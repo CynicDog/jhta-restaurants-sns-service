@@ -1,2 +1,0 @@
-create database jhta_restaurants_sns_service; 
-use jhta_restaurants_sns_service;

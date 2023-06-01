@@ -5,18 +5,19 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnUtils {
-
-    private static String url = "jdbc:mysql://localhost:3306/jhta_restaurants_sns_service";
-    private static String username = "root";
-    private static String password = "";
-
+ 
+    private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
+    private static final String username = "jhta";
+    private static final String password = "1234";
+    
     static {
 
-        try { Class.forName("com.mysql.cj.jdbc.Driver"); }
+        try { Class.forName("oracle.jdbc.OracleDriver"); }
         catch (ClassNotFoundException e) { throw new RuntimeException(e); }
     }
 
     public static Connection getConnection() throws SQLException {
+    	
         return DriverManager.getConnection(url, username, password);
     }
 }

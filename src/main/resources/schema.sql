@@ -1,4 +1,4 @@
-create table customer (
-	id int auto_increment primary key,
-	name varchar(255)
-); 
+create TABLE customer(
+    id int primary key, 
+    name varchar2(255) 
+);
