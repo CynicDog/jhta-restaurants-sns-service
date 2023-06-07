@@ -5,7 +5,7 @@ import java.util.Date;
 public class Customer {
 
 	private int id;
-	private String user_id;
+	private String userId;
 	private String password;
 	private String name;
 	private String email;
@@ -13,11 +13,40 @@ public class Customer {
 	private Date birthday;
 	private String gender;
 	private String grade;
-	private Date create_date;
-	private Date update_date;
-	private int review_no;
+	private Date createDate;
+	private Date updateDate;
 	
-	public  Customer() {}
+	public Customer() {}
+	
+	// for fetching 
+	public Customer(int id, String userId, String password, String name, String email, String phone, Date birthday,
+			String gender, String grade, Date createDate, Date updateDate) {
+		this.id = id;
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.grade = grade;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+	
+	// for storing 
+	public Customer(String userId, String password, String name, String email, String phone, Date birthday,
+			String gender, String grade) {
+
+		this.userId = userId;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.grade = grade;
+	}
 
 	public int getId() {
 		return id;
@@ -27,12 +56,12 @@ public class Customer {
 		this.id = id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {
@@ -91,30 +120,19 @@ public class Customer {
 		this.grade = grade;
 	}
 
-	public Date getCreate_date() {
-		return create_date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Date getUpdate_date() {
-		return update_date;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
-	}
-
-	public int getReview_no() {
-		return review_no;
-	}
-
-	public void setReview_no(int review_no) {
-		this.review_no = review_no;
-	}
-	
-	
-	
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}	
 }

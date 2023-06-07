@@ -5,7 +5,7 @@ import java.util.Date;
 public class Owner {
 	
 	private int id;
-	private String owner_id;
+	private String ownerId;
 	private String password;
 	private String name;
 	private String email;
@@ -20,11 +20,11 @@ public class Owner {
 	public Owner() {}
 
 	// for fetching 
-	public Owner(int id, String owner_id, String password, String name, String email, String phone, Date birthday,
+	public Owner(int id, String ownerId, String password, String name, String email, String phone, Date birthday,
 			String gender, String grade, String subscription, Date createDate, Date updateDate) {
-		super();
+		
 		this.id = id;
-		this.owner_id = owner_id;
+		this.ownerId = ownerId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
@@ -38,11 +38,10 @@ public class Owner {
 	}
 	
 	// for storing 
-	public Owner(int id, String owner_id, String password, String name, String email, String phone, Date birthday,
+	public Owner(String ownerId, String password, String name, String email, String phone, Date birthday,
 			String gender, String grade, String subscription) {
-		super();
-		this.id = id;
-		this.owner_id = owner_id;
+		
+		this.ownerId = ownerId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
@@ -57,25 +56,17 @@ public class Owner {
 		return id;
 	}
 
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-
-	public String getOwner_id() {
-		return owner_id;
+	public String getOwnerId() {
+		return ownerId;
 	}
 
-
-
-	public void setOwner_id(String owner_id) {
-		this.owner_id = owner_id;
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
 	}
-
-
 
 	public String getPassword() {
 		return password;

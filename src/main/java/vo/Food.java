@@ -5,23 +5,35 @@ public class Food {
 	private String name;
 	private int price;
 	private String category;
-	private String soldout;
+	private String soldOut;
 	private String pictureLocation;
 	private Store store;
 	
 	public Food() {}
 	
-	public Food(int id, String name, int price, String category, String soldout, String pictureLocation, int storeId) {
-		super();
+	// for fetching 
+	public Food(int id, String name, int price, String category, String soldOut, String pictureLocation, int storeId) {
+		
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.category = category;
-		this.soldout = soldout;
+		this.soldOut = soldOut;
 		this.pictureLocation = pictureLocation;
 		this.store = StoreDao.getStoreById(storeId);
 	}
-
+	
+	// for storing
+	public Food(String name, int price, String category, String soldOut, String pictureLocation, int storeId) {
+		
+		this.name = name;
+		this.price = price;
+		this.category = category;
+		this.soldOut = soldOut;
+		this.pictureLocation = pictureLocation;
+		this.store = StoreDao.getStoreById(storeId);
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -54,12 +66,12 @@ public class Food {
 		this.category = category;
 	}
 
-	public String getSoldout() {
-		return soldout;
+	public String getSoldOut() {
+		return soldOut;
 	}
 
-	public void setSoldout(String soldout) {
-		this.soldout = soldout;
+	public void setSoldOut(String soldOut) {
+		this.soldOut = soldOut;
 	}
 
 	public String getPictureLocation() {
