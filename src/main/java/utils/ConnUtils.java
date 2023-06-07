@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnUtils {
  
     private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
-    private static final String username = "jhta";
+    private static final String username = "C##jhta";
     private static final String password = "1234";
     
     static {
