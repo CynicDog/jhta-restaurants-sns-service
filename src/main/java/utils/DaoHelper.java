@@ -3,6 +3,10 @@ package utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,20 +21,33 @@ public class DaoHelper {
 	
 	private static Properties prop = new Properties();
 	
+	private static final String PROPERTIES_DIRECTORY = "utils/properties";
+
 	static {
-		try {
-			String projectPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-			File directory = new File(projectPath + "/utils/properties");
-			File[] files = directory.listFiles((dir, name) -> name.endsWith(".properties"));
-			for (File file : files) {
-				FileInputStream in= new FileInputStream(file);
-				prop.load(in);
-				in.close();
-			}
-		} catch (IOException ex) {
-			throw new RuntimeException(ex);
-		}
-	} 
+	    try {
+	        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+	        URL resourceUrl = classLoader.getResource(PROPERTIES_DIRECTORY);
+
+	        if (resourceUrl != null) {
+	            Path directoryPath = Paths.get(resourceUrl.toURI());
+	            File directory = directoryPath.toFile();
+
+	            if (directory.exists() && directory.isDirectory()) {
+	                File[] files = directory.listFiles((dir, name) -> name.endsWith(".properties"));
+	                if (files != null) {
+	                    for (File file : files) {
+	                        FileInputStream in = new FileInputStream(file);
+	                        prop.load(in);
+	                        in.close();
+	                    }
+	                }
+	            }
+	        }
+	    } catch (IOException | URISyntaxException ex) {
+	        throw new RuntimeException(ex);
+	    }
+	}
+
 	
 	/**
 	 * SELECT문을 실행하고, 조회결과를 객체에 담아서 반환한다.
