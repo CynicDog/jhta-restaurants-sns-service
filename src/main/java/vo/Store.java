@@ -1,5 +1,7 @@
 package vo;
 
+import dao.OwnerDao;
+
 public class Store {
 	
 	private int id; 
@@ -25,7 +27,7 @@ public class Store {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.text = text;
-		this.owner = OwnerDao.getOwnerById(ownerId);
+		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
 	}
 	
 	// for storing 
@@ -38,7 +40,7 @@ public class Store {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.text = text;
-		this.owner = OwnerDao.getOwnerById(ownerId);
+		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
 	}
 	
 	public int getId() {
