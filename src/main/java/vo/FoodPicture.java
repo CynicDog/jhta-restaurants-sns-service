@@ -1,5 +1,7 @@
 package vo;
 
+import dao.FoodDao;
+
 public class FoodPicture {
 
 	private int id; 

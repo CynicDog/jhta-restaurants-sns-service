@@ -13,7 +13,7 @@ public class FoodDao {
 	}
 	
 	public Food getFoodById(int storeId) {
-		return DaoHelper.selectOne("", rs->{
+		return DaoHelper.selectOne("FoodDao.getFoodById", rs->{
 			Food food = new Food(
 					rs.getInt(1),
 					rs.getString(2),
@@ -29,21 +29,22 @@ public class FoodDao {
 	}
 	
 	public void insertFood(Food food) {
-		DaoHelper.update("", food.getName(),
-							food.getPrice(),
-							food.getCategory(),
-							food.getSoldOut(),
-							food.getPictureLocation(),
-							food.getStore().getId());
+		DaoHelper.update("FoodDao.insertFood", 
+				food.getName(),
+				food.getPrice(),
+				food.getCategory(),
+				food.getSoldOut(),
+				food.getPictureLocation(),
+				food.getStore().getId());
 	}
 	
 	public void updateFood(Food food) {
-		DaoHelper.update("", food.getId(), 
-							food.getName(),
-							food.getPrice(),
-							food.getCategory(),
-							food.getSoldOut(),
-							food.getPictureLocation(),
-							food.getStore().getId());
+		DaoHelper.update("FoodDao.", 
+				food.getName(),
+				food.getPrice(),
+				food.getCategory(),
+				food.getSoldOut(),
+				food.getPictureLocation(),
+				food.getStore().getId());
 	}
 }

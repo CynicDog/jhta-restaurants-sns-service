@@ -6,6 +6,7 @@ import vo.Review;
 public class ReviewDao {
 	
 	private static ReviewDao instance = new ReviewDao();
+	
 	private ReviewDao() {}
 	
 	public static ReviewDao getInstance() {
@@ -13,7 +14,7 @@ public class ReviewDao {
 	}
 
 	public Review getReviewById(int id) {
-		return DaoHelper.selectOne("", rs -> {
+		return DaoHelper.selectOne("ReviewDao.getReviewById", rs -> {
 			Review review = new Review(
 					rs.getInt(1),
 					rs.getInt(2),
@@ -26,4 +27,6 @@ public class ReviewDao {
 			return review;
 		}, id);
 	}
+	
+	
 }

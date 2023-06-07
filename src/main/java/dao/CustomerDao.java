@@ -12,35 +12,34 @@ public class CustomerDao {
 		return instance;
 	}
 	
-	
 	public void insertCustomer(Customer customer) {
 		
-		DaoHelper.update("CustomerDao.insertCustomer", 
-					customer.getName(),
+		DaoHelper.update("CustomerDao.insertCustomer",
 					customer.getUserId(),
 					customer.getPassword(),
+					customer.getName(),
 					customer.getEmail(),
 					customer.getPhone(),
 					customer.getBirthday(),
 					customer.getGender(),
+					customer.getGrade()
 				);
 	}
-	public Customer getCustomerById(int customerId) {
-		return null;
-	} 
 	
 	public void updateCustomer(Customer customer) {
-		DaoHelper.update("customerDao.updateCustomer",
+		DaoHelper.update("CustomerDao.updateCustomer",
 					customer.getUserId(),
 					customer.getPassword(),
+					customer.getName(),
 					customer.getEmail(),
 					customer.getPhone(),
-					customer.getGrade(),
+					customer.getGrade(), 
+					customer.getUpdateDate() 
 				);
 	}
 	
 	public Customer getCustomerById(int customerId) {
-		return DaoHelper.selectOne("OwnerDao.getCustomerById", rs->{
+		return DaoHelper.selectOne("CustomerDao.getCustomerById", rs->{
 			Customer customer = new Customer(
 					rs.getInt(1),
 					rs.getString(2),
@@ -58,5 +57,4 @@ public class CustomerDao {
 			
 		}, customerId);
 	}
-	
 }
