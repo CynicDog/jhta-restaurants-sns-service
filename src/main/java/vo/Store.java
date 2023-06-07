@@ -1,5 +1,7 @@
 package vo;
 
+import dao.OwnerDao;
+
 public class Store {
 	
 	private int id; 
@@ -14,6 +16,24 @@ public class Store {
 	public Store() {
 	}
 	
+	// for fetching 
+	public Store(int id, int businessLicenseNumber, String address, int zipcode, float latitude, float longitude,
+			String text, int ownerId) {
+		super();
+		this.id = id;
+		this.businessLicenseNumber = businessLicenseNumber;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.text = text;
+		this.owner = OwnerDao.getOwnerById(ownerId); 
+	}
+	
+	// for storing 
+	
+	
+
 	public int getId() {
 		return id;
 	}
@@ -61,9 +81,5 @@ public class Store {
 	}
 	public void setOwner(Owner owner) {
 		this.owner = owner;
-	} 
-	
-	
-	
-	
+	}
 }
