@@ -2,6 +2,9 @@ package vo;
 
 import java.util.Date;
 
+import dao.CustomerDao;
+import dao.StoreDao;
+
 
 public class Review {
 
