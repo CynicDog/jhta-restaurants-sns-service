@@ -29,4 +29,27 @@ public class AdminDao {
 			return admin;		
 		}, adminId);
 	}
+	
+	public void insertAdmin(Admin admin) {
+		DaoHelper.update("adminDao.insertAdmin",
+								admin.getAdminId(),
+								admin.getPassword(),
+								admin.getName(),
+								admin.getEmail(),
+								admin.getPhone(),
+								admin.getBirthday(),
+								admin.getGender());
+	}
+	
+	public void updateAdmin(Admin admin) {
+		DaoHelper.update("adminDao.updateAdmin",
+				admin.getAdminId(),
+				admin.getPassword(),
+				admin.getName(),
+				admin.getEmail(),
+				admin.getPhone(),
+				admin.getBirthday(),
+				admin.getGender(),
+				admin.getUpdateDate());
+	}
 }

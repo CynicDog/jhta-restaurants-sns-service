@@ -10,7 +10,8 @@ public class Store {
 	private int zipcode; 
 	private float latitude; 
 	private float longitude; 
-	private String text; 
+	private String text;
+	private String phone;
 	private Owner owner;
 	
 	public Store() {
@@ -18,7 +19,7 @@ public class Store {
 	
 	// for fetching 
 	public Store(int id, int businessLicenseNumber, String address, int zipcode, float latitude, float longitude,
-			String text, int ownerId) {
+			String text, String phone, int ownerId) {
 		
 		this.id = id;
 		this.businessLicenseNumber = businessLicenseNumber;
@@ -27,12 +28,13 @@ public class Store {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.text = text;
+		this.phone = phone;
 		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
 	}
 	
 	// for storing 
 	public Store(int businessLicenseNumber, String address, int zipcode, float latitude, float longitude, String text,
-			int ownerId) {
+			String phone, int ownerId) {
 	
 		this.businessLicenseNumber = businessLicenseNumber;
 		this.address = address;
@@ -40,6 +42,7 @@ public class Store {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.text = text;
+		this.phone = phone;
 		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
 	}
 	
@@ -85,6 +88,12 @@ public class Store {
 	}
 	public void setText(String text) {
 		this.text = text;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public Owner getOwner() {
 		return owner;

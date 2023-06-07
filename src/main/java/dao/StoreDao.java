@@ -24,10 +24,35 @@ public class StoreDao {
 					rs.getFloat(5),
 					rs.getFloat(6),
 					rs.getString(7),
-					rs.getInt(8));
+					rs.getString(8),
+					rs.getInt(9));
 
 			return store; 
 		}, storeId);
+	}
+	
+	public void insertStore(Store store){
+		DaoHelper.update("storeDao.insertStore", 
+							store.getBusinessLicenseNumber(),
+							store.getAddress(),
+							store.getZipcode(),
+							store.getLatitude(),
+							store.getLongitude(),
+							store.getText(),
+							store.getPhone(),
+							store.getOwner().getId());
+	}
+	
+	public void updateStore(Store store) {
+		DaoHelper.update("storeDao.insertStore", 
+				store.getBusinessLicenseNumber(),
+				store.getAddress(),
+				store.getZipcode(),
+				store.getLatitude(),
+				store.getLongitude(),
+				store.getText(),
+				store.getPhone(),
+				store.getOwner().getId());
 	}
 	
 }
