@@ -4,6 +4,13 @@ import utils.DaoHelper;
 import vo.Review;
 
 public class ReviewDao {
+	
+	private static ReviewDao instance = new ReviewDao();
+	private ReviewDao() {}
+	
+	public static ReviewDao getInstance() {
+		return instance;
+	}
 
 	public Review getReviewById(int id) {
 		return DaoHelper.selectOne("", rs -> {

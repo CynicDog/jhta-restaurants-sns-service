@@ -28,8 +28,8 @@ public class Review {
 		this.text = text;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
-		this.customer = CustomerDao.getCustomerById(customerId);
-		this.store = StoreDao.getStoreById(storeId); 
+		this.customer = CustomerDao.getInstance().getCustomerById(customerId);
+		this.store = StoreDao.getInstance().getStoreById(storeId);
 	}
 	
 	// for storing 
@@ -37,8 +37,8 @@ public class Review {
 		
 		this.rating = rating;
 		this.text = text;
-		this.customer = CustomerDao.getCustomerById(customerId);
-		this.store = StoreDao.getStoreById(storeId);
+		this.customer = CustomerDao.getInstance().getCustomerById(customerId);
+		this.store = StoreDao.getInstance().getStoreById(storeId);
 	}
 
 	public int getId() {

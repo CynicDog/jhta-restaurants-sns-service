@@ -35,7 +35,6 @@ public class OwnerDao {
 	
 	public void insertOwner(Owner owner) {
 		DaoHelper.update("", 
-				owner.getId(),
 				owner.getOwnerId(),
 				owner.getPassword(),
 				owner.getName(),

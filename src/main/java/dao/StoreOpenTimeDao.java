@@ -25,7 +25,7 @@ public class StoreOpenTimeDao {
 	}
 	
 	public void insertStoreOpenTime(StoreOpentime storeOpentime) {
-		DaoHelper.update("", storeOpentime.getId(),
+		DaoHelper.update("", 
 							storeOpentime.getCategory(),
 							storeOpentime.getDay(),
 							storeOpentime.getOpenTime(),

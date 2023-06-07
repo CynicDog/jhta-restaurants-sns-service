@@ -6,6 +6,13 @@ import vo.Owner;
 
 public class CustomerDao {
 
+	private static CustomerDao instance = new CustomerDao();
+	private CustomerDao() {}
+	public static CustomerDao getInstance() {
+		return instance;
+	}
+	
+	
 	public void insertCustomer(Customer customer) {
 		
 		DaoHelper.update("CustomerDao.insertCustomer", 
@@ -17,6 +24,9 @@ public class CustomerDao {
 					customer.getBirthday(),
 					customer.getGender(),
 				);
+	}
+	public Customer getCustomerById(int customerId) {
+		return null;
 	} 
 	
 	public void updateCustomer(Customer customer) {

@@ -1,5 +1,7 @@
 package vo;
 
+import dao.StoreDao;
+
 public class StoreOpentime {
 	
 	private int id;
@@ -19,7 +21,7 @@ public class StoreOpentime {
 		this.day = day;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
-		this.store = StoreDao.getStoreById(storeId);
+		this.store = StoreDao.getInstance().getStoreById(storeId);
 	}
 	
 	// for storing 
@@ -29,7 +31,7 @@ public class StoreOpentime {
 		this.day = day;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
-		this.store = StoreDao.getStoreById(storeId);
+		this.store = StoreDao.getInstance().getStoreById(storeId);
 	}
 	
 	public int getId() {
