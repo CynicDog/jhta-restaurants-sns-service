@@ -7,6 +7,7 @@ import vo.Store;
 public class StoreDao {
 
 	private static StoreDao instance = new StoreDao();
+	
 	private StoreDao() {}
 	
 	public static StoreDao getInstance() {
@@ -23,8 +24,7 @@ public class StoreDao {
 					rs.getFloat(5),
 					rs.getFloat(6),
 					rs.getString(7),
-					rs.getInt(8)
-					);
+					rs.getInt(8));
 
 			return store; 
 		}, storeId);

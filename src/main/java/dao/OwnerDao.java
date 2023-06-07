@@ -34,7 +34,7 @@ public class OwnerDao {
 	}
 	
 	public void insertOwner(Owner owner) {
-		DaoHelper.update("", 
+		DaoHelper.update("OwnerDao.insertOwner", 
 				owner.getOwnerId(),
 				owner.getPassword(),
 				owner.getName(),
@@ -47,8 +47,7 @@ public class OwnerDao {
 	}
 	
 	public void updateOwner(Owner owner) {
-		DaoHelper.update("",
-				owner.getId(),
+		DaoHelper.update("OwnerDao.updateOwner",
 				owner.getOwnerId(),
 				owner.getPassword(),
 				owner.getName(),

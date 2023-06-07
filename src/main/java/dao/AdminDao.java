@@ -13,7 +13,7 @@ public class AdminDao {
 	}
 	
 	public Admin getAdminById(int adminId) {
-		return DaoHelper.selectOne("", rs -> {
+		return DaoHelper.selectOne("AdminDao.getAdminById", rs -> {
 			Admin admin = new Admin(
 					rs.getInt(1),
 					rs.getString(2),

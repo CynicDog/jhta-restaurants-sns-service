@@ -4,14 +4,17 @@ import utils.DaoHelper;
 import vo.StoreOpentime;
 
 public class StoreOpenTimeDao {
+	
 	private static StoreOpenTimeDao instance = new StoreOpenTimeDao();
+	
 	private StoreOpenTimeDao() {}
+	
 	public static StoreOpenTimeDao getInstance() {
 		return instance;
 	}
 	
 	public StoreOpentime getStoreOpenTimeById(int storeId) {
-		return DaoHelper.selectOne("", rs->{
+		return DaoHelper.selectOne("StoreOpenTimeDao.getStoreOpenTimeById", rs->{
 			StoreOpentime storeOpenTime = new StoreOpentime(
 						rs.getInt(1),
 						rs.getString(2),
@@ -25,7 +28,7 @@ public class StoreOpenTimeDao {
 	}
 	
 	public void insertStoreOpenTime(StoreOpentime storeOpentime) {
-		DaoHelper.update("", 
+		DaoHelper.update("StoreOpenTimeDao.insertStoreOpenTime", 
 							storeOpentime.getCategory(),
 							storeOpentime.getDay(),
 							storeOpentime.getOpenTime(),
@@ -34,7 +37,7 @@ public class StoreOpenTimeDao {
 	}
 	
 	public void updateStoreOpenTime(StoreOpentime storeOpentime) {
-		DaoHelper.update("", storeOpentime.getId(),
+		DaoHelper.update("StoreOpenTimeDao.updateStoreOpenTime", storeOpentime.getId(),
 							storeOpentime.getCategory(),
 							storeOpentime.getDay(),
 							storeOpentime.getOpenTime(),
