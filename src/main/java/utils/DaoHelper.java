@@ -20,7 +20,7 @@ public class DaoHelper {
 	static {
 		try {
 			String projectPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-			File directory = new File(projectPath + "/dao");
+			File directory = new File(projectPath + "/utils/properties");
 			File[] files = directory.listFiles((dir, name) -> name.endsWith(".properties"));
 			for (File file : files) {
 				FileInputStream in= new FileInputStream(file);
