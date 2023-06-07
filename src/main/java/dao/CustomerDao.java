@@ -5,9 +5,10 @@ import vo.Customer;
 
 public class CustomerDao {
 
-	public static void insertCustomer(Customer customer) {
+	public void insertCustomer(Customer customer) {
 		
-		DaoHelper.update("CustomerDAO.insertCustomer", 
+		DaoHelper.update("CustomerDao.insertCustomer", 
+                     
 					customer.getName()
 				);
 	} 
