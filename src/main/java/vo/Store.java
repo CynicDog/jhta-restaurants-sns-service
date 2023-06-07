@@ -16,19 +16,6 @@ public class Store {
 	public Store() {
 	}
 	
-	public Store(int id, int businessLicenseNumber, String address, int zipcode, float latitude, float longitude,
-			String text, Owner owner) {
-		super();
-		this.id = id;
-		this.businessLicenseNumber = businessLicenseNumber;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.text = text;
-		this.owner = owner;
-	}
-
 	public int getId() {
 		return id;
 	}
