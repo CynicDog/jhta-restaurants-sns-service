@@ -28,5 +28,21 @@ public class ReviewDao {
 		}, id);
 	}
 	
+	public void insertReview(Review review) {
+		DaoHelper.update("reviewDao.insertReview",
+							review.getRating(),
+							review.getText(),
+							review.getCustomer().getId(),
+							review.getStore().getId());
+	}
+	
+	public void updateReview(Review review) {
+		DaoHelper.update("reviewDao.updateReview",
+				review.getRating(),
+				review.getText(),
+				review.getUpdateDate(),
+				review.getCustomer().getId(),
+				review.getStore().getId());
+	}
 	
 }
