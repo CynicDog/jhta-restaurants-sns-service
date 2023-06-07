@@ -7,13 +7,14 @@ import vo.Customer;
 
 public class DatabaseConnectionTest {
 	
-	CustomerDao customerDAO = new CustomerDao(); 
+	CustomerDao customerDao = CustomerDao.getInstance();
+
 
 	@Test
 	public void customerStoreTest() {
 		
-		Customer customer = new Customer("simon"); 
+		Customer customer = new Customer(""); 
 		
-		customerDAO.insertCustomer(customer);
+		customerDao.insertCustomer(customer);
 	}
 }

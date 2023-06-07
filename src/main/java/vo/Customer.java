@@ -18,6 +18,12 @@ public class Customer {
 	
 	public Customer() {}
 	
+	//For test
+	public Customer(String name) {
+		this.name = name;
+	}
+
+	
 	// for fetching 
 	public Customer(int id, String userId, String password, String name, String email, String phone, Date birthday,
 			String gender, String grade, Date createDate, Date updateDate) {
