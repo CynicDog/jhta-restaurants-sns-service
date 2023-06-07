@@ -7,6 +7,12 @@ import vo.Owner;
 
 public class OwnerDao {
 
+	private static OwnerDao instance = new OwnerDao();
+	private OwnerDao() {}
+	public static OwnerDao getInstance() {
+		return instance;
+	}
+	
 	public Owner getOwnerById(int ownerId) {
 		return DaoHelper.selectOne("OwnerDao.getOwnerById", rs->{
 			Owner owner = new Owner(
@@ -27,5 +33,32 @@ public class OwnerDao {
 		}, ownerId);
 	}
 	
+	public void insertOwner(Owner owner) {
+		DaoHelper.update("", 
+				owner.getId(),
+				owner.getOwnerId(),
+				owner.getPassword(),
+				owner.getName(),
+				owner.getEmail(),
+				owner.getPhone(),
+				owner.getBirthday(),
+				owner.getGender(),
+				owner.getGrade(),
+				owner.getSubscription());
+	}
+	
+	public void updateOwner(Owner owner) {
+		DaoHelper.update("",
+				owner.getId(),
+				owner.getOwnerId(),
+				owner.getPassword(),
+				owner.getName(),
+				owner.getEmail(),
+				owner.getPhone(),
+				owner.getBirthday(),
+				owner.getGender(),
+				owner.getGrade(),
+				owner.getSubscription());
+	}
 	
 }
