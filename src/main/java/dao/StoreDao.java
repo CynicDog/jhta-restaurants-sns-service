@@ -15,8 +15,6 @@ public class StoreDao {
 	
 	public Store getStoreById(int storeId) { 
 		return DaoHelper.selectOne("StoreDao.getStoreById", rs->{
-			Owner owner = new Owner();
-			owner.setId(rs.getInt(8));
 			Store store = new Store(
 					rs.getInt(1), 
 					rs.getInt(2),
@@ -25,7 +23,7 @@ public class StoreDao {
 					rs.getFloat(5),
 					rs.getFloat(6),
 					rs.getString(7),
-					owner
+					rs.getInt(8)
 					);
 
 			return store; 
