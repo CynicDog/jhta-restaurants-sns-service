@@ -1,5 +1,7 @@
 package vo;
 
+import dao.StoreDao;
+
 public class Food {
 	private int id;
 	private String name;
