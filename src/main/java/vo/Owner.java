@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Owner {
 	
-	private String id;
+	private int id;
+	private String owner_id;
 	private String password;
 	private String name;
 	private String email;
@@ -18,13 +19,31 @@ public class Owner {
 	
 	public Owner() {}
 
-	public String getId() {
+
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+
+
+	public void setId(int id) {
 		this.id = id;
 	}
+
+
+
+	public String getOwner_id() {
+		return owner_id;
+	}
+
+
+
+	public void setOwner_id(String owner_id) {
+		this.owner_id = owner_id;
+	}
+
+
 
 	public String getPassword() {
 		return password;
