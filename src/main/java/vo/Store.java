@@ -11,8 +11,6 @@ public class Store {
 	private String text; 
 	private Owner owner;
 	
-	
-	
 	public Store() {
 	}
 	

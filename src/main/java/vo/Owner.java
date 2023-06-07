@@ -11,7 +11,7 @@ public class Owner {
 	private String email;
 	private String phone;
 	private Date birthday;
-	private char gender;
+	private String gender;
 	private String grade;
 	private String subscription;
 	private Date createDate;
@@ -19,7 +19,39 @@ public class Owner {
 	
 	public Owner() {}
 
-
+	// for fetching 
+	public Owner(int id, String owner_id, String password, String name, String email, String phone, Date birthday,
+			String gender, String grade, String subscription, Date createDate, Date updateDate) {
+		super();
+		this.id = id;
+		this.owner_id = owner_id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.grade = grade;
+		this.subscription = subscription;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+	
+	// for storing 
+	public Owner(int id, String owner_id, String password, String name, String email, String phone, Date birthday,
+			String gender, String grade, String subscription) {
+		super();
+		this.id = id;
+		this.owner_id = owner_id;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.birthday = birthday;
+		this.gender = gender;
+		this.grade = grade;
+		this.subscription = subscription;
+	}
 
 	public int getId() {
 		return id;
@@ -85,11 +117,11 @@ public class Owner {
 		this.birthday = birthday;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
