@@ -2,12 +2,12 @@ package database;
 
 import org.junit.jupiter.api.Test;
 
-import dao.CustomerDAO;
+import dao.CustomerDao;
 import vo.Customer;
 
 public class DatabaseConnectionTest {
 	
-	CustomerDAO customerDAO = new CustomerDAO(); 
+	CustomerDao customerDAO = new CustomerDao(); 
 
 	@Test
 	public void customerStoreTest() {
