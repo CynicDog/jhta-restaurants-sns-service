@@ -7,20 +7,31 @@ public class StoreOpentime {
 	private String day;
 	private String openTime;
 	private String closeTime;
-	private Store storeId;
+	private Store store;
 
 	public StoreOpentime() {}
 	
-	public StoreOpentime(int id, String category, String day, String openTime, String closeTime, Store storeId) {
-		super();
+	// for fetching 
+	public StoreOpentime(int id, String category, String day, String openTime, String closeTime, int storeId) {
+		
 		this.id = id;
 		this.category = category;
 		this.day = day;
 		this.openTime = openTime;
 		this.closeTime = closeTime;
-		this.storeId = StoreDao.getStoreById(storeId);
+		this.store = StoreDao.getStoreById(storeId);
 	}
-
+	
+	// for storing 
+	public StoreOpentime(String category, String day, String openTime, String closeTime, int storeId) {
+		
+		this.category = category;
+		this.day = day;
+		this.openTime = openTime;
+		this.closeTime = closeTime;
+		this.store = StoreDao.getStoreById(storeId);
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -61,12 +72,12 @@ public class StoreOpentime {
 		this.closeTime = closeTime;
 	}
 
-	public Store getStoreId() {
-		return storeId;
+	public Store getStore() {
+		return store;
 	}
 	
-	public void setStoreId(Store storeId) {
-		this.storeId = storeId;
+	public void setStore(Store store) {
+		this.store = store;
 	}
 	
 }
