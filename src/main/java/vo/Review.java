@@ -2,6 +2,7 @@ package vo;
 
 import java.util.Date;
 
+
 public class Review {
 
 	private int id;
@@ -9,34 +10,32 @@ public class Review {
 	private String text;
 	private Date createDate;
 	private Date updateDate;
-	private int customerId;
-	private int storeId;
+	private Customer customer;
+	private Store store;
 	
 	public Review() {
 		
 	}
-	
 
-	public Review(int id, int rating, String text, Date createDate, Date updateDate, int customerId, int storeId) {
-		super();
+	public Review(int id, int rating, String text, Date createDate, Date updateDate, int customerId, int StoreId) {
 		this.id = id;
 		this.rating = rating;
 		this.text = text;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
-		this.customerId = customerId;
-		this.storeId = storeId;
+		this.customer = CustomerDao.getCustomerById(customerId);
+		this.store = StoreDao.getStoreById(StoreId);
 	}
+
 	
-	public Review(int id, int rating, String text, int customerId, int storeId) {
+	public Review(int id, int rating, String text, int customerId, int StoreId) {
 		super();
 		this.id = id;
 		this.rating = rating;
 		this.text = text;
-		this.customerId = customerId;
-		this.storeId = storeId;
+		this.customer = CustomerDao.getCustomerById(customerId);
+		this.store = StoreDao.getStoreById(StoreId);;
 	}
-
 
 	public int getId() {
 		return id;
@@ -78,21 +77,24 @@ public class Review {
 		this.updateDate = updateDate;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
-	public int getStoreId() {
-		return storeId;
+	public Store getStore() {
+		return store;
 	}
 
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
+	public void setStore(Store store) {
+		this.store = store;
 	}
+	
+	
+	
 	
 	
 	

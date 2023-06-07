@@ -3,11 +3,11 @@ package dao;
 import utils.DaoHelper;
 import vo.Customer;
 
-public class CustomerDAO {
+public class CustomerDao {
 
 	public void insertCustomer(Customer customer) {
 		
-		DaoHelper.update("CustomerDAO.insertCustomer", 
+		DaoHelper.update("CustomerDao.insertCustomer", 
 					customer.getName()
 				);
 	} 
