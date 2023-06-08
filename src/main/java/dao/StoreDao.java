@@ -19,14 +19,15 @@ public class StoreDao {
 			Store store = new Store(); 
 			
 			store.setId(rs.getInt(1)); 
-			store.setBusinessLicenseNumber(rs.getInt(2));  
-			store.setAddress(rs.getString(3)); 
-			store.setZipcode(rs.getInt(4)); 
-			store.setLatitude(rs.getFloat(5)); 
-			store.setLongitude(rs.getFloat(6)); 
-			store.setText(rs.getString(7)); 
-			store.setPhone(rs.getString(8));
-			Owner owner = ownerDao.getOwnerById(rs.getInt(9)); 		
+			store.setName(rs.getString(2));
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getFloat(6)); 
+			store.setLongitude(rs.getFloat(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
 			store.setOwner(owner); 
 					
 			return store;
@@ -39,14 +40,15 @@ public class StoreDao {
 			Store store = new Store(); 
 			
 			store.setId(rs.getInt(1)); 
-			store.setBusinessLicenseNumber(rs.getInt(2));  
-			store.setAddress(rs.getString(3)); 
-			store.setZipcode(rs.getInt(4)); 
-			store.setLatitude(rs.getFloat(5)); 
-			store.setLongitude(rs.getFloat(6)); 
-			store.setText(rs.getString(7)); 
-			store.setPhone(rs.getString(8));
-			Owner owner = ownerDao.getOwnerById(rs.getInt(9)); 		
+			store.setName(rs.getString(2)); 
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getFloat(6)); 
+			store.setLongitude(rs.getFloat(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
 			store.setOwner(owner); 
 					
 			return store;
@@ -69,6 +71,7 @@ public class StoreDao {
 	
 	public void updateStore(Store store) {
 		DaoHelper.update("storeDao.updateStore", 
+				store.getName(),
 				store.getBusinessLicenseNumber(),
 				store.getAddress(),
 				store.getZipcode(),
@@ -76,7 +79,18 @@ public class StoreDao {
 				store.getLongitude(),
 				store.getText(),
 				store.getPhone(),
-				store.getOwner().getId());
+				store.getOwner().getId(),
+				store.getId());
 	}
+	
+	public void deleteStoreById(int id) {
+		DaoHelper.update("StoreDao.deleteStoreById", id);
+	}
+	
+	public void deleteStoreByName(String name) {
+		DaoHelper.update("StoreDao.deleteStoreByName", name);
+	}
+	
+	
 	
 }
