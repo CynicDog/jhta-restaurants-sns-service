@@ -7,7 +7,13 @@ import vo.Owner;
 
 public class OwnerDao {
 
-	public static Owner getOwnerById(int id) {
+	private static OwnerDao instance = new OwnerDao();
+	private OwnerDao() {}
+	public static OwnerDao getInstance() {
+		return instance;
+	}
+	
+	public Owner getOwnerById(int id) {
 		return DaoHelper.selectOne("OwnerDao.getOwnerById", rs->{
 			Owner owner = new Owner();
 			
@@ -24,12 +30,11 @@ public class OwnerDao {
 			owner.setCreateDate(rs.getDate(11));
 			owner.setUpdateDate(rs.getDate(12));
 			
-
 			return owner; 
 		}, id);
 	}
 	
-	public static void insertOwner(Owner owner) {
+	public void insertOwner(Owner owner) {
 		DaoHelper.update("OwnerDao.insertOwner", 
 				owner.getOwnerId(),
 				owner.getPassword(),
@@ -42,7 +47,7 @@ public class OwnerDao {
 				owner.getSubscription());
 	}
 	
-	public static void updateOwner(Owner owner) {
+	public void updateOwner(Owner owner) {
 		DaoHelper.update("OwnerDao.updateOwner",
 				owner.getOwnerId(),
 				owner.getPassword(),
