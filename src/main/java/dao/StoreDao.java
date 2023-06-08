@@ -36,7 +36,7 @@ public class StoreDao {
 	}
 	
 	public static void updateStore(Store store) {
-		DaoHelper.update("storeDao.insertStore", 
+		DaoHelper.update("storeDao.updateStore", 
 				store.getBusinessLicenseNumber(),
 				store.getAddress(),
 				store.getZipcode(),
