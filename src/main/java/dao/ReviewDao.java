@@ -74,7 +74,12 @@ public class ReviewDao {
 				review.getText(),
 				review.getUpdateDate(),
 				review.getCustomer().getId(),
-				review.getStore().getId());
+				review.getStore().getId(),
+				review.getId());
+	}
+	
+	public void deleteReviewById(int id) {
+		DaoHelper.update("ReviewDao.deleteReviewById", id);
 	}
 	
 }

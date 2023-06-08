@@ -14,6 +14,16 @@ public class FoodDao {
 		return instance;
 	}
 	
+	public void deleteFoodById(int id) {
+		DaoHelper.update("FoodDao.insertFood", id);
+	}
+	
+	public void deleteFoodByName(String name) {
+		DaoHelper.update("FoodDao.insertFood", name);
+	}
+	
+	
+	
 	public Food getFoodById(int id) {
 		return DaoHelper.selectOne("FoodDao.getFoodById", rs->{
 			Food food = new Food();
@@ -30,6 +40,23 @@ public class FoodDao {
 			
 			return food;
 		}, id);
+	}
+	public Food getFoodByName(String name) {
+		return DaoHelper.selectOne("FoodDao.getFoodByName", rs->{
+			Food food = new Food();
+			
+			food.setId(rs.getInt(1));
+			food.setName(rs.getString(2));
+			food.setPrice(rs.getInt(3));
+			food.setCategory(rs.getString(4));
+			food.setSoldOut(rs.getString(5));
+			food.setPictureLocation(rs.getString(6));
+			
+			Store store = storeDao.getStoreById(rs.getInt(7));
+			food.setStore(store);
+			
+			return food;
+		}, name);
 	}
 	
 	public void insertFood(Food food) {
@@ -49,6 +76,7 @@ public class FoodDao {
 				food.getCategory(),
 				food.getSoldOut(),
 				food.getPictureLocation(),
-				food.getStore().getId());
+				food.getStore().getId(),
+				food.getId());
 	}
 }
