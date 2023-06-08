@@ -36,19 +36,20 @@ public class CustomerDao {
 	
 	public static Customer getCustomerById(int customerId) {
 		return DaoHelper.selectOne("CustomerDao.getCustomerById", rs->{
-			Customer customer = new Customer(
-					rs.getInt(1),
-					rs.getString(2),
-					rs.getString(3),
-					rs.getString(4),
-					rs.getString(5),
-					rs.getString(6),
-					rs.getDate(7),
-					rs.getString(8),
-					rs.getString(9),
-					rs.getDate(10),
-					rs.getDate(11));
-
+			Customer customer = new Customer();
+			
+			customer.setId(rs.getInt("id"));
+			customer.setUserId(rs.getString("user_id"));
+			customer.setPassword(rs.getString("user_password"));
+			customer.setName(rs.getString("user_name"));
+			customer.setEmail(rs.getString("user_email"));
+			customer.setPhone(rs.getString("user_phone"));
+			customer.setBirthday(rs.getDate("user_birthday"));
+			customer.setGender(rs.getString("user_gender"));
+			customer.setGrade(rs.getString("user_grade"));
+			customer.setCreateDate(rs.getDate("user_create_date"));
+			customer.setUpdateDate(rs.getDate("user_update_date"));
+			
 			return customer; 
 			
 		}, customerId);
