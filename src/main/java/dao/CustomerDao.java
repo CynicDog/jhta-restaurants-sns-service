@@ -8,6 +8,27 @@ import vo.Owner;
 
 public class CustomerDao {
 	
+	public static Customer getCustomerById(int id) {
+		return DaoHelper.selectOne("CustomerDao.getCustomerById", rs->{
+			Customer customer = new Customer();
+			
+			customer.setId(rs.getInt(1));
+			customer.setUserId(rs.getString(2));
+			customer.setPassword(rs.getString(3));
+			customer.setName(rs.getString(4));
+			customer.setEmail(rs.getString(5));
+			customer.setPhone(rs.getString(6));
+			customer.setBirthday(rs.getDate(7));
+			customer.setGender(rs.getString(8));
+			customer.setGrade(rs.getString(9));
+			customer.setCreateDate(rs.getDate(10));
+			customer.setUpdateDate(rs.getDate(11));
+			
+			return customer; 
+			
+		}, id);
+	}
+	
 	public static void insertCustomer(Customer customer) {
 		
 		DaoHelper.update("CustomerDao.insertCustomer",
@@ -33,25 +54,5 @@ public class CustomerDao {
 					customer.getUpdateDate() 
 				);
 	}
-	
-	public static Customer getCustomerById(int customerId) {
-		return DaoHelper.selectOne("CustomerDao.getCustomerById", rs->{
-			Customer customer = new Customer();
-			
-			customer.setId(rs.getInt("id"));
-			customer.setUserId(rs.getString("user_id"));
-			customer.setPassword(rs.getString("user_password"));
-			customer.setName(rs.getString("user_name"));
-			customer.setEmail(rs.getString("user_email"));
-			customer.setPhone(rs.getString("user_phone"));
-			customer.setBirthday(rs.getDate("user_birthday"));
-			customer.setGender(rs.getString("user_gender"));
-			customer.setGrade(rs.getString("user_grade"));
-			customer.setCreateDate(rs.getDate("user_create_date"));
-			customer.setUpdateDate(rs.getDate("user_update_date"));
-			
-			return customer; 
-			
-		}, customerId);
-	}
+
 }

@@ -7,7 +7,7 @@ import vo.Owner;
 
 public class OwnerDao {
 
-	public static Owner getOwnerById(int ownerId) {
+	public static Owner getOwnerById(int id) {
 		return DaoHelper.selectOne("OwnerDao.getOwnerById", rs->{
 			Owner owner = new Owner();
 			
@@ -26,7 +26,7 @@ public class OwnerDao {
 			
 
 			return owner; 
-		}, ownerId);
+		}, id);
 	}
 	
 	public static void insertOwner(Owner owner) {
