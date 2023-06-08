@@ -1,22 +1,26 @@
 package dao;
 
 import utils.DaoHelper;
+import vo.Store;
 import vo.StoreOpentime;
 
 public class StoreOpenTimeDao {
 	
-	public static StoreOpentime getStoreOpenTimeById(int storeId) {
+	public static StoreOpentime getStoreOpenTimeById(int id) {
 		return DaoHelper.selectOne("StoreOpenTimeDao.getStoreOpenTimeById", rs->{
-			StoreOpentime storeOpenTime = new StoreOpentime(
-						rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4),
-						rs.getString(5),
-						rs.getInt(6));
+			StoreOpentime storeOpenTime = new StoreOpentime(); 
+			
+			storeOpenTime.setId(rs.getInt(1)); 
+			storeOpenTime.setCategory(rs.getString(2)); 
+			storeOpenTime.setDay(rs.getString(3)); 
+			storeOpenTime.setOpenTime(rs.getString(4)); 
+			storeOpenTime.setCloseTime(rs.getString(5)); 
+			
+			Store store = StoreDao.getStoreById(rs.getInt(6)); 
+			storeOpenTime.setStore(store); 
 			
 				return storeOpenTime;
-			}, storeId);
+			}, id);
 	}
 	
 	public static void insertStoreOpenTime(StoreOpentime storeOpentime) {

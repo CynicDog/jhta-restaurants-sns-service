@@ -6,21 +6,25 @@ import vo.Store;
 
 public class StoreDao {
 	
-	public static Store getStoreById(int storeId) { 
-		return DaoHelper.selectOne("StoreDao.getStoreById", rs->{
-			Store store = new Store(
-					rs.getInt(1), 
-					rs.getInt(2),
-					rs.getString(3),
-					rs.getInt(4),
-					rs.getFloat(5),
-					rs.getFloat(6),
-					rs.getString(7),
-					rs.getString(8),
-					rs.getInt(9));
-
-			return store; 
-		}, storeId);
+	public static Store getStoreById(int id) { 
+		return DaoHelper.selectOne("StoreDao.getStoreById", rs -> {
+			Store store = new Store(); 
+			
+			store.setId(rs.getInt(1)); 
+			store.setBusinessLicenseNumber(rs.getInt(2));  
+			store.setAddress(rs.getString(3)); 
+			store.setZipcode(rs.getInt(4)); 
+			store.setLatitude(rs.getFloat(5)); 
+			store.setLongitude(rs.getFloat(6)); 
+			store.setText(rs.getString(7)); 
+			store.setPhone(rs.getString(8));
+	
+			Owner owner = OwnerDao.getOwnerById(rs.getInt(9)); 		
+			store.setOwner(owner); 
+					
+			return store;
+			
+		}, id);
 	}
 	
 	public static void insertStore(Store store){
