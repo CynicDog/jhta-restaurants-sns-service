@@ -19,39 +19,6 @@ public class Owner {
 	
 	public Owner() {}
 
-	// for fetching 
-	public Owner(int id, String ownerId, String password, String name, String email, String phone, Date birthday,
-			String gender, String grade, String subscription, Date createDate, Date updateDate) {
-		
-		this.id = id;
-		this.ownerId = ownerId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.grade = grade;
-		this.subscription = subscription;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
-	
-	// for storing 
-	public Owner(String ownerId, String password, String name, String email, String phone, Date birthday,
-			String gender, String grade, String subscription) {
-		
-		this.ownerId = ownerId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.grade = grade;
-		this.subscription = subscription;
-	}
-
 	public int getId() {
 		return id;
 	}

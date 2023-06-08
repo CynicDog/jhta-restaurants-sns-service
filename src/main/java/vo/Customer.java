@@ -17,42 +17,6 @@ public class Customer {
 	private Date updateDate;
 	
 	public Customer() {}
-	
-	//For test
-	public Customer(String name) {
-		this.name = name;
-	}
-
-	
-	// for fetching 
-	public Customer(int id, String userId, String password, String name, String email, String phone, Date birthday,
-			String gender, String grade, Date createDate, Date updateDate) {
-		this.id = id;
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.grade = grade;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
-	
-	// for storing 
-	public Customer(String userId, String password, String name, String email, String phone, Date birthday,
-			String gender, String grade) {
-
-		this.userId = userId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.grade = grade;
-	}
 
 	public int getId() {
 		return id;

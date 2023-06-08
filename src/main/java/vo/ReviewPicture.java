@@ -12,21 +12,6 @@ public class ReviewPicture {
 		super();
 	}
 
-	// for fetching 
-	public ReviewPicture(int id, String fileLocation, int reviewId) {
-	
-		this.id = id;
-		this.fileLocation = fileLocation;
-		this.review = ReviewDao.getReviewById(reviewId); 
-	}
-
-	// for storing 
-	public ReviewPicture(String fileLocation, int reviewId) {
-	
-		this.fileLocation = fileLocation;
-		this.review = ReviewDao.getReviewById(reviewId);
-	}
-
 	public int getId() {
 		return id;
 	}

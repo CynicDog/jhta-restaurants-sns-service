@@ -7,21 +7,6 @@ public class FoodPicture {
 	private int id; 
 	private String fileLocation; 
 	private Food food;
-	
-	// for fetching 
-	public FoodPicture(int id, String fileLocation, int foodId) {
-	
-		this.id = id;
-		this.fileLocation = fileLocation;
-		this.food = FoodDao.getFoodById(foodId); 
-	}
-	
-	// for storing 
-	public FoodPicture(String fileLocation, int foodId) {
-		
-		this.fileLocation = fileLocation;
-		this.food = FoodDao.getFoodById(foodId);
-	}
 
 	public int getId() {
 		return id;

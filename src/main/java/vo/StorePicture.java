@@ -8,21 +8,6 @@ public class StorePicture {
 	private String fileLocation; 
 	private Store store;
 	
-	// for fetching 
-	public StorePicture(int id, String fileLocation, int storeId) {
-		
-		this.id = id;
-		this.fileLocation = fileLocation;
-		this.store = StoreDao.getStoreById(storeId); 
-	}
-	
-	// for storing  
-	public StorePicture(String fileLocation, int storeId) {
-	
-		this.fileLocation = fileLocation;
-		this.store = StoreDao.getStoreById(storeId);
-	}
-
 	public int getId() {
 		return id;
 	}
