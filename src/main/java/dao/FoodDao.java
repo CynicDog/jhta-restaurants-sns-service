@@ -15,11 +15,11 @@ public class FoodDao {
 	}
 	
 	public void deleteFoodById(int id) {
-		DaoHelper.update("FoodDao.insertFood", id);
+		DaoHelper.update("FoodDao.deleteFoodById", id);
 	}
 	
 	public void deleteFoodByName(String name) {
-		DaoHelper.update("FoodDao.insertFood", name);
+		DaoHelper.update("FoodDao.deleteFoodByName", name);
 	}
 	
 	
