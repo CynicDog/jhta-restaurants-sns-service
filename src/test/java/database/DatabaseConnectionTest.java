@@ -57,43 +57,43 @@ public class DatabaseConnectionTest {
 //		Assertions.assertEquals("test_name", foundOwner.getName());
 //	}
 	
-	@Test 
-	public void storeInsertTest() {
-		
-		Owner owner = ownerDao.getOwnerByName("test_name"); 
-		
-		Store store = new Store(); 
-		store.setName("test_name");
-		store.setBusinessLicenseNumber(1);
-		store.setAddress("test_address");
-		store.setZipcode(11111);
-		store.setLatitude(9.9f);
-		store.setLongitude(9.9f);
-		store.setText("test_text");
-		store.setPhone("test_phone");
-		store.setOwner(owner);
-		
-		storeDao.insertStore(store);
-		
-		Store found = storeDao.getStoreByName("test_name"); 	
-		Assertions.assertEquals(11111, found.getZipcode());
-	}
-	
-//	@Test
-//	public void reviewInsertTest() {
+//	@Test 
+//	public void storeInsertTest() {
 //		
-//		Customer customer = customerDao.getCustomerByName("test_name"); 
-//		Store store = storeDao.getStoreByName("test_name");
+//		Owner owner = ownerDao.getOwnerByName("test_name"); 
 //		
-//		Review review = new Review(); 
-//		review.setRating(5);
-//		review.setText("test_text");
-//		review.setCustomer(customer);
-//		review.setStore(store);
+//		Store store = new Store(); 
+//		store.setName("test_name");
+//		store.setBusinessLicenseNumber(1);
+//		store.setAddress("test_address");
+//		store.setZipcode(11111);
+//		store.setLatitude(9.9999);
+//		store.setLongitude(9.9999);
+//		store.setText("test_text");
+//		store.setPhone("test_phone");
+//		store.setOwner(owner);
 //		
-//		reviewDao.insertReview(review);
+//		storeDao.insertStore(store);
 //		
-//		Review found = reviewDao.getReviewByText("test_text"); 
-//		Assertions.assertEquals(5, found.getRating());
+//		Store found = storeDao.getStoreByName("test_name"); 	
+//		Assertions.assertEquals(11111, found.getZipcode());
 //	}
+	
+	@Test
+	public void reviewInsertTest() {
+		
+		Customer customer = customerDao.getCustomerByName("test_name"); 
+		Store store = storeDao.getStoreByName("test_name");
+		
+		Review review = new Review(); 
+		review.setRating(5);
+		review.setText("test_text");
+		review.setCustomer(customer);
+		review.setStore(store);
+		
+		reviewDao.insertReview(review);
+		
+		Review found = reviewDao.getReviewById(25009); 
+		Assertions.assertEquals(5, found.getRating());
+	}
 }
