@@ -32,7 +32,7 @@ public class FoodDao {
 	}
 	
 	public static void updateFood(Food food) {
-		DaoHelper.update("FoodDao.", 
+		DaoHelper.update("FoodDao.updateFood", 
 				food.getName(),
 				food.getPrice(),
 				food.getCategory(),
