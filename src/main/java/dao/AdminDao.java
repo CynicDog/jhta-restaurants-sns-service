@@ -4,15 +4,8 @@ import utils.DaoHelper;
 import vo.Admin;
 
 public class AdminDao {
-
-	private static AdminDao instance = new AdminDao();
-	private AdminDao() {}
 	
-	public static AdminDao getInstance() {
-		return instance;
-	}
-	
-	public Admin getAdminById(int adminId) {
+	public static Admin getAdminById(int adminId) {
 		return DaoHelper.selectOne("AdminDao.getAdminById", rs -> {
 			Admin admin = new Admin(
 					rs.getInt(1),
@@ -30,7 +23,7 @@ public class AdminDao {
 		}, adminId);
 	}
 	
-	public void insertAdmin(Admin admin) {
+	public static void insertAdmin(Admin admin) {
 		DaoHelper.update("adminDao.insertAdmin",
 								admin.getAdminId(),
 								admin.getPassword(),
@@ -41,7 +34,7 @@ public class AdminDao {
 								admin.getGender());
 	}
 	
-	public void updateAdmin(Admin admin) {
+	public static void updateAdmin(Admin admin) {
 		DaoHelper.update("adminDao.updateAdmin",
 				admin.getAdminId(),
 				admin.getPassword(),

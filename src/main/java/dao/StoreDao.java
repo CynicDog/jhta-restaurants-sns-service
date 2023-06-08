@@ -5,16 +5,8 @@ import vo.Owner;
 import vo.Store;
 
 public class StoreDao {
-
-	private static StoreDao instance = new StoreDao();
 	
-	private StoreDao() {}
-	
-	public static StoreDao getInstance() {
-		return instance;
-	}
-	
-	public Store getStoreById(int storeId) { 
+	public static Store getStoreById(int storeId) { 
 		return DaoHelper.selectOne("StoreDao.getStoreById", rs->{
 			Store store = new Store(
 					rs.getInt(1), 
@@ -31,7 +23,7 @@ public class StoreDao {
 		}, storeId);
 	}
 	
-	public void insertStore(Store store){
+	public static void insertStore(Store store){
 		DaoHelper.update("storeDao.insertStore", 
 							store.getBusinessLicenseNumber(),
 							store.getAddress(),
@@ -43,7 +35,7 @@ public class StoreDao {
 							store.getOwner().getId());
 	}
 	
-	public void updateStore(Store store) {
+	public static void updateStore(Store store) {
 		DaoHelper.update("storeDao.insertStore", 
 				store.getBusinessLicenseNumber(),
 				store.getAddress(),

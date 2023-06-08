@@ -4,16 +4,8 @@ import utils.DaoHelper;
 import vo.Review;
 
 public class ReviewDao {
-	
-	private static ReviewDao instance = new ReviewDao();
-	
-	private ReviewDao() {}
-	
-	public static ReviewDao getInstance() {
-		return instance;
-	}
 
-	public Review getReviewById(int id) {
+	public static Review getReviewById(int id) {
 		return DaoHelper.selectOne("ReviewDao.getReviewById", rs -> {
 			Review review = new Review(
 					rs.getInt(1),
@@ -28,7 +20,7 @@ public class ReviewDao {
 		}, id);
 	}
 	
-	public void insertReview(Review review) {
+	public static void insertReview(Review review) {
 		DaoHelper.update("reviewDao.insertReview",
 							review.getRating(),
 							review.getText(),
@@ -36,7 +28,7 @@ public class ReviewDao {
 							review.getStore().getId());
 	}
 	
-	public void updateReview(Review review) {
+	public static void updateReview(Review review) {
 		DaoHelper.update("reviewDao.updateReview",
 				review.getRating(),
 				review.getText(),

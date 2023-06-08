@@ -29,7 +29,7 @@ public class Store {
 		this.longitude = longitude;
 		this.text = text;
 		this.phone = phone;
-		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
+		this.owner = OwnerDao.getOwnerById(ownerId);
 	}
 	
 	// for storing 
@@ -43,7 +43,7 @@ public class Store {
 		this.longitude = longitude;
 		this.text = text;
 		this.phone = phone;
-		this.owner = OwnerDao.getInstance().getOwnerById(ownerId);
+		this.owner = OwnerDao.getOwnerById(ownerId);
 	}
 	
 	public int getId() {

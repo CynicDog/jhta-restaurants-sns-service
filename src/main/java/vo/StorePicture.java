@@ -13,14 +13,14 @@ public class StorePicture {
 		
 		this.id = id;
 		this.fileLocation = fileLocation;
-		this.store = StoreDao.getInstance().getStoreById(storeId); 
+		this.store = StoreDao.getStoreById(storeId); 
 	}
 	
 	// for storing  
 	public StorePicture(String fileLocation, int storeId) {
 	
 		this.fileLocation = fileLocation;
-		this.store = StoreDao.getInstance().getStoreById(storeId);
+		this.store = StoreDao.getStoreById(storeId);
 	}
 
 	public int getId() {

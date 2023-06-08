@@ -4,15 +4,8 @@ import utils.DaoHelper;
 import vo.Food;
 
 public class FoodDao {
-
-	private static FoodDao instance = new FoodDao();
-	private FoodDao() {}
 	
-	public static FoodDao getInstance() {
-		return instance;
-	}
-	
-	public Food getFoodById(int storeId) {
+	public static Food getFoodById(int storeId) {
 		return DaoHelper.selectOne("FoodDao.getFoodById", rs->{
 			Food food = new Food(
 					rs.getInt(1),
@@ -28,7 +21,7 @@ public class FoodDao {
 		}, storeId);
 	}
 	
-	public void insertFood(Food food) {
+	public static void insertFood(Food food) {
 		DaoHelper.update("FoodDao.insertFood", 
 				food.getName(),
 				food.getPrice(),
@@ -38,7 +31,7 @@ public class FoodDao {
 				food.getStore().getId());
 	}
 	
-	public void updateFood(Food food) {
+	public static void updateFood(Food food) {
 		DaoHelper.update("FoodDao.", 
 				food.getName(),
 				food.getPrice(),

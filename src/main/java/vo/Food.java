@@ -22,7 +22,7 @@ public class Food {
 		this.category = category;
 		this.soldOut = soldOut;
 		this.pictureLocation = pictureLocation;
-		this.store = StoreDao.getInstance().getStoreById(storeId);
+		this.store = StoreDao.getStoreById(storeId);
 	}
 	
 	// for storing
@@ -33,7 +33,7 @@ public class Food {
 		this.category = category;
 		this.soldOut = soldOut;
 		this.pictureLocation = pictureLocation;
-		this.store = StoreDao.getInstance().getStoreById(storeId);
+		this.store = StoreDao.getStoreById(storeId);
 	}
 	
 	public int getId() {
