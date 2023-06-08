@@ -61,7 +61,7 @@ public class ReviewDao {
 	}
 	
 	public void insertReview(Review review) {
-		DaoHelper.update("reviewDao.insertReview",
+		DaoHelper.update("ReviewDao.insertReview",
 							review.getRating(),
 							review.getText(),
 							review.getCustomer().getId(),

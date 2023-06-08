@@ -44,8 +44,8 @@ public class StoreDao {
 			store.setBusinessLicenseNumber(rs.getInt(3));  
 			store.setAddress(rs.getString(4)); 
 			store.setZipcode(rs.getInt(5)); 
-			store.setLatitude(rs.getFloat(6)); 
-			store.setLongitude(rs.getFloat(7)); 
+			store.setLatitude(rs.getDouble(6)); 
+			store.setLongitude(rs.getDouble(7)); 
 			store.setText(rs.getString(8)); 
 			store.setPhone(rs.getString(9));
 			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		

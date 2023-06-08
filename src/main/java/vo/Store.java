@@ -9,8 +9,8 @@ public class Store {
 	private int businessLicenseNumber; 
 	private String address; 
 	private int zipcode; 
-	private float latitude; 
-	private float longitude; 
+	private double latitude; 
+	private double longitude; 
 	private String text;
 	private String phone;
 	private Owner owner;
@@ -51,16 +51,16 @@ public class Store {
 	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getText() {
