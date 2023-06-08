@@ -5,6 +5,7 @@ import dao.OwnerDao;
 public class Store {
 	
 	private int id; 
+	private String name;
 	private int businessLicenseNumber; 
 	private String address; 
 	private int zipcode; 
@@ -25,6 +26,12 @@ public class Store {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getBusinessLicenseNumber() {
 		return businessLicenseNumber;
