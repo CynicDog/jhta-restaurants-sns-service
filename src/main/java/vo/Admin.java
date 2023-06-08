@@ -85,7 +85,7 @@ public class Admin {
 		return createDate;
 	}
 
-	public void setCreate_date(Date createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
@@ -93,7 +93,7 @@ public class Admin {
 		return updateDate;
 	}
 
-	public void setUpdate_date(Date updateDate) {
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
 }

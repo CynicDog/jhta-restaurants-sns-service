@@ -7,20 +7,21 @@ public class AdminDao {
 	
 	public static Admin getAdminById(int adminId) {
 		return DaoHelper.selectOne("AdminDao.getAdminById", rs -> {
-			Admin admin = new Admin(
-					rs.getInt(1),
-					rs.getString(2),
-					rs.getString(3),
-					rs.getString(4),
-					rs.getString(5),
-					rs.getString(6),
-					rs.getDate(7),
-					rs.getString(8),
-					rs.getDate(9),
-					rs.getDate(10));
+			Admin admin = new Admin();
 			
-			return admin;		
-		}, adminId);
+			admin.setId(rs.getInt("id"));
+			admin.setAdminId(rs.getString("admin_id"));
+			admin.setPassword(rs.getString("admin_password"));
+			admin.setName(rs.getString("admin_name"));
+			admin.setEmail(rs.getString("admin_email"));
+			admin.setPhone(rs.getString("admin_phone"));
+			admin.setBirthday(rs.getDate("admin_birtyday"));
+			admin.setGender(rs.getString("admin_gender"));
+			admin.setCreateDate(rs.getDate("admin_create_date"));
+			admin.setUpdateDate(rs.getDate("admin_update_date"));
+		
+			return admin;
+		});
 	}
 	
 	public static void insertAdmin(Admin admin) {
