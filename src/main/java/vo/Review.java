@@ -20,27 +20,6 @@ public class Review {
 		
 	}
 
-	// for fetching 
-	public Review(int id, int rating, String text, Date createDate, Date updateDate, int customerId, int storeId) {
-
-		this.id = id;
-		this.rating = rating;
-		this.text = text;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-		this.customer = CustomerDao.getCustomerById(customerId);
-		this.store = StoreDao.getStoreById(storeId);
-	}
-	
-	// for storing 
-	public Review(int rating, String text, int customerId, int storeId) {
-		
-		this.rating = rating;
-		this.text = text;
-		this.customer = CustomerDao.getCustomerById(customerId);
-		this.store = StoreDao.getStoreById(storeId);
-	}
-
 	public int getId() {
 		return id;
 	}

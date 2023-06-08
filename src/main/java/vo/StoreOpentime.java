@@ -13,27 +13,6 @@ public class StoreOpentime {
 
 	public StoreOpentime() {}
 	
-	// for fetching 
-	public StoreOpentime(int id, String category, String day, String openTime, String closeTime, int storeId) {
-		
-		this.id = id;
-		this.category = category;
-		this.day = day;
-		this.openTime = openTime;
-		this.closeTime = closeTime;
-		this.store = StoreDao.getStoreById(storeId);
-	}
-	
-	// for storing 
-	public StoreOpentime(String category, String day, String openTime, String closeTime, int storeId) {
-		
-		this.category = category;
-		this.day = day;
-		this.openTime = openTime;
-		this.closeTime = closeTime;
-		this.store = StoreDao.getStoreById(storeId);
-	}
-	
 	public int getId() {
 		return id;
 	}

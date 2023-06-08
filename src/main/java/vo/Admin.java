@@ -17,34 +17,6 @@ public class Admin {
 	
 	public Admin() {}
 	
-	// for fetching 
-	public Admin(int id, String adminId, String password, String name, String email, String phone, Date birthday,
-			String gender, Date createDate, Date updateDate) {
-		this.id = id;
-		this.adminId = adminId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
-	
-	// storing 
-	public Admin(String adminId, String password, String name, String email, String phone, Date birthday,
-			String gender) {
-		
-		this.adminId = adminId;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.phone = phone;
-		this.birthday = birthday;
-		this.gender = gender;
-	}
-
 	public int getId() {
 		return id;
 	}

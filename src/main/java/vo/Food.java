@@ -13,29 +13,6 @@ public class Food {
 	
 	public Food() {}
 	
-	// for fetching 
-	public Food(int id, String name, int price, String category, String soldOut, String pictureLocation, int storeId) {
-		
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.category = category;
-		this.soldOut = soldOut;
-		this.pictureLocation = pictureLocation;
-		this.store = StoreDao.getStoreById(storeId);
-	}
-	
-	// for storing
-	public Food(String name, int price, String category, String soldOut, String pictureLocation, int storeId) {
-		
-		this.name = name;
-		this.price = price;
-		this.category = category;
-		this.soldOut = soldOut;
-		this.pictureLocation = pictureLocation;
-		this.store = StoreDao.getStoreById(storeId);
-	}
-	
 	public int getId() {
 		return id;
 	}

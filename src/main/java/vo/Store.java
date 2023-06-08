@@ -15,36 +15,9 @@ public class Store {
 	private Owner owner;
 	
 	public Store() {
+
 	}
-	
-	// for fetching 
-	public Store(int id, int businessLicenseNumber, String address, int zipcode, float latitude, float longitude,
-			String text, String phone, int ownerId) {
-		
-		this.id = id;
-		this.businessLicenseNumber = businessLicenseNumber;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.text = text;
-		this.phone = phone;
-		this.owner = OwnerDao.getOwnerById(ownerId);
-	}
-	
-	// for storing 
-	public Store(int businessLicenseNumber, String address, int zipcode, float latitude, float longitude, String text,
-			String phone, int ownerId) {
-	
-		this.businessLicenseNumber = businessLicenseNumber;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.text = text;
-		this.phone = phone;
-		this.owner = OwnerDao.getOwnerById(ownerId);
-	}
+
 	
 	public int getId() {
 		return id;
