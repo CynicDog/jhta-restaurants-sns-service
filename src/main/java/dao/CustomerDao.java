@@ -9,11 +9,12 @@ import vo.Owner;
 public class CustomerDao {
 	
 	private static CustomerDao instance = new CustomerDao();
+	
 	private CustomerDao() {}
+	
 	public static CustomerDao getInstance() {
 		return instance;
 	}
-	
 	
 	public Customer getCustomerByName(String name) {
 		return DaoHelper.selectOne("CustomerDao.getCustomerByName", rs->{
@@ -58,7 +59,6 @@ public class CustomerDao {
 	}
 	
 	public void insertCustomer(Customer customer) {
-		
 		DaoHelper.update("CustomerDao.insertCustomer",
 					customer.getUserId(),
 					customer.getPassword(),
@@ -78,9 +78,20 @@ public class CustomerDao {
 					customer.getName(),
 					customer.getEmail(),
 					customer.getPhone(),
+					customer.getGender(), 
 					customer.getGrade(), 
-					customer.getUpdateDate() 
+					customer.getUpdateDate(), 
+					customer.getId()
 				);
 	}
+	
+	public void deleteCustomerById(int id) {
+		DaoHelper.update("CustomerDao.deleteCustomerById", id); 
+	} 
+	
+	public void deleteCustomerByName(String name) {
+		DaoHelper.update("CustomerDao.deleteCustomerByName", name);
+	} 
+	
 
 }
