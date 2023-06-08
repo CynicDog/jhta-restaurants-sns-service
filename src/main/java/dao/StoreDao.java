@@ -57,7 +57,7 @@ public class StoreDao {
 	}
 	
 	public  void insertStore(Store store){
-		DaoHelper.update("storeDao.insertStore", 
+		DaoHelper.update("StoreDao.insertStore", 
 				store.getName(), 
 				store.getBusinessLicenseNumber(),
 				store.getAddress(),
