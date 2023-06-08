@@ -69,7 +69,7 @@ public class ReviewDao {
 	}
 	
 	public void updateReview(Review review) {
-		DaoHelper.update("reviewDao.updateReview",
+		DaoHelper.update("ReviewDao.updateReview",
 				review.getRating(),
 				review.getText(),
 				review.getUpdateDate(),
