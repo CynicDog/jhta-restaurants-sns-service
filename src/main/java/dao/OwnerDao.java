@@ -75,9 +75,21 @@ public class OwnerDao {
 				owner.getName(),
 				owner.getEmail(),
 				owner.getPhone(),
-				owner.getBirthday(),
 				owner.getGender(),
 				owner.getGrade(),
-				owner.getSubscription());
+				owner.getSubscription(), 
+				owner.getUpdateDate(), 
+				owner.getId());
+	}
+	
+	public void deleteOwnerById(int id) {
+		DaoHelper.update("OwnerDao.deleteOwnerById", id); 
+	} 
+	
+	public void deleteOwnerByName(String name) {
+		DaoHelper.update("OwnerDao.deleteOwnerByName", name); 
 	}
 }
+
+
+
