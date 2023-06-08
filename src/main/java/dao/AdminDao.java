@@ -5,23 +5,23 @@ import vo.Admin;
 
 public class AdminDao {
 	
-	public static Admin getAdminById(int adminId) {
+	public static Admin getAdminById(int id) {
 		return DaoHelper.selectOne("AdminDao.getAdminById", rs -> {
 			Admin admin = new Admin();
 			
-			admin.setId(rs.getInt("id"));
-			admin.setAdminId(rs.getString("admin_id"));
-			admin.setPassword(rs.getString("admin_password"));
-			admin.setName(rs.getString("admin_name"));
-			admin.setEmail(rs.getString("admin_email"));
-			admin.setPhone(rs.getString("admin_phone"));
-			admin.setBirthday(rs.getDate("admin_birtyday"));
-			admin.setGender(rs.getString("admin_gender"));
-			admin.setCreateDate(rs.getDate("admin_create_date"));
-			admin.setUpdateDate(rs.getDate("admin_update_date"));
+			admin.setId(rs.getInt(1));
+			admin.setAdminId(rs.getString(2));
+			admin.setPassword(rs.getString(3));
+			admin.setName(rs.getString(4));
+			admin.setEmail(rs.getString(5));
+			admin.setPhone(rs.getString(6));
+			admin.setBirthday(rs.getDate(7));
+			admin.setGender(rs.getString(8));
+			admin.setCreateDate(rs.getDate(9));
+			admin.setUpdateDate(rs.getDate(10));
 		
 			return admin;
-		});
+		}, id);
 	}
 	
 	public static void insertAdmin(Admin admin) {
