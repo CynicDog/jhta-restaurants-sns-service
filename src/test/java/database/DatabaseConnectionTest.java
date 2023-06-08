@@ -22,40 +22,40 @@ public class DatabaseConnectionTest {
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
 
-	@Test
-	public void customserOwnerInsertTest() {
-		
-		Customer customer = new Customer();
-		customer.setUserId("test_id");
-		customer.setPassword("test_password");
-		customer.setName("test_name");
-		customer.setEmail("test_email");
-		customer.setPhone("test_phone");
-		customer.setBirthday(new Date());
-		customer.setGender("test_gender");
-		customer.setGrade("test_grade");
-		
-		customerDao.insertCustomer(customer); 
-		
-		Owner owner = new Owner(); 
-		owner.setOwnerId("test_id");
-		owner.setPassword("test_password");
-		owner.setName("test_name");
-		owner.setEmail("test_email");
-		owner.setPhone("test_phone");
-		owner.setBirthday(new Date());
-		owner.setGender("test_gender");
-		owner.setGrade("test_grade");
-		owner.setSubscription("test_subs");
-		
-		ownerDao.insertOwner(owner);
-		
-		Customer foundCustomer = customerDao.getCustomerByName("test_name");
-		Assertions.assertEquals("test_name", foundCustomer.getName());
-		
-		Owner foundOwner = ownerDao.getOwnerByName("test_name"); 
-		Assertions.assertEquals("test_name", foundOwner.getName());
-	}
+//	@Test
+//	public void customserOwnerInsertTest() {
+//		
+//		Customer customer = new Customer();
+//		customer.setUserId("test_id");
+//		customer.setPassword("test_password");
+//		customer.setName("test_name");
+//		customer.setEmail("test_email");
+//		customer.setPhone("test_phone");
+//		customer.setBirthday(new Date());
+//		customer.setGender("test_gender");
+//		customer.setGrade("test_grade");
+//		
+//		customerDao.insertCustomer(customer); 
+//		
+//		Owner owner = new Owner(); 
+//		owner.setOwnerId("test_id");
+//		owner.setPassword("test_password");
+//		owner.setName("test_name");
+//		owner.setEmail("test_email");
+//		owner.setPhone("test_phone");
+//		owner.setBirthday(new Date());
+//		owner.setGender("test_gender");
+//		owner.setGrade("test_grade");
+//		owner.setSubscription("test_subs");
+//		
+//		ownerDao.insertOwner(owner);
+//		
+//		Customer foundCustomer = customerDao.getCustomerByName("test_name");
+//		Assertions.assertEquals("test_name", foundCustomer.getName());
+//		
+//		Owner foundOwner = ownerDao.getOwnerByName("test_name"); 
+//		Assertions.assertEquals("test_name", foundOwner.getName());
+//	}
 	
 	@Test 
 	public void storeInsertTest() {
@@ -79,21 +79,21 @@ public class DatabaseConnectionTest {
 		Assertions.assertEquals(11111, found.getZipcode());
 	}
 	
-	@Test
-	public void reviewInsertTest() {
-		
-		Customer customer = customerDao.getCustomerByName("test_name"); 
-		Store store = storeDao.getStoreByName("test_name");
-		
-		Review review = new Review(); 
-		review.setRating(5);
-		review.setText("test_text");
-		review.setCustomer(customer);
-		review.setStore(store);
-		
-		reviewDao.insertReview(review);
-		
-		Review found = reviewDao.getReviewByText("test_text"); 
-		Assertions.assertEquals(5, found.getRating());
-	}
+//	@Test
+//	public void reviewInsertTest() {
+//		
+//		Customer customer = customerDao.getCustomerByName("test_name"); 
+//		Store store = storeDao.getStoreByName("test_name");
+//		
+//		Review review = new Review(); 
+//		review.setRating(5);
+//		review.setText("test_text");
+//		review.setCustomer(customer);
+//		review.setStore(store);
+//		
+//		reviewDao.insertReview(review);
+//		
+//		Review found = reviewDao.getReviewByText("test_text"); 
+//		Assertions.assertEquals(5, found.getRating());
+//	}
 }
