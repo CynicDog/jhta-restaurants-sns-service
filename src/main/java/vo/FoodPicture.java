@@ -13,14 +13,14 @@ public class FoodPicture {
 	
 		this.id = id;
 		this.fileLocation = fileLocation;
-		this.food = FoodDao.getInstance().getFoodById(foodId); 
+		this.food = FoodDao.getFoodById(foodId); 
 	}
 	
 	// for storing 
 	public FoodPicture(String fileLocation, int foodId) {
 		
 		this.fileLocation = fileLocation;
-		this.food = FoodDao.getInstance().getFoodById(foodId);
+		this.food = FoodDao.getFoodById(foodId);
 	}
 
 	public int getId() {

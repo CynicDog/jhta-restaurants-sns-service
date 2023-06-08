@@ -7,14 +7,8 @@ import vo.Customer;
 import vo.Owner;
 
 public class CustomerDao {
-
-	private static CustomerDao instance = new CustomerDao();
-	private CustomerDao() {}
-	public static CustomerDao getInstance() {
-		return instance;
-	}
 	
-	public void insertCustomer(Customer customer) {
+	public static void insertCustomer(Customer customer) {
 		
 		DaoHelper.update("CustomerDao.insertCustomer",
 					customer.getUserId(),
@@ -28,7 +22,7 @@ public class CustomerDao {
 				);
 	}
 	
-	public void updateCustomer(Customer customer) {
+	public static void updateCustomer(Customer customer) {
 		DaoHelper.update("CustomerDao.updateCustomer",
 					customer.getUserId(),
 					customer.getPassword(),
@@ -40,7 +34,7 @@ public class CustomerDao {
 				);
 	}
 	
-	public Customer getCustomerById(int customerId) {
+	public static Customer getCustomerById(int customerId) {
 		return DaoHelper.selectOne("CustomerDao.getCustomerById", rs->{
 			Customer customer = new Customer(
 					rs.getInt(1),

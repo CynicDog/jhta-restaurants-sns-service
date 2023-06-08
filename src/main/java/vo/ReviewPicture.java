@@ -17,14 +17,14 @@ public class ReviewPicture {
 	
 		this.id = id;
 		this.fileLocation = fileLocation;
-		this.review = ReviewDao.getInstance().getReviewById(reviewId); 
+		this.review = ReviewDao.getReviewById(reviewId); 
 	}
 
 	// for storing 
 	public ReviewPicture(String fileLocation, int reviewId) {
 	
 		this.fileLocation = fileLocation;
-		this.review = ReviewDao.getInstance().getReviewById(reviewId);
+		this.review = ReviewDao.getReviewById(reviewId);
 	}
 
 	public int getId() {
