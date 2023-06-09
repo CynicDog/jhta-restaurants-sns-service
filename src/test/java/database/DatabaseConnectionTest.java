@@ -8,12 +8,14 @@ import org.junit.jupiter.api.Test;
 import dao.CustomerDao;
 import dao.OwnerDao;
 import dao.ReviewDao;
+import dao.ReviewPictureDao;
 import dao.StoreDao;
 import dao.StorePictureDao;
 import utils.DaoHelper;
 import vo.Customer;
 import vo.Owner;
 import vo.Review;
+import vo.ReviewPicture;
 import vo.Store;
 import vo.StorePicture;
 
@@ -23,6 +25,7 @@ public class DatabaseConnectionTest {
 	OwnerDao ownerDao = OwnerDao.getInstance(); 
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
+	ReviewPictureDao reviewPicturesDao = ReviewPictureDao.getInstance();
 	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 
 //	@Test
@@ -147,7 +150,7 @@ public class DatabaseConnectionTest {
 //			Assertions.assertEquals("test_text_modified", modified.getText());
 //		}
 //	} 
-	
+//	
 //	@Test
 //	public void entitiesDeleteTest() {
 //		
@@ -178,10 +181,24 @@ public class DatabaseConnectionTest {
 //			Customer found = customerDao.getCustomerById(47);
 //			found.getId();
 //		});
-//	}
+//	}	
 	
 	@Test
-	public void storePictureUpdateTest() {
+	public  void reviewPictureInsertTest () {
+		
+		Review review = reviewDao.getReviewById(25001);
+		
+		ReviewPicture reviewPicture = new ReviewPicture();
+		
+		reviewPicture.setFileLocation("test_location");
+		reviewPicture.setReview(review);
+		
+		reviewPicturesDao.insertReviewPicture(reviewPicture);
+	
+	}	
+	
+	@Test
+	public void storePictureInsertTest() {
 		
 		Store store = storeDao.getStoreById(35003);
 		
@@ -190,10 +207,6 @@ public class DatabaseConnectionTest {
 		storePicture.setFileLocation("test_location");
 		storePicture.setStore(store);
 		
-		storePictureDao.insertStorePicture(storePicture);
-		
-				
+		storePictureDao.insertStorePicture(storePicture);				
 	}
-	
-	
 }
