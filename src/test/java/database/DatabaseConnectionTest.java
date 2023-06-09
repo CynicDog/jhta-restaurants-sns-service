@@ -218,6 +218,7 @@ public class DatabaseConnectionTest {
 		
 		foodPictureDao.insertFoodPicture(foodPicture);
 		Assertions.assertEquals("location", food.getPictureLocation());
+	}
 	
 	@Test
 	public  void reviewPictureInsertTest () {
