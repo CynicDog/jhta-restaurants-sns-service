@@ -57,12 +57,10 @@ public class StoreOpenTimeDao {
 
 	public void updateStoreOpenTime(StoreOpentime storeOpentime) {
 		DaoHelper.update("StoreOpenTimeDao.updateStoreOpenTime", 
-				storeOpentime.getId(), 
 				storeOpentime.getCategory(),
 				storeOpentime.getDay(), 
 				storeOpentime.getOpenTime(), 
 				storeOpentime.getCloseTime(),
-				storeOpentime.getStore().getId(), 
 				storeOpentime.getId());
 	}
 	
