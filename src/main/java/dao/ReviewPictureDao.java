@@ -29,8 +29,7 @@ public class ReviewPictureDao {
 	}
 	
 	public  void insertReviewPicture (ReviewPicture reviewPicture){
-		DaoHelper.update("ReviewPictureDao.insertReviewPicture", 
-				reviewPicture.getId(), 
+		DaoHelper.update("ReviewPictureDao.insertReviewPicture",  
 				reviewPicture.getFileLocation(),
 				reviewPicture.getReview().getId());
 	}

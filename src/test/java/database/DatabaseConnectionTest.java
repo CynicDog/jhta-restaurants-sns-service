@@ -10,14 +10,18 @@ import dao.FoodDao;
 import dao.FoodPictureDao;
 import dao.OwnerDao;
 import dao.ReviewDao;
+import dao.ReviewPictureDao;
 import dao.StoreDao;
+import dao.StorePictureDao;
 import utils.DaoHelper;
 import vo.Customer;
 import vo.Food;
 import vo.FoodPicture;
 import vo.Owner;
 import vo.Review;
+import vo.ReviewPicture;
 import vo.Store;
+import vo.StorePicture;
 
 public class DatabaseConnectionTest {
 	
@@ -27,6 +31,8 @@ public class DatabaseConnectionTest {
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	FoodDao foodDao = FoodDao.getInstance();
 	FoodPictureDao foodPictureDao = FoodPictureDao.getInstance();
+	ReviewPictureDao reviewPicturesDao = ReviewPictureDao.getInstance();
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 
 //	@Test
 //	public void customserOwnerInsertTest() {
@@ -150,7 +156,7 @@ public class DatabaseConnectionTest {
 //			Assertions.assertEquals("test_text_modified", modified.getText());
 //		}
 //	} 
-	
+//	
 //	@Test
 //	public void entitiesDeleteTest() {
 //		
@@ -200,6 +206,7 @@ public class DatabaseConnectionTest {
 		Food found = foodDao.getFoodByName("test_name"); 	
 		Assertions.assertEquals("location", found.getPictureLocation());
 	}
+  
 	@Test	
 	public void foodPictureInsertTest() {
 		FoodPicture foodPicture = new FoodPicture();
@@ -211,5 +218,31 @@ public class DatabaseConnectionTest {
 		
 		foodPictureDao.insertFoodPicture(foodPicture);
 		Assertions.assertEquals("location", food.getPictureLocation());
+	
+	@Test
+	public  void reviewPictureInsertTest () {
+		
+		Review review = reviewDao.getReviewById(25001);
+		
+		ReviewPicture reviewPicture = new ReviewPicture();
+		
+		reviewPicture.setFileLocation("test_location");
+		reviewPicture.setReview(review);
+		
+		reviewPicturesDao.insertReviewPicture(reviewPicture);
+	
+	}	
+	
+	@Test
+	public void storePictureInsertTest() {
+		
+		Store store = storeDao.getStoreById(35003);
+		
+		StorePicture storePicture = new StorePicture();
+		
+		storePicture.setFileLocation("test_location");
+		storePicture.setStore(store);
+		
+		storePictureDao.insertStorePicture(storePicture);				
 	}
 }
