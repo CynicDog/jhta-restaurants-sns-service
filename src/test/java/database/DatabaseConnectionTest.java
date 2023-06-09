@@ -10,12 +10,14 @@ import dao.OwnerDao;
 import dao.ReviewDao;
 import dao.ReviewPictureDao;
 import dao.StoreDao;
+import dao.StorePictureDao;
 import utils.DaoHelper;
 import vo.Customer;
 import vo.Owner;
 import vo.Review;
 import vo.ReviewPicture;
 import vo.Store;
+import vo.StorePicture;
 
 public class DatabaseConnectionTest {
 	
@@ -24,6 +26,7 @@ public class DatabaseConnectionTest {
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	ReviewPictureDao reviewPicturesDao = ReviewPictureDao.getInstance();
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 
 //	@Test
 //	public void customserOwnerInsertTest() {
@@ -181,7 +184,7 @@ public class DatabaseConnectionTest {
 //	}	
 	
 	@Test
-	public  void insertReviewPictureTest () {
+	public  void reviewPictureInsertTest () {
 		
 		Review review = reviewDao.getReviewById(25001);
 		
@@ -193,4 +196,17 @@ public class DatabaseConnectionTest {
 		reviewPicturesDao.insertReviewPicture(reviewPicture);
 	
 	}	
+	
+	@Test
+	public void storePictureInsertTest() {
+		
+		Store store = storeDao.getStoreById(35003);
+		
+		StorePicture storePicture = new StorePicture();
+		
+		storePicture.setFileLocation("test_location");
+		storePicture.setStore(store);
+		
+		storePictureDao.insertStorePicture(storePicture);				
+	}
 }
