@@ -9,11 +9,13 @@ import dao.CustomerDao;
 import dao.OwnerDao;
 import dao.ReviewDao;
 import dao.StoreDao;
+import dao.StorePictureDao;
 import utils.DaoHelper;
 import vo.Customer;
 import vo.Owner;
 import vo.Review;
 import vo.Store;
+import vo.StorePicture;
 
 public class DatabaseConnectionTest {
 	
@@ -21,6 +23,7 @@ public class DatabaseConnectionTest {
 	OwnerDao ownerDao = OwnerDao.getInstance(); 
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 
 //	@Test
 //	public void customserOwnerInsertTest() {
@@ -175,5 +178,22 @@ public class DatabaseConnectionTest {
 //			Customer found = customerDao.getCustomerById(47);
 //			found.getId();
 //		});
-//	}	
+//	}
+	
+	@Test
+	public void storePictureUpdateTest() {
+		
+		Store store = storeDao.getStoreById(35003);
+		
+		StorePicture storePicture = new StorePicture();
+		
+		storePicture.setFileLocation("test_location");
+		storePicture.setStore(store);
+		
+		storePictureDao.insertStorePicture(storePicture);
+		
+				
+	}
+	
+	
 }
