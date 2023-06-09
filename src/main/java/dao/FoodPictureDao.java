@@ -17,7 +17,7 @@ public class FoodPictureDao {
 	
 	public FoodPicture getFoodPictureById(int id) {
 		
-		return DaoHelper.selectOne("", rs->{
+		return DaoHelper.selectOne("FoodPictureDao.getFoodPictureById", rs->{
 			FoodPicture foodPicture = new FoodPicture();
 			
 			foodPicture.setId(rs.getInt(1));
@@ -31,13 +31,13 @@ public class FoodPictureDao {
 	}
 	
 	public void insertFoodPicture(FoodPicture foodPicture) {
-		DaoHelper.update("",
+		DaoHelper.update("FoodPictureDao.insertFoodPicture",
 				foodPicture.getFileLocation(),
 				foodPicture.getFood().getId());
 	}
 	
 	public void updateFoodPicture(FoodPicture foodPicture) {
-		DaoHelper.update("", 
+		DaoHelper.update("FoodPictureDao.updateFoodPicture", 
 				foodPicture.getFileLocation(),
 				foodPicture.getFood().getId(),
 				foodPicture.getId());
@@ -45,6 +45,6 @@ public class FoodPictureDao {
 	}
 	
 	public void deleteFoodPictureById(int id) {
-		DaoHelper.update("", id);
+		DaoHelper.update("FoodPictureDao.deleteFoodPictureById", id);
 	}
 }
