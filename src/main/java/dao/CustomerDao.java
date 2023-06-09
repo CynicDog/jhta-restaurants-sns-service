@@ -73,6 +73,7 @@ public class CustomerDao {
 	
 	public void updateCustomer(Customer customer) {
 		DaoHelper.update("CustomerDao.updateCustomer",
+					
 					customer.getUserId(),
 					customer.getPassword(),
 					customer.getName(),

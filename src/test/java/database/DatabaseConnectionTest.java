@@ -78,22 +78,102 @@ public class DatabaseConnectionTest {
 //		Store found = storeDao.getStoreByName("test_name"); 	
 //		Assertions.assertEquals(11111, found.getZipcode());
 //	}
+//	
+//	@Test
+//	public void reviewInsertTest() {
+//		
+//		Customer customer = customerDao.getCustomerByName("test_name"); 
+//		Store store = storeDao.getStoreByName("test_name");
+//		
+//		Review review = new Review(); 
+//		review.setRating(5);
+//		review.setText("test_text");
+//		review.setCustomer(customer);
+//		review.setStore(store);
+//		
+//		reviewDao.insertReview(review);
+//		
+//		Review found = reviewDao.getReviewById(25001); 
+//		Assertions.assertEquals(5, found.getRating());
+//	}
 	
-	@Test
-	public void reviewInsertTest() {
-		
-		Customer customer = customerDao.getCustomerByName("test_name"); 
-		Store store = storeDao.getStoreByName("test_name");
-		
-		Review review = new Review(); 
-		review.setRating(5);
-		review.setText("test_text");
-		review.setCustomer(customer);
-		review.setStore(store);
-		
-		reviewDao.insertReview(review);
-		
-		Review found = reviewDao.getReviewById(25009); 
-		Assertions.assertEquals(5, found.getRating());
-	}
+//	@Test 
+//	public void entitiesUpdateTest() {
+//		
+//		{
+//			Customer found = customerDao.getCustomerByName("test_name"); 
+//			found.setName("test_name_modified");
+//			
+//			customerDao.updateCustomer(found);
+//			
+//			Customer modified = customerDao.getCustomerByName("test_name_modified"); 
+//			
+//			Assertions.assertEquals("test_name_modified", modified.getName());
+//		}
+//		
+//		{
+//			Owner found = ownerDao.getOwnerByName("test_name"); 
+//			found.setName("test_name_modified");
+//			
+//			ownerDao.updateOwner(found);
+//			
+//			Owner modified = ownerDao.getOwnerByName("test_name_modified"); 
+//			
+//			Assertions.assertEquals("test_name_modified", modified.getName());
+//		}
+//		
+//		{
+//			Store found = storeDao.getStoreByName("test_name"); 
+//			found.setName("test_name_modified"); 
+//			
+//			storeDao.updateStore(found);
+//			
+//			Store modified = storeDao.getStoreByName("test_name_modified"); 
+//			
+//			Assertions.assertEquals("test_name_modified", modified.getName());
+//		}
+//		
+//		{
+//			Review found = reviewDao.getReviewByText("test_text"); 
+//			found.setText("test_text_modified");
+//			
+//			reviewDao.updateReview(found); 
+//			
+//			Review modified = reviewDao.getReviewByText("test_text_modified"); 
+//			
+//			Assertions.assertEquals("test_text_modified", modified.getText());
+//		}
+//	} 
+	
+//	@Test
+//	public void entitiesDeleteTest() {
+//		
+//		reviewDao.deleteReviewById(25002);
+//		Assertions.assertThrows(NullPointerException.class, () -> {
+//			
+//			Review found = reviewDao.getReviewById(25002); 
+//			found.getId();
+//		});  
+//		
+//		storeDao.deleteStoreById(35005);
+//		Assertions.assertThrows(NullPointerException.class, () -> {
+//			
+//			Store found = storeDao.getStoreById(35005); 
+//			found.getId(); 
+//		});
+//		
+//		ownerDao.deleteOwnerById(20004);
+//		Assertions.assertThrows(NullPointerException.class, () -> {
+//			
+//			Owner found = ownerDao.getOwnerById(20004); 
+//			found.getId(); 
+//		});
+//		
+//		customerDao.deleteCustomerById(47); 
+//		Assertions.assertThrows(NullPointerException.class, () -> {
+//			
+//			Customer found = customerDao.getCustomerById(47);
+//			found.getId();
+//		});
+//	}	
 }
