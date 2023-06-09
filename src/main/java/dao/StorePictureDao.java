@@ -29,7 +29,7 @@ public class StorePictureDao {
 	}
 	
 	public void insertStorePicture(StorePicture storePicture) {
-		DaoHelper.update("StoreOpenTimeDao.insertStoreOpenTime",
+		DaoHelper.update("StorePictureDao.insertStorePicture",
 				storePicture.getFileLocation(),
 				storePicture.getStore().getId());
 	}
