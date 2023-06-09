@@ -70,7 +70,7 @@ public class StoreDao {
 	}
 	
 	public void updateStore(Store store) {
-		DaoHelper.update("storeDao.updateStore", 
+		DaoHelper.update("StoreDao.updateStore", 
 				store.getName(),
 				store.getBusinessLicenseNumber(),
 				store.getAddress(),
