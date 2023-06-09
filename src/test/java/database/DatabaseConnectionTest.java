@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import dao.CustomerDao;
+import dao.FoodDao;
+import dao.FoodPictureDao;
 import dao.OwnerDao;
 import dao.ReviewDao;
 import dao.ReviewPictureDao;
@@ -13,6 +15,8 @@ import dao.StoreDao;
 import dao.StorePictureDao;
 import utils.DaoHelper;
 import vo.Customer;
+import vo.Food;
+import vo.FoodPicture;
 import vo.Owner;
 import vo.Review;
 import vo.ReviewPicture;
@@ -25,6 +29,8 @@ public class DatabaseConnectionTest {
 	OwnerDao ownerDao = OwnerDao.getInstance(); 
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
+	FoodDao foodDao = FoodDao.getInstance();
+	FoodPictureDao foodPictureDao = FoodPictureDao.getInstance();
 	ReviewPictureDao reviewPicturesDao = ReviewPictureDao.getInstance();
 	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 
@@ -154,34 +160,64 @@ public class DatabaseConnectionTest {
 //	@Test
 //	public void entitiesDeleteTest() {
 //		
-//		reviewDao.deleteReviewById(25002);
+//		reviewDao.deleteReviewById(25007);
 //		Assertions.assertThrows(NullPointerException.class, () -> {
 //			
-//			Review found = reviewDao.getReviewById(25002); 
+//			Review found = reviewDao.getReviewById(25007); 
 //			found.getId();
 //		});  
 //		
-//		storeDao.deleteStoreById(35005);
+//		storeDao.deleteStoreById(35002);
 //		Assertions.assertThrows(NullPointerException.class, () -> {
 //			
-//			Store found = storeDao.getStoreById(35005); 
+//			Store found = storeDao.getStoreById(35002); 
 //			found.getId(); 
 //		});
 //		
-//		ownerDao.deleteOwnerById(20004);
+//		ownerDao.deleteOwnerById(20001);
 //		Assertions.assertThrows(NullPointerException.class, () -> {
 //			
-//			Owner found = ownerDao.getOwnerById(20004); 
+//			Owner found = ownerDao.getOwnerById(20001); 
 //			found.getId(); 
 //		});
 //		
-//		customerDao.deleteCustomerById(47); 
+//		customerDao.deleteCustomerById(38); 
 //		Assertions.assertThrows(NullPointerException.class, () -> {
 //			
-//			Customer found = customerDao.getCustomerById(47);
+//			Customer found = customerDao.getCustomerById(38);
 //			found.getId();
 //		});
 //	}	
+	@Test
+	public void foodInsertTest() {
+		Store store = storeDao.getStoreByName("test_name");
+		
+		Food food = new Food();
+		
+		food.setName("test_name");
+		food.setPrice(12000);
+		food.setCategory("test_category");
+		food.setSoldOut("out");
+		food.setPictureLocation("location");
+		food.setStore(store);
+		
+		foodDao.insertFood(food);
+		
+		Food found = foodDao.getFoodByName("test_name"); 	
+		Assertions.assertEquals("location", found.getPictureLocation());
+	}
+  
+	@Test	
+	public void foodPictureInsertTest() {
+		FoodPicture foodPicture = new FoodPicture();
+		
+		foodPicture.setFileLocation("location");
+		
+		Food food = foodDao.getFoodByName("test_name");
+		foodPicture.setFood(food);
+		
+		foodPictureDao.insertFoodPicture(foodPicture);
+		Assertions.assertEquals("location", food.getPictureLocation());
 	
 	@Test
 	public  void reviewPictureInsertTest () {
