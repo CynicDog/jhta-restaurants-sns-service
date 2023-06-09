@@ -2,6 +2,19 @@
 <!doctype html>
 <html lang="ko">
 <head>
+  <style>
+    .container-wrapper {
+      display: flex;
+    }
+    .container {
+      flex: 1;
+      width: 200px;
+      height: 500px;
+      border: 1px solid black;
+      padding: 10px;
+      margin-right: 50px;
+    }
+  </style>
 <title>User Detail</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,8 +24,28 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
-<body>
+<body>	
+  	<div class="row mb-3 text-center">
+    	<div class="col-12">
+        	<h1 class=" bg-danger" style="--bs-bg-opacity: .5; ">네비</h1>
+      	</div>
+   	</div>
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>컨테이너 1</h2>
+      <p>이곳에 컨테이너 1의 콘텐츠를 추가하세요.</p>
+      <p>이곳에 컨테이너 1의 콘텐츠를 추가하세요.</p>
+      <p>이곳에 컨테이너 1의 콘텐츠를 추가하세요.</p>
 
+    </div>
 
+    <div class="container">
+      <h2>컨테이너 2</h2>
+      <p>이곳에 컨테이너 2의 콘텐츠를 추가하세요.</p>
+      <p>이곳에 컨테이너 2의 콘텐츠를 추가하세요.</p>
+      <p>이곳에 컨테이너 2의 콘텐츠를 추가하세요.</p>
+      <p>이곳에 컨테이너 2의 콘텐츠를 추가하세요.</p>
+    </div>
+  </div>
 </body>
 </html>
