@@ -52,7 +52,7 @@ public class AdminDao {
 	}
 	
 	public void insertAdmin(Admin admin) {
-		DaoHelper.update("adminDao.insertAdmin",
+		DaoHelper.update("AdminDao.insertAdmin",
 				admin.getAdminId(),
 				admin.getPassword(),
 				admin.getName(),
@@ -63,7 +63,7 @@ public class AdminDao {
 	}
 	
 	public void updateAdmin(Admin admin) {
-		DaoHelper.update("adminDao.updateAdmin",
+		DaoHelper.update("AdminDao.updateAdmin",
 				admin.getAdminId(),
 				admin.getPassword(),
 				admin.getName(),
