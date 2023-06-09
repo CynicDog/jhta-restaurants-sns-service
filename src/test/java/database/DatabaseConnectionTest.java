@@ -188,6 +188,7 @@ public class DatabaseConnectionTest {
 //			found.getId();
 //		});
 //	}	
+
 //	@Test
 //	public void foodInsertTest() {
 //		Store store = storeDao.getStoreByName("test_name");
@@ -207,18 +208,21 @@ public class DatabaseConnectionTest {
 //		Assertions.assertEquals("location", found.getPictureLocation());
 //	}
 //  
-//	@Test	
-//	public void foodPictureInsertTest() {
-//		FoodPicture foodPicture = new FoodPicture();
-//		
-//		foodPicture.setFileLocation("location");
-//		
-//		Food food = foodDao.getFoodByName("test_name");
-//		foodPicture.setFood(food);
-//		
-//		foodPictureDao.insertFoodPicture(foodPicture);
-//		Assertions.assertEquals("location", food.getPictureLocation());
-//	}
+
+  @Test	
+	public void foodPictureInsertTest() {
+		FoodPicture foodPicture = new FoodPicture();
+		
+		foodPicture.setFileLocation("test_location");
+		
+		Food food = foodDao.getFoodByName("test_name");
+		foodPicture.setFood(food);
+		
+		foodPictureDao.insertFoodPicture(foodPicture);
+		
+		FoodPicture found = foodPictureDao.getFoodPictureById(15002);
+		Assertions.assertEquals("test_location", found.getFileLocation());
+	}
 	
 	@Test
 	public  void reviewPictureInsertTest () {
@@ -236,7 +240,7 @@ public class DatabaseConnectionTest {
 		Assertions.assertEquals("test_location", found.getFileLocation());
 	
 	}	
-//	
+  
 //	@Test
 //	public void storePictureInsertTest() {
 //		
