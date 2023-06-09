@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 import dao.CustomerDao;
 import dao.OwnerDao;
 import dao.ReviewDao;
+import dao.ReviewPictureDao;
 import dao.StoreDao;
 import utils.DaoHelper;
 import vo.Customer;
 import vo.Owner;
 import vo.Review;
+import vo.ReviewPicture;
 import vo.Store;
 
 public class DatabaseConnectionTest {
@@ -21,6 +23,7 @@ public class DatabaseConnectionTest {
 	OwnerDao ownerDao = OwnerDao.getInstance(); 
 	StoreDao storeDao = StoreDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
+	ReviewPictureDao reviewPicturesDao = ReviewPictureDao.getInstance();
 
 //	@Test
 //	public void customserOwnerInsertTest() {
@@ -144,7 +147,7 @@ public class DatabaseConnectionTest {
 //			Assertions.assertEquals("test_text_modified", modified.getText());
 //		}
 //	} 
-	
+//	
 //	@Test
 //	public void entitiesDeleteTest() {
 //		
@@ -176,4 +179,18 @@ public class DatabaseConnectionTest {
 //			found.getId();
 //		});
 //	}	
+	
+	@Test
+	public  void insertReviewPictureTest () {
+		
+		Review review = reviewDao.getReviewById(25001);
+		
+		ReviewPicture reviewPicture = new ReviewPicture();
+		
+		reviewPicture.setFileLocation("test_location");
+		reviewPicture.setReview(review);
+		
+		reviewPicturesDao.insertReviewPicture(reviewPicture);
+	
+	}	
 }
