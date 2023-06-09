@@ -189,26 +189,6 @@ public class DatabaseConnectionTest {
 //		});
 //	}	
 
-//	@Test
-//	public void foodInsertTest() {
-//		Store store = storeDao.getStoreByName("test_name");
-//		
-//		Food food = new Food();
-//		
-//		food.setName("test_name");
-//		food.setPrice(12000);
-//		food.setCategory("test_category");
-//		food.setSoldOut("out");
-//		food.setPictureLocation("location");
-//		food.setStore(store);
-//		
-//		foodDao.insertFood(food);
-//		
-//		Food found = foodDao.getFoodByName("test_name"); 	
-//		Assertions.assertEquals("location", found.getPictureLocation());
-//	}
-//  
-
   @Test	
 	public void foodPictureInsertTest() {
 		FoodPicture foodPicture = new FoodPicture();
@@ -241,16 +221,19 @@ public class DatabaseConnectionTest {
 	
 	}	
   
-//	@Test
-//	public void storePictureInsertTest() {
-//		
-//		Store store = storeDao.getStoreById(35003);
-//		
-//		StorePicture storePicture = new StorePicture();
-//		
-//		storePicture.setFileLocation("test_location");
-//		storePicture.setStore(store);
-//		
-//		storePictureDao.insertStorePicture(storePicture);				
-//	}
+	@Test
+	public void storePictureInsertTest() {
+		
+		Store store = storeDao.getStoreById(35003);
+		
+		StorePicture storePicture = new StorePicture();
+		
+		storePicture.setFileLocation("test_location");
+		storePicture.setStore(store);
+		
+		storePictureDao.insertStorePicture(storePicture);
+		
+		StorePicture found = storePictureDao.getStorePictureById(45002);
+		Assertions.assertEquals("test_location", found.getFileLocation());
+	}
 }
