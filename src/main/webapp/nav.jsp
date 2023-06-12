@@ -30,9 +30,12 @@
 				z-index:101;
 			}
 			
-			#search-button{
+			#button{
+				width:8%;
 				background-color: rgb(125, 185, 182);
+				color:white;
 			}
+			
 
 		</style>
 	</head>
@@ -42,7 +45,9 @@
 			  <div class="container-fluid">
 			    <form class="d-flex" role="search">
 			      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			      <button id="search-button" class="btn" type="submit">Search</button>
+			      <button id="button" class="btn" type="submit">Search</button>
+			      <button id="button" class="btn" type="submit">Login</button>
+			      <button id="button" class="btn" type="submit">Sign up</button>
 			    </form>
 			  </div>
 			</nav>
