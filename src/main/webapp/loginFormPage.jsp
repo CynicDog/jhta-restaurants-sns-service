@@ -44,7 +44,7 @@
             </div>
             <div class="d-flex justify-content-end mt-4 mb-1 w-100">
               <div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">로그</button>
               </div>
             </div>
           </div>
