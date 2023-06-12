@@ -73,12 +73,7 @@ header,h1 {
     padding-left: 27px
 }
 
-.Header--Transparent {
-    border-bottom: 0;
-    box-shadow: none;
-    background-color: transparent
-}
-.Header__Logo {
+.Header__menu {
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -97,18 +92,16 @@ header,h1 {
     -webkit-box-orient: horizontal;
     margin: 0 25px
 }
-.Header__LogoIcon {
+.Header__MenuIcon {
     width: 30px;
     height: 40px;
     background-image: url(https://cdns.iconmonstr.com/wp-content/releases/preview/7.3.0/240/iconmonstr-menu-lined.png);
     background-size: cover;
     background-repeat: no-repeat
 }
-
 .Header[data-page=home] .Header__SearchBox {
     display: none
 }
-
 .Header[data-page=home] .Header__SearchBox--Show {
     display: -moz-flex;
     display: -ms-flexbox;
@@ -116,7 +109,6 @@ header,h1 {
     display: -webkit-box;
     display: -webkit-flex
 }
-
 .Header__SearchInputWrap {
     display: -moz-flex;
     display: -ms-flexbox;
@@ -147,7 +139,6 @@ header,h1 {
     min-width: 0;
     overflow: hidden
 }
-
 .Header__SearchIcon {
     background-image: url(https://mp-seoul-image-production-s3.mangoplate.com/web/resources/2018022864551sprites_desktop.png);
     background-position: -974px -159px;
@@ -167,11 +158,9 @@ header,h1 {
     border: 0;
     font-size: 16px
 }
-
 .Header__SearchInput::-ms-clear {
     display: none
 }
-
 .Header__SearchInputClearButton {
     display: none;
     margin: 0 20px;
@@ -179,12 +168,10 @@ header,h1 {
     line-height: 1.2;
     color: #DBDBDB
 }
-
 .Header__SearchInputClearButton--Show {
     display: block
 }
-
-.Header__MenuList {
+.Header__Login {
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -199,8 +186,7 @@ header,h1 {
     height: 100%;
     margin-left: auto
 }
-
-.Header__MenuItem {
+.Header__LoginItem {
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -221,11 +207,7 @@ header,h1 {
     box-sizing: border-box
 }
 
-.Header--Transparent .Header__MenuItem {
-    border-left: 0
-}
-
-.Header__MenuLink {
+.Header__LoginLink {
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
@@ -249,51 +231,167 @@ header,h1 {
     -webkit-flex: 1;
     height: 100%
 }
-
-.Header__MenuText {
+.Header__LoginText {
     position: relative;
     font-size: 16px;
     color: #888888
 }
 
-.Header--Transparent .Header__MenuText {
-    color: #FFFFFF
+.basic-info-list {
+	padding-top: 100px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.store_img {
+    display:inline-block;
+}
+
+.textbox {
+    display:inline;
+ 	width: 250px;
+ 	height: 250px;
+ 	border-left: 1px solid #dbdbdb;
+}
+
+.store_list {
+    display:flex;
+    justify-content: center;
 }
 
 </style>
 </head>
 <body>
+
 <header class="Header " data-page="normal">
-  <a href="/" class="Header__Logo" onclick="trackEvent('CLICK_HEADER_LOGO');">
-    <i class="Header__LogoIcon"></i>
-  </a>
-
-  <div class="Header__SearchBox">
-    <i class="Header__SearchIcon"></i>
-
-    <label class="Header__SearchInputWrap">
-      <input type="text" class="Header__SearchInput" placeholder="지역, 식당 또는 음식" value="" autocomplete="off" maxlength="50">
-    </label>
-
-    <button class="Header__SearchInputClearButton">CLEAR</button>
-  </div>
-
-  <ul class="Header__MenuList">
-      <li class="Header__MenuItem Header__MenuItem--New">
-        <a href="/eat_deals" class="Header__MenuLink" onclick="trackEvent('CLICK_EAT_DEALS')">
-          <span class="Header__MenuText">LOGIN</span>
-        </a>
-      </li>
-  </ul>
+	 <!-- 메뉴 -->
+	 <a href="/" class="Header__menu" onclick="trackEvent('CLICK_HEADER_MENU');">
+	   <i class="Header__MenuIcon"></i>
+	 </a>
+	 <!-- 검색창  -->
+	 <div class="Header__SearchBox">
+	   <i class="Header__SearchIcon"></i>
+	
+	   <label class="Header__SearchInputWrap">
+	     <input type="text" class="Header__SearchInput" placeholder="지역, 식당 또는 음식" value="" autocomplete="off" maxlength="50">
+	   </label>
+	
+	   <button class="Header__SearchInputClearButton">CLEAR</button>
+	 </div>
+	 <!-- 로그인  -->
+	 <ul class="Header__Login">
+	     <li class="Header__LoginItem Header__LoginItem--New">
+	       <a href="/loginFormPage" class="Header__LoginLink" onclick="trackEvent('CLICK_LOGIN_FORM')">
+	         <span class="Header__LoginText">LOGIN</span>
+	       </a>
+		</li>
+	 </ul>
 </header>
-<header class="basic-info-list">
-     <div class="inner" style="padding-bottom: 10px">
-       <h1 class="title">태그 맛집 베스트 순위</h1>
-     </div>
-</header>
-<div class="container-list" id="contents_width">
 
-</div>
-
+<article class="contents">
+	<header class="basic-info-list">
+	    	<div class="inner" style="padding-bottom: 10px">
+	      		<h1 class="title">태그 맛집 베스트 순위</h1>
+	     	</div>
+	</header>
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
+				</span>
+				<span><strong>별점</strong></span>
+					<p>가게주소</p>
+					<p>베스트 리뷰</p>
+					<div style="text-align: right">
+						<a href="/storeDetail.jsp">가게명 더보기></a>
+					</div>
+			</li>
+		</ol>
+	</div>		
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
+				</span>
+				<span><strong>별점</strong></span>
+					<p>가게주소</p>
+					<p>베스트 리뷰</p>
+					<div style="text-align: right">
+						<a href="/storeDetail.jsp">가게명 더보기></a>
+					</div>
+			</li>
+		</ol>
+	</div>		
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
+				</span>
+				<span><strong>별점</strong></span>
+					<p>가게주소</p>
+					<p>베스트 리뷰</p>
+					<div style="text-align: right">
+						<a href="/storeDetail.jsp">가게명 더보기></a>
+					</div>
+			</li>
+		</ol>
+	</div>		
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
+				</span>
+				<span><strong>별점</strong></span>
+					<p>가게주소</p>
+					<p>베스트 리뷰</p>
+					<a href="/storeDetail.jsp">가게명 더보기></a>
+			</li>
+		</ol>
+	</div>		
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
+				</span>
+				<span><strong>별점</strong></span>
+					<p>가게주소</p>
+					<p>베스트 리뷰</p>
+					<div style="text-align: right">
+						<a href="/storeDetail.jsp">가게명 더보기></a>
+					</div>
+			</li>
+		</ol>
+	</div>		
+</article>
 </body>
 </html>
