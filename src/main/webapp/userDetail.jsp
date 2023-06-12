@@ -32,6 +32,7 @@
 #user-activity {
 	border: 1px solid rgb(233, 100, 121);
 	padding: 10px;
+	padding-left: 30px;
 	background-color: rgb(233, 100, 121);
 	color: white;
 }
@@ -40,16 +41,14 @@
 	width: 200px;
 	height: 500px;
 	padding: 10px;
-	margin-left: 100px;
-	margin-right: 100px;
-}
-
-.user-info {
-	
 }
 
 .user-act {
-	
+	font-size: 20px;
+}
+
+.table{
+	margin-top: 30px; 
 }
 
 table td {
@@ -95,36 +94,38 @@ table td {
 		<div class="row">
 			<div id="user-activity" class="col-12">
 				<h3>활동 내역</h3>
-				<p class="user-act">리뷰어 등급</p>
-				<p>customer.getGrade()</p>
-				<p class="user-act">활동 내역</p>
-				<p class="user-act">활동 내역</p>
-
+				<p class="user-act">loginType</p>
+				
+<!-- 사장, 유저의 경우에만 grade 존재하고 관리자는 없음 -->
+<%-- <%if (!loginType="관리자") { %> --%>
+				<p class="user-act">리뷰어 등급 : customer.getGrade()</p>
+<!-- } -->
 			</div>
 		</div>
 
 		<div class="row justify-content-center">
-
-
 			<div id="user-details" class="col-3">
 				<table class="table">
 					<thead>
 						<tr>
 							<th style="text-align: center; font-size: 25px;">회원 정보</th>
+							<th>
+								<a href="/changeUserDetail.jsp" style="font-size: 18px; ">수정</a>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<th>아이디</th>
-							<td>customer.getId()</td>
-						</tr>
-						<tr>
-							<th>비밀번호</th>
-							<td>customer.getPassword()</td>
+							<td>customer.getUserId()</td>
 						</tr>
 						<tr>
 							<th>이름</th>
 							<td>customer.getName()</td>
+						</tr>
+						<tr>
+							<th>성별</th>
+							<td>customer.getGender()</td>
 						</tr>
 						<tr>
 							<th>이메일</th>
@@ -138,22 +139,10 @@ table td {
 							<th>생년월일</th>
 							<td>customer.getBirthday()</td>
 						</tr>
-						<tr>
-							<th>성별</th>
-							<td>customer.getGender()</td>
-						</tr>
+
 					</tbody>
 				</table>
 
-
-				<!-- 				<h3 style="text-align: center;">회원 정보</h3> -->
-				<!-- 				<p class="user-info">아이디</p> -->
-				<!-- 				<p class="user-info">비밀번호</p> -->
-				<!-- 				<p class="user-info">이름</p> -->
-				<!-- 				<p class="user-info">이메일</p> -->
-				<!-- 				<p class="user-info">휴대폰</p> -->
-				<!-- 				<p class="user-info">생년월일</p> -->
-				<!-- 				<p class="user-info">성별</p> -->
 			</div>
 
 		</div>
