@@ -47,16 +47,15 @@
 	font-size: 20px;
 }
 
-.table{
-	margin-top: 30px; 
+.table {
+	margin-top: 30px;
 }
 
 table td {
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  /* 추가적인 폰트 스타일 조정 */
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	/* 추가적인 폰트 스타일 조정 */
 }
-
 </style>
 
 <title>User Detail</title>
@@ -78,6 +77,29 @@ table td {
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+
+<script>
+  var popupChangeUserDetail;
+
+  function openPopup() {
+    var popupWidth = 600; // 팝업 창의 너비
+    var popupHeight = 800; // 팝업 창의 높이
+
+    var leftPosition = (window.innerWidth - popupWidth) / 2; // 가로 위치 계산
+    var topPosition = (window.innerHeight - popupHeight) / 2; // 세로 위치 계산
+
+    var popupOptions = 'width=' + popupWidth + ',height=' + popupHeight + ',top=' + topPosition + ',left=' + leftPosition;
+    popupChangeUserDetail = window.open('changeUserDetail.html', 'popup', popupOptions);
+  }
+  
+  function closePopup() {
+    if (popupChangeUserDetail) {
+      popupChangeUserDetail.close(); // 팝업 창 닫기
+    }
+  }
+</script>
+
 </head>
 <body>
 	<jsp:include page="nav.jsp">
@@ -87,7 +109,7 @@ table td {
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="border bg-light fs-4 p-3">상세 정보</h1>
+				<h1 class="border bg-light fs-4 p-2">상세 정보</h1>
 			</div>
 		</div>
 
@@ -95,11 +117,11 @@ table td {
 			<div id="user-activity" class="col-12">
 				<h3>활동 내역</h3>
 				<p class="user-act">loginType</p>
-				
-<!-- 사장, 유저의 경우에만 grade 존재하고 관리자는 없음 -->
-<%-- <%if (!loginType="관리자") { %> --%>
+
+				<!-- 사장, 유저의 경우에만 grade 존재하고 관리자는 없음 -->
+				<%-- <%if (!loginType="관리자") { %> --%>
 				<p class="user-act">리뷰어 등급 : customer.getGrade()</p>
-<!-- } -->
+				<!-- } -->
 			</div>
 		</div>
 
@@ -110,7 +132,8 @@ table td {
 						<tr>
 							<th style="text-align: center; font-size: 25px;">회원 정보</th>
 							<th>
-								<a href="/changeUserDetail.jsp" style="font-size: 18px; ">수정</a>
+								<!-- 								<a href="/changeUserDetail.jsp" style="font-size: 18px; ">수정</a> -->
+								<button onclick="openPopup()">수정</button>
 							</th>
 						</tr>
 					</thead>
