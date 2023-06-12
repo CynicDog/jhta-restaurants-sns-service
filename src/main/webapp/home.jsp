@@ -23,6 +23,29 @@
 		padding:5px;
 		margin-left:12px;
 	}
+	
+	#map{
+		width:33%;
+		height:100%;
+		position:fixed;
+		bottom: 0px;
+		right: 0px;
+	}
+	
+	body{
+		padding:55px;
+	}
+	
+	.btn{
+		margin-right:15px;
+		margin-left:15px;
+		padding:10px;
+		background-color:rgb(125, 185, 182);
+	}
+	
+	img{
+		object-fit:cover;
+	}
 
 </style>
 
@@ -35,74 +58,111 @@
 
 
 <div class="container-fluid text-center">
-	<div class="row">
-    
-    <div id="test_btn_group" class="col-8 ">	
-    	<button class="btn" type="button">Button</button>
-		<a class="btn" role="button" >Link</a>
-		<a class="btn" role="button" >Link</a>
-		<a class="btn" role="button" >Link</a>
-		<a class="btn" role="button" >Link</a>
-		<a class="btn" role="button" >Link</a>
-    </div>	
-  
-  	</div>
-  	<div class="row">
-  
-	    <div class="col-4">
-	      <div class="card m-2 sm-14" style="inline-block; width: 500px; height: 280px; box-shadow: 20px 20px 20px grey;">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
+	<div class="col-8">
+		<div class="row">
+	    
+	    <div id="test_btn_group" >	
+			<a class="btn" role="button" >Link</a>
+			<a class="btn" role="button" >Link</a>
+			<a class="btn" role="button" >Link</a>
+			<a class="btn" role="button" >Link</a>
+			<a class="btn" role="button" >Link</a>
+	    </div>	
+	  
+	  	</div>
+	  	<div class="row">
+	  
+		    <div class="col-6">
+		      <div class="card m-2 sm-14 shadow bg-body rounded" >
+		      		<div class="embed-responsive embed-responsive-4by3">
+						<a href=""><img src="resources/images/cafe1.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">라떼와 브라우니가 유명한 곳</p>
+					</div>
+				</div>
+		    </div>
+	    
+		    <div class="col-6">
+		      	<div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
+		      		<div class="embed-responsive embed-responsive-4by3">
+						<a href=""><img src="resources/images/cafe2.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">레트로한 분위기에 사진 스팟을 원한다면 방문!</p>
+					</div>
 				</div>
 			</div>
-	    </div>
-    
-	    <div class="col-4">
-	      	<div class="card m-2 sm-14" style="inline-block">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
+			
+		</div>
+	    
+	   <div class="row">
+			<div class="col-6">
+			    <div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
+			    	<div class="embed-responsive embed-responsive-4by3">
+						<a href=""><img src="resources/images/dakbal.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">유명한 닭발 맛집, 숯불닭발과 계란말이가 일품</p>
+					</div>
 				</div>
 			</div>
-		    <div class="col-4">
-	      
-	    	</div>	
+	    
+	    	<div class="col-6">
+	      		<div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
+	      			<div class="embed-responsive embed-responsive-4by3">
+						<a href=""><img src="resources/images/pizza.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">이색적인 메뉴가 많은 이자카야</p>
+					</div>
+				</div>
+	   		</div>
+	    
 		</div>
 	</div>
-    
-   <div class="row">
-		<div class="col-4">
-		    <div class="card m-2 sm-14" style="inline-block">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				</div>
-			</div>
-		</div>
-    
-    	<div class="col-4">
-      		<div class="card m-2 sm-14" style="inline-block">
-				<img src="..." class="card-img-top" alt="...">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				</div>
-			</div>
-   		</div>
-    
-    	<div class="col-4">
-      
-    	</div>
-	</div>
+	
 
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+	<div class="col">			
+		<div id="map">
+		<script>
+				var container = document.getElementById('map');
+				var options = {
+		// 										  latitude,longitude 순으로 입력
+					center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+					level: 4
+				};
+		
+				var map = new kakao.maps.Map(container, options);
+				
+				// 마커가 표시될 위치입니다 
+				var markerPosition  = new kakao.maps.LatLng(37.5729587735263, 126.992241734889); 
+				var markerPosition2  = new kakao.maps.LatLng(37.5699451391001, 126.988087440713); 
+		
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+				    position: markerPosition
+				});
+				var marker2 = new kakao.maps.Marker({
+				    position: markerPosition2
+				});
+		
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+				marker2.setMap(map);
+		
+				// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+				// marker.setMap(null);    
+				
+			</script>
+		</div>
+	</div>
 </div>
 </body>
 </html>
