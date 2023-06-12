@@ -10,7 +10,7 @@
 <style>
 </style>
 
-<title>User Detail</title>
+<title>회원정보 수정</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
