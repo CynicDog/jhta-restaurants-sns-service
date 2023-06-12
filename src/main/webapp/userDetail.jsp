@@ -90,7 +90,7 @@ table td {
     var topPosition = (window.innerHeight - popupHeight) / 2; // 세로 위치 계산
 
     var popupOptions = 'width=' + popupWidth + ',height=' + popupHeight + ',top=' + topPosition + ',left=' + leftPosition;
-    popupChangeUserDetail = window.open('changeUserDetail.html', 'popup', popupOptions);
+    popupChangeUserDetail = window.open('changeUserDetail.jsp', 'popup', popupOptions);
   }
   
   function closePopup() {
@@ -132,8 +132,10 @@ table td {
 						<tr>
 							<th style="text-align: center; font-size: 25px;">회원 정보</th>
 							<th>
-								<!-- 								<a href="/changeUserDetail.jsp" style="font-size: 18px; ">수정</a> -->
-								<button onclick="openPopup()">수정</button>
+								<div class="button-container col my-1 mt-4"
+									style="text-align: right;">
+									<button class="btn btn-primary" onclick="openPopup()">수정</button>
+								</div>
 							</th>
 						</tr>
 					</thead>
