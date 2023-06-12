@@ -46,6 +46,18 @@
 	
 	.blind{position:absolute;clip:rect(0 0 0 0);margin:-1px;width:1px;height: 1px;overflow:hidden;}
 	#floatingTextarea{height:300px;}
+	
+    .real-upload {
+      display: none;
+    }
+
+    .upload {
+      width: 100%;
+      height: 35px;
+      margin-bottom: 15px;
+      
+    }
+
   </style>
 </head>
 <body>
@@ -91,19 +103,25 @@
 				</div>
               </div>
             </form>
-			  <input type="file" class="real-upload" accept="image/*" required multiple style="display: none;">
-			  <div class="upload">
-			  		<button class="btn btn-primary" type="button">사진 업로드</button>
-			  </div>
-			  <script>
-			    const realUpload = document.querySelector('.real-upload');
-			    const upload = document.querySelector('.upload');
-			
-			    upload.addEventListener('click', () => realUpload.click());
-			  </script>            
+				  <input type="file" class="real-upload" accept="image/*" required multiple>
+					<div>
+						<a class="upload btn btn-primary">사진 업로드</a>
+					</div>
+					<script>
+					  function getImageFiles(e) {
+					    const files = e.currentTarget.files;
+					    console.log(typeof files, files);
+					  }
+					
+					  const realUpload = document.querySelector('.real-upload');
+					  const upload = document.querySelector('.upload');
+					
+					  upload.addEventListener('click', () => realUpload.click());
+					  realUpload.addEventListener('change', getImageFiles);
+					</script>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn btn-primary me-md-2" type="button">취소</button>
-			  <button class="btn btn-primary" type="button">작성</button>
+			  <button class="btn btn-primary me-md-2" type="submit">취소</button>
+			  <button class="btn btn-primary" type="submit">작성</button>
 			</div>
           </div>
 
