@@ -175,8 +175,10 @@
     const text2 = document.getElementById('text2').value;
     const text3 = document.getElementById('text3').value;
     const text4 = document.getElementById('text4').value;
+    
+    console.log(text1);
 
-    const result = `${text1} ~ ${text2} : ${text3} ~ ${text4}`;
+    const result = text1 + " ~ " + text2 + " : " + text3 + " ~ " + text4;
     const resultRow = document.createElement('p');
     resultRow.textContent = result;
 
