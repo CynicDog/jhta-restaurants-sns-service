@@ -120,9 +120,21 @@
 					  realUpload.addEventListener('change', getImageFiles);
 					</script>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button class="btn btn-primary me-md-2" type="submit">취소</button>
-			  <button class="btn btn-primary" type="submit">작성</button>
+			  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
+			  <button onclick="update()" class="btn btn-primary" type="submit" onclick="close()">작성</button>
 			</div>
+			
+			<script type="text/javascript">
+				function cls(){
+					// 현재창 닫기
+					self.close();
+				}
+				function update(){
+					
+					self.close();
+				}
+				
+			</script>
           </div>
 
       </div>
