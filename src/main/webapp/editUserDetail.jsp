@@ -25,6 +25,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -36,7 +37,6 @@
 					<div class="card-header">
 						<p class="my-2">회원 정보 수정</p>
 					</div>
-
 					<div class="card-body">
 						<form>
 							<div class="mb-3">
@@ -59,9 +59,10 @@
 									value="customer.getName()" readonly>
 							</div>
 							<div class="mb-3">
-								<label for="email" class="form-label">이메일</label> <input
+								<label for="email" class="form-label">이메일</label> 
+								<input
 									type="email" class="form-control" id="email"
-									placeholder="foo@bar.com" required>
+									placeholder="foo@bar.com" onkeydown="fn(event)" required>
 							</div>
 							<div class="mb-3">
 								<label for="phone" class="form-label">휴대전화 번호</label> <input
@@ -88,18 +89,15 @@
 									</div>
 									<div class="col-6">
 										<input type="text" class="form-control" id="gender"
-											placeholder="직접 입력" required>
+											placeholder="직접 입력" >
 									</div>
 								</div>
 							</div>
 
 							<div class="button-container col my-1 mt-4" style="text-align: right; ">
-								<button type="button" class="btn btn-primary btn m-1"
-									onclick="window.opener.closePopup()">완료</button>
+								<button type="submit" class="btn btn-primary btn m-1">완료</button>
 								<button type="button" class="btn btn-secondary btn m-1"
 									onclick="window.opener.closePopup()">취소</button>
-					
-									
 							</div>
 
 						</form>
