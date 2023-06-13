@@ -1,8 +1,11 @@
 package dao;
 
+import java.util.List;
+
 import utils.DaoHelper;
 import vo.Food;
 import vo.Store;
+import vo.StorePicture;
 
 public class FoodDao {
 	
@@ -57,6 +60,22 @@ public class FoodDao {
 			
 			return food;
 		}, name);
+	}
+	
+	public  List<Food> getFoodByCategory() {
+		return DaoHelper.selectList("FoodDao.getFoodByCategory", rs->{
+			Food food = new Food();
+			food.setCategory(rs.getString("food_category"));
+			food.setPictureLocation(rs.getString("food_picture_location"));
+			
+			Store store = new Store();
+			store.setName(rs.getString("store_name"));
+			store.setAddress(rs.getString("store_address"));
+			store.setText(rs.getString("store_text"));
+			food.setStore(store);
+			
+			return food;
+		});
 	}
 	
 	public void insertFood(Food food) {
