@@ -7,21 +7,21 @@
 <%
 	
 	String memberType = request.getParameter("member");
-	String userId = request.getParameter("user_id"); 
+	String memberId = request.getParameter("member-id"); 
 	String password = request.getParameter("password");
 	String name = request.getParameter("name"); 
 	String email = request.getParameter("email"); 
 	String phone = request.getParameter("phone"); 
 	Date birthday = DateUtils.stringToDate(request.getParameter("birthday")); 
 	String gender = request.getParameter("gender"); 
-	String grade = "ì¼ë°˜"; 
+	String grade = "basic°˜"; 
 
 	if (memberType.equals("customer")) {
 		
 		CustomerDao customerDao = CustomerDao.getInstance();
 		
 		Customer customer = new Customer();
-		customer.setUserId(userId); 
+		customer.setUserId(memberId); 
 		customer.setPassword(password); 
 		customer.setName(name); 
 		customer.setEmail(email);
@@ -30,16 +30,18 @@
 		customer.setGender(gender); 
 		customer.setGrade(grade); 
 	
-		customerDao.insertCustomer(customer); 
+		customerDao.insertCustomer(customer);
+		
+		response.sendRedirect("loginFormPage.jsp");
 		
 	} else if (memberType.equals("owner")) {
 		
-		String subscription = "ì¼ë°˜";
+		String subscription = "basic˜";
 		
 		OwnerDao ownerDao = OwnerDao.getInstance();
 		
 		Owner owner = new Owner();
-		owner.setOwnerId(userId); 
+		owner.setOwnerId(memberId); 
 		owner.setPassword(password); 
 		owner.setName(name); 
 		owner.setEmail(email);
@@ -50,6 +52,8 @@
 		owner.setSubscription(subscription); 
 		
 		ownerDao.insertOwner(owner); 
+		
+		response.sendRedirect("loginFormPage.jsp");
 	}
 
 %>
