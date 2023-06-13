@@ -1,5 +1,14 @@
+<%@page import="dao.StoreDao"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.StoreDaoTest"%>
+<%@page import="vo.Store"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	StoreDaoTest storeDaotest = StoreDaoTest.getInstance();
+	List<Store> storeList = storeDaotest.getAllStores();
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -294,6 +303,32 @@ header,h1 {
 	      		<h1 class="title">태그 맛집 베스트 순위</h1>
 	     	</div>
 	</header>
+<%
+	for (Store store : storeList) {
+%>
+	<div class=store_list>
+		<div class=store_img>
+			<a href="/storeDetail.jsp">
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
+			</a>
+		</div>
+		<ol class=textbox style="text-align: left">
+			<li>
+				<span>
+					<a href="/storeDetail.jsp"><strong><%=store.getName() %></strong></a>
+				</span>
+					<p><%=store.getAddress() %>></p>
+					<p><%=store.getText() %></p>
+					<div style="text-align: right">
+						<a href="/storeDetail.jsp">리뷰 보러가기></a>
+					</div>
+			</li>
+		</ol>
+	</div>
+<%
+ 	} 
+%>		
+ 	
 	<div class=store_list>
 		<div class=store_img>
 			<a href="/storeDetail.jsp">
@@ -305,11 +340,10 @@ header,h1 {
 				<span>
 					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
 				</span>
-				<span><strong>별점</strong></span>
 					<p>가게주소</p>
-					<p>베스트 리뷰</p>
+					<p>가게소개</p>
 					<div style="text-align: right">
-						<a href="/storeDetail.jsp">가게명 더보기></a>
+						<a href="/storeDetail.jsp">리뷰 보러가기></a>
 					</div>
 			</li>
 		</ol>
@@ -325,11 +359,10 @@ header,h1 {
 				<span>
 					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
 				</span>
-				<span><strong>별점</strong></span>
 					<p>가게주소</p>
-					<p>베스트 리뷰</p>
+					<p>가게소개</p>
 					<div style="text-align: right">
-						<a href="/storeDetail.jsp">가게명 더보기></a>
+						<a href="/storeDetail.jsp">리뷰 보러가기></a>
 					</div>
 			</li>
 		</ol>
@@ -345,11 +378,10 @@ header,h1 {
 				<span>
 					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
 				</span>
-				<span><strong>별점</strong></span>
 					<p>가게주소</p>
-					<p>베스트 리뷰</p>
+					<p>가게소개</p>
 					<div style="text-align: right">
-						<a href="/storeDetail.jsp">가게명 더보기></a>
+						<a href="/storeDetail.jsp">리뷰 보러가기></a>
 					</div>
 			</li>
 		</ol>
@@ -365,29 +397,10 @@ header,h1 {
 				<span>
 					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
 				</span>
-				<span><strong>별점</strong></span>
 					<p>가게주소</p>
-					<p>베스트 리뷰</p>
-					<a href="/storeDetail.jsp">가게명 더보기></a>
-			</li>
-		</ol>
-	</div>		
-	<div class=store_list>
-		<div class=store_img>
-			<a href="/storeDetail.jsp">
-				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
-			</a>
-		</div>
-		<ol class=textbox style="text-align: left">
-			<li>
-				<span>
-					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
-				</span>
-				<span><strong>별점</strong></span>
-					<p>가게주소</p>
-					<p>베스트 리뷰</p>
+					<p>가게소개</p>
 					<div style="text-align: right">
-						<a href="/storeDetail.jsp">가게명 더보기></a>
+						<a href="/storeDetail.jsp">리뷰 보러가기></a>
 					</div>
 			</li>
 		</ol>
