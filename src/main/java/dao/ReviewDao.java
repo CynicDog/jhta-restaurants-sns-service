@@ -82,4 +82,11 @@ public class ReviewDao {
 		DaoHelper.update("ReviewDao.deleteReviewById", id);
 	}
 	
+	public int getSeq() {
+		return DaoHelper.selectOne("ReviewDao.getSeq", rs->{
+				
+			return rs.getInt("seq"); 
+		});
+	}
+	
 }
