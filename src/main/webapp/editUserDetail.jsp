@@ -15,6 +15,9 @@ int loginId = (int)session.getAttribute("loginId");
 
 CustomerDao customerDao = CustomerDao.getInstance();
 Customer customer = customerDao.getCustomerById(loginId);
+
+
+
 %>
 
 
@@ -57,7 +60,7 @@ function closePopupAndSubmit() {
     customer.setPhone(phone);
     customer.setBirthday(birthday);
     
-    customerdao.updateCustomer(customer)
+    customerdao.updateCustomer(customer) ;
     window.opener.location.reload();
     window.close();
 }
