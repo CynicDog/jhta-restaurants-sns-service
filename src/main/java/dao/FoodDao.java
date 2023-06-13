@@ -62,20 +62,22 @@ public class FoodDao {
 		}, name);
 	}
 	
-	public  List<Food> getFoodByCategory() {
+	public  List<Food> getFoodByCategory(String category) {
 		return DaoHelper.selectList("FoodDao.getFoodByCategory", rs->{
 			Food food = new Food();
-			food.setCategory(rs.getString("food_category"));
-			food.setPictureLocation(rs.getString("food_picture_location"));
 			
-			Store store = new Store();
-			store.setName(rs.getString("store_name"));
-			store.setAddress(rs.getString("store_address"));
-			store.setText(rs.getString("store_text"));
+			food.setId(rs.getInt(1));
+			food.setName(rs.getString(2));
+			food.setPrice(rs.getInt(3));
+			food.setCategory(rs.getString(4));
+			food.setSoldOut(rs.getString(5));
+			food.setPictureLocation(rs.getString(6));
+			
+			Store store = storeDao.getStoreById(rs.getInt(7));
 			food.setStore(store);
 			
 			return food;
-		});
+		}, category);
 	}
 	
 	public void insertFood(Food food) {
