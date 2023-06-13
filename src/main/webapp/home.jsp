@@ -1,4 +1,13 @@
+<%@page import="java.util.List"%>
+<%@page import="vo.StorePicture"%>
+<%@page import="dao.StorePictureDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%
+
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
+	List<StorePicture> storePictures = storePictureDao.getAllStorePictures();
+	
+%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -62,29 +71,78 @@
 		<div class="row">
 	    
 	    <div id="test_btn_group" >	
-			<a class="btn" role="button" >Link</a>
-			<a class="btn" role="button" >Link</a>
-			<a class="btn" role="button" >Link</a>
-			<a class="btn" role="button" >Link</a>
-			<a class="btn" role="button" >Link</a>
+			<a class="btn" role="button" >추천 맛집</a>
+			<a class="btn" role="button" >한식</a>
+			<a class="btn" role="button" >중식</a>
+			<a class="btn" role="button" >일식</a>
+			<a class="btn" role="button" >양식</a>
 	    </div>	
 	  
 	  	</div>
-	  	<div class="row">
-	  
-		    <div class="col-6">
-		      <div class="card m-2 sm-14 shadow bg-body rounded" >
-		      		<div class="embed-responsive embed-responsive-4by3">
-						<a href=""><img src="resources/images/cafe1.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
+
+	 	
+	<div class="row">
+	
+		<%
+		for(StorePicture picture : storePictures){
+			System.out.println(picture.getId());
+		%>
+			<div class="col-6">
+				  	<div class="card m-2 sm-14 shadow bg-body rounded" >
+				  		<div class="embed-responsive embed-responsive-4by3">
+							<a href=""><img src="<%=picture.getFileLocation()%>" class="card-img-top embed-responsive-item" alt="..." name=></a>
+						</div>
+						<div class="card-body">
+							<h5 class="card-title"><%=picture.getStore().getName() %></h5>
+							<p class="card-text"><%=picture.getStore().getPhone() %></p>
+						</div>
 					</div>
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">라떼와 브라우니가 유명한 곳</p>
-					</div>
-				</div>
-		    </div>
+			  </div>
+		 <%
+		}
+		%>
+			
+	</div>
+
+
+
+<%-- <%
+	int columns = 2;
+	
+	for (int i = 0; i < storePictures.size(); i += columns) {
+%>
+	    <div class="row">
+	        <%
+		        for (int j = 0; j < columns ; j++) {
+		            
+	            	StorePicture picture = storePictures.get(i + j);
+		            
+	        %>
+	            <div class="col-<%= 12 / columns %>">
+	                <div class="card m-2 sm-14 shadow bg-body rounded">
+	                    <div class="embed-responsive embed-responsive-4by3">
+	                        <a href=""><img src="<%=picture.getFileLocation()%>" class="card-img-top embed-responsive-item" alt="..."></a>
+	                  
+	                    </div>
+	                    <div class="card-body">
+	                        <h5 class="card-title"><%=picture.getStore().getName() %></h5>
+	                        <p class="card-text"><%=picture.getStore().getPhone() %></p>
+	                    </div>
+	                </div>
+	            </div>
+	           
+	      	<%
+	        }
+	        %>
+	    </div>
+    <%
+	}
+%> --%>
+
+
+
 	    
-		    <div class="col-6">
+		    <!-- <div class="col-6">
 		      	<div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
 		      		<div class="embed-responsive embed-responsive-4by3">
 						<a href=""><img src="resources/images/cafe2.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
@@ -94,11 +152,8 @@
 						<p class="card-text">레트로한 분위기에 사진 스팟을 원한다면 방문!</p>
 					</div>
 				</div>
-			</div>
-			
-		</div>
-	    
-	   <div class="row">
+			</div>  -->
+	   <!-- <div class="row">
 			<div class="col-6">
 			    <div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
 			    	<div class="embed-responsive embed-responsive-4by3">
@@ -123,7 +178,7 @@
 				</div>
 	   		</div>
 	    
-		</div>
+		</div> -->
 	</div>
 	
 

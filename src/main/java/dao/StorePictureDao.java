@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import utils.DaoHelper;
 import vo.Store;
 import vo.StorePicture;
@@ -28,6 +30,20 @@ public class StorePictureDao {
 		}, id);
 	}
 	
+	public List<StorePicture> getAllStorePictures(){
+		return DaoHelper.selectList("StorePcitureDao.getAllStorePictures", rs->{
+			StorePicture storePicture = new StorePicture();
+			
+			storePicture.setId(rs.getInt(1));
+			storePicture.setFileLocation(rs.getString(2));
+			
+			Store store = storeDao.getStoreById(rs.getInt(3)); 
+			storePicture.setStore(store);
+			
+			return storePicture;
+		});
+	}
+	
 	public void insertStorePicture(StorePicture storePicture) {
 		DaoHelper.update("StorePictureDao.insertStorePicture",
 				storePicture.getFileLocation(),
@@ -42,6 +58,6 @@ public class StorePictureDao {
 	}
 	
 	public void deleteStorePicture(int id) {
-		DaoHelper.update("StorePicture.deleteStorePictureById", id);
+		DaoHelper.update("StorePictureDao.deleteStorePictureById", id);
 	}
 }

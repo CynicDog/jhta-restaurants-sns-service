@@ -82,18 +82,32 @@
 			    <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
 			    <label for="starpoint_9" class="label_star" title="4.5"><span class="blind">4.5점</span></label>
 			    <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
-			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio" value=0.5>
+			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio" value=1.0>
+			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio" value=1.5>
+			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio" value=2.0>
+			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio" value=2.5>
+			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio" value=3.0>
+			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio" value=3.5>
+			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio" value=4.0>
+			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio" value=4.5>
+			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio" value=5.0>
 			    <span class="starpoint_bg"></span>
 			  </div>
+			  <script type="text/javascript">
+			  	
+		  		const radioOptions = document.getElementsByName('starpoint');
+
+		  		radioOptions.forEach(option => {
+		  		  option.addEventListener('change', () => {
+		  		    if (option.checked) {
+		  		      console.log(option.value);
+		  		    }
+		  		  });
+		  		});
+
+			  	
+			  </script>
 			</div>
             <form>
               <div class="mb-3">
@@ -121,7 +135,7 @@
 					</script>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
-			  <button onclick="update()" class="btn btn-primary" type="submit" onclick="close()">작성</button>
+			  <button onclick="update()" class="btn btn-primary" type="button" >작성</button>
 			</div>
 			
 			<script type="text/javascript">
