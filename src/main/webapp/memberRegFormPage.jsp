@@ -55,7 +55,7 @@
                     
                         <div class="mb-3">
                             <label for="user_id" class="form-label">아이디</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" required>
+                            <input type="text" class="form-control" id="id" name="member-id" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">비밀번호</label>

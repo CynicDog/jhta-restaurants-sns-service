@@ -1,5 +1,29 @@
+<%@page import="vo.Owner"%>
+<%@page import="vo.Customer"%>
+<%@page import="dao.CustomerDao"%>
+<%@page import="dao.OwnerDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	CustomerDao customerDao = CustomerDao.getInstance();	
+	OwnerDao ownerDao = OwnerDao.getInstance();
+	
+	String loginId = (String) session.getAttribute("loginId"); 
+	
+	Customer customer = null;
+	Owner owner = null; 
+	
+	customer = customerDao.getCustomerByUserId(loginId); 
+	owner = ownerDao.getOwnerByOwnerId(loginId); 
+	
+	String memberName = null;
+	
+	if (customer != null) {
+		memberName = customer.getName();
+	} else if (owner != null) {
+		memberName = owner.getName();
+	}
+%>>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +50,7 @@
     <div class="col-md-6">
       <div class="card shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
-            <p class="text-center">{...님} 환영합니다!</p>
+            <p class="text-center"><%=memberName%>님, 환영합니다!</p>
           </div>
       </div>
     </div>
