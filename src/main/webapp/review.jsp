@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,42 +83,27 @@
 			    <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
 			    <label for="starpoint_9" class="label_star" title="4.5"><span class="blind">4.5점</span></label>
 			    <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
-			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio" value=0.5>
-			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio" value=1.0>
-			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio" value=1.5>
-			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio" value=2.0>
-			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio" value=2.5>
-			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio" value=3.0>
-			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio" value=3.5>
-			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio" value=4.0>
-			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio" value=4.5>
-			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio" value=5.0>
+			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio">
 			    <span class="starpoint_bg"></span>
 			  </div>
-			  <script type="text/javascript">
-			  	
-		  		const radioOptions = document.getElementsByName('starpoint');
-
-		  		radioOptions.forEach(option => {
-		  		  option.addEventListener('change', () => {
-		  		    if (option.checked) {
-		  		      console.log(option.value);
-		  		    }
-		  		  });
-		  		});
-
-			  	
-			  </script>
 			</div>
-            <form>
+            <form method="post" action="review" enctype="multipart/form-data">
               <div class="mb-3">
               	<div class="form-floating">
-					<textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+					<textarea name="review_text" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
   					<label for="floatingTextarea">리뷰를 작성해 주세요!</label>
 				</div>
               </div>
-            </form>
-				  <input type="file" class="real-upload" accept="image/*" required multiple>
+				  <input type="file" name="pictureFiles" class="real-upload" accept="image/*" required multiple>
 					<div>
 						<a class="upload btn btn-primary">사진 업로드</a>
 					</div>
@@ -133,18 +119,15 @@
 					  upload.addEventListener('click', () => realUpload.click());
 					  realUpload.addEventListener('change', getImageFiles);
 					</script>
-			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
-			  <button onclick="update()" class="btn btn-primary" type="button" >작성</button>
-			</div>
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
+				  <button  class="btn btn-primary" type="submit" >작성</button>
+				</div>
+            </form>
 			
 			<script type="text/javascript">
 				function cls(){
 					// 현재창 닫기
-					self.close();
-				}
-				function update(){
-					
 					self.close();
 				}
 				
