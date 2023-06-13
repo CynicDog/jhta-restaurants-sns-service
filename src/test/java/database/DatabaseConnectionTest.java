@@ -236,6 +236,44 @@ public class DatabaseConnectionTest {
 //		StorePicture found = storePictureDao.getStorePictureById(45002);
 //		Assertions.assertEquals("test_location", found.getFileLocation());
 //	}
+
+	
+//	  @Test
+//	    public void testInsertReview() {
+//	        // 삽입할 리뷰 객체 생성
+//	        Review review = new Review();
+//	        review.setRating(5);
+//	        review.setText("Great store!");
+//	        
+//	        Customer customer = new Customer();
+//	        customer.setId(2); // 고객 ID 설정
+//	        review.setCustomer(customer);
+//
+//	        Store store = new Store();
+//	        store.setId(35003); // 상점 ID 설정
+//	        review.setStore(store);
+//
+//	        // 리뷰 삽입
+//	        reviewDao.insertReview(review);
+//
+//	        // 삽입 후에 리뷰 ID가 할당되었는지 확인
+//	        Assertions.assertNotNull(review.getId());
+//	    }
+	  
+//	  @Test
+//	    public void testGetReviewById() {
+//	        int reviewId = 25022; // 조회할 리뷰 ID
+//
+//	        // 리뷰 조회
+//	        Review review = reviewDao.getReviewById(reviewId);
+//
+//	        // 리뷰가 정상적으로 조회되었는지 확인
+//	        Assertions.assertNotNull(review);
+//	        Assertions.assertEquals(reviewId, review.getId());
+//	    }
+	
+	
+
 	
 	@Test 
 	public void foodInsertTest() {
@@ -253,4 +291,5 @@ public class DatabaseConnectionTest {
 		foodDao.insertFood(food);
 		
 	}
+
 }

@@ -85,79 +85,79 @@
 	</div>
 	<div class="container">
 		<div class="row">
-				<div class="col-8">
-					<div>
-						<header>
-							<div>
-								<span class="title">
-	  								<h1 class="restaurants_name">가게 이름 <strong class="rate-point"><span>4.5</span></strong></h1>
-	  								<button type="button" class="btn btn-outline-primary" onclick="location.href='review.jsp'">리뷰작성</button>
-								</span>
-							</div>
-							<table>
-								<tr>
-									<th>주소</th>
-									<td>"서울특별시 성동구 xxxx길 xx"</td>
-								</tr>
-								<tr>
-									<th>전화번호</th>
-									<td>0507-1111-1111</td>
-								</tr>
-								<tr>
-									<th>음식 종류</th>
-									<td>이탈리안</td>
-								</tr>
-								<tr>
-									<th>가격대</th>
-									<td>만원-2만원</td>
-								</tr>
-								<tr>
-									<th>주차</th>
-									<td>주차공간없음</td>
-								</tr>
-								<tr>
-									<th>영업시간</th>
-									<td>
-										"월-금: 11:00 - 21:00"
-										<br>
-										"토-일: 13:00 - 23:00"
-									</td>
-								</tr>
-								<tr>
-									<th>휴일</th>
-									<td>연중무휴</td>
-								</tr>
-								<tr>
-									<th>메뉴</th>
-									<td>
-										<ul class="restaurant_menuList">
-											<li>
-												<span class="restaurant_menu">알리올리오</span>
-												<span class="restaurant_menuPrice">13,000원</span>
-											</li>
-											<li>
-												<span class="restaurant_menu">까르보나라</span>
-												<span class="restaurant_menuPrice">13,000원</span>
-											</li>
-											<li>
-												<span class="restaurant_menu">라자냐</span>
-												<span class="restaurant_menuPrice">20,000원</span>
-											</li>
-											<li>
-												<span class="restaurant_menu">투움바파스타</span>
-												<span class="restaurant_menuPrice">14,000원</span>
-											</li>
-											<li>
-												<span class="restaurant_menu">마르게리따피자</span>
-												<span class="restaurant_menuPrice">16,000원</span>
-											</li>
-										</ul>
-									</td>
-								</tr>
-							</table>
-						</header>
-					</div>
+			<div class="col-8">
+				<div>
+					<header>
+						<div>
+							<span class="title">
+  								<h1 class="restaurants_name">가게 이름 <strong class="rate-point"><span>4.5</span></strong></h1>
+  								<button type="button" class="btn btn-outline-primary" onclick="location.href='review.jsp'">리뷰작성</button>
+							</span>
+						</div>
+						<table>
+							<tr>
+								<th>주소</th>
+								<td>"서울특별시 성동구 xxxx길 xx"</td>
+							</tr>
+							<tr>
+								<th>전화번호</th>
+								<td>0507-1111-1111</td>
+							</tr>
+							<tr>
+								<th>음식 종류</th>
+								<td>이탈리안</td>
+							</tr>
+							<tr>
+								<th>가격대</th>
+								<td>만원-2만원</td>
+							</tr>
+							<tr>
+								<th>주차</th>
+								<td>주차공간없음</td>
+							</tr>
+							<tr>
+								<th>영업시간</th>
+								<td>
+									"월-금: 11:00 - 21:00"
+									<br>
+									"토-일: 13:00 - 23:00"
+								</td>
+							</tr>
+							<tr>
+								<th>휴일</th>
+								<td>연중무휴</td>
+							</tr>
+							<tr>
+								<th>메뉴</th>
+								<td>
+									<ul class="restaurant_menuList">
+										<li>
+											<span class="restaurant_menu">알리올리오</span>
+											<span class="restaurant_menuPrice">13,000원</span>
+										</li>
+										<li>
+											<span class="restaurant_menu">까르보나라</span>
+											<span class="restaurant_menuPrice">13,000원</span>
+										</li>
+										<li>
+											<span class="restaurant_menu">라자냐</span>
+											<span class="restaurant_menuPrice">20,000원</span>
+										</li>
+										<li>
+											<span class="restaurant_menu">투움바파스타</span>
+											<span class="restaurant_menuPrice">14,000원</span>
+										</li>
+										<li>
+											<span class="restaurant_menu">마르게리따피자</span>
+											<span class="restaurant_menuPrice">16,000원</span>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+					</header>
 				</div>
+			</div>
 			<div class="col-4">
 				<div id="map" style="width:400px; height:350px;"></div>
 			</div>
