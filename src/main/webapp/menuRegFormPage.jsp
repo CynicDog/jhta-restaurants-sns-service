@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +35,15 @@
         <div class="col-md-6">
             <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-header">
-                    <p class="my-2">메뉴 등록</p>
+                    <div class="col-4">
+                        <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">가게 사업 정보 기입</span> </p>
+                    </div>
+                    <div class="col-4">
+                        <p class="text-center m-2"><span style="font-weight: bold; white-space: nowrap">가게 상세 정보 기입</span> </p>
+                    </div>
+                    <div class="col-4">
+                        <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">메뉴 등록</span> </p>
+                    </div>
                 </div>
                 <form>
                     <div class="card-body">
@@ -66,7 +74,7 @@
                                 <option value="etc">기타</option>
                             </select>
                         </div>
-					<!--  TODO: Picture upload -->
+                        <!--  TODO: Picture upload -->
                     </div>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit" onclick="fn1()">입력</button>
