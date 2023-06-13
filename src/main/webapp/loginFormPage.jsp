@@ -28,23 +28,35 @@
         <div class="card-header">
           <p class="my-2">로그인</p>
         </div>
-        <form>
+        <form method="post" action="login.jsp">
           <div class="card-body">
+			<div class="mb-3">
+				<div class="row">
+					<div class="col-3 my-1">
+						<input class="form-check-input" type="radio" name="member" id="member-radio-1" value="customer" checked>
+						<label class="form-check-label" for="member-radio-1">손님</label>
+					</div>
+					<div class="col-3 my-1">
+						<input class="form-check-input" type="radio" name="member" id="member-radio-2" value="owner">
+						<label class="form-check-label" for="member-radio-2">사장님</label>
+					</div> 
+				</div>
+			</div>  
             <div class="row mb-3">
               <label for="user_id" class="col-sm-2 col-form-label"><span style="white-space: nowrap">아이디</span></label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="user_id">
+                <input type="text" class="form-control" id="member-id" name="member-id">
               </div>
             </div>
             <div class="row mb-3">
               <label for="password" class="col-sm-2 col-form-label"><span style="white-space: nowrap">비밀번호</span></label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="password">
+                <input type="password" class="form-control" id="password" name="password">
               </div>
             </div>
             <div class="d-flex justify-content-end mt-4 mb-1 w-100">
               <div>
-                <button type="submit" class="btn btn-primary">로그</button>
+                <button type="submit" class="btn btn-primary">로그인</button>
               </div>
             </div>
           </div>

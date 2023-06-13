@@ -30,7 +30,7 @@
 				z-index:101;
 			}
 			
-			#button{
+			.nav-button {
 				width:8%;
 				background-color: rgb(125, 185, 182);
 				color:white;
@@ -45,9 +45,9 @@
 			  <div class="container-fluid">
 			    <form class="d-flex" role="search">
 			      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			      <button id="button" class="btn" type="submit">Search</button>
-			      <button id="button" class="btn" type="submit">Login</button>
-			      <button id="button" class="btn" type="submit">Sign up</button>
+			      <button id="button-1" class="btn nav-button" type="submit">Search</button>
+			      <button id="button-2" class="btn nav-button" type="button" onclick="location.href='loginFormPage.jsp'">Login</button>
+			      <button id="button-3" class="btn nav-button" type="button" onclick="location.href='memberRegFormPage.jsp'">Sign up</button>
 			    </form>
 			  </div>
 			</nav>

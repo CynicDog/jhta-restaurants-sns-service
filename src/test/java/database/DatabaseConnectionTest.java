@@ -236,6 +236,7 @@ public class DatabaseConnectionTest {
 //		StorePicture found = storePictureDao.getStorePictureById(45002);
 //		Assertions.assertEquals("test_location", found.getFileLocation());
 //	}
+
 	
 //	  @Test
 //	    public void testInsertReview() {
@@ -272,4 +273,23 @@ public class DatabaseConnectionTest {
 //	    }
 	
 	
+
+	
+	@Test 
+	public void foodInsertTest() {
+		
+		Store store = storeDao.getStoreById(35001); 
+		
+		Food food = new Food(); 
+		food.setName("test_name");
+		food.setPrice(1);
+		food.setCategory("test_category");
+		food.setSoldOut("test_soldout");
+		food.setPictureLocation("test_picture_location");
+		food.setStore(store);
+		
+		foodDao.insertFood(food);
+		
+	}
+
 }
