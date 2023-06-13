@@ -35,14 +35,16 @@ pageEncoding="UTF-8"%>
         <div class="col-md-6">
             <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-header">
-                    <div class="col-4">
-                        <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">가게 사업 정보 기입</span> </p>
-                    </div>
-                    <div class="col-4">
-                        <p class="text-center m-2"><span style="font-weight: bold; white-space: nowrap">가게 상세 정보 기입</span> </p>
-                    </div>
-                    <div class="col-4">
-                        <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">메뉴 등록</span> </p>
+                    <div class="row">
+                        <div class="col-4">
+                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">가게 사업 정보 기입</span></p>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">가게 상세 정보 기입</span></p>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-center m-2"><span style="font-weight: bold; white-space: nowrap">메뉴 등록</span></p>
+                        </div>
                     </div>
                 </div>
                 <form>
@@ -74,7 +76,10 @@ pageEncoding="UTF-8"%>
                                 <option value="etc">기타</option>
                             </select>
                         </div>
-                        <!--  TODO: Picture upload -->
+                        <div class="my-3">
+                            <label for="picture" class="form-label">TODO: 메뉴 사진 첨부</label>
+                            <input type="text" class="form-control" id="picture" min="0" required>
+                        </div>
                     </div>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit" onclick="fn1()">입력</button>
