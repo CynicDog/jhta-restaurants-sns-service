@@ -7,7 +7,8 @@
     pageEncoding="UTF-8"%>
 <%
 	FoodDao foodDao = FoodDao.getInstance();
-	List<Food> foodList = foodDao.getFoodByCategory();
+	List<Food> foodList = foodDao.getFoodByCategory("test_category");
+													// 응답값 														
 %>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,7 @@
 <title> 맛집 베스트 순위</title>
 <style type="text/css">
 header,h1 {
+
     font-size: 100%
 }
 
@@ -47,21 +49,21 @@ header,h1 {
 
 <jsp:include page="nav.jsp">
 	<jsp:param name="menu" value="홈"/>
-</jsp:include>
-
-<%
-	for (Food food : foodList) {
-%>	
+</jsp:include>	
 
 <article class="contents">
 	<header class="basic-info-list">
 	    	<div class="inner" style="padding-bottom: 10px">
-	      		<h1 class="title"><%=food.getCategory() %> 맛집 베스트 순위</h1>
+	      		<h1 class="title"><%=foodList.get(0).getCategory() %> 맛집 베스트 순위</h1>
+	      							<!-- 응답값 넣을 때 바꾸기 -->
 	     	</div>
 	</header>
+<% 
+	for (Food food : foodList) {
+%>
 	<div class=store_list>
 		<div class=store_img>
-			<a href="/storeDetail.jsp">
+			<a href="/storeDetail.jsp">				
 				<img alt="이미지텍스트대체" src="<%=food.getPictureLocation() %>"  width=250px height=250px; >
 			</a>
 		</div>
@@ -79,65 +81,9 @@ header,h1 {
 		</ol>
 	</div>		
 <%
-	}
+}
 %>	
-	<div class=store_list>
-		<div class=store_img>
-			<a href="/storeDetail.jsp">
-				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
-			</a>
-		</div>
-		<ol class=textbox style="text-align: left">
-			<li>
-				<span>
-					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
-				</span>
-					<p>가게주소</p>
-					<p>가게소개</p>
-					<div style="text-align: right">
-						<a href="/storeDetail.jsp">리뷰 보러가기></a>
-					</div>
-			</li>
-		</ol>
-	</div>		
-	<div class=store_list>
-		<div class=store_img>
-			<a href="/storeDetail.jsp">
-				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
-			</a>
-		</div>
-		<ol class=textbox style="text-align: left">
-			<li>
-				<span>
-					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
-				</span>
-					<p>가게주소</p>
-					<p>가게소개</p>
-					<div style="text-align: right">
-						<a href="/storeDetail.jsp">리뷰 보러가기></a>
-					</div>
-			</li>
-		</ol>
-	</div>		
-	<div class=store_list>
-		<div class=store_img>
-			<a href="/storeDetail.jsp">
-				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
-			</a>
-		</div>
-		<ol class=textbox style="text-align: left">
-			<li>
-				<span>
-					<a href="/storeDetail.jsp"><strong>가게명</strong></a>
-				</span>
-					<p>가게주소</p>
-					<p>가게소개</p>
-					<div style="text-align: right">
-						<a href="/storeDetail.jsp">리뷰 보러가기></a>
-					</div>
-			</li>
-		</ol>
-	</div>		
+			
 </article>
 </body>
 </html>
