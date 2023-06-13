@@ -2,31 +2,36 @@
 <%@page import="dao.CustomerDao"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%--
+
 <%
-	
+	//테스트용 세션 데이터
+	String type = "customer";
+	int id = 10;
+	session.setAttribute("loginType", type);
+	session.setAttribute("loginId", id);
+
 	// 1. 세션에서 로그인된 사용자 정보 조회하기
 	String loginType = (String) session.getAttribute("loginType");
-	it loginId = (int)session.getAttribute("loginId");
+	int loginId = (int)session.getAttribute("loginId");
 	
 	// 2. 로그인된 상태인지 체크하기
 	if (loginType == null) {
-		response.sendRedirect("../loginform.jsp?err=req&job="+URLEncoder.encode("수강신청현황조회", "utf-8"));
+		response.sendRedirect("/loginformPage.jsp");
 		return;
 	}
 	
-	// 3. 로그인된 학생의 수강신청 현황 조회하기
+	// 3. 로그인된 유저의 객체 획득
 	CustomerDao customerDao = CustomerDao.getInstance();
 	Customer customer = customerDao.getCustomerById(loginId);
 %>
---%>
+
 <!doctype html>
 <html lang="ko">
 <head>
-
 <style type="text/css">
-.container-fluid {
-	
+
+.container-fluid{
+	margin-top: 55px;
 }
 
 #user-activity {
@@ -43,7 +48,8 @@
 	padding: 10px;
 }
 
-.user-act {
+.user-act-info {
+
 	font-size: 20px;
 }
 
@@ -54,7 +60,6 @@
 table td {
 	font-family: Arial, sans-serif;
 	font-size: 20px;
-	/* 추가적인 폰트 스타일 조정 */
 }
 </style>
 
@@ -80,7 +85,7 @@ table td {
 
 
 <script>
-  var popupChangeUserDetail;
+  var popupEditUserDetail;
 
   function openPopup() {
     var popupWidth = 600; // 팝업 창의 너비
@@ -90,38 +95,29 @@ table td {
     var topPosition = (window.innerHeight - popupHeight) / 2; // 세로 위치 계산
 
     var popupOptions = 'width=' + popupWidth + ',height=' + popupHeight + ',top=' + topPosition + ',left=' + leftPosition;
-    popupChangeUserDetail = window.open('changeUserDetail.jsp', 'popup', popupOptions);
+    popupEditUserDetail = window.open('editUserDetail.jsp', 'popup', popupOptions);
   }
   
   function closePopup() {
-    if (popupChangeUserDetail) {
-      popupChangeUserDetail.close(); // 팝업 창 닫기
+    if (popupEditUserDetail) {
+    	popupEditUserDetail.close(); // 팝업 창 닫기
     }
   }
 </script>
 
 </head>
 <body>
+<!-- 네비게이션 -->
 	<jsp:include page="nav.jsp">
 		<jsp:param name="menu" value="userDetail" />
 	</jsp:include>
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12">
-				<h1 class="border bg-light fs-4 p-2">상세 정보</h1>
-			</div>
-		</div>
-
-		<div class="row">
 			<div id="user-activity" class="col-12">
-				<h3>활동 내역</h3>
-				<p class="user-act">loginType</p>
-
-				<!-- 사장, 유저의 경우에만 grade 존재하고 관리자는 없음 -->
-				<%-- <%if (!loginType="관리자") { %> --%>
-				<p class="user-act">리뷰어 등급 : customer.getGrade()</p>
-				<!-- } -->
+				<p class="user-act-info"><%=loginType %></p>
+				<p class="user-act-info"><%=customer.getUserId() %></p>
+				<p class="user-act-info">리뷰어 등급 : <%=customer.getGrade()%></p>
 			</div>
 		</div>
 
@@ -130,10 +126,9 @@ table td {
 				<table class="table">
 					<thead>
 						<tr>
-							<th style="text-align: center; font-size: 25px;">회원 정보</th>
+							<th style="font-size: 25px;">회원 정보</th>
 							<th>
-								<div class="button-container col my-1 mt-4"
-									style="text-align: right;">
+								<div class="button-container col my-1 mt-4" style="text-align: right;">
 									<button class="btn btn-primary" onclick="openPopup()">수정</button>
 								</div>
 							</th>
@@ -142,27 +137,27 @@ table td {
 					<tbody>
 						<tr>
 							<th>아이디</th>
-							<td>customer.getUserId()</td>
+							<td><%=customer.getUserId() %></td>
 						</tr>
 						<tr>
 							<th>이름</th>
-							<td>customer.getName()</td>
+							<td><%=customer.getName() %></td>
 						</tr>
 						<tr>
 							<th>성별</th>
-							<td>customer.getGender()</td>
+							<td><%=customer.getGender() %></td>
 						</tr>
 						<tr>
 							<th>이메일</th>
-							<td>customer.getEmail()</td>
+							<td><%=customer.getEmail() %></td>
 						</tr>
 						<tr>
 							<th>휴대폰</th>
-							<td>customer.getPhone()</td>
+							<td><%=customer.getPhone() %></td>
 						</tr>
 						<tr>
 							<th>생년월일</th>
-							<td>customer.getBirthday()</td>
+							<td><%=customer.getBirthday() %></td>
 						</tr>
 
 					</tbody>

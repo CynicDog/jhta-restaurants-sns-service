@@ -70,10 +70,13 @@
                     <label class="form-check-label" for="gridRadios2"> 여 </label>
                   </div>
                   <div class="col-6">
-                    <input type="text" class="form-control" id="gender" placeholder="직접 입력" required>
+                    <input type="text" class="form-control" id="gender" placeholder="직접 입력" >
                   </div>
                 </div>
               </div>
+				<div class="button-container col my-1 mt-4" style="text-align: center; ">
+					<button type="submit" class="btn btn-primary btn-lg m-1">완료</button>
+				</div>
             </form>
           </div>
 

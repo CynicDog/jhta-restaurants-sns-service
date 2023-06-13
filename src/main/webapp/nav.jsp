@@ -47,7 +47,7 @@
 			      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 			      <button id="button" class="btn" type="submit">Search</button>
 			      <button id="button" class="btn" type="submit">Login</button>
-			      <button id="button" class="btn" type="submit">Sign up</button>
+			      <button id="button" class="btn" type="button" onclick="location.href='memberRegFormPage.jsp'">Sign up</button>
 			    </form>
 			  </div>
 			</nav>
