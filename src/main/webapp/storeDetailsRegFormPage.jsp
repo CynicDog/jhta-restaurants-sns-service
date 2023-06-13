@@ -35,7 +35,7 @@
 <body>
 <div class="container">
   <div class="row justify-content-center align-items-center mt-5">
-    <div class="col-md-6">
+    <div class="col-md-8">
       <div class="card shadow p-3 mb-5 bg-white rounded">
         <div class="card-header">
           <p class="my-2">가게 상세 정보 기입</p>
