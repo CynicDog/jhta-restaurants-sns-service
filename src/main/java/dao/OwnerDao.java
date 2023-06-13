@@ -13,6 +13,27 @@ public class OwnerDao {
 		return instance;
 	}
 	
+	public Owner getOwnerByOwnerId(String ownerId) {
+		return DaoHelper.selectOne("OwnerDao.getOwnerByOwnerId", rs->{
+			Owner owner = new Owner();
+			
+			owner.setId(rs.getInt(1));
+			owner.setOwnerId(rs.getString(2));
+			owner.setPassword(rs.getString(3));
+			owner.setName(rs.getString(4));
+			owner.setEmail(rs.getString(5));
+			owner.setPhone(rs.getString(6));
+			owner.setBirthday(rs.getDate(7));
+			owner.setGender(rs.getString(8));
+			owner.setGrade(rs.getString(9));
+			owner.setSubscription(rs.getString(10));
+			owner.setCreateDate(rs.getDate(11));
+			owner.setUpdateDate(rs.getDate(12));
+			
+			return owner; 
+		}, ownerId);
+	} 
+	
 	public Owner getOwnerByName(String name) {
 		return DaoHelper.selectOne("OwnerDao.getOwnerByName", rs->{
 			Owner owner = new Owner();

@@ -16,6 +16,27 @@ public class CustomerDao {
 		return instance;
 	}
 	
+	public Customer getCustomerByUserId(String userId) { 
+		return DaoHelper.selectOne("CustomerDao.getCustomerByUserId", rs->{
+			Customer customer = new Customer();
+			
+			customer.setId(rs.getInt(1));
+			customer.setUserId(rs.getString(2));
+			customer.setPassword(rs.getString(3));
+			customer.setName(rs.getString(4));
+			customer.setEmail(rs.getString(5));
+			customer.setPhone(rs.getString(6));
+			customer.setBirthday(rs.getDate(7));
+			customer.setGender(rs.getString(8));
+			customer.setGrade(rs.getString(9));
+			customer.setCreateDate(rs.getDate(10));
+			customer.setUpdateDate(rs.getDate(11));
+			
+			return customer; 
+			
+		}, userId);
+	}
+	
 	public Customer getCustomerByName(String name) {
 		return DaoHelper.selectOne("CustomerDao.getCustomerByName", rs->{
 			Customer customer = new Customer();
