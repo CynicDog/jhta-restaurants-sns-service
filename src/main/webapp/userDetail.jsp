@@ -103,7 +103,15 @@ table td {
     	popupEditUserDetail.close(); // 팝업 창 닫기
     }
   }
+  
+  function updateTable(formData){
+	
+	  
+	  
+  }
+  
 </script>
+
 
 </head>
 <body>
