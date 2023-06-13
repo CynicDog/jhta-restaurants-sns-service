@@ -1,4 +1,23 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@page import="vo.Customer"%>
+<%@page import="dao.CustomerDao"%>
+
+
+<%
+//테스트용 세션 데이터
+String type = "customer";
+int id = 10;
+session.setAttribute("loginType", type);
+session.setAttribute("loginId", id);
+
+String loginType = (String) session.getAttribute("loginType");
+int loginId = (int)session.getAttribute("loginId");
+
+CustomerDao customerDao = CustomerDao.getInstance();
+Customer customer = customerDao.getCustomerById(loginId);
+%>
+
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -26,6 +45,24 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+<script type="text/javascript">
+function closePopupAndSubmit() {
+    var password = document.getElementById("password").value;
+    var email = document.getElementById("email").value;
+    var phone = document.getElementById("phone").value;
+    var birthday = document.getElementById("birthday").value;
+    
+    customer.setPassword(password);
+    customer.setEmail(email);
+    customer.setPhone(phone);
+    customer.setBirthday(birthday);
+    
+    customerdao.updateCustomer(customer)
+    window.opener.location.reload();
+    window.close();
+}
+</script>
+
 </head>
 <body>
 
@@ -38,11 +75,11 @@
 						<p class="my-2">회원 정보 수정</p>
 					</div>
 					<div class="card-body">
-						<form>
+						<form id="form-edit-detail" onsubmit="event.preventDefault(); closePopupAndSubmit();">
 							<div class="mb-3">
 								<label for="user_id" class="form-label">아이디</label> <input
 									type="text" class="form-control" id="user_id"
-									value="customer.getUserId()" readonly>
+									value=<%=customer.getUserId() %> readonly>
 							</div>
 							<div class="mb-3">
 								<label for="password" class="form-label">새 비밀번호</label> <input
@@ -50,50 +87,34 @@
 							</div>
 							<div class="mb-3">
 								<label for="password_check" class="form-label">비밀번호 확인</label> <input
-									type="password" class="form-control" id="password_check"
-									required>
+									type="password" class="form-control" id="password_check" required>
 							</div>
 							<div class="mb-3">
 								<label for="name" class="form-label">이름</label> <input
 									type="text" class="form-control" id="name" placeholder="이름"
-									value="customer.getName()" readonly>
+									value=<%=customer.getName() %> readonly>
 							</div>
 							<div class="mb-3">
 								<label for="email" class="form-label">이메일</label> 
 								<input
 									type="email" class="form-control" id="email"
-									placeholder="foo@bar.com" onkeydown="fn(event)" required>
+									placeholder="foo@bar.com" value=<%=customer.getEmail() %> required>
 							</div>
 							<div class="mb-3">
 								<label for="phone" class="form-label">휴대전화 번호</label> <input
 									type="text" class="form-control" id="phone"
-									placeholder="010-0000-0000" required>
+									placeholder="010-0000-0000" value=<%=customer.getPhone() %> required>
 							</div>
 							<div class="mb-3">
 								<label for="birthday" class="form-label">생년월일</label> <input
 									type="text" class="form-control" id="birthday"
-									placeholder="YYYY-MM-DD" required>
+									placeholder="YYYY-MM-DD" value=<%=customer.getBirthday() %> required>
 							</div>
-							<div class="mb-3">
-								성별
-								<div class="row">
-									<div class="col-2 my-1 ">
-										<input class="form-check-input" type="radio" name="gender"
-											id="gridRadios1" value="male" checked> <label
-											class="form-check-label" for="gridRadios1"> 남 </label>
-									</div>
-									<div class="col-2 my-1">
-										<input class="form-check-input" type="radio" name="gender"
-											id="gridRadios2" value="female"> <label
-											class="form-check-label" for="gridRadios2"> 여 </label>
-									</div>
-									<div class="col-6">
-										<input type="text" class="form-control" id="gender"
-											placeholder="직접 입력" >
-									</div>
-								</div>
+								<div class="mb-3">
+								<label for="gender" class="form-label">성별</label> <input
+									type="text" class="form-control" id="gender"
+									value=<%=customer.getGender() %> readonly>
 							</div>
-
 							<div class="button-container col my-1 mt-4" style="text-align: right; ">
 								<button type="submit" class="btn btn-primary btn m-1">완료</button>
 								<button type="button" class="btn btn-secondary btn m-1"
