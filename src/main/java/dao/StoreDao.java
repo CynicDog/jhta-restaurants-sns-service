@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import utils.DaoHelper;
 import vo.Owner;
 import vo.Store;
@@ -116,6 +118,46 @@ public class StoreDao {
 		DaoHelper.update("StoreDao.deleteStoreByName", name);
 	}
 	
+	public  List<Store> getAllStores() {
+		return DaoHelper.selectList("StoreDao.getAllStores", rs->{
+			Store store = new Store();
+			
+			store.setId(rs.getInt(1)); 
+			store.setName(rs.getString(2)); 
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getDouble(6)); 
+			store.setLongitude(rs.getDouble(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
+			store.setOwner(owner); 
+					
+			return store;
+			
+		});
+	}
 	
+	public  List<Store> getStoresByFoodCategory(String category) {
+		return DaoHelper.selectList("StoreDao.getStoresByFoodCategory", rs->{
+			Store store = new Store();
+			
+			store.setId(rs.getInt(1)); 
+			store.setName(rs.getString(2)); 
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getDouble(6)); 
+			store.setLongitude(rs.getDouble(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
+			store.setOwner(owner); 
+			
+			return store;
+			
+		}, category);
+	}
 	
 }
