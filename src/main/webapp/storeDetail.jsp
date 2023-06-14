@@ -1,4 +1,15 @@
+<%@page import="vo.Store"%>
+<%@page import="dao.StoreDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%
+	String storeName = request.getParameter("name");
+
+	StoreDao storeDao = StoreDao.getInstance();
+	Store store = storeDao.getStoreByName(storeName);
+	
+	session.setAttribute("storeName", store.getName());
+%>
+
 <!doctype html>
 <html lang="ko">
 <head>
