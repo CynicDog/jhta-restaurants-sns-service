@@ -60,8 +60,11 @@ public class ReviewServlet extends HttpServlet {
 		
 //		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
 		
+		String projectHome = System.getenv("PROJECT_HOME");
+		String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture/";
+		
 		InputStream in = part.getInputStream();
-		OutputStream out = new FileOutputStream(new File("C:\\Users\\GOTAEHWA\\git\\jhta-restaurants-sns-service\\src\\main\\webapp\\resources\\reviewPicture", fileName));
+		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
 //		OutputStream out = new FileOutputStream(
 //				new File(request.getServletContext().getRealPath("/JAVA_HOME/PROJECT_HOME/"), fileName));
 
