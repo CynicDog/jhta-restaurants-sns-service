@@ -1,14 +1,20 @@
+<%@page import="dao.StoreDao"%>
+<%@page import="vo.Store"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.StorePicture"%>
 <%@page import="dao.StorePictureDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
 
-StorePictureDao storePictureDao = StorePictureDao.getInstance();
-List
-<StorePicture> storePictures = storePictureDao.getAllStorePictures();
-
-    %>
+	StoreDao storeDao = StoreDao.getInstance();
+	List<Store> stores = storeDao.getAllStores();
+	
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
+	/* List<StorePicture> storePictures = storePictureDao.getAllStorePictures();  */
+	String projectHome = System.getenv("PROJECT_HOME");
+	String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture";
+	
+%>
     <!doctype html>
     <html lang="ko">
     <head>
@@ -82,18 +88,27 @@ List
             <div class="row">
 
                 <%
-                for(StorePicture picture : storePictures){
-                System.out.println(picture.getId());
+                for(Store store : stores){
+                	int storeId = store.getId();
+                	StorePicture storePicture = storePictureDao.getStorePictureById(storeId);
                 %>
                 <div class="col-6">
                     <div class="card m-2 sm-14 shadow bg-body rounded">
                         <div class="embed-responsive embed-responsive-4by3">
-                            <a href=""><img src="<%=picture.getFileLocation()%>"
+                        <% if (storePicture != null) { %>
+                            <a href="" onclick="createLoginId('<%= storeId %>')"><img src="<%=saveDirectory + storePicture.getFileLocation()%>"
                                             class="card-img-top embed-responsive-item" alt="..." name=></a>
+                        <% } %>
                         </div>
+                        <script type="text/javascript">
+                        	function createLoginId(storeId){
+                        		 sessionStorage.setItem("storeId", storeId);
+                        	}
+                        </script>
+                        
                         <div class="card-body">
-                            <h5 class="card-title"><%=picture.getStore().getName() %></h5>
-                            <p class="card-text"><%=picture.getStore().getPhone() %></p>
+                            <h5 class="card-title"><%=store.getName() %></h5>
+                            <p class="card-text"><%=store.getPhone() %></p>
                         </div>
                     </div>
                 </div>
@@ -103,79 +118,6 @@ List
 
             </div>
 
-
-            <%-- <%
-            int columns = 2;
-
-            for (int i = 0; i < storePictures.size(); i += columns) {
-            %>
-            <div class="row">
-                <%
-                for (int j = 0; j < columns ; j++) {
-
-                StorePicture picture = storePictures.get(i + j);
-
-                %>
-                <div class="col-<%= 12 / columns %>">
-                    <div class="card m-2 sm-14 shadow bg-body rounded">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <a href=""><img src="<%=picture.getFileLocation()%>"
-                                            class="card-img-top embed-responsive-item" alt="..."></a>
-
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title"><%=picture.getStore().getName() %></h5>
-                            <p class="card-text"><%=picture.getStore().getPhone() %></p>
-                        </div>
-                    </div>
-                </div>
-
-                <%
-                }
-                %>
-            </div>
-            <%
-            }
-            %> --%>
-
-
-            <!-- <div class="col-6">
-                  <div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
-                      <div class="embed-responsive embed-responsive-4by3">
-                        <a href=""><img src="resources/images/cafe2.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">레트로한 분위기에 사진 스팟을 원한다면 방문!</p>
-                    </div>
-                </div>
-            </div>  -->
-            <!-- <div class="row">
-                 <div class="col-6">
-                     <div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
-                         <div class="embed-responsive embed-responsive-4by3">
-                             <a href=""><img src="resources/images/dakbal.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
-                         </div>
-                         <div class="card-body">
-                             <h5 class="card-title">Card title</h5>
-                             <p class="card-text">유명한 닭발 맛집, 숯불닭발과 계란말이가 일품</p>
-                         </div>
-                     </div>
-                 </div>
-             
-                 <div class="col-6">
-                       <div class="card m-2 sm-14 shadow bg-body rounded" style="inline-block">
-                           <div class="embed-responsive embed-responsive-4by3">
-                             <a href=""><img src="resources/images/pizza.jpg" class="card-img-top embed-responsive-item" alt="..."></a>
-                         </div>
-                         <div class="card-body">
-                             <h5 class="card-title">Card title</h5>
-                             <p class="card-text">이색적인 메뉴가 많은 이자카야</p>
-                         </div>
-                     </div>
-                    </div>
-             
-             </div> -->
         </div>
 
 
