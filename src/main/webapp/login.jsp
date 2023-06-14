@@ -30,7 +30,7 @@
 			
 			session.setAttribute("loginId", owner.getId()); // int 
 			session.setAttribute("loginType", "owner"); 
-			response.sendRedirect("home.jsp");
+			response.sendRedirect("userDetail.jsp");
 		} 
 	}
 %>
