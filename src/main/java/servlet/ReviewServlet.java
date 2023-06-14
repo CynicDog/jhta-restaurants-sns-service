@@ -12,6 +12,7 @@ import dao.CustomerDao;
 import dao.ReviewDao;
 import dao.ReviewPictureDao;
 import dao.StoreDao;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +36,7 @@ public class ReviewServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		
+				
 		CustomerDao customerDao = CustomerDao.getInstance();
 		StoreDao storeDao = StoreDao.getInstance();
 
@@ -52,12 +53,17 @@ public class ReviewServlet extends HttpServlet {
 
 		Part part = request.getPart("pictureFiles");
 		String fileName = part.getSubmittedFileName();
-		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
 		
-		OutputStream out = new FileOutputStream(
-				new File(request.getServletContext().getRealPath("/resources/images/"), fileName));
-
+//		ServletContext servletContext = request.getServletContext();
+//		String fileLocation = servletContext.getRealPath("/JAVA_HOME/PROJECT_HOME/") + File.separator + fileName;
+		
+//		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
+		
 		InputStream in = part.getInputStream();
+		OutputStream out = new FileOutputStream(new File("C:\\Users\\GOTAEHWA\\git\\jhta-restaurants-sns-service\\src\\main\\webapp\\resources\\images", fileName));
+//		OutputStream out = new FileOutputStream(
+//				new File(request.getServletContext().getRealPath("/JAVA_HOME/PROJECT_HOME/"), fileName));
+
 //		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
 		IOUtils.copy(in, out);
 		
@@ -81,7 +87,7 @@ public class ReviewServlet extends HttpServlet {
 
 		
 		ReviewPicture rp = new ReviewPicture();
-		rp.setFileLocation(fileLocation);
+		rp.setFileLocation(fileName);
 		rp.setReview(review);
 
 		reviewPictureDao.insertReviewPicture(rp);
