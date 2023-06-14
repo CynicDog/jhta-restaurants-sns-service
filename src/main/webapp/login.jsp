@@ -16,8 +16,9 @@
 		
 		if (customer.getPassword().equals(password)) { // authenticate  
 			
-			session.setAttribute("loginId", customer.getUserId());
-			response.sendRedirect("postMemberRegPage.jsp"); 
+			session.setAttribute("loginId", customer.getId()); // int
+			session.setAttribute("loginType", "customer"); 
+			response.sendRedirect("home.jsp"); 
 		}
 		
 	} else if (memberType.equals("owner")) {
@@ -27,8 +28,9 @@
 		
 		if (owner.getPassword().equals(password)) { // authenticate 
 			
-			session.setAttribute("loginId", owner.getOwnerId());
-			response.sendRedirect("postMemberRegPage.jsp");
+			session.setAttribute("loginId", owner.getId()); // int 
+			session.setAttribute("loginType", "owner"); 
+			response.sendRedirect("userDetail.jsp");
 		} 
 	}
 %>

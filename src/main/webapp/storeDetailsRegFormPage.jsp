@@ -50,15 +50,15 @@
                         </div>
                     </div>
                 </div>
-                <form>
+                <form id="store-details-register-form" method="post" action="storeDetailsRegister.jsp">
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="name" class="form-label">가게이름</label>
-                            <input type="text" class="form-control" id="name" required>
+                            <label for="name" class="form-label">가게 이름</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="text">가게 소개글</label>
-                            <textarea class="form-control" id="text" rows="3"></textarea>
+                            <textarea class="form-control" id="text" rows="3" name="text"></textarea>
                         </div>
                         <div class="col mt-3"> 영업시간
                             <div class="row my-2">
@@ -144,7 +144,7 @@
                                         <option value="05:00">05:00</option>
                                     </select>
                                 </div>
-
+                                <input id="operation-times" hidden name="operation-times">
                                 <div class="button-container col my-1">
                                     <button type="button" class="btn btn-light btn-sm m-1" onclick="generateResult()">추가</button>
                                     <button type="button" class="btn btn-light btn-sm m-1" onclick="deleteResult()">삭제</button>
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                             <div class="mt-3"> 쉬는날
-                                <input id="day-offs" hidden>
+                                <input id="day-offs" hidden name="day-offs">
                                 <div class="row">
                                     <div id="day1" class="col text-center border rounded m-1" onclick="addDayOff('day1')"><span style="white-space: nowrap">월요일</span></div>
                                     <div id="day2" class="col text-center border rounded m-1" onclick="addDayOff('day2')"><span style="white-space: nowrap">화요일</span></div>
@@ -171,7 +171,7 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button class="btn btn-primary" type="submit" onclick="fn1()">입력</button>
+                        <button class="btn btn-primary" type="button" onclick="register()">입력</button>
                     </div>
                 </form>
             </div>
@@ -186,9 +186,7 @@
         const text3 = document.getElementById('text3').value;
         const text4 = document.getElementById('text4').value;
 
-        console.log(text1);
-
-        const result = text1 + " ~ " + text2 + " : " + text3 + " ~ " + text4;
+        const result = text1 + " ~ " + text2 + " : " + text3 + " ~ " + text4 + ".";
         const resultRow = document.createElement('p');
         resultRow.textContent = result;
 
@@ -242,10 +240,30 @@
         offDay.classList.toggle("clicked");
     }
 
-    function fn1() {
-        const offDays = document.getElementById("day-offs")
+    function register() {
 
-        console.log(offDays.value);
+        const divResult = document.getElementById('result');
+        if (divResult === "") {
+            alert("영업 시간을 선택해주세요.");
+            return;
+        }
+        const inputResult = document.getElementById('operation-times');
+        inputResult.value = divResult.innerText;
+
+        const name = document.getElementById("name");
+        if (name === "") {
+            alert("가게 이름을 적어주세요.");
+            return;
+        }
+
+        const text = document.getElementById("text");
+        if (text === "") {
+            alert("가게 소개를 적어주세요.");
+            return;
+        }
+
+        let form = document.getElementById("store-details-register-form");
+        form.submit();
     }
 </script>
 </body>

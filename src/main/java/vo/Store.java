@@ -13,13 +13,13 @@ public class Store {
 	private double longitude; 
 	private String text;
 	private String phone;
+	private String dayOffs; 
 	private Owner owner;
 	
 	public Store() {
 
 	}
 
-	
 	public int getId() {
 		return id;
 	}
@@ -74,6 +74,12 @@ public class Store {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getDayOffs() {
+		return dayOffs;
+	}
+	public void setDayOffs(String dayOffs) {
+		this.dayOffs = dayOffs;
 	}
 	public Owner getOwner() {
 		return owner;

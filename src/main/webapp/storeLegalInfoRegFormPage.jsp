@@ -51,15 +51,19 @@
                         </div>
                     </div>
                 </div>
-                <form>
+                <form method="post" action="storeLegalInfoRegister.jsp">
                     <div class="card-body">
                         <div class="col my-3">
                             <label for="business-license-number" class="form-label">사업자 등록 번호</label>
-                            <input type="text" class="form-control" id="business-license-number" placeholder="사업자 등록 번호 10자리" required>
+                            <input type="text" class="form-control" id="business-license-number" placeholder="사업자 등록 번호 10자리" name="business-license-number" required>
+                        </div>
+						<div class="col my-3">
+                            <label for="phone" class="form-label">가게 전화번호</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
                         </div>
                         <div class="row">
                             <div class="col-7 my-1">
-                                <input class="form-control my-1" type="text" id="sample6_postcode" placeholder="우편번호">
+                                <input class="form-control my-1" type="text" id="sample6_postcode" placeholder="우편번호" name="zipcode" required>
                             </div>
                             <div class="col-5 my-1">
                                 <div class="button-container-mid">
@@ -68,7 +72,7 @@
                             </div>
                         </div>
                         <div class="col my-1">
-                            <input class="form-control" type="text" id="sample6_address" placeholder="주소">
+                            <input class="form-control" type="text" id="sample6_address" placeholder="주소" name="address" required>
                         </div>
                         <div class="col my-3">
                             <input class="form-control" type="text" id="sample6_detailAddress" placeholder="상세주소">
@@ -78,7 +82,7 @@
                         </div>
                     </div>
                     <div class="button-container">
-                        <button class="btn btn-primary" type="submit" onclick="fn1()">입력</button>
+                        <button class="btn btn-primary" type="submit">입력</button>
                     </div>
                 </form>
             </div>

@@ -14,7 +14,7 @@
 	String phone = request.getParameter("phone"); 
 	Date birthday = DateUtils.stringToDate(request.getParameter("birthday")); 
 	String gender = request.getParameter("gender"); 
-	String grade = "basic°˜"; 
+	String grade = "basic"; 
 
 	if (memberType.equals("customer")) {
 		
@@ -55,5 +55,4 @@
 		
 		response.sendRedirect("loginFormPage.jsp");
 	}
-
 %>
