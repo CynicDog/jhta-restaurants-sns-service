@@ -9,7 +9,7 @@ import dao.StoreDao;
 public class Review {
 
 	private int id;
-	private int rating;
+	private double rating;
 	private String text;
 	private Date createDate;
 	private Date updateDate;
@@ -28,11 +28,11 @@ public class Review {
 		this.id = id;
 	}
 
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 
