@@ -13,19 +13,12 @@
 	
 	String memberName = null;
 	
-	System.out.println(loginId + ", " + loginType + ", " + memberName);
-	
 	if (loginType.equals("customer")) {
 		Customer customer = customerDao.getCustomerById(loginId);	
 		memberName = customer.getName(); 
-		
-		System.out.println(loginId + ", " + loginType + ", " + memberName);
-		
 	} else if (loginType.equals("owner")) { 
 		Owner owner = ownerDao.getOwnerById(loginId);  
 		memberName = owner.getName();
-		
-		System.out.println(loginId + ", " + loginType + ", " + memberName);
 	}
 %>
 <!DOCTYPE html>

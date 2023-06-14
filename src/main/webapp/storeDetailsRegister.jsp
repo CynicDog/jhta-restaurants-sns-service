@@ -14,7 +14,7 @@
 	String name = request.getParameter("name"); 
 	String text = request.getParameter("text"); 
 	String dayOffs = request.getParameter("day-offs"); 
-	String ownerId = (String) session.getAttribute("loginId");
+	int ownerId = (int) session.getAttribute("loginId");
 	 
 	String operationTimes = request.getParameter("operation-times"); 
 	
@@ -22,7 +22,7 @@
 	store.setText(text); 
 	store.setDayOffs(dayOffs); 
 	
-	Owner onwer = ownerDao.getOwnerByOwnerId(ownerId); 
+	Owner onwer = ownerDao.getOwnerById(ownerId); 
 	store.setOwner(onwer); 
 	
 	storeDao.insertStore(store); 
@@ -35,5 +35,5 @@
 	
 	storeOpenTimeDao.insertStoreOpenTime(storeOpentime);
 	
-	response.sendRedirect("home.jsp"); 
+	response.sendRedirect("menuRegFormPage.jsp"); 
 %>
