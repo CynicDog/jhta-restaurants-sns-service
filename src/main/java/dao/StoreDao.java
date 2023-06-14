@@ -14,6 +14,28 @@ public class StoreDao {
 		return instance;
 	}
 	
+	public Store getStoreByBusinessLicenseNumber(int businessLicenseNumber) {
+		return DaoHelper.selectOne("StoreDao.getStoreByBusinessLicenseNumber", rs -> {
+			Store store = new Store(); 
+			
+			store.setId(rs.getInt(1)); 
+			store.setName(rs.getString(2));
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getFloat(6)); 
+			store.setLongitude(rs.getFloat(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			store.setDayOffs(rs.getString(10));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 		
+			store.setOwner(owner); 
+					
+			return store;
+			
+		}, businessLicenseNumber);
+	}
+	
 	public Store getStoreByName(String name) { 
 		return DaoHelper.selectOne("StoreDao.getStoreByName", rs -> {
 			Store store = new Store(); 
@@ -27,7 +49,8 @@ public class StoreDao {
 			store.setLongitude(rs.getFloat(7)); 
 			store.setText(rs.getString(8)); 
 			store.setPhone(rs.getString(9));
-			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
+			store.setDayOffs(rs.getString(10));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 		
 			store.setOwner(owner); 
 					
 			return store;
@@ -47,8 +70,8 @@ public class StoreDao {
 			store.setLatitude(rs.getDouble(6)); 
 			store.setLongitude(rs.getDouble(7)); 
 			store.setText(rs.getString(8)); 
-			store.setPhone(rs.getString(9));
-			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
+			store.setDayOffs(rs.getString(10));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 	
 			store.setOwner(owner); 
 					
 			return store;
@@ -66,6 +89,7 @@ public class StoreDao {
 				store.getLongitude(),
 				store.getText(),
 				store.getPhone(),
+				store.getDayOffs(),
 				store.getOwner().getId());
 	}
 	
@@ -79,6 +103,7 @@ public class StoreDao {
 				store.getLongitude(),
 				store.getText(),
 				store.getPhone(),
+				store.getDayOffs(),
 				store.getOwner().getId(),
 				store.getId());
 	}

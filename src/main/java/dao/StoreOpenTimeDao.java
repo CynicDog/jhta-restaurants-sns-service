@@ -19,11 +19,8 @@ public class StoreOpenTimeDao {
 			StoreOpentime storeOpenTime = new StoreOpentime();
 
 			storeOpenTime.setId(rs.getInt(1));
-			storeOpenTime.setCategory(rs.getString(2));
-			storeOpenTime.setDay(rs.getString(3));
-			storeOpenTime.setOpenTime(rs.getString(4));
-			storeOpenTime.setCloseTime(rs.getString(5));
-			Store store = storeDao.getStoreById(rs.getInt(6));
+			storeOpenTime.setOperationTime(rs.getString(2));
+			Store store = storeDao.getStoreById(rs.getInt(3));
 			storeOpenTime.setStore(store);
 
 			return storeOpenTime;
@@ -35,11 +32,8 @@ public class StoreOpenTimeDao {
 			StoreOpentime storeOpenTime = new StoreOpentime();
 
 			storeOpenTime.setId(rs.getInt(1));
-			storeOpenTime.setCategory(rs.getString(2));
-			storeOpenTime.setDay(rs.getString(3));
-			storeOpenTime.setOpenTime(rs.getString(4));
-			storeOpenTime.setCloseTime(rs.getString(5));
-			Store store = storeDao.getStoreById(rs.getInt(6));
+			storeOpenTime.setOperationTime(rs.getString(2));
+			Store store = storeDao.getStoreById(rs.getInt(3));
 			storeOpenTime.setStore(store);
 
 			return storeOpenTime;
@@ -48,19 +42,13 @@ public class StoreOpenTimeDao {
 
 	public void insertStoreOpenTime(StoreOpentime storeOpentime) {
 		DaoHelper.update("StoreOpenTimeDao.insertStoreOpenTime",
-				storeOpentime.getCategory(),
-				storeOpentime.getDay(),
-				storeOpentime.getOpenTime(), 
-				storeOpentime.getCloseTime(), 
+				storeOpentime.getOperationTime(), 
 				storeOpentime.getStore().getId());
 	}
 
 	public void updateStoreOpenTime(StoreOpentime storeOpentime) {
 		DaoHelper.update("StoreOpenTimeDao.updateStoreOpenTime", 
-				storeOpentime.getCategory(),
-				storeOpentime.getDay(), 
-				storeOpentime.getOpenTime(), 
-				storeOpentime.getCloseTime(),
+				storeOpentime.getOperationTime(), 
 				storeOpentime.getId());
 	}
 	
