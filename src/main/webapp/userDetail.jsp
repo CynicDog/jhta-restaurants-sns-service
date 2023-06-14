@@ -187,7 +187,9 @@
 <% } %>                        
                         <div class="d-flex justify-content-end mt-4 mb-1 w-100">
                             <div>
-                                <button class="btn btn-light mx-2" type="button" onclick="location.href='storeLegalInfoRegFormPage.jsp'">가게 등록 </button>
+<% if (owner != null) { %>                            
+                                <button class="btn btn-light mx-2" type="button" onclick="location.href='storeLegalInfoRegFormPage.jsp'">가게 등록</button>
+<% } %>                                
                                 <button type="button" class="btn btn-primary" onclick="location.href='editUserDetailPage.jsp'">수정</button>
                             </div>
                         </div>
