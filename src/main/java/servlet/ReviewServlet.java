@@ -28,11 +28,16 @@ import vo.Store;
 @MultipartConfig
 @WebServlet(urlPatterns = "/review")
 public class ReviewServlet extends HttpServlet {
+	
+	
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		System.out.println(System.getenv());
+		
+		
 		CustomerDao customerDao = CustomerDao.getInstance();
 		StoreDao storeDao = StoreDao.getInstance();
 
@@ -51,14 +56,14 @@ public class ReviewServlet extends HttpServlet {
 		Part part = request.getPart("pictureFiles");
 		String fileName = part.getSubmittedFileName();
 		String fileLocation = "src/main/resources/reviewImages/" + fileName;
+		
+		OutputStream out = new FileOutputStream(
+				new File(request.getServletContext().getRealPath("/resources/images"), fileName));
 
 		InputStream in = part.getInputStream();
-		OutputStream out = new FileOutputStream(new File(fileLocation));
+//		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
 		IOUtils.copy(in, out);
 		
-		File file = new File("C:\\workspace\\files", fileName);
-//		OutputStream out = new FileOutputStream(
-//				new File(/*request.getServletContext().getRealPath("/resources/images"), */fileLocation));
 
 		ReviewDao reviewDao = ReviewDao.getInstance();
 		int seq = reviewDao.getSeq();
