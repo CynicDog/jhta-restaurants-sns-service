@@ -6,9 +6,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	String category = request.getParameter("foodCategory");
+	System.out.println(category);
+//	List<Food> foodList = null;
+	List<Store> storeList = null;
+
 	FoodDao foodDao = FoodDao.getInstance();
-	List<Food> foodList = foodDao.getFoodByCategory("test_category");
-													// 응답값 														
+	StoreDao storeDao = StoreDao.getInstance();
+	if (category == null) {	// search.jsp : 전체
+		storeList = storeDao.getAllStores();
+		//foodList = foodDao.getAllFoods();
+		
+	} else {				// search.jsp?foodCategory=한식
+		//foodList = foodDao.getFoodByCategory(category);
+		storeList = storeDao.getStoresByFoodCategory(category);
+		
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -54,26 +67,39 @@ header,h1 {
 <article class="contents">
 	<header class="basic-info-list">
 	    	<div class="inner" style="padding-bottom: 10px">
-	      		<h1 class="title"><%=foodList.get(0).getCategory() %> 맛집 베스트 순위</h1>
-	      							<!-- 응답값 넣을 때 바꾸기 -->
+	      		<h1 class="title">음식종류별 가게 리스트</h1>
+	      						<!-- 응답값 넣을 때 바꾸기 -->
 	     	</div>
-	</header>
+		    <div id="test_btn_group" >	
+				<a class="btn" role="button" href="search.jsp">전체</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=한식">한식</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=중식">중식</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=일식">일식</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=패스트푸드">패스트푸드</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=찜, 탕, 찌개">찜, 탕, 찌개</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=육고기">육고기</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=분식">분식</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=아시안">아시안</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=디저트">디저트</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=기타">기타</a>
+		    </div>	     	
+	</header>	
 <% 
-	for (Food food : foodList) {
-%>
+	for (Store stores : storeList) {
+%>	
 	<div class=store_list>
 		<div class=store_img>
 			<a href="/storeDetail.jsp">				
-				<img alt="이미지텍스트대체" src="<%=food.getPictureLocation() %>"  width=250px height=250px; >
+				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
 			</a>
 		</div>
 		<ol class=textbox style="text-align: left">
 			<li>
 				<span>
-					<a href="/storeDetail.jsp"><strong><%=food.getStore().getName() %></strong></a>
+					<a href="/storeDetail.jsp"><strong><%=stores.getName() %></strong></a>
 				</span>
-					<p><%=food.getStore().getAddress() %></p>
-					<p><%=food.getStore().getText() %></p>
+					<p><%=stores.getAddress() %></p>
+					<p><%=stores.getText() %></p>
 					<div style="text-align: right">
 						<a href="/storeDetail.jsp">리뷰 보러가기></a>
 					</div>
@@ -81,7 +107,7 @@ header,h1 {
 		</ol>
 	</div>		
 <%
-}
+	}
 %>	
 			
 </article>
