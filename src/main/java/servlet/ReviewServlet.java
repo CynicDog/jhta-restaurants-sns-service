@@ -49,6 +49,7 @@ public class ReviewServlet extends HttpServlet {
 			response.sendRedirect("home.jsp");
 		}
 		
+		Double starPoint = Double.parseDouble(request.getParameter("starpoint"));
 		String reviewText = request.getParameter("review_text");
 
 		Part part = request.getPart("pictureFiles");
@@ -60,7 +61,7 @@ public class ReviewServlet extends HttpServlet {
 //		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
 		
 		InputStream in = part.getInputStream();
-		OutputStream out = new FileOutputStream(new File("C:\\Users\\GOTAEHWA\\git\\jhta-restaurants-sns-service\\src\\main\\webapp\\resources\\images", fileName));
+		OutputStream out = new FileOutputStream(new File("C:\\Users\\GOTAEHWA\\git\\jhta-restaurants-sns-service\\src\\main\\webapp\\resources\\reviewPicture", fileName));
 //		OutputStream out = new FileOutputStream(
 //				new File(request.getServletContext().getRealPath("/JAVA_HOME/PROJECT_HOME/"), fileName));
 
@@ -73,7 +74,7 @@ public class ReviewServlet extends HttpServlet {
 
 		Review review = new Review();
 		review.setId(seq);
-		review.setRating(5);
+		review.setRating(starPoint);
 		review.setText(reviewText);
 		
 		Customer customer = customerDao.getCustomerByUserId("test_id");

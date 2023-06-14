@@ -71,6 +71,7 @@
         </div>
 
           <div class="card-body">
+            <form method="post" action="review" enctype="multipart/form-data" onsubmit="checkform(event)">
 			<div class="starpoint_wrap">
 			  <div class="starpoint_box">
 			    <label for="starpoint_1" class="label_star" title="0.5"><span class="blind">0.5점</span></label>
@@ -83,20 +84,19 @@
 			    <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
 			    <label for="starpoint_9" class="label_star" title="4.5"><span class="blind">4.5점</span></label>
 			    <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
-			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio">
-			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio">
+			    <input type="radio" name="starpoint" id="starpoint_1" class="star_radio" value=0.5>
+			    <input type="radio" name="starpoint" id="starpoint_2" class="star_radio" value=1.0>
+			    <input type="radio" name="starpoint" id="starpoint_3" class="star_radio" value=1.5>
+			    <input type="radio" name="starpoint" id="starpoint_4" class="star_radio" value=2.0>
+			    <input type="radio" name="starpoint" id="starpoint_5" class="star_radio" value=2.5>
+			    <input type="radio" name="starpoint" id="starpoint_6" class="star_radio" value=3.0>
+			    <input type="radio" name="starpoint" id="starpoint_7" class="star_radio" value=3.5>
+			    <input type="radio" name="starpoint" id="starpoint_8" class="star_radio" value=4.0>
+			    <input type="radio" name="starpoint" id="starpoint_9" class="star_radio" value=4.5>
+			    <input type="radio" name="starpoint" id="starpoint_10" class="star_radio" value=5.0>
 			    <span class="starpoint_bg"></span>
 			  </div>
 			</div>
-            <form method="post" action="review" enctype="multipart/form-data">
               <div class="mb-3">
               	<div class="form-floating">
 					<textarea name="review_text" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -130,7 +130,32 @@
 					// 현재창 닫기
 					self.close();
 				}
-				
+				function checkform(e){
+					// 보유기술
+					
+					let pointEls = document.querySelectorAll("[name=starpoint]");
+					
+					let isChecked = false;
+					
+					for(let i = 0; i<pointEls.length; i++){
+						if(pointEls[i].checked){
+							alert(pointEls[i].value);
+						}
+					}
+					
+					pointEls.forEach(function(el){
+						console.log(el, el.checked);
+						if(el.checked){
+							isChecked = true;	
+						}
+						
+					});
+					console.log("최종 결과 ->", isChecked);
+					if(!isChecked){
+						alert("별점은 꼭 입력해주세요!");
+						e.preventDefault();
+					}
+				}
 			</script>
           </div>
 

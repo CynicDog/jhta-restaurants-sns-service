@@ -22,7 +22,7 @@ public class ReviewDao {
 			Review review = new Review();
 			
 			review.setId(rs.getInt(1)); 
-			review.setRating(rs.getInt(2));
+			review.setRating(rs.getDouble(2));
 			review.setText(rs.getString(3)); 
 			review.setCreateDate(rs.getDate(4)); 
 			review.setUpdateDate(rs.getDate(5)); 
@@ -44,7 +44,7 @@ public class ReviewDao {
 			Review review = new Review();
 			
 			review.setId(rs.getInt(1)); 
-			review.setRating(rs.getInt(2));
+			review.setRating(rs.getDouble(2));
 			review.setText(rs.getString(3)); 
 			review.setCreateDate(rs.getDate(4)); 
 			review.setUpdateDate(rs.getDate(5)); 
