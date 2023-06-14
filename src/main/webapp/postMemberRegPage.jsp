@@ -42,6 +42,10 @@
       align-items: center;
       justify-content: center;
     }
+	.button-container {
+	  display: flex;
+	  justify-content: center;
+	}
   </style>
 </head>
 <body>
@@ -51,6 +55,9 @@
       <div class="card shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
             <p class="text-center"><%=memberName%>님, 환영합니다!</p>
+            <div class="button-container mt-3">
+            	<button class="btn btn-light" type="button" onclick="location.href='storeLegalInfoRegFormPage.jsp'">가게 등록하러 가기</button> 
+            </div>
           </div>
       </div>
     </div>
