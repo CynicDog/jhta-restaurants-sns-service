@@ -2,6 +2,10 @@
 <%@page import="dao.StoreDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
+	int storeId = int.parseint request.getParameter("storeId");
+
+	
+
 	String storeName = request.getParameter("name");
 
 	StoreDao storeDao = StoreDao.getInstance();
