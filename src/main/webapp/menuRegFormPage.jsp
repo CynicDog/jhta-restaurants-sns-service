@@ -47,23 +47,23 @@ pageEncoding="UTF-8"%>
                         </div>
                     </div>
                 </div>
-                <form>
+                <form method="post" action="foodInsert" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="my-3">
                             <label for="name" class="form-label">메뉴 이름</label>
-                            <input type="text" class="form-control" id="name" required>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group my-3">
                             <label for="text">메뉴 소개글</label>
-                            <textarea class="form-control" id="text" rows="3"></textarea>
+                            <textarea class="form-control" id="text" rows="3" name="text"></textarea>
                         </div>
                         <div class="my-3">
                             <label for="price" class="form-label">메뉴 가격</label>
-                            <input type="number" class="form-control" id="price" min="0" required>
+                            <input type="number" class="form-control" id="price" min="0" name="price" required>
                         </div>
                         <div class="mt-3">
                             <label class="text-center" for="categories"><span style="white-space: nowrap">메뉴 카테고리</span></label>
-                            <select id="categories" class="form-control">
+                            <select id="categories" class="form-control" name="category">
                                 <option value="korean">한식</option>
                                 <option value="chinese">중식</option>
                                 <option value="japanese">일식</option>
@@ -77,8 +77,8 @@ pageEncoding="UTF-8"%>
                             </select>
                         </div>
                         <div class="my-3">
-                            <label for="picture" class="form-label">TODO: 메뉴 사진 첨부</label>
-                            <input type="text" class="form-control" id="picture" min="0" required>
+                            <label for="picture" class="form-label">메뉴 사진 첨부</label>
+                            <input type="file" class="form-control" id="picture" min="0" name="picture" required>
                         </div>
                     </div>
                     <div class="button-container">

@@ -9,6 +9,7 @@ public class Food {
 	private String category;
 	private String soldOut;
 	private String pictureLocation;
+	private String text; 
 	private Store store;
 	
 	public Food() {}
@@ -59,6 +60,14 @@ public class Food {
 
 	public void setPictureLocation(String pictureLocation) {
 		this.pictureLocation = pictureLocation;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Store getStore() {

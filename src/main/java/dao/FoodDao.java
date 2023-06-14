@@ -25,8 +25,6 @@ public class FoodDao {
 		DaoHelper.update("FoodDao.deleteFoodByName", name);
 	}
 	
-	
-	
 	public Food getFoodById(int id) {
 		return DaoHelper.selectOne("FoodDao.getFoodById", rs->{
 			Food food = new Food();
@@ -37,13 +35,15 @@ public class FoodDao {
 			food.setCategory(rs.getString(4));
 			food.setSoldOut(rs.getString(5));
 			food.setPictureLocation(rs.getString(6));
+			food.setText(rs.getString(7));
 			
-			Store store = storeDao.getStoreById(rs.getInt(7));
+			Store store = storeDao.getStoreById(rs.getInt(8));
 			food.setStore(store);
 			
 			return food;
 		}, id);
 	}
+	
 	public Food getFoodByName(String name) {
 		return DaoHelper.selectOne("FoodDao.getFoodByName", rs->{
 			Food food = new Food();
@@ -54,8 +54,9 @@ public class FoodDao {
 			food.setCategory(rs.getString(4));
 			food.setSoldOut(rs.getString(5));
 			food.setPictureLocation(rs.getString(6));
+			food.setText(rs.getString(7));
 			
-			Store store = storeDao.getStoreById(rs.getInt(7));
+			Store store = storeDao.getStoreById(rs.getInt(8));
 			food.setStore(store);
 			
 			return food;
@@ -72,8 +73,9 @@ public class FoodDao {
 			food.setCategory(rs.getString(4));
 			food.setSoldOut(rs.getString(5));
 			food.setPictureLocation(rs.getString(6));
+			food.setText(rs.getString(7));
 			
-			Store store = storeDao.getStoreById(rs.getInt(7));
+			Store store = storeDao.getStoreById(rs.getInt(8));
 			food.setStore(store);
 			
 			return food;
@@ -87,6 +89,7 @@ public class FoodDao {
 				food.getCategory(),
 				food.getSoldOut(),
 				food.getPictureLocation(),
+				food.getText(),
 				food.getStore().getId());
 	}
 	
@@ -97,7 +100,7 @@ public class FoodDao {
 				food.getCategory(),
 				food.getSoldOut(),
 				food.getPictureLocation(),
-				food.getStore().getId(),
+				food.getText(), 
 				food.getId());
 	}
 }
