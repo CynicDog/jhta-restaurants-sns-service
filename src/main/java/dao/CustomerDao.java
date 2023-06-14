@@ -94,15 +94,14 @@ public class CustomerDao {
 	
 	public void updateCustomer(Customer customer) {
 		DaoHelper.update("CustomerDao.updateCustomer",
-					
 					customer.getUserId(),
 					customer.getPassword(),
 					customer.getName(),
 					customer.getEmail(),
 					customer.getPhone(),
-					customer.getGender(), 
+					customer.getBirthday(),
+					customer.getGender(),   
 					customer.getGrade(), 
-					customer.getUpdateDate(), 
 					customer.getId()
 				);
 	}

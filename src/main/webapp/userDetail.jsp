@@ -104,11 +104,6 @@ table td {
     }
   }
   
-  function updateTable(formData){
-	
-	  
-	  
-  }
   
 </script>
 
@@ -137,7 +132,7 @@ table td {
 							<th style="font-size: 25px;">회원 정보</th>
 							<th>
 								<div class="button-container col my-1 mt-4" style="text-align: right;">
-									<button class="btn btn-primary" onclick="openPopup()">수정</button>
+									<button class="btn btn-primary" onclick="location.href='editUserDetailPage.jsp'">수정</button>
 								</div>
 							</th>
 						</tr>
