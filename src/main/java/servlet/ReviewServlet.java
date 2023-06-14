@@ -35,8 +35,6 @@ public class ReviewServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		System.out.println(System.getenv());
-		
 		
 		CustomerDao customerDao = CustomerDao.getInstance();
 		StoreDao storeDao = StoreDao.getInstance();
@@ -50,15 +48,14 @@ public class ReviewServlet extends HttpServlet {
 			response.sendRedirect("home.jsp");
 		}
 		
-
 		String reviewText = request.getParameter("review_text");
 
 		Part part = request.getPart("pictureFiles");
 		String fileName = part.getSubmittedFileName();
-		String fileLocation = "src/main/resources/reviewImages/" + fileName;
+		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
 		
 		OutputStream out = new FileOutputStream(
-				new File(request.getServletContext().getRealPath("/resources/images"), fileName));
+				new File(request.getServletContext().getRealPath("/resources/images/"), fileName));
 
 		InputStream in = part.getInputStream();
 //		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
@@ -93,54 +90,3 @@ public class ReviewServlet extends HttpServlet {
 //		response.sendRedirect("storeDetail.jsp");
 	}
 }
-
-//@WebServlet(urlPatterns = "/review")
-//@MultipartConfig
-//public class ReviewServlet extends HttpServlet {
-//
-//	@Override
-//	protected void service(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//
-//		/*
-//		 * HttpSession session = request.getSession(); String loginId = (String)
-//		 * session.getAttribute("loginId"); if (loginId == null) {
-//		 * response.sendRedirect("home.jsp"); return; }
-//		 */
-//
-//		String reviewText = request.getParameter("review_text");
-//
-//		Part part = request.getPart("pictureFiles");
-//		String fileLocation = part.getSubmittedFileName();
-//
-//		InputStream in = part.getInputStream();
-//		OutputStream out = new FileOutputStream(new File("../../webapp/resourses/images", fileLocation));
-//		byte[] buffer = new byte[1024];
-//		int bytesRead;
-//		while ((bytesRead = in.read(buffer)) != -1) {
-//			out.write(buffer, 0, bytesRead);
-//		}
-//		out.close();
-//		in.close();
-//
-//		ReviewDao reviewDao = ReviewDao.getInstance();
-//		int seq = reviewDao.getSeq();
-//
-//		Review review = new Review();
-//		review.setId(seq);
-//		review.setText(reviewText);
-//
-//		ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
-//
-//		ReviewPicture rp = new ReviewPicture();
-//		rp.setId(seq);
-//		rp.setFileLocation(fileLocation);
-//		rp.setReview(review);
-//
-//		reviewPictureDao.insertReviewPicture(rp);
-//
-//		reviewDao.insertReview(review);
-//
-//		response.sendRedirect("storeDetail.jsp");
-//	}
-//}
