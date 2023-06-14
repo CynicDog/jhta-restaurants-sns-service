@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
 
@@ -55,10 +57,8 @@ public class FoodInsertServlet extends HttpServlet{
 		if (size > 0) {
 			pictureFileName = System.currentTimeMillis() + "-" + picturePart.getSubmittedFileName();
 			
-			InputStream in = picturePart.getInputStream(); 
-
-			String menuDirectory = getServletContext().getRealPath("../resources/menu");
-			OutputStream out = new FileOutputStream(new File(menuDirectory, pictureFileName));
+			InputStream in = picturePart.getInputStream();		
+			OutputStream out = new FileOutputStream(new File("src/main/resouces/menu 절대경로...", pictureFileName));
 			
 			IOUtils.copy(in, out);
 		}
@@ -73,5 +73,7 @@ public class FoodInsertServlet extends HttpServlet{
 		food.setStore(store);
 		
 		foodDao.insertFood(food); 		
+		
+		response.sendRedirect("home.jsp");
 	}
 }
