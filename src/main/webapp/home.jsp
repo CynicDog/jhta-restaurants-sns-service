@@ -42,7 +42,7 @@
 	}
 	
 	body{
-		padding:55px;
+		/* padding:55px; */
 	}
 	
 	.btn{
@@ -64,20 +64,16 @@
 	<jsp:param name="menu" value="홈"/>
 </jsp:include>
 
-
-
 <div class="container-fluid text-center">
 	<div class="col-8">
 		<div class="row">
-	    
-	    <div id="test_btn_group" >	
-			<a class="btn" role="button" >추천 맛집</a>
-			<a class="btn" role="button" >한식</a>
-			<a class="btn" role="button" >중식</a>
-			<a class="btn" role="button" >일식</a>
-			<a class="btn" role="button" >양식</a>
-	    </div>	
-	  
+		    <div id="test_btn_group" >	
+				<a class="btn" role="button" >추천 맛집</a>
+				<a class="btn" role="button" >한식</a>
+				<a class="btn" role="button" >중식</a>
+				<a class="btn" role="button" >일식</a>
+				<a class="btn" role="button" >양식</a>
+		    </div>	
 	  	</div>
 
 	 	

@@ -56,6 +56,9 @@
 
 </head>
 <body>
+<jsp:include page="nav.jsp">
+    <jsp:param name="menu" value="userDetail"/>
+</jsp:include>
 
 	<div class="container-fluid">
 

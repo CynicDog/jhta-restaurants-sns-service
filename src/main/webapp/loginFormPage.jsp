@@ -9,19 +9,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <style>
-    html, body {
-      height: 100%;
-    }
-
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+		.container-pt {
+			padding-top: 10%;
+		}
   </style>
 </head>
 <body>
-<div class="container">
+<jsp:include page="nav.jsp">
+    <jsp:param name="menu" value="홈"/>
+</jsp:include>
+<div class="container container-pt">
   <div class="row justify-content-center align-items-center mt-5">
     <div class="col-md-6">
       <div class="card shadow p-3 mb-5 bg-white rounded">
