@@ -31,7 +31,7 @@ public class StorePictureDao {
 	}
 	
 	public List<StorePicture> getAllStorePictures(){
-		return DaoHelper.selectList("StorePcitureDao.getAllStorePictures", rs->{
+		return DaoHelper.selectList("StorePictureDao.getAllStorePictures", rs->{
 			StorePicture storePicture = new StorePicture();
 			
 			storePicture.setId(rs.getInt(1));
