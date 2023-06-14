@@ -7,16 +7,21 @@
 	// 세션에 저장된 로그인타입, 로그인아이디 조회하기
 	String loginType = (String) session.getAttribute("loginType");
  	Integer loginId = (Integer) session.getAttribute("loginId");
+ 	System.out.println(loginType);
+ 	System.out.println(loginId);
  	
 
 	// 요청파라미터 조회하기
 	String menu = request.getParameter("menu");
 	
-	String userId = null;
 	// userId 획득
+	String userId="";
 	CustomerDao customerDao = CustomerDao.getInstance();
-	if(loginType!=null){
-		
+	OwnerDao ownerDao = OwnerDao.getInstance();
+	AdminDao adminDao = AdminDao.getInstance();
+	
+	if(loginType!=null&&loginId!=null){
+
 		if ("customer".equals(loginType)){
 			try{
 				userId = customerDao.getCustomerById(loginId).getUserId();
@@ -24,12 +29,13 @@
 			}catch(Exception e){
 				
 			}
-
 		}else if("owner".equals(loginType)){
 			userId = OwnerDao.getInstance().getOwnerById(loginId).getOwnerId();
 
 		}else if("admin".equals(loginType)){
 			userId = AdminDao.getInstance().getAdminById(loginId).getAdminId();
+		}else{
+			userId = "";
 		}
 	}
 
@@ -57,16 +63,16 @@
 				background-color:rgb(233, 100, 121);
 			}
 
-			.d-flex{
-				width:90%;
-				position:fixed;
-				top:8px;
-				right:5px;
-				z-index:101;
-			}
+/*  			.d-flex{ */
+/*  				width:50%;  */
+/*  				position: fixed;  */
+/*  				top:8px;  */
+/*  				right:5px;  */
+/*  				z-index:101;  */
+/*  			}  */
 			
 			.nav-button {
-				width:8%;
+			
 				background-color: rgb(125, 185, 182);
 				color:white;
 			}
@@ -75,55 +81,63 @@
 		</style>
 	</head>
 	<body>
-	
-			<nav class="navbar ">
-			  <div class="container-fluid">
-			    <form class="d-flex" role="search">
-			    <button id="button-home" class="btn nav-button" type="button" onclick="location.href='home.jsp'">Home</button>
-			      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			      <button id="button-search" class="btn nav-button" type="submit">Search</button>
+	<nav class="navbar ">
+		<div class="container-fluid" style="justify-content: flex-start">
+
+			<button id="button-home" class="btn nav-button" type="button"
+				onclick="location.href='home.jsp'">Home
+			</button>
+
+			<form>
+				<input type="text" name="search" placeholder="Search..." style="width: 1000px;">
+				<button class="btn nav-button" type="submit">Search</button>
+			</form>
+
 <%
 	if (loginType != null) {
-		System.out.println(loginType);
 %>
-		
-		<span class="navbar-text me-5">
-			<strong class="text-white bolder"><%=userId %></strong>님 환영합니다.
-		</span>
+
+				<span class="navbar-text me-5"> <strong
+					class="text-white bolder"><%=userId %></strong>님 환영합니다.
+				</span>
 <%	
 	}
 %>
 
 
-<%
+				<%
 	if ("customer".equals(loginType)) {
 %>
-				     <button id="button-userDetail" class="btn nav-button" type="button" onclick="location.href='userDetail.jsp'">MyPage</button>
-	
-<%
-	} else if("owner".equals(loginType)){
-%>	
+				<button id="button-userDetail" class="btn nav-button" type="button"
+					onclick="location.href='userDetail.jsp'">MyPage</button>
 
-<%
+				<%
+	} else if("owner".equals(loginType)){
+%>
+
+				<%
 	}
 %>
 
-<%
+				<%
 	if (loginType == null) {
 %>
-			      <button id="button-login" class="btn nav-button" type="button" onclick="location.href='loginFormPage.jsp'">Login</button>
-			      <button id="button-signUp" class="btn nav-button" type="button" onclick="location.href='memberRegFormPage.jsp'">Sign up</button>
-<%
+				<button id="button-login" class="btn nav-button" type="button"
+					onclick="location.href='loginFormPage.jsp'">Login</button>
+				<button id="button-signUp" class="btn nav-button" type="button"
+					onclick="location.href='memberRegFormPage.jsp'">Sign up</button>
+				<%
 	} else {
-%>	
-         		<button id="button-logout" class="btn nav-button" type="button" onclick="location.href='logout.jsp'">Logout</button>
-<%
+%>
+				<button id="button-logout" class="btn nav-button" type="button"
+					onclick="location.href='logout.jsp'">Logout</button>
+				<%
 	}
 %>
-			   
-			    </form>
-			  </div>
-			</nav>
-	
-	</body>
+
+		
+		</div>
+	</nav>
+
+</body>
 </html>

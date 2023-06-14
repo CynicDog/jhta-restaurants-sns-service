@@ -1,16 +1,15 @@
+<%@page import="vo.Admin"%>
+<%@page import="vo.Owner"%>
+<%@page import="dao.AdminDao"%>
+<%@page import="dao.OwnerDao"%>
 <%@page import="vo.Customer"%>
 <%@page import="dao.CustomerDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
-	//테스트용 세션 데이터
-	String type = "customer";
-	int id = 21;
-	session.setAttribute("loginType", type);
-	session.setAttribute("loginId", id);
 
 	// 1. 세션에서 로그인된 사용자 정보 조회하기
 	String loginType = (String) session.getAttribute("loginType");
-	int loginId = (int)session.getAttribute("loginId");
+	Integer loginId = (Integer)session.getAttribute("loginId");
 	
 	// 2. 로그인된 상태인지 체크하기
 	if (loginType == null) {
@@ -21,6 +20,11 @@
 	// 3. 로그인된 유저의 객체 획득
 	CustomerDao customerDao = CustomerDao.getInstance();
 	Customer customer = customerDao.getCustomerById(loginId);
+	OwnerDao ownerDao = OwnerDao.getInstance();
+	Owner owner = ownerDao.getOwnerById(loginId);
+	AdminDao adminDao = AdminDao.getInstance();
+	Admin admin = adminDao.getAdminById(loginId);
+	
 %>
 
 <!doctype html>
