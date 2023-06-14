@@ -4,15 +4,10 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <%
-	//테스트용 세션 데이터
-	String type = "customer";
-	int id = 10;
-	session.setAttribute("loginType", type);
-	session.setAttribute("loginId", id);
 
 	// 1. 세션에서 로그인된 사용자 정보 조회하기
 	String loginType = (String) session.getAttribute("loginType");
-	int loginId = (int)session.getAttribute("loginId");
+	Integer loginId = (Integer)session.getAttribute("loginId");
 	
 	// 2. 로그인된 상태인지 체크하기
 	if (loginType == null) {
