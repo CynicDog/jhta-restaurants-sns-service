@@ -131,7 +131,8 @@ public class StoreDao {
 			store.setLongitude(rs.getDouble(7)); 
 			store.setText(rs.getString(8)); 
 			store.setPhone(rs.getString(9));
-			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
+			store.setDayOffs(rs.getString(10));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 		
 			store.setOwner(owner); 
 					
 			return store;
