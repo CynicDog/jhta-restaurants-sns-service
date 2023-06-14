@@ -43,7 +43,7 @@
 				</div>
 			</div>  
             <div class="row mb-3">
-              <label for="user_id" class="col-sm-2 col-form-label"><span style="white-space: nowrap">아이디</span></label>
+              <label for="member-id" class="col-sm-2 col-form-label"><span style="white-space: nowrap">아이디</span></label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="member-id" name="member-id">
               </div>

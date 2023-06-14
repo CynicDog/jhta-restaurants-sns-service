@@ -8,22 +8,26 @@
 	CustomerDao customerDao = CustomerDao.getInstance();	
 	OwnerDao ownerDao = OwnerDao.getInstance();
 	
-	String loginId = (String) session.getAttribute("loginId"); 
-	
-	Customer customer = null;
-	Owner owner = null; 
-	
-	customer = customerDao.getCustomerByUserId(loginId); 
-	owner = ownerDao.getOwnerByOwnerId(loginId); 
+	int loginId = (int) session.getAttribute("loginId");
+	String loginType = (String) session.getAttribute("loginType");
 	
 	String memberName = null;
 	
-	if (customer != null) {
-		memberName = customer.getName();
-	} else if (owner != null) {
+	System.out.println(loginId + ", " + loginType + ", " + memberName);
+	
+	if (loginType.equals("customer")) {
+		Customer customer = customerDao.getCustomerById(loginId);	
+		memberName = customer.getName(); 
+		
+		System.out.println(loginId + ", " + loginType + ", " + memberName);
+		
+	} else if (loginType.equals("owner")) { 
+		Owner owner = ownerDao.getOwnerById(loginId);  
 		memberName = owner.getName();
+		
+		System.out.println(loginId + ", " + loginType + ", " + memberName);
 	}
-%>>
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,9 +59,11 @@
       <div class="card shadow p-3 mb-5 bg-white rounded">
           <div class="card-body">
             <p class="text-center"><%=memberName%>님, 환영합니다!</p>
+            <% if (loginType.equals("owner")) { %>
             <div class="button-container mt-3">
             	<button class="btn btn-light" type="button" onclick="location.href='storeLegalInfoRegFormPage.jsp'">가게 등록하러 가기</button> 
             </div>
+            <% } %>
           </div>
       </div>
     </div>

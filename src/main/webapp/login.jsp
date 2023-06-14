@@ -16,7 +16,8 @@
 		
 		if (customer.getPassword().equals(password)) { // authenticate  
 			
-			session.setAttribute("loginId", customer.getUserId());
+			session.setAttribute("loginId", customer.getId()); // int
+			session.setAttribute("loginType", "customer"); 
 			response.sendRedirect("postMemberRegPage.jsp"); 
 		}
 		
@@ -27,7 +28,8 @@
 		
 		if (owner.getPassword().equals(password)) { // authenticate 
 			
-			session.setAttribute("loginId", owner.getOwnerId());
+			session.setAttribute("loginId", owner.getId()); // int 
+			session.setAttribute("loginType", "owner"); 
 			response.sendRedirect("postMemberRegPage.jsp");
 		} 
 	}
