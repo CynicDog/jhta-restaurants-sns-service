@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
 
 import dao.FoodDao;
+import dao.StoreDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import vo.Food;
+import vo.Store;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
@@ -28,14 +30,17 @@ import vo.Food;
 public class FoodInsertServlet extends HttpServlet{
 	
 	static {
-		System.out.println("Post request gor received."); 
+		System.out.println("Post request got received."); 
 	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		FoodDao foodDao = FoodDao.getInstance();
-		
+
+		// TODO: resolve tightly coupled operations of insertion of `store` and insertion of `food`
+		Store store = (Store) request.getSession().getAttribute("storeComplete");   
+ 
 		String name = request.getParameter("name");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String category = request.getParameter("category");
@@ -51,7 +56,9 @@ public class FoodInsertServlet extends HttpServlet{
 			pictureFileName = System.currentTimeMillis() + "-" + picturePart.getSubmittedFileName();
 			
 			InputStream in = picturePart.getInputStream(); 
-			OutputStream out = new FileOutputStream(new File("../resources/menu", pictureFileName));
+
+			String menuDirectory = getServletContext().getRealPath("../resources/menu");
+			OutputStream out = new FileOutputStream(new File(menuDirectory, pictureFileName));
 			
 			IOUtils.copy(in, out);
 		}
@@ -63,6 +70,7 @@ public class FoodInsertServlet extends HttpServlet{
 		food.setSoldOut(soldOut); 
 		food.setPictureLocation(pictureFileName);
 		food.setText(text);
+		food.setStore(store);
 		
 		foodDao.insertFood(food); 		
 	}

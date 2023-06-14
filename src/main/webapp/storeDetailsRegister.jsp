@@ -35,5 +35,7 @@
 	
 	storeOpenTimeDao.insertStoreOpenTime(storeOpentime);
 	
+	session.setAttribute("storeComplete", store_found);	
+	
 	response.sendRedirect("menuRegFormPage.jsp"); 
 %>
