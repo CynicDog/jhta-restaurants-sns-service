@@ -6,13 +6,24 @@
  <%
 	// 세션에 저장된 로그인타입, 로그인아이디 조회하기
 	String loginType = (String) session.getAttribute("loginType");
-	int loginId = (int) session.getAttribute("loginId");
+ 	Integer loginId = (Integer) session.getAttribute("loginId");
+ 	
+
+	// 요청파라미터 조회하기
+	String menu = request.getParameter("menu");
 	
-	// 유저의 userId 획득
 	String userId = null;
+	// userId 획득
+	CustomerDao customerDao = CustomerDao.getInstance();
 	if(loginType!=null){
+		
 		if ("customer".equals(loginType)){
-			userId = CustomerDao.getInstance().getCustomerById(loginId).getUserId();
+			try{
+				userId = customerDao.getCustomerById(loginId).getUserId();
+
+			}catch(Exception e){
+				
+			}
 
 		}else if("owner".equals(loginType)){
 			userId = OwnerDao.getInstance().getOwnerById(loginId).getOwnerId();
@@ -21,9 +32,7 @@
 			userId = AdminDao.getInstance().getAdminById(loginId).getAdminId();
 		}
 	}
-	// 요청파라미터 조회하기
-	String menu = request.getParameter("menu");
-	
+
 %>   
     
 <!DOCTYPE html>
@@ -75,7 +84,9 @@
 			      <button id="button-search" class="btn nav-button" type="submit">Search</button>
 <%
 	if (loginType != null) {
+		System.out.println(loginType);
 %>
+		
 		<span class="navbar-text me-5">
 			<strong class="text-white bolder"><%=userId %></strong>님 환영합니다.
 		</span>
