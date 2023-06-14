@@ -39,7 +39,7 @@ public class ReviewServlet extends HttpServlet {
 		
 		HttpSession session =request.getSession();
 		String loginId = (String)session.getAttribute("loginId"); 
-		String custName = (String)session.getAttribute("custName");
+		String storeName = "test_name"; /*(String)session.getAttribute("storeName");*/
 		
 		if (loginId == null) {
 			response.sendRedirect("home.jsp");
@@ -49,37 +49,43 @@ public class ReviewServlet extends HttpServlet {
 		String reviewText = request.getParameter("review_text");
 
 		Part part = request.getPart("pictureFiles");
-		String fileLocation = part.getSubmittedFileName();
+		String fileName = part.getSubmittedFileName();
+		String fileLocation = "src/main/resources/reviewImages/" + fileName;
 
 		InputStream in = part.getInputStream();
-		OutputStream out = new FileOutputStream(
-				new File(request.getServletContext().getRealPath("/resources/images"), fileLocation));
+		OutputStream out = new FileOutputStream(new File(fileLocation));
 		IOUtils.copy(in, out);
+		
+		File file = new File("C:\\workspace\\files", fileName);
+//		OutputStream out = new FileOutputStream(
+//				new File(/*request.getServletContext().getRealPath("/resources/images"), */fileLocation));
 
 		ReviewDao reviewDao = ReviewDao.getInstance();
 		int seq = reviewDao.getSeq();
 
 		Review review = new Review();
+		review.setId(seq);
 		review.setRating(5);
 		review.setText(reviewText);
 		
-		Customer customer = customerDao.getCustomerByName(custName);
+		Customer customer = customerDao.getCustomerByUserId("test_id");
 		review.setCustomer(customer);
-		Store store = storeDao.getStoreByName();
+		Store store = storeDao.getStoreByName(storeName);
 		review.setStore(store);
 
+		reviewDao.insertReview(review);
+		
 		ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
 
+		
 		ReviewPicture rp = new ReviewPicture();
-		rp.setId(seq);
 		rp.setFileLocation(fileLocation);
 		rp.setReview(review);
 
 		reviewPictureDao.insertReviewPicture(rp);
 
-		reviewDao.insertReview(review);
 
-		response.sendRedirect("storeDetail.jsp");
+//		response.sendRedirect("storeDetail.jsp");
 	}
 }
 

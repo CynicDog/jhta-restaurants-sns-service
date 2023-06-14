@@ -62,6 +62,7 @@ public class ReviewDao {
 	
 	public void insertReview(Review review) {
 		DaoHelper.update("ReviewDao.insertReview",
+							review.getId(),
 							review.getRating(),
 							review.getText(),
 							review.getCustomer().getId(),
