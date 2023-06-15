@@ -4,7 +4,6 @@
 <%@page import="vo.Review"%>
 <%@page import="vo.StoreOpentime"%>
 <%@page import="java.util.List"%>
-<%@page import="dao.FoodPictureDao"%>
 <%@page import="dao.FoodDao"%>
 <%@page import="dao.ReviewPictureDao"%>
 <%@page import="dao.ReviewDao"%>
@@ -24,7 +23,6 @@
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
 	FoodDao foodDao = FoodDao.getInstance();
-	FoodPictureDao foodPictureDao = FoodPictureDao.getInstance();
 	
 	Store store = storeDao.getStoreById(storeId); // pk 조회 -> 하나만
 	List<StoreOpentime> storeOpentimes= storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
