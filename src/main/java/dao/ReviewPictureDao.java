@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import utils.DaoHelper;
 import vo.Review;
 import vo.ReviewPicture;
@@ -13,6 +15,19 @@ public class ReviewPictureDao {
 	private ReviewPictureDao() {}
 	public static ReviewPictureDao getInstance() {
 		return instance;
+	}
+	
+	public List<ReviewPicture> getReviewPictureByReviewId(int reviewId) {
+		return DaoHelper.selectList("ReviewPictureDao.getReviewPictureByReviewId", rs -> {
+			ReviewPicture reviewPicture = new ReviewPicture();
+
+			reviewPicture.setId(rs.getInt(1));
+			reviewPicture.setFileLocation(rs.getString(2));
+			Review review = reviewDao.getReviewById(rs.getInt(3));
+			reviewPicture.setReview(review);
+
+			return reviewPicture;
+		}, reviewId);
 	}
 	
 	public ReviewPicture getReviewPictureById(int id) {

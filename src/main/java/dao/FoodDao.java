@@ -104,7 +104,7 @@ public class FoodDao {
 				food.getId());
 	}
 	
-	public  List<Food> getFoodsByStoreId() {
+	public  List<Food> getFoodsByStoreId(int storeId) {
 		return DaoHelper.selectList("FoodDao.getFoodsByStoreId", rs->{
 			Food food = new Food();
 			
@@ -120,6 +120,6 @@ public class FoodDao {
 			food.setStore(store);
 			
 			return food;
-		});
+		}, storeId);
 	}
 }

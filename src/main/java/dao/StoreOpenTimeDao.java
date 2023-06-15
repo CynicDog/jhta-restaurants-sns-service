@@ -58,7 +58,7 @@ public class StoreOpenTimeDao {
 		DaoHelper.update("StoreOpenTimeDao.deleteStoreOpenTimeById", id);
 	}
 	
-	public List<StoreOpentime> getStoreOpenTimeByStoreId() {
+	public List<StoreOpentime> getStoreOpenTimeByStoreId(int storeId) {
 		return DaoHelper.selectList("StoreOpenTimeDao.getStoreOpenTimeByStoreId", rs -> {
 			StoreOpentime storeOpenTime = new StoreOpentime();
 
@@ -68,10 +68,10 @@ public class StoreOpenTimeDao {
 			storeOpenTime.setStore(store);
 
 			return storeOpenTime;
-		});
+		}, storeId);
 	}
 	
-	public List<StoreOpentime> getStoreOpentimeByStoreId() {
+	public List<StoreOpentime> getStoreOpentimeByStoreId(int storeId) {
 		return DaoHelper.selectList("StoreOpenTimeDao.getStoreOpentimeByStoreId", rs -> {
 			StoreOpentime storeOpenTime = new StoreOpentime();
 
@@ -81,6 +81,6 @@ public class StoreOpenTimeDao {
 			storeOpenTime.setStore(store);
 
 			return storeOpenTime;
-		});
+		}, storeId);
 	}
 }
