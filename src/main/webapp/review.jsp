@@ -72,6 +72,7 @@
 
           <div class="card-body">
             <form method="post" action="review" enctype="multipart/form-data" onsubmit="checkform(event)">
+            <input hidden =true value=<%=request.getParameter("storeId")  %> name="storeId"> 
 			<div class="starpoint_wrap">
 			  <div class="starpoint_box">
 			    <label for="starpoint_1" class="label_star" title="0.5"><span class="blind">0.5점</span></label>
@@ -112,6 +113,8 @@
 					    const files = e.currentTarget.files;
 					    console.log(typeof files, files);
 					  }
+					  
+					  
 					
 					  const realUpload = document.querySelector('.real-upload');
 					  const upload = document.querySelector('.upload');
@@ -119,6 +122,7 @@
 					  upload.addEventListener('click', () => realUpload.click());
 					  realUpload.addEventListener('change', getImageFiles);
 					</script>
+		
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
 				  <button  class="btn btn-primary" type="submit" >작성</button>
@@ -137,12 +141,6 @@
 					
 					let isChecked = false;
 					
-					for(let i = 0; i<pointEls.length; i++){
-						if(pointEls[i].checked){
-							alert(pointEls[i].value);
-						}
-					}
-					
 					pointEls.forEach(function(el){
 						console.log(el, el.checked);
 						if(el.checked){
@@ -150,7 +148,7 @@
 						}
 						
 					});
-					console.log("최종 결과 ->", isChecked);
+				
 					if(!isChecked){
 						alert("별점은 꼭 입력해주세요!");
 						e.preventDefault();

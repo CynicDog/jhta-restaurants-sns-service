@@ -42,9 +42,9 @@ public class ReviewServlet extends HttpServlet {
 
 		
 		HttpSession session =request.getSession();
-		String loginId = (String)session.getAttribute("loginId"); 
+		int loginId = (int)session.getAttribute("loginId"); 
 		
-		if (loginId == null) {
+		if (session.getAttribute("loginId") == null) {
 			response.sendRedirect("home.jsp");
 		}
 		
@@ -80,7 +80,7 @@ public class ReviewServlet extends HttpServlet {
 		review.setRating(starPoint);
 		review.setText(reviewText);
 		
-		Customer customer = customerDao.getCustomerByUserId("test_id");
+		Customer customer = customerDao.getCustomerById(loginId);
 		review.setCustomer(customer);
 		Store store = storeDao.getStoreById(storeId);
 		review.setStore(store);
@@ -97,6 +97,6 @@ public class ReviewServlet extends HttpServlet {
 		reviewPictureDao.insertReviewPicture(rp);
 
 
-//		response.sendRedirect("storeDetail.jsp");
+		response.sendRedirect("storeDetail.jsp?storeId=" + storeId);
 	}
 }
