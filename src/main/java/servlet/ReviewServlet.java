@@ -47,6 +47,7 @@ public class ReviewServlet extends HttpServlet {
 			response.sendRedirect("home.jsp");
 		}
 		
+		
 		int storeId = Integer.parseInt(request.getParameter("storeId"));
 		Double starPoint = Double.parseDouble(request.getParameter("starpoint"));
 		String reviewText = request.getParameter("review_text");
@@ -67,11 +68,11 @@ public class ReviewServlet extends HttpServlet {
 		reviewDao.insertReview(review);
 		
 		Part part = request.getPart("pictureFiles");
-		if (request.getPart("pictureFiles") != null) { 
+		if (part.getSize() > 0) { 
 			String fileName = part.getSubmittedFileName();
 			
 			String projectHome = System.getenv("PROJECT_HOME");
-			String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture/";
+			String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture";
 			
 			InputStream in = part.getInputStream();
 			OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
