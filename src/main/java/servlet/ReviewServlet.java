@@ -39,7 +39,6 @@ public class ReviewServlet extends HttpServlet {
 				
 		CustomerDao customerDao = CustomerDao.getInstance();
 		StoreDao storeDao = StoreDao.getInstance();
-
 		
 		HttpSession session =request.getSession();
 		int loginId = (int)session.getAttribute("loginId"); 
@@ -51,26 +50,6 @@ public class ReviewServlet extends HttpServlet {
 		int storeId = Integer.parseInt(request.getParameter("storeId"));
 		Double starPoint = Double.parseDouble(request.getParameter("starpoint"));
 		String reviewText = request.getParameter("review_text");
-
-		Part part = request.getPart("pictureFiles");
-		String fileName = part.getSubmittedFileName();
-		
-//		ServletContext servletContext = request.getServletContext();
-//		String fileLocation = servletContext.getRealPath("/JAVA_HOME/PROJECT_HOME/") + File.separator + fileName;
-		
-//		String fileLocation = request.getServletContext().getRealPath("/resources/images/") + fileName;
-		
-		String projectHome = System.getenv("PROJECT_HOME");
-		String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture/";
-		
-		InputStream in = part.getInputStream();
-		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
-//		OutputStream out = new FileOutputStream(
-//				new File(request.getServletContext().getRealPath("/JAVA_HOME/PROJECT_HOME/"), fileName));
-
-//		OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
-		IOUtils.copy(in, out);
-		
 
 		ReviewDao reviewDao = ReviewDao.getInstance();
 		int seq = reviewDao.getSeq();
@@ -87,15 +66,26 @@ public class ReviewServlet extends HttpServlet {
 
 		reviewDao.insertReview(review);
 		
-		ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
+		Part part = request.getPart("pictureFiles");
+		if (request.getPart("pictureFiles") != null) { 
+			String fileName = part.getSubmittedFileName();
+			
+			String projectHome = System.getenv("PROJECT_HOME");
+			String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture/";
+			
+			InputStream in = part.getInputStream();
+			OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
 
-		
-		ReviewPicture rp = new ReviewPicture();
-		rp.setFileLocation(fileName);
-		rp.setReview(review);
+			IOUtils.copy(in, out);
+			
+			ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
+			
+			ReviewPicture rp = new ReviewPicture();
+			rp.setFileLocation(fileName);
+			rp.setReview(review);
 
-		reviewPictureDao.insertReviewPicture(rp);
-
+			reviewPictureDao.insertReviewPicture(rp);
+		}
 
 		response.sendRedirect("storeDetail.jsp?storeId=" + storeId);
 	}

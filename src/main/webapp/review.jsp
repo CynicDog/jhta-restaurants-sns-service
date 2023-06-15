@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +71,7 @@
 
           <div class="card-body">
             <form method="post" action="review" enctype="multipart/form-data" onsubmit="checkform(event)">
-            <input hidden =true value=<%=request.getParameter("storeId")  %> name="storeId"> 
+            <input hidden =true value=<%=request.getParameter("storeId")%> name="storeId"> 
 			<div class="starpoint_wrap">
 			  <div class="starpoint_box">
 			    <label for="starpoint_1" class="label_star" title="0.5"><span class="blind">0.5점</span></label>
@@ -104,38 +103,40 @@
   					<label for="floatingTextarea">리뷰를 작성해 주세요!</label>
 				</div>
               </div>
-				  <input type="file" name="pictureFiles" class="real-upload" accept="image/*" required multiple>
+              
+				  <input type="file" name="pictureFiles" class="real-upload" accept="image/*" multiple>
 					<div>
 						<a class="upload btn btn-primary">사진 업로드</a>
 					</div>
+					
 					<script>
-					  function getImageFiles(e) {
-					    const files = e.currentTarget.files;
-					    console.log(typeof files, files);
+					
+ 					  function getImageFiles(e) {
+						    const files = e.currentTarget.files;
+						    /* console.log(typeof files, files); */
+						
 					  }
-					  
-					  
 					
 					  const realUpload = document.querySelector('.real-upload');
 					  const upload = document.querySelector('.upload');
 					
 					  upload.addEventListener('click', () => realUpload.click());
-					  realUpload.addEventListener('change', getImageFiles);
+					  realUpload.addEventListener('change', getImageFiles); 
 					</script>
-		
+
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				  <button onclick="cls()" class="btn btn-primary me-md-2" >취소</button>
+				  <a href="javascript:window.history.back();" onclick="cls()" class="btn btn-primary me-md-2" >취소</a>
 				  <button  class="btn btn-primary" type="submit" >작성</button>
 				</div>
             </form>
 			
 			<script type="text/javascript">
-				function cls(){
+				/* function cls(){
 					// 현재창 닫기
 					self.close();
-				}
+				} */
 				function checkform(e){
-					// 보유기술
+					// 별점
 					
 					let pointEls = document.querySelectorAll("[name=starpoint]");
 					
