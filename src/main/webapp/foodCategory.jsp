@@ -23,15 +23,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 맛집 베스트 순위</title>
+<title> 카테고리별 맛집</title>
 <style type="text/css">
 header,h1 {
-
     font-size: 100%
 }
 
-.basic-info-list {
-	padding-top: 100px;
+.category {
+	padding-top: 20px;
 	font-size: 16px;
 	text-align: center;
 }
@@ -61,15 +60,13 @@ header,h1 {
 <body>
 
 <jsp:include page="nav.jsp">
-	<jsp:param name="menu" value="홈"/>
+	<jsp:param name="menu" value="searchFood"/>
 </jsp:include>	
 
-<article class="contents">
-	<header class="basic-info-list">
-	    	<div class="inner" style="padding-bottom: 20px">
-	      		<h3 class="title">음식종류별 가게 리스트</h3>
+<div class="container">
+	<header class="category">
+	      		<h3 class="title">카테고리</h3>
 	      						
-	     	</div>
 		    <div id="test_btn_group" >	
 				<a class="btn" role="button" href="search.jsp">전체</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=한식">한식</a>
@@ -77,7 +74,7 @@ header,h1 {
 				<a class="btn" role="button" href="search.jsp?foodCategory=일식">일식</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=패스트푸드">패스트푸드</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=찜, 탕, 찌개">찜, 탕, 찌개</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=육고기">육고기</a>
+				<a class="btn" role="button" href="search.jsp?foodCategory=양식">양식</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=분식">분식</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=아시안">아시안</a>
 				<a class="btn" role="button" href="search.jsp?foodCategory=디저트">디저트</a>
@@ -87,12 +84,19 @@ header,h1 {
 <% 
 	for (Store stores : storeList) {
 %>	
+	<div>
+	</div>
+	
+	
+	
+	
 	<div class=store_list>
 		<div class=store_img>
-			<a href="/storeDetail.jsp">				
+			<a href="/resources/reviewPicture/pizza.jpg">				
 				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
 			</a>
 		</div>
+		
 		<ol class=textbox style="text-align: left">
 			<li>
 				<span>
@@ -100,9 +104,7 @@ header,h1 {
 				</span>
 					<p><%=stores.getAddress() %></p>
 					<p><%=stores.getText() %></p>
-					<div style="text-align: right">
-						<a href="/storeDetail.jsp">리뷰 보러가기></a>
-					</div>
+			
 			</li>
 		</ol>
 	</div>		
@@ -110,6 +112,6 @@ header,h1 {
 	}
 %>	
 			
-</article>
+</div>
 </body>
 </html>
