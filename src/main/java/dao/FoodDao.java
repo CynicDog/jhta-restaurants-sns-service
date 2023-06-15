@@ -103,4 +103,23 @@ public class FoodDao {
 				food.getText(), 
 				food.getId());
 	}
+	
+	public  List<Food> getFoodsByStoreId() {
+		return DaoHelper.selectList("FoodDao.getFoodsByStoreId", rs->{
+			Food food = new Food();
+			
+			food.setId(rs.getInt(1));
+			food.setName(rs.getString(2));
+			food.setPrice(rs.getInt(3));
+			food.setCategory(rs.getString(4));
+			food.setSoldOut(rs.getString(5));
+			food.setPictureLocation(rs.getString(6));
+			food.setText(rs.getString(7));
+			
+			Store store = storeDao.getStoreById(rs.getInt(8));
+			food.setStore(store);
+			
+			return food;
+		});
+	}
 }
