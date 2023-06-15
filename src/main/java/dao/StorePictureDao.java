@@ -30,6 +30,20 @@ public class StorePictureDao {
 		}, id);
 	}
 	
+	public StorePicture getStorePictureByStoreId(int id) {
+		return DaoHelper.selectOne("StorePictureDao.getStorePictureByStoreId", rs -> {
+			StorePicture storePicture = new StorePicture();
+			
+			storePicture.setId(rs.getInt(1));
+			storePicture.setFileLocation(rs.getString(2));
+			
+			Store store = storeDao.getStoreById(rs.getInt(3)); 
+			storePicture.setStore(store);
+			
+			return storePicture;
+		}, id);
+	}
+	
 	public List<StorePicture> getAllStorePictures(){
 		return DaoHelper.selectList("StorePictureDao.getAllStorePictures", rs->{
 			StorePicture storePicture = new StorePicture();
