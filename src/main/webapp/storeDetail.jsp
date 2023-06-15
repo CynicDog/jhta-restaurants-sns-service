@@ -15,8 +15,8 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
 	int loginId = (int) session.getAttribute("loginId");
+	String loginType = (String) session.getAttribute("loginType");
 	int storeId = Integer.parseInt(request.getParameter( "storeId"));
-			
 	
 	CustomerDao customerDao = CustomerDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance();
@@ -105,7 +105,9 @@
                                 <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"><%=store.getName() %></span><span class="rate-point mx-3" style="font-weight: bold; font-size: large"><%=avgRating %></span></p>
                             </div>
                             <div class="col-4">
+                            <% if ("customer".equals(loginType)) { %>
   								<button type="button" class="btn btn-outline-primary my-3" onclick="location.href='review.jsp?storeId=<%=storeId %>'">리뷰작성</button>
+                            <% } %>
                             </div>
                         </div>
                         <table class="table">
