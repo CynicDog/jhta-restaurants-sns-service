@@ -1,9 +1,11 @@
+<%@page import="utils.EngKorConverter"%>
 <%@page import="vo.ReviewPicture"%>
 <%@page import="java.util.stream.Collectors"%>
 <%@page import="vo.Food"%>
 <%@page import="vo.Review"%>
 <%@page import="vo.StoreOpentime"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.Arrays"%>
 <%@page import="dao.FoodDao"%>
 <%@page import="dao.ReviewPictureDao"%>
 <%@page import="dao.ReviewDao"%>
@@ -25,21 +27,38 @@
 	FoodDao foodDao = FoodDao.getInstance();
 	
 	Store store = storeDao.getStoreById(storeId); // pk 조회 -> 하나만
-	List<StoreOpentime> storeOpentimes= storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
+	List<StoreOpentime> storeOpentimes = storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
 	
 	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId); // fk 조회 -> 여러개
 		
 	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
 			
+	// Food -> String 이후 영어 ->한글 (korean, chinese... -> 한식, 중식, ...)
 	String foodsCategory = foods.stream()
 								.map(food -> food.getCategory())
+								.distinct()
+								.map(category -> EngKorConverter.foodCategoryToKorean(category))
 								.collect(Collectors.toList())
-								.toString();
+								.toString(); 
+	
+	// 영어 -> 한글 (day1, day2... -> 월요일, 화요일...)
+	String dayOffs = Arrays.asList(store.getDayOffs().split(",")).stream()
+			.map(dayOff -> EngKorConverter.dayOffsToKorean(dayOff))
+			.collect(Collectors.toList())
+			.toString(); 
 	
 	double avgRating = reviews.stream()
 			.mapToDouble(review -> review.getRating())
 			.average()
 			.orElse(0.0);
+	
+	// `월요일 ~ 월요일 : 06:00 ~ 06:00.화요일 ~ 목요일 : 06:00 ~ 08:00....` -> comma(`.`) 기준 parsing 
+	List<String> storeOpenTimesParsed = Arrays.asList(
+				storeOpentimes.stream()
+								.map(storeOpentime -> storeOpentime.getOperationTime())
+								.collect(Collectors.joining("\\."))
+								.split("\\.")
+				);
 	
 %><!doctype html>
 <html lang="ko">
@@ -108,6 +127,7 @@
                             <% } %>
                             </div>
                         </div>
+                        <div class="row"> 
                         <table class="table">
                             <tr>
                                 <th>주소</th>
@@ -123,16 +143,17 @@
                             </tr>
                            <tr>
                                 <th>영업시간</th>
-                                <% for (StoreOpentime storeOpenTime : storeOpentimes) { %>
+                                <%-- <% for (StoreOpentime storeOpenTime : storeOpentimes) { %> --%>
+                                <% for (String parsed : storeOpenTimesParsed) { %>
                                 <td>
-                                    <%=storeOpenTime.getOperationTime() %>
-                                    <br>
+                                    <%=parsed %> <br> <!-- TODO: new line each time adding `parsed` -->
                                 </td>
                                 <% } %>
+                                <%-- <% } %> --%>
                             </tr>
                             <tr>
                                 <th>휴일</th>
-                                <td><%=store.getDayOffs() %></td>
+                                <td><%=dayOffs %></td>
                             </tr>
 
                               <tr>
@@ -148,8 +169,8 @@
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
+                        </div>
                     </header>
                 </div>
             </div>
