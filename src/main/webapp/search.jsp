@@ -8,19 +8,15 @@
 <%
 	String category = request.getParameter("foodCategory");
 	System.out.println(category);
-//	List<Food> foodList = null;
 	List<Store> storeList = null;
 
 	FoodDao foodDao = FoodDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance();
 	if (category == null) {	// search.jsp : 전체
 		storeList = storeDao.getAllStores();
-		//foodList = foodDao.getAllFoods();
 		
 	} else {				// search.jsp?foodCategory=한식
-		//foodList = foodDao.getFoodByCategory(category);
 		storeList = storeDao.getStoresByFoodCategory(category);
-		
 	}
 %>
 <!DOCTYPE html>
@@ -56,6 +52,10 @@ header,h1 {
     justify-content: center;
 }
 
+.title {
+	margin-top: 20;
+}
+
 </style>
 </head>
 <body>
@@ -66,9 +66,9 @@ header,h1 {
 
 <article class="contents">
 	<header class="basic-info-list">
-	    	<div class="inner" style="padding-bottom: 10px">
-	      		<h1 class="title">음식종류별 가게 리스트</h1>
-	      						<!-- 응답값 넣을 때 바꾸기 -->
+	    	<div class="inner" style="padding-bottom: 20px">
+	      		<h3 class="title">음식종류별 가게 리스트</h3>
+	      						
 	     	</div>
 		    <div id="test_btn_group" >	
 				<a class="btn" role="button" href="search.jsp">전체</a>
