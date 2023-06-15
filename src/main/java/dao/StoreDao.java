@@ -71,7 +71,8 @@ public class StoreDao {
 			store.setZipcode(rs.getInt(5)); 
 			store.setLatitude(rs.getDouble(6)); 
 			store.setLongitude(rs.getDouble(7)); 
-			store.setText(rs.getString(8)); 
+			store.setText(rs.getString(8));
+			store.setPhone(rs.getString(9)); 
 			store.setDayOffs(rs.getString(10));
 			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 	
 			store.setOwner(owner); 
