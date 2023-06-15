@@ -40,14 +40,17 @@
             <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="text-center m-2"><span style="font-weight: bold; white-space: nowrap">가게 사업 정보 기입</span> </p>
                         </div>
-                        <div class="col-4">
-                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">가게 상세 정보 기입</span> </p>
+                        <div class="col-3">
+                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap; font-size: small">가게 상세 정보 기입</span> </p>
                         </div>
-                        <div class="col-4">
-                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap">메뉴 등록</span> </p>
+						<div class="col-3">
+                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap; font-size: small">가게 사진 등록</span></p>
+                        </div>
+                        <div class="col-3">
+                            <p class="text-center m-2"><span style="color:#808080; white-space: nowrap; font-size: small">메뉴 등록</span> </p>
                         </div>
                     </div>
                 </div>

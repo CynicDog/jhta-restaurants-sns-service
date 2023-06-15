@@ -37,5 +37,5 @@
 	
 	session.setAttribute("storeComplete", store_found);	
 	
-	response.sendRedirect("menuRegFormPage.jsp"); 
+	response.sendRedirect("storePictureRegFormPage.jsp"); 
 %>
