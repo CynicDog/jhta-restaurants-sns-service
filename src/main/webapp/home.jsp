@@ -76,11 +76,11 @@
         <div class="col-8">
             <div class="row">
                 <div id="test_btn_group">
-                    <a class="btn" role="button">추천 맛집</a>
-                    <a class="btn" role="button">한식</a>
-                    <a class="btn" role="button">중식</a>
-                    <a class="btn" role="button">일식</a>
-                    <a class="btn" role="button">양식</a>
+                    <a class="btn" role="button">평점순</a>
+                    <a class="btn" role="button">버튼</a>
+                    <a class="btn" role="button">버튼</a>
+                    <a class="btn" role="button">버튼</a>
+                    <a class="btn" role="button">버튼</a>
                 </div>
             </div>
 
@@ -90,23 +90,27 @@
                 <%
                 for(Store store : stores){
                 	int storeId = store.getId();
-                	StorePicture storePicture = storePictureDao.getStorePictureById(storeId);
+                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
                 %>
                 <div class="col-6">
                     <div class="card m-2 sm-14 shadow bg-body rounded">
                         <div class="embed-responsive embed-responsive-4by3">
-                        <% if (storePicture != null) { %>
-                            <a href="" onclick="createLoginId('<%= storeId %>')"><img src="<%=saveDirectory + storePicture.getFileLocation()%>"
-                                            class="card-img-top embed-responsive-item" alt="..." name=></a>
-                        <% } %>
+                        	<% if(storePicture != null){%>
+	                            <a href="storeDetail.jsp?storeId=<%=storeId %>" onclick="createLoginId('<%= storeId %>')"><img src="resources/reviewPicture/<%=storePicture.getFileLocation() %>"
+	                                            class="card-img-top embed-responsive-item" alt="..." ></a>
+                            <%}else {%>
+							    <a href="storeDetail.jsp?storeId=<%=storeId %>" onclick="createLoginId('<%= storeId %>')"><img src="resources/reviewPicture/스크린샷 2023-03-24 124359.png"
+							    			class="card-img-top embed-responsive-item" alt="..."></a>
+							<% } %>
                         </div>
+                        
                         <script type="text/javascript">
                         	function createLoginId(storeId){
                         		 sessionStorage.setItem("storeId", storeId);
                         	}
                         </script>
                         
-                        <div class="card-body">
+                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
                             <h5 class="card-title"><%=store.getName() %></h5>
                             <p class="card-text"><%=store.getPhone() %></p>
                         </div>
