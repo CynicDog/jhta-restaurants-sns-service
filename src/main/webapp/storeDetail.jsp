@@ -1,17 +1,43 @@
+<%@page import="vo.ReviewPicture"%>
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="vo.Food"%>
+<%@page import="vo.Review"%>
+<%@page import="vo.StoreOpentime"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.FoodPictureDao"%>
+<%@page import="dao.FoodDao"%>
+<%@page import="dao.ReviewPictureDao"%>
+<%@page import="dao.ReviewDao"%>
+<%@page import="dao.StoreOpenTimeDao"%>
+<%@page import="dao.CustomerDao"%>
 <%@page import="vo.Store"%>
 <%@page import="dao.StoreDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
-	/* int storeId = int.parseint request.getParameter("storeId");
- */
-/* 	
-
-	String storeName = request.getParameter("name");
-
-	StoreDao storeDao = StoreDao.getInstance();
-	Store store = storeDao.getStoreByName(storeName);
+	int loginId = (int) session.getAttribute("loginId");
+	int storeId = 35022;
+	// Integer.parseInt(request.getParameter( "storeId"));
+			
 	
-	session.setAttribute("storeName", store.getName()); */
+	CustomerDao customerDao = CustomerDao.getInstance();
+	StoreDao storeDao = StoreDao.getInstance();
+	StoreOpenTimeDao storeOpenTimeDao = StoreOpenTimeDao.getInstance();
+	ReviewDao reviewDao = ReviewDao.getInstance();
+	ReviewPictureDao reviewPictureDao = ReviewPictureDao.getInstance();
+	FoodDao foodDao = FoodDao.getInstance();
+	FoodPictureDao foodPictureDao = FoodPictureDao.getInstance();
+	
+	Store store = storeDao.getStoreById(storeId); // pk 조회 -> 하나만
+	List<StoreOpentime> storeOpentimes= storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
+	
+	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId); // fk 조회 -> 여러개
+		
+	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
+			
+	String foodsCategory = foods.stream()
+								.map(food -> food.getCategory())
+								.collect(Collectors.toList())
+								.toString();
 %><!doctype html>
 <html lang="ko">
 <head>
@@ -74,70 +100,50 @@
                                 <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"> 가게이름 </span><span class="rate-point mx-3" style="font-weight: bold; font-size: large">4.5</span></p>
                             </div>
                             <div class="col-4">
-  								<button type="button" class="btn btn-outline-primary my-3" onclick="location.href='review.jsp'">리뷰작성</button>
+  								<button type="button" class="btn btn-outline-primary my-3" onclick="location.href='review.jsp?storeId=<%=storeId %>>'">리뷰작성</button>
                             </div>
                         </div>
                         <table class="table">
                             <tr>
                                 <th>주소</th>
-                                <td>"서울특별시 성동구 xxxx길 xx"</td>
+                                <td><%=store.getAddress() %></td>
                             </tr>
                             <tr>
                                 <th>전화번호</th>
-                                <td>0507-1111-1111</td>
+                                <td><%=store.getPhone() %></td>
                             </tr>
                             <tr>
                                 <th>음식 종류</th>
-                                <td>이탈리안</td>
+                                <td><%=foodsCategory %></td>
                             </tr>
-                            <tr>
-                                <th>가격대</th>
-                                <td>만원-2만원</td>
-                            </tr>
-                            <tr>
-                                <th>주차</th>
-                                <td>주차공간없음</td>
-                            </tr>
-                            <tr>
-
+                           <tr>
                                 <th>영업시간</th>
+                                <% for (StoreOpentime storeOpenTime : storeOpentimes) { %>
                                 <td>
-                                    "월-금: 11:00 - 21:00"
+                                    storeOpentime.getOperationTime();
                                     <br>
-                                    "토-일: 13:00 - 23:00"
                                 </td>
+                                <% } %>
                             </tr>
                             <tr>
                                 <th>휴일</th>
-                                <td>연중무휴</td>
+                                <td><%=store.getDayOffs() %></td>
                             </tr>
-                            <tr>
+
+                              <tr>
                                 <th>메뉴</th>
                                 <td>
-                                    <div class="restaurant_menuList">
+                                    <div>
+<% for (Food food : foods) { %>
                                         <div class="col my-2">
-                                            <span class="">알리올리오</span>
-                                            <span class="">13,000원</span>
+                                            <span class="food-name"><%=food.getName() %></span>
+                                            <span class="food-price"><%=food.getPrice() %></span>
                                         </div>
-                                        <div class="col my-2">
-                                            <span class="restaurant_menu">까르보나라</span>
-                                            <span class="restaurant_menuPrice">13,000원</span>
-                                        </div>
-                                        <div class="col my-2">
-                                            <span class="restaurant_menu">라자냐</span>
-                                            <span class="restaurant_menuPrice">20,000원</span>
-                                        </div>
-                                        <div class="col my-2">
-                                            <span class="restaurant_menu">투움바파스타</span>
-                                            <span class="restaurant_menuPrice">14,000원</span>
-                                        </div>
-                                        <div class="col my-2">
-                                            <span class="restaurant_menu">마르게리따피자</span>
-                                            <span class="restaurant_menuPrice">16,000원</span>
-                                        </div>
+<% } %>
                                     </div>
                                 </td>
                             </tr>
+
                         </table>
                     </header>
                 </div>
@@ -154,18 +160,27 @@
     <div class="my-2">
         <span style="font-size: x-large; font-weight: bold">리뷰</span>
     </div>
+<% for (Review review : reviews) { 
+	List<ReviewPicture> reviewPictures = reviewPictureDao.getReviewPictureByReviewId(review.getId());
+%>    
     <div class="card mb-3">
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <div class="text-center card-title my-1"><span style="font-size: medium; font-weight: bold;"> 고객 이름 </span></div>
+                    <div class="text-center card-title my-1"><span style="font-size: medium; font-weight: bold;"><%=review.getCustomer().getName() %></span></div>
                 </div>
                 <div class="col-10">
-                    <p class="card-text"> 리뷰 내용 </p>
+                    <p class="card-text"><%=review.getText() %></p>
+                    <%-- <% if (reviewPicture.fileLocation != null) { %> --%>
+                    <% for (ReviewPicture reviewPicture : reviewPictures) { %>                    	
+       				 <img src="<%=reviewPicture.getFileLocation() %>" alt="Review Photo" class="img-fluid">
+                    <% } %>
+    				<%-- <% } %> --%>
                 </div>
             </div>
         </div>
     </div>
+<% } %>    
     <div class="card mb-3">
         <div class="card-body">
             <div class="row">
@@ -285,31 +300,40 @@
     const reviews = document.getElementsByClassName('card mb-3'); // 리뷰 카드들을 모두 선택합니다.
 
     const reviewCount = reviews.length; // 현재 리뷰 개수를 가져옵니다.
-    const hiddenReviewCount = reviewCount - 5; // 보이지 않는 리뷰 개수를 계산합니다.
+    let visibleReviewCount = 5; // 보여지는 리뷰 개수를 초기화합니다.
+    const hiddenReviewCount = reviewCount - visibleReviewCount; // 숨겨진 리뷰 개수를 계산합니다.
 
-    // 처음에는 처음 5개의 리뷰를 제외한 나머지 리뷰를 숨깁니다.
-    for (let i = 5; i < reviewCount; i++) {
+    // 처음에는 처음 5개의 리뷰만 보이도록 설정합니다.
+    for (let i = visibleReviewCount; i < reviewCount; i++) {
         reviews[i].style.display = 'none';
     }
 
-    // 리뷰 개수가 10개 이상인 경우에만 "더보기" 버튼을 보이도록 처리합니다.
-    if (reviewCount > 10) {
+    // 리뷰 개수가 5개 이상인 경우에만 "더보기" 버튼을 보이도록 처리합니다.
+    if (hiddenReviewCount > 0) {
         showMoreButtonContainer.style.display = 'block';
     } else {
         showMoreButtonContainer.style.display = 'none';
     }
 
-    // "더보기" 버튼을 클릭했을 때 숨겨진 리뷰를 보여주는 함수를 정의합니다.
+    // "더보기" 버튼을 클릭했을 때 추가적인 리뷰를 보여주는 함수를 정의합니다.
     function showHiddenReviews() {
-        for (let i = 5; i < reviewCount; i++) {
-            reviews[i].style.display = 'block';
+        // 추가적인 5개의 리뷰를 보여줍니다.
+        for (let i = visibleReviewCount; i < visibleReviewCount + 5; i++) {
+            if (reviews[i]) {
+                reviews[i].style.display = 'block';
+            }
         }
-        showMoreButtonContainer.style.display = 'none'; // "더보기" 버튼을 숨깁니다.
+
+        visibleReviewCount += 5; // 보여지는 리뷰 개수를 업데이트합니다.
+        if (visibleReviewCount >= reviewCount) {
+            showMoreButtonContainer.style.display = 'none'; // 모든 리뷰가 보여졌으므로 "더보기" 버튼을 숨깁니다.
+        }
     }
 
     // "더보기" 버튼에 클릭 이벤트 리스너를 추가합니다.
     showMoreButton.addEventListener('click', showHiddenReviews);
 </script>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 <script>
     var container = document.getElementById('map');

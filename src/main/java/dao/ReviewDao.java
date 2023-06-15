@@ -92,7 +92,7 @@ public class ReviewDao {
 		});
 	}
 	
-	public List<Review> getReviewsByStoreId() {
+	public List<Review> getReviewsByStoreId(int storeId) {
 		return DaoHelper.selectList("ReviewDao.getReviewsByStoreId", rs -> {
 			Review review = new Review();
 			
@@ -110,6 +110,6 @@ public class ReviewDao {
 			
 			return review;
 			
-		});		
+		}, storeId);		
 	}	
 }
