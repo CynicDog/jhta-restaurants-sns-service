@@ -38,6 +38,12 @@
 								.map(food -> food.getCategory())
 								.collect(Collectors.toList())
 								.toString();
+	
+	double avgRating = reviews.stream()
+			.mapToDouble(review -> review.getRating())
+			.average()
+			.orElse(0.0);
+	
 %><!doctype html>
 <html lang="ko">
 <head>
@@ -97,10 +103,10 @@
                     <header>
                         <div class="row">
                             <div class="col-8">
-                                <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"> 가게이름 </span><span class="rate-point mx-3" style="font-weight: bold; font-size: large">4.5</span></p>
+                                <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"><%=store.getName() %></span><span class="rate-point mx-3" style="font-weight: bold; font-size: large"><%=avgRating %></span></p>
                             </div>
                             <div class="col-4">
-  								<button type="button" class="btn btn-outline-primary my-3" onclick="location.href='review.jsp?storeId=<%=storeId %>>'">리뷰작성</button>
+  								<button type="button" class="btn btn-outline-primary my-3" onclick="location.href='review.jsp?storeId=<%=storeId %>'">리뷰작성</button>
                             </div>
                         </div>
                         <table class="table">
