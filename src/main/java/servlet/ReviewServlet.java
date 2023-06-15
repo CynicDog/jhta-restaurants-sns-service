@@ -43,12 +43,12 @@ public class ReviewServlet extends HttpServlet {
 		
 		HttpSession session =request.getSession();
 		String loginId = (String)session.getAttribute("loginId"); 
-		String storeName = "test_name"; /*(String)session.getAttribute("storeName");*/
 		
 		if (loginId == null) {
 			response.sendRedirect("home.jsp");
 		}
 		
+		int storeId = Integer.parseInt(request.getParameter("storeId"));
 		Double starPoint = Double.parseDouble(request.getParameter("starpoint"));
 		String reviewText = request.getParameter("review_text");
 
@@ -82,7 +82,7 @@ public class ReviewServlet extends HttpServlet {
 		
 		Customer customer = customerDao.getCustomerByUserId("test_id");
 		review.setCustomer(customer);
-		Store store = storeDao.getStoreByName(storeName);
+		Store store = storeDao.getStoreById(storeId);
 		review.setStore(store);
 
 		reviewDao.insertReview(review);

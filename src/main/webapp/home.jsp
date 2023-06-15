@@ -63,7 +63,21 @@
             img {
                 object-fit: cover;
             }
-
+		    .card-container {
+		        display: grid;
+		        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		        justify-items: center;
+		        align-items: center;
+		        gap: 20px;
+		    }
+		    .card {
+		        width: 100%;
+		        height: 100%;
+		        display: flex;
+		        flex-direction: column;
+		        justify-content: center;
+		        align-items: center;
+		    }
         </style>
 
     </head>
@@ -71,98 +85,96 @@
     <jsp:include page="nav.jsp">
         <jsp:param name="menu" value="홈"/>
     </jsp:include>
-
     <div class="container-fluid text-center">
-        <div class="col-8">
-            <div class="row">
-                <div id="test_btn_group">
-                    <a class="btn" role="button">평점순</a>
-                    <a class="btn" role="button">버튼</a>
-                    <a class="btn" role="button">버튼</a>
-                    <a class="btn" role="button">버튼</a>
-                    <a class="btn" role="button">버튼</a>
-                </div>
-            </div>
-
-
-            <div class="row">
-
-                <%
-                for(Store store : stores){
-                	int storeId = store.getId();
-                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
-                %>
-                <div class="col-6">
-                    <div class="card m-2 sm-14 shadow bg-body rounded">
-                        <div class="embed-responsive embed-responsive-4by3">
-                        	<% if(storePicture != null){%>
-	                            <a href="storeDetail.jsp?storeId=<%=storeId %>" onclick="createLoginId('<%= storeId %>')"><img src="resources/reviewPicture/<%=storePicture.getFileLocation() %>"
-	                                            class="card-img-top embed-responsive-item" alt="..." ></a>
-                            <%}else {%>
-							    <a href="storeDetail.jsp?storeId=<%=storeId %>" onclick="createLoginId('<%= storeId %>')"><img src="resources/reviewPicture/스크린샷 2023-03-24 124359.png"
-							    			class="card-img-top embed-responsive-item" alt="..."></a>
-							<% } %>
-                        </div>
-                        
-                        <script type="text/javascript">
-                        	function createLoginId(storeId){
-                        		 sessionStorage.setItem("storeId", storeId);
-                        	}
-                        </script>
-                        
-                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
-                            <h5 class="card-title"><%=store.getName() %></h5>
-                            <p class="card-text"><%=store.getPhone() %></p>
-                        </div>
-                    </div>
-                </div>
-                <%
-                }
-                %>
-
-            </div>
-
-        </div>
-
-
-        <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
-        <script type="text/javascript"
-                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
-        <div class="col">
-            <div id="map">
-                <script>
-                    var container = document.getElementById('map');
-                    var options = {
-                        // 										  latitude,longitude 순으로 입력
-                        center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
-                        level: 4
-                    };
-
-                    var map = new kakao.maps.Map(container, options);
-
-                    // 마커가 표시될 위치입니다 
-                    var markerPosition = new kakao.maps.LatLng(37.5729587735263, 126.992241734889);
-                    var markerPosition2 = new kakao.maps.LatLng(37.5699451391001, 126.988087440713);
-
-                    // 마커를 생성합니다
-                    var marker = new kakao.maps.Marker({
-                        position: markerPosition
-                    });
-                    var marker2 = new kakao.maps.Marker({
-                        position: markerPosition2
-                    });
-
-                    // 마커가 지도 위에 표시되도록 설정합니다
-                    marker.setMap(map);
-                    marker2.setMap(map);
-
-                    // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-                    // marker.setMap(null);    
-
-                </script>
-            </div>
-        </div>
+		<div class="row">
+			<div class="col-1"></div>
+	        <div class="col-6">
+	            <div class="row">
+	                <div id="test_btn_group">
+	                    <a class="btn" role="button">평점순</a>
+	                    <a class="btn" role="button">버튼</a>
+	                    <a class="btn" role="button">버튼</a>
+	                    <a class="btn" role="button">버튼</a>
+	                    <a class="btn" role="button">버튼</a>
+	                </div>
+	            </div>
+	
+	
+	            <!-- <div class="card-container"> -->
+				<div class="row">
+	                <%
+	                for(Store store : stores){
+	                	int storeId = store.getId();
+	                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+	                %>
+	               		<!-- <div class="col"></div> -->
+		                <div class="col-6">
+		                    <div class="card m-2 sm-14 shadow bg-body rounded">
+		                        <div class="embed-responsive embed-responsive-4by3">
+		                        	<% if(storePicture != null){%>
+			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/<%=storePicture.getFileLocation() %>"
+			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
+		                            <%}else {%>
+									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/스크린샷 2023-03-24 124359.png"
+									    			class="card-img-top embed-responsive-item" alt="..."></a>
+									<% } %>
+		                        </div>
+		                        
+		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
+		                            <h5 class="card-title"><%=store.getName() %></h5>
+		                            <p class="card-text"><%=store.getPhone() %></p>
+		                        </div>
+		                    </div>
+		                </div>
+	                <%
+	                }
+	                %>
+					
+	            </div>
+                <!-- </div> -->
+	
+	        </div>
+			<div class="col-1"></div>
+			
+	        <script type="text/javascript"
+	                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+	        <script type="text/javascript"
+	                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+		       <div class="col">
+		           <div id="map">
+		               <script>
+		                   var container = document.getElementById('map');
+		                   var options = {
+		                       // 										  latitude,longitude 순으로 입력
+		                       center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+		                       level: 4
+		                   };
+		
+		                   var map = new kakao.maps.Map(container, options);
+		
+		                   // 마커가 표시될 위치입니다 
+		                   var markerPosition = new kakao.maps.LatLng(37.5729587735263, 126.992241734889);
+		                   var markerPosition2 = new kakao.maps.LatLng(37.5699451391001, 126.988087440713);
+		
+		                   // 마커를 생성합니다
+		                   var marker = new kakao.maps.Marker({
+		                       position: markerPosition
+		                   });
+		                   var marker2 = new kakao.maps.Marker({
+		                       position: markerPosition2
+		                   });
+		
+		                   // 마커가 지도 위에 표시되도록 설정합니다
+		                   marker.setMap(map);
+		                   marker2.setMap(map);
+		
+		                   // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+		                   // marker.setMap(null);    
+		
+		               </script>
+		           </div>
+		       </div>
+	    </div>   
     </div>
     </body>
     </html>
