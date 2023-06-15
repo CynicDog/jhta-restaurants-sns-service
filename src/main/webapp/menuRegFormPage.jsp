@@ -10,15 +10,10 @@ pageEncoding="UTF-8"%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <style>
-        html, body {
-            height: 100%;
-        }
 
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+		.container-pt {
+			padding-top: 10%; 
+		}
 
         .button-container {
             display: flex;
@@ -31,7 +26,10 @@ pageEncoding="UTF-8"%>
     </style>
 </head>
 <body>
-<div class="container">
+    <jsp:include page="nav.jsp">
+        <jsp:param name="menu" value="홈"/>
+    </jsp:include>
+<div class="container container-pt">
     <div class="row justify-content-center align-items-center mt-5">
         <div class="col-md-6">
             <div class="card shadow p-3 mb-5 bg-white rounded">
@@ -48,7 +46,7 @@ pageEncoding="UTF-8"%>
                         </div>
                     </div>
                 </div>
-                <form method="post" action="foodInsert" enctype="multipart/form-data">
+                <form method="post" action="menuReg.jsp">
                     <div class="card-body">
                         <div class="my-3">
                             <label for="name" class="form-label">메뉴 이름</label>
@@ -77,13 +75,13 @@ pageEncoding="UTF-8"%>
                                 <option value="etc">기타</option>
                             </select>
                         </div>
-                        <div class="my-3">
+                        <!-- <div class="my-3">
                             <label for="picture" class="form-label">메뉴 사진 첨부</label>
                             <input type="file" class="form-control" id="picture" min="0" name="picture" required>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="button-container">
-                        <button class="btn btn-primary" type="submit" onclick="fn1()">입력</button>
+                        <button class="btn btn-primary" type="submit">입력</button>
                     </div>
                 </form>
             </div>
