@@ -15,8 +15,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
 	int loginId = (int) session.getAttribute("loginId");
-	int storeId = 35022;
-	// Integer.parseInt(request.getParameter( "storeId"));
+	int storeId = Integer.parseInt(request.getParameter( "storeId"));
 			
 	
 	CustomerDao customerDao = CustomerDao.getInstance();
@@ -126,7 +125,7 @@
                                 <th>영업시간</th>
                                 <% for (StoreOpentime storeOpenTime : storeOpentimes) { %>
                                 <td>
-                                    storeOpentime.getOperationTime();
+                                    <%=storeOpenTime.getOperationTime() %>
                                     <br>
                                 </td>
                                 <% } %>
