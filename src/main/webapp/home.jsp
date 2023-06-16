@@ -1,7 +1,7 @@
+<%@page import="vo.Review"%>
 <%@page import="utils.Pagination"%>
 <%@page import="dto.StoreHome"%>
 <%@page import="dao.ReviewDao"%>
-<%@page import="vo.Review"%>
 <%@page import="vo.ReviewPicture"%>
 <%@page import="dao.StoreDao"%>
 <%@page import="vo.Store"%>
@@ -16,7 +16,7 @@
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	
 	StorePictureDao storePictureDao = StorePictureDao.getInstance();
-	/* List<StorePicture> storePictures = storePictureDao.getAllStorePictures();  */
+	// List<StorePicture> storePictures = storePictureDao.getAllStorePictures(); 
 	String projectHome = System.getenv("PROJECT_HOME");
 	String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture";
 	

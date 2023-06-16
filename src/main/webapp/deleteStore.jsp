@@ -43,8 +43,8 @@
 	}
 	
 	// child table deletion 
-	if (storeOpenTimeDao.getStoreOpentimeByStoreId(storeId) != null) {
-		List<StoreOpentime> storeOpentimes = storeOpenTimeDao.getStoreOpentimeByStoreId(storeId); 
+	if (storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId) != null) {
+		List<StoreOpentime> storeOpentimes = storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); 
 		for (StoreOpentime storeOpentime : storeOpentimes) {
 			
 			storeOpenTimeDao.deleteStoreOpenTime(storeOpentime.getId()); 
