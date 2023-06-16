@@ -107,7 +107,6 @@
 	            </div>
 	            <!-- <div class="card-container"> -->
 				<div class="row">
-					<div class="infinite">
 	                <%
 	                for(Store store : stores){
 	                	int storeId = store.getId();
@@ -142,7 +141,7 @@
 	                <%
 	                }
 	                %>
-					</div>	
+				
 	            </div>
                 <!-- </div> -->
 	
