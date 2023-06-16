@@ -17,6 +17,19 @@ public class ReviewPictureDao {
 		return instance;
 	}
 	
+	public List<ReviewPicture> getRecentPicturesByStoreId(int storeId) {
+		return DaoHelper.selectList("ReviewPictureDao.getRecentPicturesByStoreId", rs -> {
+			ReviewPicture reviewPicture = new ReviewPicture();
+
+			reviewPicture.setId(rs.getInt(1));
+			reviewPicture.setFileLocation(rs.getString(2));
+			Review review = reviewDao.getReviewById(rs.getInt(3));
+			reviewPicture.setReview(review);
+
+			return reviewPicture;
+		}, storeId);
+	}
+	
 	public List<ReviewPicture> getReviewPictureByReviewId(int reviewId) {
 		return DaoHelper.selectList("ReviewPictureDao.getReviewPictureByReviewId", rs -> {
 			ReviewPicture reviewPicture = new ReviewPicture();
