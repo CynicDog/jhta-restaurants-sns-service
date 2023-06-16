@@ -1,3 +1,5 @@
+<%@page import="dao.StorePictureDao"%>
+<%@page import="vo.StorePicture"%>
 <%@page import="dto.StoreByRating"%>
 <%@page import="vo.Review"%>
 <%@page import="dao.ReviewDao"%>
@@ -12,6 +14,7 @@
 <%
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance(); 
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 	
 	int pageNo = -1; 
 	if (request.getParameter("page") != null) { 
@@ -56,11 +59,17 @@
         <div class="col-1"></div>
         <div class="col-10">
             <div class="row">
-<% for (StoreByRating store : stores) { %>            
+<% for (StoreByRating store : stores) { 
+	int storeId = store.getId();
+	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+%>            
                 <div class="col-6">
                     <div class="card m-2 sm-14 shadow bg-body rounded">
                         <div class="embed-responsive embed-responsive-4by3">
-                            <a>Picture</a>
+                            <% if(storePicture != null){%>
+			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
+			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
+		                    <%}%>
                         </div>
                         <div class="card-body" style="cursor: pointer;" onclick="">
                             <a class="card-title a-tag-no-dec" href="storeDetial.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
