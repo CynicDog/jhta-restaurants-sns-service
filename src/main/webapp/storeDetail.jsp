@@ -15,7 +15,6 @@
 <%@page import="dao.StoreDao"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%
-	int loginId = (int) session.getAttribute("loginId");
 	String loginType = (String) session.getAttribute("loginType");
 	int storeId = Integer.parseInt(request.getParameter( "storeId"));
 	
@@ -101,7 +100,7 @@
         <div class="row row-cols-5">
             <div class="col">
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/688135_1508733757417689.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>
+            </div>          
             <div class="col">
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011436?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
             </div>
@@ -207,9 +206,16 @@ for (int i = reviews.size() - 1; i >= 0; i--) {
                             <p class="col card-text"><%=review.getText() %></p>                		
                         </div> 
                         <div class="col-1"> 
-                            <% if ("customer".equals(loginType) && review.getCustomer().getId() == loginId) { %>
+<%                 
+	if (session.getAttribute("loginId") != null) { 
+		int loginId = (int) session.getAttribute("loginId");
+		if ("customer".equals(loginType) && review.getCustomer().getId() == loginId) { 
+%>
                                 <a href="deleteReview.jsp?reviewId=<%=review.getId() %>&storeId=<%=store.getId() %>"  class="btn btn-danger" >삭제</a>
-                            <% } %>
+<% 		
+		}
+	}
+%>
                         </div> 
                     </div>
                     <div class="row">
