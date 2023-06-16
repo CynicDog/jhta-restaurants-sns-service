@@ -18,7 +18,7 @@
 			
 			session.setAttribute("loginId", customer.getId()); // int
 			session.setAttribute("loginType", "customer"); 
-			response.sendRedirect("postMemberRegPage.jsp"); 
+			response.sendRedirect("home.jsp"); 
 		}
 		
 	} else if (memberType.equals("owner")) {
