@@ -155,7 +155,7 @@ public class StoreDao {
 			store.setText(rs.getString(8)); 
 			store.setPhone(rs.getString(9));
 			Owner owner = ownerDao.getOwnerById(rs.getInt(10)); 		
-			store.setOwner(owner); 
+			store.setOwner(o wner); 
 			
 			return store;
 			

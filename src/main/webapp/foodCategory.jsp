@@ -1,3 +1,8 @@
+<%@page import="vo.Review"%>
+<%@page import="dao.ReviewDao"%>
+<%@page import="vo.StoreOpentime"%>
+<%@page import="dao.StoreOpenTimeDao"%>
+<%@page import="dao.StorePictureDao"%>
 <%@page import="vo.StorePicture"%>
 <%@page import="vo.Food"%>
 <%@page import="dao.FoodDao"%>
@@ -13,6 +18,10 @@
 
 	FoodDao foodDao = FoodDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance();
+	StorePictureDao storePictureDao = StorePictureDao.getInstance();
+	StoreOpenTimeDao storeOpenTimeDao = StoreOpenTimeDao.getInstance();
+	ReviewDao reviewDao = ReviewDao.getInstance();
+
 	if (category == null) {	// search.jsp : 전체
 		storeList = storeDao.getAllStores();
 		
@@ -26,6 +35,7 @@
 <meta charset="UTF-8">
 <title> 카테고리별 맛집</title>
 <style type="text/css">
+
 img {
 	object-fit: cover;
 }
@@ -39,9 +49,10 @@ img {
 }
 
 .category {
-	padding-top: 20px;
+	padding: 10px;
 	font-size: 16px;
 	text-align: center;
+	margin-bottom: 40px; 
 }
 
 .card {
@@ -52,6 +63,8 @@ img {
 	justify-content: center;
 	align-items: center;
 }
+
+
 
 </style>
 </head>
@@ -65,35 +78,46 @@ img {
 	<header class="category">
 	      		<h3 class="title">카테고리</h3>
 	      						
-		    <div id="test_btn_group" >	
-				<a class="btn" role="button" href="search.jsp">전체</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=한식">한식</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=중식">중식</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=일식">일식</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=패스트푸드">패스트푸드</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=찜, 탕, 찌개">찜, 탕, 찌개</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=양식">양식</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=분식">분식</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=아시안">아시안</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=디저트">디저트</a>
-				<a class="btn" role="button" href="search.jsp?foodCategory=기타">기타</a>
-		    </div>	     	
+		    <form id="myForm" method="post" action="foodCategory.jsp">
+  				<button class="btn btn-light" type="submit" name="foodCategory" value="" formaction="foodCategory.jsp">전체</button>
+		    	<button class="btn btn-light" type="submit" name="foodCategory" value="양식" formaction="foodCategory.jsp?foodCategory=양식">양식</button>
+			</form>
+		    	
+		    
+				<a class="btn" role="button" href="foodCategory.jsp">전체</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=한식">한식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=중식">중식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=일식">일식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=양식">양식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=패스트푸드">패스트푸드</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=분식">분식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=아시안">아시안</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=디저트">디저트</a>
+		   	     	
 	</header>	
 	<div class="row">
 <% 
-			for (Store stores : storeList) {
+			for (Store store : storeList) {
 	                	int storeId = store.getId();
 	                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+	                	StoreOpentime storeOpenTime = storeOpenTimeDao.getStoreOpenTimeById(storeId);
+	                	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId); 
+	                	
+	                	double avgRating = reviews.stream()
+	                			.mapToDouble(review -> review.getRating())
+	                			.average()
+	                			.orElse(0.0);
+
 	                %>
-	               		<!-- <div class="col"></div> -->
-		                <div class="col-9">
+		                <div class="col-4">
+		               
 		                    <div class="card m-2 sm-14 shadow bg-body rounded">
 		                        <div class="embed-responsive embed-responsive-4by3">
 		                        	<% if(storePicture != null){%>
-			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/<%=storePicture.getFileLocation() %>"
+			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
 			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
 		                            <%}else {%>
-									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/스크린샷 2023-03-24 124359.png"
+									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/Color.png"
 									    			class="card-img-top embed-responsive-item" alt="..."></a>
 									<% } %>
 		                        </div>
@@ -101,6 +125,9 @@ img {
 		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
 		                            <h5 class="card-title"><%=store.getName() %></h5>
 		                            <p class="card-text"><%=store.getPhone() %></p>
+		                            <p class="card-text"><%=avgRating %></p>
+		                            <p class="card-text"><%=store.getPhone() %></p>
+		                            
 		                        </div>
 		                    </div>
 		                </div>
@@ -110,32 +137,7 @@ img {
 					
 	 
 	</div>
-	
-	
-	
-	
-	<div class=store_list>
-		<div class=store_img>
-			<a href="/resources/reviewPicture/pizza.jpg">				
-				<img alt="이미지텍스트대체" src=""  width=250px height=250px; >
-			</a>
-		</div>
-		
-		<ol class=textbox style="text-align: left">
-			<li>
-				<span>
-					<a href="/storeDetail.jsp"><strong><%=stores.getName() %></strong></a>
-				</span>
-					<p><%=stores.getAddress() %></p>
-					<p><%=stores.getText() %></p>
-			
-			</li>
-		</ol>
-	</div>		
-<%
-	}
-%>	
-			
+				
 </div>
 </body>
 </html>
