@@ -62,6 +62,7 @@ public class StoreDao {
 			},category,start, end); 
 		
 		}
+	}
 
 	public List<StoreHome> getStoresHomePaginated(int start, int end){
 		return DaoHelper.selectList("StoreDao.getStoresHomePaginated", rs->{
