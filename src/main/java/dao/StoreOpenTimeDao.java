@@ -70,17 +70,4 @@ public class StoreOpenTimeDao {
 			return storeOpenTime;
 		}, storeId);
 	}
-	
-	public List<StoreOpentime> getStoreOpentimeByStoreId(int storeId) {
-		return DaoHelper.selectList("StoreOpenTimeDao.getStoreOpentimeByStoreId", rs -> {
-			StoreOpentime storeOpenTime = new StoreOpentime();
-
-			storeOpenTime.setId(rs.getInt(1));
-			storeOpenTime.setOperationTime(rs.getString(2));
-			Store store = storeDao.getStoreById(rs.getInt(3));
-			storeOpenTime.setStore(store);
-
-			return storeOpenTime;
-		}, storeId);
-	}
 }

@@ -73,7 +73,7 @@
 		                    <%}%>
                         </div>
                         <div class="card-body" style="cursor: pointer;" onclick="">
-                            <a class="card-title a-tag-no-dec" href="storeDetial.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
+                            <a class="card-title a-tag-no-dec" href="storeDetail.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
                             <p class="card-text"><%=store.getReviewAvg() %></p>
                         </div>
                     </div>

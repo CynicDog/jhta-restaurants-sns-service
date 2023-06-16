@@ -32,7 +32,8 @@
 		
 	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
 	
-	List<ReviewPicture> recentPictures = reviewPictureDao.getRecentPicturesByStoreId(storeId);
+	// TODO 
+	// List<ReviewPicture> recentPictures = reviewPictureDao.getRecentPicturesByStoreId(storeId);
 	
 	// Food -> String 이후 영어 ->한글 (korean, chinese... -> 한식, 중식, ...)
 	String foodsCategory = foods.stream()
@@ -100,9 +101,11 @@
 
     <div class="container">
         <div class="row row-cols-5">
+        <%-- TODO 
         	<% for (ReviewPicture recentPicture : recentPictures) { %>                 	
             	<img class="img-thumbnail" src="resources/reviewPicture/<%=recentPicture.getFileLocation() %>" style="width: 320px; max-width: 320px;" alt="...">
             <% } %>
+         --%>    
             <div class="col">            
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/688135_1508733757417689.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
             </div>          
