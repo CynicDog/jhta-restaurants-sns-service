@@ -1,3 +1,6 @@
+<%@page import="dao.ReviewDao"%>
+<%@page import="vo.Review"%>
+<%@page import="vo.ReviewPicture"%>
 <%@page import="dao.StoreDao"%>
 <%@page import="vo.Store"%>
 <%@page import="java.util.List"%>
@@ -8,6 +11,8 @@
 
 	StoreDao storeDao = StoreDao.getInstance();
 	List<Store> stores = storeDao.getAllStores();
+	
+	ReviewDao reviewDao = ReviewDao.getInstance();
 	
 	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 	/* List<StorePicture> storePictures = storePictureDao.getAllStorePictures();  */
@@ -91,8 +96,8 @@
 	        <div class="col-6">
 	            <div class="row">
 	                <div id="test_btn_group">
+	                    <a href="foodCategory.jsp" class="btn" role="button">카테고리별</a>
 	                    <a class="btn" role="button">평점순</a>
-	                    <a class="btn" role="button">버튼</a>
 	                    <a class="btn" role="button">버튼</a>
 	                    <a class="btn" role="button">버튼</a>
 	                    <a class="btn" role="button">버튼</a>
@@ -106,23 +111,30 @@
 	                for(Store store : stores){
 	                	int storeId = store.getId();
 	                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+	                	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId);
+	                	
+	                	double avgRating = reviews.stream()
+	                			.mapToDouble(review -> review.getRating())
+	                			.average()
+	                			.orElse(0.0);
 	                %>
 	               		<!-- <div class="col"></div> -->
 		                <div class="col-6">
 		                    <div class="card m-2 sm-14 shadow bg-body rounded">
 		                        <div class="embed-responsive embed-responsive-4by3">
 		                        	<% if(storePicture != null){%>
-			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/<%=storePicture.getFileLocation() %>"
+			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
 			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
-		                            <%}else {%>
-									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/reviewPicture/스크린샷 2023-03-24 124359.png"
+		                            <%}%>
+<%-- 		                        	<%else {%>
+									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/Color.png"
 									    			class="card-img-top embed-responsive-item" alt="..."></a>
-									<% } %>
+									<% } %> --%>
 		                        </div>
 		                        
 		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
 		                            <h5 class="card-title"><%=store.getName() %></h5>
-		                            <p class="card-text"><%=store.getPhone() %></p>
+		                            <p class="card-text"><%=avgRating %></p>
 		                        </div>
 		                    </div>
 		                </div>
@@ -141,7 +153,7 @@
 	        <script type="text/javascript"
 	                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 		       <div class="col">
-		           <div id="map">
+		           <div id="map" style="z-index:0">
 		               <script>
 		                   var container = document.getElementById('map');
 		                   var options = {
