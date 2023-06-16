@@ -19,10 +19,30 @@ public class StoreDao {
 		return instance;
 	}
 	
-	
+	public List<Store> getStoresByOwnerId(int ownerId) {
+		return DaoHelper.selectList("StoreDao.getStoresByOwnerId", rs -> {
+			Store store = new Store();
+			
+			store.setId(rs.getInt(1)); 
+			store.setName(rs.getString(2)); 
+			store.setBusinessLicenseNumber(rs.getInt(3));  
+			store.setAddress(rs.getString(4)); 
+			store.setZipcode(rs.getInt(5)); 
+			store.setLatitude(rs.getDouble(6)); 
+			store.setLongitude(rs.getDouble(7)); 
+			store.setText(rs.getString(8)); 
+			store.setPhone(rs.getString(9));
+			store.setDayOffs(rs.getString(10));
+			Owner owner = ownerDao.getOwnerById(rs.getInt(11)); 		
+			store.setOwner(owner); 
+					
+			return store;
+			
+		}, ownerId);
+	}
 	
 	public List<StoreByRating> getStoresPaginated(int start, int end) { 
-		return DaoHelper.selectList("StoreDao.getStoresPaginated", rs->{
+		return DaoHelper.selectList("StoreDao.getStoresPaginated", rs -> {
 			StoreByRating storeByRating = new StoreByRating(
 						rs.getInt(1), 
 						rs.getDouble(2),
@@ -38,7 +58,7 @@ public class StoreDao {
 	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
 		
 		if(category==null) {
-			return DaoHelper.selectList("StoreDao.getStoresPaginated", rs->{
+			return DaoHelper.selectList("StoreDao.getStoresPaginated", rs -> {
 				StoreByRating storeByRating = new StoreByRating(
 							rs.getInt(1), 
 							rs.getDouble(2),
@@ -50,7 +70,7 @@ public class StoreDao {
 			}, start, end); 
 		}else {
 		
-			return DaoHelper.selectList("StoreDao.getStoresPaginatedByCategory", rs->{
+			return DaoHelper.selectList("StoreDao.getStoresPaginatedByCategory", rs -> {
 				StoreByRating storeByRating = new StoreByRating(
 						rs.getInt(1), 
 						rs.getDouble(2),
@@ -65,7 +85,7 @@ public class StoreDao {
 	}
 
 	public List<StoreHome> getStoresHomePaginated(int start, int end){
-		return DaoHelper.selectList("StoreDao.getStoresHomePaginated", rs->{
+		return DaoHelper.selectList("StoreDao.getStoresHomePaginated", rs -> {
 			StoreHome storeHome = new StoreHome(
 						rs.getInt(1),
 						rs.getInt(2),
@@ -200,7 +220,7 @@ public class StoreDao {
 	}
 	
 	public  List<Store> getAllStores() {
-		return DaoHelper.selectList("StoreDao.getAllStores", rs->{
+		return DaoHelper.selectList("StoreDao.getAllStores", rs -> {
 			Store store = new Store();
 			
 			store.setId(rs.getInt(1)); 
@@ -223,7 +243,7 @@ public class StoreDao {
 	
 	public  List<Store> getStoresByFoodCategory(String category) {
 		
-		return DaoHelper.selectList("StoreDao.getStoresByFoodCategory", rs->{
+		return DaoHelper.selectList("StoreDao.getStoresByFoodCategory", rs -> {
 			Store store = new Store();
 			
 			store.setId(rs.getInt(1)); 

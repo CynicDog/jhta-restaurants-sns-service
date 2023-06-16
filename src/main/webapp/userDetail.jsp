@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="vo.Store"%>
+<%@page import="java.util.List"%>
+<%@page import="dao.StoreDao"%>
 <%@page import="java.util.Date"%>
 <%@page import="dao.AdminDao"%>
 <%@page import="vo.Admin"%>
@@ -10,6 +14,7 @@
 
 <%
 	CustomerDao customerDao = CustomerDao.getInstance();
+	StoreDao storeDao = StoreDao.getInstance(); 
 	OwnerDao ownerDao = OwnerDao.getInstance();
 	AdminDao adminDao = AdminDao.getInstance(); 
 
@@ -41,6 +46,8 @@
 	String subscription = null;
 	String gender = null; 
 	
+	List<Store> stores = new ArrayList<Store>();
+			
 	if (customer != null) {
 		memberId = customer.getUserId(); 
 		name = customer.getName();
@@ -60,6 +67,8 @@
 		gender = owner.getGender();
 		subscription = owner.getSubscription();
 		
+		stores = storeDao.getStoresByOwnerId(owner.getId());
+		
 	} else if (admin != null) {
 		memberId = admin.getAdminId(); 
 		name = admin.getName();
@@ -71,31 +80,7 @@
 	} {
 		// exception handling (customer == null && owner == null && admin == null) 
 	}
-	
-/* 	// 3. 로그인된 유저의 객체 획득
-	Customer customer = null;
-	Owner owner = null;
-	Admin admin = null;
-
-	Object user = null;
-	
-	if ("customer".equals(loginType)) {
-	CustomerDao customerDao = CustomerDao.getInstance();
-	 customer = customerDao.getCustomerById(loginId);
-	 user = customer;
-	
-	} else if ("owner".equals(loginType)) {
-	OwnerDao ownerDao = OwnerDao.getInstance();
-	owner = ownerDao.getOwnerById(loginId);
-	user = owner;
-	
-	} else if ("admin".equals(loginType)) {
-	AdminDao adminDao = AdminDao.getInstance();
-	admin = adminDao.getAdminById(loginId);
-	user = admin;
-	} else {
-		// TODO: exception handling 
-	} */
+	 
 %>
 <!doctype html>
 <html lang="ko">
@@ -129,10 +114,7 @@
                 <div class="card-header">
                     <p class="my-2">사용자 상세 화면</p>
                 </div>
-                <form method="post" action="login.jsp">
                     <div class="card-body">
-                        <div class="mb-3">
-                        </div>
                         <div class="row mb-3">
                             <label for="user-id" class="col-sm-2 col-form-label"><span style="white-space: nowrap">아이디</span></label>
                             <div class="col-sm-10">
@@ -194,10 +176,42 @@
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>
+
+<% 
+	if (!stores.isEmpty()) {		
+%>                    
+        <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-7">
+            <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-header">
+                    <p class="my-2">가게 목록</p>
+                </div>
+                <div class="card-body">
+                    <ol class="list-group list-group-numbered">
+<%  
+		for (Store store : stores) {  
+%>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><%=store.getName() %></div>
+                                <%=store.getBusinessLicenseNumber() %>
+                            </div>
+                            <a href="deleteStore.jsp?storeId=<%=store.getId() %>"  class="btn btn-danger btn-sm my-3" >삭제</a>
+                        </li>
+<%  
+		}   
+%>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+<% 
+	} 
+%>
 </div>
 </body>
 </html>
