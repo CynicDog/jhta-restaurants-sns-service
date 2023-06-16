@@ -36,37 +36,36 @@
 <meta charset="UTF-8">
 <title> 카테고리별 맛집</title>
 <style type="text/css">
-
 img {
 	object-fit: cover;
-}
-
-.card-container {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	justify-items: center;
-	align-items: center;
-	gap: 20px;
+	width: 400px;
+	height: 300px;
 }
 
 .category {
 	padding: 10px;
 	font-size: 16px;
 	text-align: center;
-	margin-bottom: 40px; 
+	margin-bottom: 40px;
 }
 
 .card {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	/*
+ 	width: 100%; 
+ 	height: 100%; 
+ 	display: flex; 
+ 	flex-direction: column; 
+ 	justify-content: center;
+ 	align-items: center;
+ 	*/
+	
 }
 
-
-
+.card-body {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+}
 </style>
 </head>
 <body>
@@ -84,7 +83,7 @@ img {
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=chinese">중식</a>
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=japanese">일식</a>
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=western">양식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=faseFood">패스트푸드</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=fastFood">패스트푸드</a>
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=snack">분식</a>
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=asian">아시안</a>
 				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=disert">디저트</a>
@@ -104,25 +103,24 @@ img {
 	                			.orElse(0.0);
 
 	                %>
-		                <div class="col-4">
+		                <div class="col-4" style="margin-bottom: 30px">
 		               
-		                    <div class="card m-2 sm-14 shadow bg-body rounded">
+		                    <div class="card m-2 sm-14 shadow bg-body rounded " >
 		                        <div class="embed-responsive embed-responsive-4by3">
 		                        	<% if(storePicture != null){%>
-			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
+			                            <a href="storeDetail.jsp?storeId=<%=storeId %>">
+			                            <img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
 			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
 		                            <%}else {%>
-									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/Color.png"
+									    <a href="storeDetail.jsp?storeId=<%=storeId %>">
+									    <img src="resources/storePicture/Color.png"
 									    			class="card-img-top embed-responsive-item" alt="..."></a>
 									<% } %>
 		                        </div>
 		                        
-		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
-		                            <h5 class="card-title"><%=store.getName() %></h5>
-		                            <p class="card-text"><%=store.getPhone() %></p>
-		                            <p class="card-text"><%=avgRating %></p>
-		                            <p class="card-text"><%=store.getPhone() %></p>
-		                            
+		                        <div class="card-body"  onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
+		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=store.getName() %></p>
+		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=avgRating %></p>
 		                        </div>
 		                    </div>
 		                </div>
