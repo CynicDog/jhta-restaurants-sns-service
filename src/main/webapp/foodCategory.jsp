@@ -44,11 +44,6 @@
 		
 		storeList = storeDao.getStoresPaginatedByCategory(start, end, category);
 
-	
-	
-	
-	
-	
 %>
 <!DOCTYPE html>
 <html>
