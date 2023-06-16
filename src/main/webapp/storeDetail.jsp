@@ -85,6 +85,10 @@
         .rate-point {
             color: #FFC107; /* 밝은 색상 코드를 설정합니다. 예시로는 노란색 (#FFC107)을 사용했습니다. */
         }
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body>
@@ -144,11 +148,11 @@
                            <tr>
                                 <th>영업시간</th>
                                 <%-- <% for (StoreOpentime storeOpenTime : storeOpentimes) { %> --%>
-                                <% for (String parsed : storeOpenTimesParsed) { %>
                                 <td>
+                                <% for (String parsed : storeOpenTimesParsed) { %>
                                     <%=parsed %> <br> <!-- TODO: new line each time adding `parsed` -->
-                                </td>
                                 <% } %>
+                                </td>
                                 <%-- <% } %> --%>
                             </tr>
                             <tr>
@@ -186,8 +190,10 @@
     <div class="my-2">
         <span style="font-size: x-large; font-weight: bold">리뷰</span>
     </div>
-<% for (Review review : reviews) { 
-	List<ReviewPicture> reviewPictures = reviewPictureDao.getReviewPictureByReviewId(review.getId());
+<% 
+for (int i = reviews.size() - 1; i >= 0; i--) { 
+    Review review = reviews.get(i);
+    List<ReviewPicture> reviewPictures = reviewPictureDao.getReviewPictureByReviewId(review.getId());
 %>    
     <div class="card mb-3">
         <div class="card-body">
@@ -196,121 +202,32 @@
                     <div class="text-center card-title my-1"><span style="font-size: medium; font-weight: bold;"><%=review.getCustomer().getName() %></span></div>
                 </div>
                 <div class="col-10">
-                    <p class="card-text"><%=review.getText() %></p>
-                    <%-- <% if (reviewPicture.fileLocation != null) { %> --%>
-                    <% for (ReviewPicture reviewPicture : reviewPictures) { %>                    	
-       				 <img src="<%=reviewPicture.getFileLocation() %>" alt="Review Photo" class="img-fluid">
-                    <% } %>
-    				<%-- <% } %> --%>
+                    <div class="row mb-2">
+                        <div class="col-11">
+                            <p class="col card-text"><%=review.getText() %></p>                		
+                        </div> 
+                        <div class="col-1"> 
+                            <% if ("customer".equals(loginType) && review.getCustomer().getId() == loginId) { %>
+                                <a href="deleteReview.jsp?reviewId=<%=review.getId() %>&storeId=<%=store.getId() %>"  class="btn btn-danger" >삭제</a>
+                            <% } %>
+                        </div> 
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <% for (ReviewPicture reviewPicture : reviewPictures) { %>                 	
+                                <img class="img-thumbnail" src="resources/reviewPicture/<%=reviewPicture.getFileLocation() %>" style="width: 320px; max-width: 320px;" alt="...">
+                            <% } %>
+                        </div>
+                    </div>	
                 </div>
             </div>
         </div>
     </div>
-<% } %>    
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-1">
-                    <div class="card-title"><span style="font-size: large; font-weight: bold">사용자</span></div>
-                </div>
-                <div class="col-11">
-                    <p class="card-text">리뷰 텍스트</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-1">
-                    <div class="card-title"><span style="font-size: large; font-weight: bold">사용자</span></div>
-                </div>
-                <div class="col-11">
-                    <p class="card-text">리뷰 텍스트</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-1">
-                    <div class="card-title"><span style="font-size: large; font-weight: bold">사용자</span></div>
-                </div>
-                <div class="col-11">
-                    <p class="card-text">리뷰 텍스트</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-1">
-                    <div class="card-title"><span style="font-size: large; font-weight: bold">사용자</span></div>
-                </div>
-                <div class="col-11">
-                    <p class="card-text">리뷰 텍스트</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자7</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자8</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자9</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자10</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자11</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자12</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자13</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자14</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">사용자15</h5>
-            <p class="card-text">분위기가 좋고 서비스도 만족스러웠습니다.</p>
-        </div>
-    </div>
+<% } %>   
 </div>
+
+
+    
 <div class="container">
     <div id="reviewContainer">
         <!-- 리뷰 카드들이 여기에 동적으로 추가될 예정입니다. -->

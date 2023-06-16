@@ -1,3 +1,5 @@
+<%@page import="utils.Pagination"%>
+<%@page import="dto.StoreHome"%>
 <%@page import="dao.ReviewDao"%>
 <%@page import="vo.Review"%>
 <%@page import="vo.ReviewPicture"%>
@@ -10,14 +12,29 @@
 <%
 
 	StoreDao storeDao = StoreDao.getInstance();
-	List<Store> stores = storeDao.getAllStores();
-	
+	//List<Store> stores = storeDao.getAllStores();
 	ReviewDao reviewDao = ReviewDao.getInstance();
 	
 	StorePictureDao storePictureDao = StorePictureDao.getInstance();
 	/* List<StorePicture> storePictures = storePictureDao.getAllStorePictures();  */
 	String projectHome = System.getenv("PROJECT_HOME");
 	String saveDirectory = projectHome + "/src/main/webapp/resources/reviewPicture";
+	
+	int pageNo = -1;
+	if(request.getParameter("page") != null){
+		pageNo = Integer.parseInt(request.getParameter("page"));
+	}else {
+		pageNo = 1;
+	}
+	
+	int totalRows = storeDao.getTotalRows();
+	
+	Pagination pagination = new Pagination(pageNo, 4, totalRows);
+	
+	int start = pagination.getStartingRow();
+	int end = pagination.getEndingRow();
+	
+	List<StoreHome> stores = storeDao.getStoresHomePaginated(start, end);
 	
 %>
     <!doctype html>
@@ -107,9 +124,8 @@
 	            </div>
 	            <!-- <div class="card-container"> -->
 				<div class="row">
-					<div class="infinite">
 	                <%
-	                for(Store store : stores){
+	                for(StoreHome store : stores){
 	                	int storeId = store.getId();
 	                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
 	                	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId);
@@ -142,10 +158,28 @@
 	                <%
 	                }
 	                %>
-					</div>	
+				
 	            </div>
                 <!-- </div> -->
-	
+                    <nav class="my-3">
+				<ul class="pagination justify-content-center">
+					<li class="page-item <%=pageNo <= 1 ? "disabled" : ""%>">
+						<a href="home.jsp?page=<%=pageNo - 1%>" class="page-link">이전</a>
+					</li>
+<%
+	for (int num = pagination.getStartingPage(); num <= pagination.getEndingPage(); num++) {
+%>
+					<li class="page-item <%=pageNo == num? "active" : ""%>">
+						<a href="home.jsp?page=<%=num%>" class="page-link"><%=num%></a> 
+					</li>
+<%
+	}
+%>
+					<li class="page-item <%=pageNo >= pagination.getTotalPages() ? "disabled" : ""%>">
+						<a href="home.jsp?page=<%=pageNo + 1%>" class="page-link">다음</a>
+					</li>
+				</ul>
+			</nav>
 	        </div>
 			<div class="col-1"></div>
 			
@@ -187,7 +221,8 @@
 		               </script>
 		           </div>
 		       </div>
-	    </div>   
+	    </div>
+
     </div>
     </body>
     </html>

@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import dto.StoreByRating;
+import dto.StoreHome;
 import utils.DaoHelper;
 import vo.Owner;
 import vo.Store;
@@ -18,6 +19,8 @@ public class StoreDao {
 		return instance;
 	}
 	
+	
+	
 	public List<StoreByRating> getStoresPaginated(int start, int end) { 
 		return DaoHelper.selectList("StoreDao.getStoresPaginated", rs->{
 			StoreByRating storeByRating = new StoreByRating(
@@ -31,6 +34,7 @@ public class StoreDao {
 		}, start, end); 
 	}
 	
+
 	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
 		
 		if(category==null) {
@@ -58,6 +62,17 @@ public class StoreDao {
 			},category,start, end); 
 		
 		}
+
+	public List<StoreHome> getStoresHomePaginated(int start, int end){
+		return DaoHelper.selectList("StoreDao.getStoresHomePaginated", rs->{
+			StoreHome storeHome = new StoreHome(
+						rs.getInt(1),
+						rs.getInt(2),
+						rs.getString(3)
+					);
+			return storeHome;
+		}, start, end);
+
 	}
 	
 	public int getTotalRows() {

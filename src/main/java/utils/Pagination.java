@@ -14,6 +14,13 @@ public class Pagination {
 		this.totalRows = totalRows; 
 	}
 	
+	public Pagination(int page, int rows, int totalRows) {
+		super();
+		this.page = page;
+		this.rows = rows;
+		this.totalRows = totalRows;
+	}
+
 	public int getStartingRow() {
 		return (page - 1) * rows + 1; 
 	}
