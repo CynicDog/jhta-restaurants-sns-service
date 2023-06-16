@@ -26,6 +26,7 @@
 		storeList = storeDao.getAllStores();
 		
 	} else {				// search.jsp?foodCategory=한식
+			System.out.println("category:"+category);
 		storeList = storeDao.getStoresByFoodCategory(category);
 	}
 %>
@@ -78,21 +79,15 @@ img {
 	<header class="category">
 	      		<h3 class="title">카테고리</h3>
 	      						
-		    <form id="myForm" method="post" action="foodCategory.jsp">
-  				<button class="btn btn-light" type="submit" name="foodCategory" value="" formaction="foodCategory.jsp">전체</button>
-		    	<button class="btn btn-light" type="submit" name="foodCategory" value="양식" formaction="foodCategory.jsp?foodCategory=양식">양식</button>
-			</form>
-		    	
-		    
 				<a class="btn" role="button" href="foodCategory.jsp">전체</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=한식">한식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=중식">중식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=일식">일식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=양식">양식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=패스트푸드">패스트푸드</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=분식">분식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=아시안">아시안</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=디저트">디저트</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=korean">한식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=chinese">중식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=japanese">일식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=western">양식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=faseFood">패스트푸드</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=snack">분식</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=asian">아시안</a>
+				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=disert">디저트</a>
 		   	     	
 	</header>	
 	<div class="row">
