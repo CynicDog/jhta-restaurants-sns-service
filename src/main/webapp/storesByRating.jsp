@@ -57,16 +57,14 @@
     </jsp:include>
 <div class="container-fluid text-center">
 	<h3 class="title">평점순</h3>
-    <div class="row my-2">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row" >
-            <div class="col-1"></div>
+    <div class="row my-4">
+            <div class="row mx-1" >
 <% for (StoreByRating store : stores) { 
 	int storeId = store.getId();
 	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
-%>             
-                <div class="col-5">
+%>              
+                
+                <div class="col-6">
                     <div class="card m-2 sm-14 shadow bg-body rounded">
                         <div class="embed-responsive embed-responsive-4by3">
                             <% if(storePicture != null){%>
@@ -80,8 +78,8 @@
                         </div>
                     </div>
                 </div>
-<% } %>                
-            <div class="col-1"></div>
+                
+<% } %>              
             </div>
         </div>
         <div class="col-1"></div>
