@@ -125,7 +125,7 @@
 					</script>
 
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-				  <a href="javascript:window.history.back();" onclick="cls()" class="btn btn-primary me-md-2" >취소</a>
+				  <a href="javascript:window.history.back();" class="btn btn-primary me-md-2" >취소</a>
 				  <button  class="btn btn-primary" type="submit" >작성</button>
 				</div>
             </form>
