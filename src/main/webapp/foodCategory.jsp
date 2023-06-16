@@ -1,3 +1,6 @@
+<%@page import="dto.StoreByRating"%>
+<%@page import="dto.FoodCategory"%>
+<%@page import="utils.Pagination"%>
 <%@page import="vo.Review"%>
 <%@page import="dao.ReviewDao"%>
 <%@page import="vo.StoreOpentime"%>
@@ -14,7 +17,7 @@
 <%
 	String category = request.getParameter("foodCategory");
 	System.out.println(category);
-	List<Store> storeList = null;
+	List<StoreByRating> storeList = null;
 
 	FoodDao foodDao = FoodDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance();
@@ -22,13 +25,30 @@
 	StoreOpenTimeDao storeOpenTimeDao = StoreOpenTimeDao.getInstance();
 	ReviewDao reviewDao = ReviewDao.getInstance();
 
-	if (category == null) {	// search.jsp : 전체
-		storeList = storeDao.getAllStores();
+	//pagination + categorization
+		System.out.println("category:"+category);
+	
+		int pageNo = -1; 
+		if (request.getParameter("page") != null) { 
+			pageNo = Integer.parseInt(request.getParameter("page"));
+		} else {
+			pageNo = 1; 							
+		}
 		
-	} else {				// search.jsp?foodCategory=한식
-			System.out.println("category:"+category);
-		storeList = storeDao.getStoresByFoodCategory(category);
-	}
+		int totalRows = storeDao.getTotalRowsByFoodCategory(category); 
+
+		Pagination pagination = new Pagination(pageNo, totalRows); 
+		
+		int start = pagination.getStartingRow(); 	
+		int end = pagination.getEndingRow();	 
+		
+		storeList = storeDao.getStoresPaginatedByCategory(start, end, category);
+
+	
+	
+	
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -91,7 +111,7 @@ img {
 	</header>	
 	<div class="row">
 <% 
-			for (Store store : storeList) {
+			for (StoreByRating store : storeList) {
 	                	int storeId = store.getId();
 	                	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
 	                	StoreOpentime storeOpenTime = storeOpenTimeDao.getStoreOpenTimeById(storeId);
@@ -101,6 +121,8 @@ img {
 	                			.mapToDouble(review -> review.getRating())
 	                			.average()
 	                			.orElse(0.0);
+	                    String avgRatingStr = String.format("%.2f", avgRating);
+
 
 	                %>
 		                <div class="col-4" style="margin-bottom: 30px">
@@ -120,17 +142,16 @@ img {
 		                        
 		                        <div class="card-body"  onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
 		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=store.getName() %></p>
-		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=avgRating %></p>
+		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=avgRatingStr %></p>
 		                        </div>
 		                    </div>
 		                </div>
 	                <%
 	                }
 	                %>
-					
-	 
 	</div>
 				
 </div>
+ 
 </body>
 </html>
