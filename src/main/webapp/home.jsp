@@ -66,22 +66,24 @@
             }
 
             img {
+            	height: 380px;
                 object-fit: cover;
             }
+            
 		    .card-container {
-		        display: grid;
+/* 		        display: grid;
 		        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		        justify-items: center;
 		        align-items: center;
-		        gap: 20px;
+		        gap: 20px; */
 		    }
 		    .card {
-		        width: 100%;
+/* 		        width: 100%;
 		        height: 100%;
 		        display: flex;
 		        flex-direction: column;
 		        justify-content: center;
-		        align-items: center;
+		        align-items: center; */
 		    }
         </style>
 
@@ -105,6 +107,7 @@
 	            </div>
 	            <!-- <div class="card-container"> -->
 				<div class="row">
+					<div class="infinite">
 	                <%
 	                for(Store store : stores){
 	                	int storeId = store.getId();
@@ -124,7 +127,7 @@
 			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
 			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
 		                            <%}%>
-<%-- 		                        	<%else {%>
+									<%--<%else {%>
 									    <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/Color.png"
 									    			class="card-img-top embed-responsive-item" alt="..."></a>
 									<% } %> --%>
@@ -139,7 +142,7 @@
 	                <%
 	                }
 	                %>
-					
+					</div>	
 	            </div>
                 <!-- </div> -->
 	
