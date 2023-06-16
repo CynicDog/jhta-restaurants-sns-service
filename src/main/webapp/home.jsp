@@ -96,15 +96,13 @@
 	        <div class="col-6">
 	            <div class="row">
 	                <div id="test_btn_group">
+	                    <a class="btn" role="button" onclick="location.href='storesByRating.jsp?page=1'">평점순</a>
 	                    <a href="foodCategory.jsp" class="btn" role="button">카테고리별</a>
-	                    <a class="btn" role="button">평점순</a>
 	                    <a class="btn" role="button">버튼</a>
 	                    <a class="btn" role="button">버튼</a>
 	                    <a class="btn" role="button">버튼</a>
 	                </div>
 	            </div>
-	
-	
 	            <!-- <div class="card-container"> -->
 				<div class="row">
 	                <%
