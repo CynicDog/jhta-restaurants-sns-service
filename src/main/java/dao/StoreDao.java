@@ -10,6 +10,7 @@ import vo.Store;
 public class StoreDao {
 	
 	OwnerDao ownerDao = OwnerDao.getInstance();
+	StoreDao storeDao = StoreDao.getInstance();
 	
 	private static StoreDao instance = new StoreDao();
 	private StoreDao() {}
@@ -30,10 +31,54 @@ public class StoreDao {
 		}, start, end); 
 	}
 	
+	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
+		
+		if(category==null) {
+			return DaoHelper.selectList("StoreDao.getStoresPaginated", rs->{
+				StoreByRating storeByRating = new StoreByRating(
+							rs.getInt(1), 
+							rs.getDouble(2),
+							rs.getString(3),
+							rs.getInt(4)
+						);
+				return storeByRating;
+				
+			}, start, end); 
+		}else {
+		
+			return DaoHelper.selectList("StoreDao.getStoresPaginatedByCategory", rs->{
+				StoreByRating storeByRating = new StoreByRating(
+						rs.getInt(1), 
+						rs.getDouble(2),
+						rs.getString(3),
+						rs.getInt(4)
+						);
+				return storeByRating;
+				
+			},category,start, end); 
+		
+		}
+	}
+	
 	public int getTotalRows() {
 		return DaoHelper.selectOne("StoreDao.getTotalRows", 
 				rs -> rs.getInt(1));
 	};
+	
+	public int getTotalRowsByFoodCategory(String category) {
+		if (category==null) {
+			return DaoHelper.selectOne("StoreDao.getTotalRows", 
+					rs -> rs.getInt(1));
+		}else {
+		return DaoHelper.selectOne("StoreDao.getTotalRowsByFoodCategory", 
+				rs -> {
+					int rows = rs.getInt(1);
+					return rows;
+					},category);
+		}
+	};
+	
+	
 	
 	public Store getStoreByBusinessLicenseNumber(int businessLicenseNumber) {
 		return DaoHelper.selectOne("StoreDao.getStoreByBusinessLicenseNumber", rs -> {
@@ -161,6 +206,7 @@ public class StoreDao {
 	}
 	
 	public  List<Store> getStoresByFoodCategory(String category) {
+		
 		return DaoHelper.selectList("StoreDao.getStoresByFoodCategory", rs->{
 			Store store = new Store();
 			
