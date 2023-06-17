@@ -1,5 +1,4 @@
 <%@page import="dto.StoreByRating"%>
-<%@page import="dto.FoodCategory"%>
 <%@page import="utils.Pagination"%>
 <%@page import="vo.Review"%>
 <%@page import="dao.ReviewDao"%>
@@ -16,7 +15,6 @@
     pageEncoding="UTF-8"%>
 <%
 	String category = request.getParameter("foodCategory");
-	System.out.println(category);
 	List<StoreByRating> storeList = null;
 
 	FoodDao foodDao = FoodDao.getInstance();
@@ -26,8 +24,6 @@
 	ReviewDao reviewDao = ReviewDao.getInstance();
 
 	//pagination + categorization
-		System.out.println("category:"+category);
-	
 		int pageNo = -1; 
 		if (request.getParameter("page") != null) { 
 			pageNo = Integer.parseInt(request.getParameter("page"));
