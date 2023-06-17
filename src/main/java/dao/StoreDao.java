@@ -58,16 +58,7 @@ public class StoreDao {
 	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
 		
 		if(category==null) {
-			return DaoHelper.selectList("StoreDao.getStoresPaginated", rs -> {
-				StoreByRating storeByRating = new StoreByRating(
-							rs.getInt(1), 
-							rs.getDouble(2),
-							rs.getString(3),
-							rs.getInt(4)
-						);
-				return storeByRating;
-				
-			}, start, end); 
+			return getStoresPaginated(start, end);
 		}else {
 		
 			return DaoHelper.selectList("StoreDao.getStoresPaginatedByCategory", rs -> {
@@ -103,8 +94,7 @@ public class StoreDao {
 	
 	public int getTotalRowsByFoodCategory(String category) {
 		if (category==null) {
-			return DaoHelper.selectOne("StoreDao.getTotalRows", 
-					rs -> rs.getInt(1));
+			return getTotalRows();
 		}else {
 		return DaoHelper.selectOne("StoreDao.getTotalRowsByFoodCategory", 
 				rs -> {
