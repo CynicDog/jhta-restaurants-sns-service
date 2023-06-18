@@ -60,9 +60,9 @@
 								.map(storeOpentime -> storeOpentime.getOperationTime())
 								.collect(Collectors.joining("\\."))
 								.split("\\.")
-				);
-	
-%><!doctype html>
+				);	
+%>
+<!doctype html>
 <html lang="ko">
 <head>
     <title></title>
@@ -198,48 +198,51 @@
         <span style="font-size: x-large; font-weight: bold">리뷰</span>
     </div>
 <% 
-for (int i = reviews.size() - 1; i >= 0; i--) { 
-    Review review = reviews.get(i);
-    List<ReviewPicture> reviewPictures = reviewPictureDao.getReviewPictureByReviewId(review.getId());
-%>    
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-2">
-                    <div class="text-center card-title my-1"><span style="font-size: medium; font-weight: bold;"><%=review.getCustomer().getName() %></span></div>
-                </div>
-                <div class="col-10">
-                    <div class="row mb-2">
-                        <div class="col-11">
-                            <p class="col card-text"><%=review.getText() %></p>                		
-                        </div> 
-                        <div class="col-1"> 
-<%                 
-	if (session.getAttribute("loginId") != null) { 
-		int loginId = (int) session.getAttribute("loginId");
-		if ("customer".equals(loginType) && review.getCustomer().getId() == loginId) { 
+   for (int i = reviews.size() - 1; i >= 0; i--) { 
+       Review review = reviews.get(i);
+       List<ReviewPicture> reviewPictures = reviewPictureDao.getReviewPictureByReviewId(review.getId());        
 %>
-                                <a href="deleteReview.jsp?reviewId=<%=review.getId() %>&storeId=<%=store.getId() %>"  class="btn btn-danger" >삭제</a>
-<% 		
-		}
-	}
-%>
-                        </div> 
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <% for (ReviewPicture reviewPicture : reviewPictures) { %>                 	
-                                <img class="img-thumbnail" src="resources/reviewPicture/<%=reviewPicture.getFileLocation() %>" style="width: 320px; max-width: 320px;" alt="...">
-                            <% } %>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="text-center card-title my-1">
+                            <span style="font-size: medium; font-weight: bold;"><%=review.getCustomer().getName() %></span>
                         </div>
-                    </div>	
+                    </div>
+                    <div class="col-10">
+                        <div class="row mb-2">
+                            <div class="col-11">
+                                <p class="col card-text"><%=review.getText() %></p>
+                            </div>
+                            <div class="col-1">
+                                <%                 
+                                if (session.getAttribute("loginId") != null) { 
+                                    int loginId = (int) session.getAttribute("loginId");
+                                    if ("customer".equals(loginType) && review.getCustomer().getId() == loginId) { 
+                                %>
+                                <a href="deleteReview.jsp?reviewId=<%=review.getId() %>&storeId=<%=store.getId() %>" class="btn btn-danger">삭제</a>
+                                <% 		
+                                    }
+                                }
+                                %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <% for (ReviewPicture reviewPicture : reviewPictures) { %>                 	
+                                <img class="img-thumbnail" src="resources/reviewPicture/<%=reviewPicture.getFileLocation() %>" style="width: 320px; max-width: 320px;" alt="...">
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<% } %>   
+    <% 
+       }
+	%>   
 </div>
-
 
     
 <div class="container">
