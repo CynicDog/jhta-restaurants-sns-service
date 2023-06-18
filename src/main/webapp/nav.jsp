@@ -1,3 +1,4 @@
+<%@page import="utils.StringUtils"%>
 <%@page import="vo.Admin"%>
 <%@page import="vo.Owner"%>
 <%@page import="vo.Customer"%>
@@ -14,6 +15,9 @@
  	// 세션에 저장된 로그인타입, 로그인아이디 조회하기
 	String loginType = (String) session.getAttribute("loginType");
  	Integer loginId = (Integer) session.getAttribute("loginId");
+ 	
+	String keyword = StringUtils.nullToBlank(request.getParameter("keyword"));
+
  	
 	String memberName = ""; 
 	if (loginType != null && loginId != null){
@@ -72,7 +76,7 @@
 <% } %>                    
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2" type="search" name="keyword" value="<%=keyword %>" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>

@@ -254,4 +254,28 @@ public class StoreDao {
 		}, category);
 	}
 	
+// 키워드로 검색용 Dao 	
+//	public List<StoreByRating> getStoresByKeyword(int begin, int end, String keyword) {
+//		String sql = "select * ";
+//		sql += "      from ( ";
+//		sql += "            select A.*, row_number() over (order by A.id) row_number ";
+//		sql += "            from stores A ";
+//		sql += "        where store_name like '%' || ? || '%' ";
+//		sql +=       ") ";
+//		sql +=       "where row_number between ? and ? ";
+//		
+//		return DaoHelper.selectList(sql, rs -> {
+//			StoreByRating storeByRating = new StoreByRating(
+//					rs.getInt(1), 
+//					rs.getDouble(2),
+//					rs.getString(3),
+//					rs.getInt(4)
+//					);
+//			return storeByRating;
+//		}, keyword, begin, end);
+//	}
+	
+	
+	
+	
 }
