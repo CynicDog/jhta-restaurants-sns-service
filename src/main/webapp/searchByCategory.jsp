@@ -14,7 +14,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String category = request.getParameter("foodCategory");
+	String category = request.getParameter("category");
 	List<StoreByRating> storeList = null;
 
 	FoodDao foodDao = FoodDao.getInstance();
@@ -89,15 +89,15 @@ img {
 	<header class="category">
 	      		<h3 class="title">카테고리</h3>
 	      						
-				<a class="btn" role="button" href="foodCategory.jsp">전체</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=korean">한식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=chinese">중식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=japanese">일식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=western">양식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=fastFood">패스트푸드</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=snack">분식</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=asian">아시안</a>
-				<a class="btn" role="button" href="foodCategory.jsp?foodCategory=disert">디저트</a>
+				<a class="btn" role="button" href="searchByCategory.jsp">전체</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=korean">한식</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=chinese">중식</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=japanese">일식</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=western">양식</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=fastFood">패스트푸드</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=snack">분식</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=asian">아시안</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=disert">디저트</a>
 		   	     	
 	</header>	
 	<div class="row">
@@ -146,19 +146,19 @@ img {
  <nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item <%=pageNo <= 1 ? "disabled" : ""%>">
-						<a href="storesByRating.jsp?page=<%=pageNo - 1%>" class="page-link">이전</a>
+						<a href="searchByCategory.jsp?page=<%=pageNo - 1%>" class="page-link">이전</a>
 					</li>
 <%
 	for (int num = pagination.getStartingPage(); num <= pagination.getEndingPage(); num++) {
 %>
 					<li class="page-item <%=pageNo == num? "active" : ""%>">
-						<a href="storesByRating.jsp?page=<%=num%>" class="page-link"><%=num%></a> 
+						<a href="searchByCategory.jsp?page=<%=num%>" class="page-link"><%=num%></a> 
 					</li>
 <%
 	}
 %>
 					<li class="page-item <%=pageNo >= pagination.getTotalPages() ? "disabled" : ""%>">
-						<a href="storesByRating.jsp?page=<%=pageNo + 1%>" class="page-link">다음</a>
+						<a href="searchByCategory.jsp?page=<%=pageNo + 1%>" class="page-link">다음</a>
 					</li>
 				</ul>
 			</nav>

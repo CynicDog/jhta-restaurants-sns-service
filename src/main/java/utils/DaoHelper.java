@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import utils.ConnUtils;
+import utils.DaoHelper.RowMapper;
 
 public class DaoHelper {
 	
@@ -61,7 +63,7 @@ public class DaoHelper {
 		try {
 			T t = null;
 			Connection conn = ConnUtils.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(prop.getProperty(key));
+			PreparedStatement pstmt = conn.prepareStatement(getSql(key));
 			setParams(pstmt, params);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -89,7 +91,7 @@ public class DaoHelper {
 		try {
 			List<T> list = new ArrayList<>();
 			Connection conn = ConnUtils.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(prop.getProperty(key));
+			PreparedStatement pstmt = conn.prepareStatement(getSql(key));
 			setParams(pstmt, params);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -149,6 +151,13 @@ public class DaoHelper {
 				index++;
 			}
 		}
+	}
+	
+	private static String getSql(String key) {
+		if (key.contains(" ")) {
+			return key;
+		} 
+		return prop.getProperty(key);
 	}
 	
 	/**
