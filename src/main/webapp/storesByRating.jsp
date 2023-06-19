@@ -69,6 +69,8 @@
 	<% for (StoreByRating store : stores) { 
 		int storeId = store.getId();
 		StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+		
+		String avgRatingStr = String.format("%.2f", store.getReviewAvg());
 	%>              
 	                
 	                <div class="col-4">
@@ -81,7 +83,7 @@
 	                        </div>
 	                        <div class="card-body" style="cursor: pointer;" onclick="">
 	                            <a class="card-title a-tag-no-dec" href="storeDetail.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
-	                            <p class="card-text"><%=store.getReviewAvg() %></p>
+	                            <p class="card-text"><%=avgRatingStr %></p>
 	                        </div>
 	                    </div>
 	                </div>
