@@ -29,7 +29,7 @@
 	Store store = storeDao.getStoreById(storeId); // pk 조회 -> 하나만
 	List<StoreOpentime> storeOpentimes = storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
 	
-	List<Review> reviews = reviewDao.getReviewsByStoreId(storeId); // fk 조회 -> 여러개
+	List<Review> reviews = reviewDao.getRecentReviewsByStoreId(storeId); // fk 조회 -> 여러개
 		
 	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
 	
@@ -61,7 +61,7 @@
 								.map(storeOpentime -> storeOpentime.getOperationTime())
 								.collect(Collectors.joining("\\."))
 								.split("\\.")
-				);	
+				); 
 %>
 <!doctype html>
 <html lang="ko">
@@ -135,6 +135,21 @@
             text-decoration: none;
             cursor: pointer;
         }
+        
+        .row-cols-5 {
+	        display: flex;
+	        flex-wrap: wrap;
+	        justify-content: flex-start;
+    	}
+    
+    	.row-cols-5 img {
+	        flex-basis: 20%;
+	        max-width: 100%;
+	        height: 100%;
+	        object-fit: cover;
+	        box-sizing: border-box;
+	        padding: 5px;
+    }
     </style>
 </head>
 <body>
