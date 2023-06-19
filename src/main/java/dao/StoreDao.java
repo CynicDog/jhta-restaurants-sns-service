@@ -59,7 +59,6 @@ public class StoreDao {
 	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
 		
 		if(category==null) {
-			System.out.println("category : " + category);
 			return getStoresPaginated(start, end);
 		}else {
 		
