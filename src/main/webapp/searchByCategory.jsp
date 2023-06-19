@@ -41,15 +41,12 @@
 		}
 		
 		int totalRows = storeDao.getTotalRowsByFoodCategory(category); 
-		System.out.println("totalRows:"+totalRows);
 
 		Pagination pagination = new Pagination(pageNo, totalRows); 
 		
 		int start = pagination.getStartingRow(); 
-		System.out.println("start:"+start);
 
 		int end = pagination.getEndingRow();	 
-		System.out.println("end:"+end);
 
 		
 		storeList = storeDao.getStoresPaginatedByCategory(start, end, category);
