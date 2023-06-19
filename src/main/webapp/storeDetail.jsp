@@ -170,7 +170,7 @@
 	        object-fit: cover;
 	        box-sizing: border-box;
 	        padding: 5px;
-    }
+    	}
     </style>
 </head>
 <body>
@@ -296,6 +296,9 @@
                     <div class="col-2">
                         <div class="text-center card-title my-1">
                             <span style="font-size: medium; font-weight: bold;"><%=review.getCustomer().getName() %></span>
+                        </div>
+                        <div class="text-center card-title my-1">
+                            <span style="font-size: medium; font-weight: bold; color: #FFC107;"><%=review.getRating() %></span>                            
                         </div>
                     </div>
                     <div class="col-10">
