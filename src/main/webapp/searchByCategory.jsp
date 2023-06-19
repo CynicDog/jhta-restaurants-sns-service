@@ -14,7 +14,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String category = request.getParameter("category");
+
+	String category = null; 
+	if (request.getParameter("category") != null) { 
+	 	category = request.getParameter("category");
+	}
+	
+	if ("null".equals(category)) {
+		category = null; 
+	}
+ 
 	List<StoreByRating> storeList = null;
 
 	FoodDao foodDao = FoodDao.getInstance();
@@ -42,8 +51,12 @@
 		int end = pagination.getEndingRow();	 
 		System.out.println("end:"+end);
 
+		
 		storeList = storeDao.getStoresPaginatedByCategory(start, end, category);
 
+		storeList.stream()
+				.map(store -> store.getId())
+				.forEach(System.out::println); // 4 
 %>
 <!DOCTYPE html>
 <html>
@@ -124,11 +137,15 @@ img {
 		               
 		                    <div class="card m-2 sm-14 shadow bg-body rounded " >
 		                        <div class="embed-responsive embed-responsive-4by3">
-		                        	<% if(storePicture != null){%>
+		                        	<%
+		                        	// System.out.println("storeId :"+ storeId);
+		                        	if(storePicture != null){%>
 			                            <a href="storeDetail.jsp?storeId=<%=storeId %>">
 			                            <img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
 			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
-		                            <%}else {%>
+		                            <%}else { 
+		                             
+		                            %>
 									    <a href="storeDetail.jsp?storeId=<%=storeId %>">
 									    <img src="resources/storePicture/Color.png"
 									    			class="card-img-top embed-responsive-item" alt="..."></a>
@@ -150,19 +167,15 @@ img {
  <nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item <%=pageNo <= 1 ? "disabled" : ""%>">
-					<%System.out.println("pageNo:"+pageNo); %>
 						<a href="searchByCategory.jsp?page=<%=pageNo - 1%>" class="page-link">이전</a>
 					</li>
 <%
 	for (int num = pagination.getStartingPage(); num <= pagination.getEndingPage(); num++) {
 %>
 					<li class="page-item <%=pageNo == num? "active" : ""%>">
-				<%System.out.println("num:"+num);
-				System.out.println("pagination.getEndingPage():"+pagination.getEndingPage());
-
-				%>
+	
 					
-						<a href="searchByCategory.jsp?page=<%=num%>" class="page-link"><%=num%></a> 
+						<a href="searchByCategory.jsp?page=<%=num%>&category=<%=category %>" class="page-link"><%=num%></a> 
 					</li>
 <%
 	}
