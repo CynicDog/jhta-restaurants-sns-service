@@ -6,7 +6,6 @@ public class Pagination {
 	private int page; 
 	private int rows = 6;
 	private int pages = 5;
-	
 	private int totalRows;  
 	
 	public Pagination(int page, int totalRows) {
@@ -38,14 +37,10 @@ public class Pagination {
     public int getStartingPage() { return (getCurrentBlock() - 1)  * pages + 1; }
     
     public int getEndingPage() {
-    	System.out.println("getCurrentBlock():"+getCurrentBlock());
-    	System.out.println("getTotalBlocks():"+getTotalBlocks());
         if (getCurrentBlock() >= getTotalBlocks()) {
-        	System.out.println("getTotalPages()"+getTotalPages());
 
             return getTotalPages();
         }
-    	System.out.println("getCurrentBlock() * pages:"+getCurrentBlock() * pages);
 
         return getCurrentBlock() * pages; 
     }	

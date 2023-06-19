@@ -49,6 +49,7 @@ public class StoreDao {
 						rs.getString(3),
 						rs.getInt(4)
 					);
+			System.out.println("storeByRating.getId():"+storeByRating.getId());
 			return storeByRating;
 			
 		}, start, end); 
@@ -58,6 +59,7 @@ public class StoreDao {
 	public List<StoreByRating> getStoresPaginatedByCategory(int start, int end, String category) { 
 		
 		if(category==null) {
+			System.out.println("category : " + category);
 			return getStoresPaginated(start, end);
 		}else {
 		
