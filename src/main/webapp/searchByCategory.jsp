@@ -111,7 +111,7 @@ img {
 				<a class="btn" role="button" href="searchByCategory.jsp?category=fastFood">패스트푸드</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=snack">분식</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=asian">아시안</a>
-				<a class="btn" role="button" href="searchByCategory.jsp?category=disert">디저트</a>
+				<a class="btn" role="button" href="searchByCategory.jsp?category=dessert">디저트</a>
 		   	     	
 	</header>	
 	<div class="row">

@@ -83,13 +83,12 @@ pageEncoding="UTF-8"%>
                                 <option value="korean">한식</option>
                                 <option value="chinese">중식</option>
                                 <option value="japanese">일식</option>
+                                <option value="western">양식</option>
                                 <option value="fastfood">패스트푸드</option>
-                                <option value="stew">찜, 탕, 찌개</option>
-                                <option value="meat">육고기</option>
-                                <option value="street">분식</option>
+                                <option value="snack">분식</option>
                                 <option value="asian">아시안</option>
                                 <option value="dessert">디저트</option>
-                                <option value="etc">기타</option>
+                                
                             </select>
                         </div>
                         <!-- <div class="my-3">

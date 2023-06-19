@@ -60,7 +60,7 @@
         <jsp:param name="menu" value="홈"/>
     </jsp:include>
 <div class="container-fluid text-center">
-	<h3 class="title">평점순</h3>
+	<h3 class="title my-3">평점순</h3>
 	<div class=row> 
 	<div class=col-2></div>
 		<div class=col>
