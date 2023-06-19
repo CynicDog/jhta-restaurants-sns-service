@@ -10,6 +10,7 @@
 	// 요청 파라미터값 조회하기
 	int reviewId = Integer.parseInt(request.getParameter("reviewId"));
 	int storeId = Integer.parseInt(request.getParameter("storeId"));
+	String fromUserDetails = request.getParameter("fromUserDetails"); 
 	
 	// 세션에서 로그인한 사용자 정보 조회하기
 	Integer loginId = (Integer) session.getAttribute("loginId");
@@ -39,6 +40,11 @@
 	// 리뷰 정보 삭제
 	reviewDao.deleteReviewById(reviewId);
 	
-	// storedetail.jsp를 재요청하는 URL을 응답으로 보냅니다.
-	response.sendRedirect("storeDetail.jsp?storeId=" + storeId);
+	// userDetail.jsp에서 호출된 delet 요청인 경우, 삭제 작업 이후 redirection은 userDetail.jsp로
+	// storeDetail.jsp에서 호출된 delet 요청인 경우, 삭제 작업 이후 redirection은 storeDetail.jsp로 분기. 
+	if (fromUserDetails != null) {  
+		response.sendRedirect("userDetail.jsp"); 
+	} else {  
+		response.sendRedirect("storeDetail.jsp?storeId=" + storeId);
+	}
 %>
