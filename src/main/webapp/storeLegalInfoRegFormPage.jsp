@@ -83,6 +83,12 @@
                         <div class="col my-2">
                             <input class="form-control" type="text" id="sample6_extraAddress" placeholder="참고항목">
                         </div>
+                        <div>
+                        	<input hidden=true id="storeLongitude" name="longitude">
+                        </div>
+                        <div>
+                        	<input hidden=true id="storeLatitude" name="latitude">
+                        </div>
                     </div>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit">입력</button>
@@ -93,6 +99,8 @@
     </div>
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript"
+	                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 <script>
     function sample6_execDaumPostcode() {
         new daum.Postcode({
@@ -132,7 +140,25 @@
                 } else {
                     document.getElementById("sample6_extraAddress").value = '';
                 }
+                
+                console.log(addr);
+                
+             	var geocoder = new kakao.maps.services.Geocoder();
+             	// 주소로 좌표를 검색합니다
+                geocoder.addressSearch(addr, function(result, status) {
 
+                    // 정상적으로 검색이 완료됐으면 
+                     if (status === kakao.maps.services.Status.OK) {
+						
+                    	var x = result[0].road_address.x
+                    	var y = result[0].road_address.y
+                    	
+		                document.getElementById('storeLongitude').value = x;
+		                document.getElementById('storeLatitude').value = y;
+                    } 
+                });
+				
+                
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample6_postcode').value = data.zonecode;
                 document.getElementById("sample6_address").value = addr;
