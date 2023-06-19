@@ -144,25 +144,14 @@
     </jsp:include>
 
     <div class="container">
+    	<div>
+    		<input hidden=true id=longitude value=<%=store.getLongitude() %>>
+    		<input hidden=true id=latitude value=<%=store.getLatitude() %>>
+    	</div>
         <div class="row row-cols-5"> 
         	<% for (ReviewPictureRecent recentPicture : recentPictures) { %>                 	
             	<img class="img-thumbnail" src="resources/reviewPicture/<%= recentPicture.getFileLocation() %>" style="max-width: 100%; height: auto;" alt="..." onclick="openModal(this)">
             <% } %>          
-         <!--    <div class="col">            
-                <img src="https://mp-seoul-image-production-s3.mangoplate.com/688135_1508733757417689.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>          
-            <div class="col">
-                <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011436?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>
-            <div class="col">
-                <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011435?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>
-            <div class="col">
-                <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011438?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>
-            <div class="col">
-                <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011433?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div> -->
         </div>
     </div>
     <!-- 모달 창 -->
@@ -357,24 +346,32 @@
     showMoreButton.addEventListener('click', showHiddenReviews);
 </script>
 
+<script type="text/javascript"
+	                src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 <script>
     var container = document.getElementById('map');
+    var longitude = document.getElementById("longitude").value;
+    var latitude = document.getElementById("latitude").value;
     var options = {
-        center: new kakao.maps.LatLng(37.572846, 126.992302),
+        center: new kakao.maps.LatLng(latitude, longitude),
         level: 3
     };
+    
 
     var map = new kakao.maps.Map(container, options);
+    var geocoder = new kakao.maps.services.Geocoder();
+    
+    var coords = new kakao.maps.LatLng(latitude, longitude);
 
-    // 키워드 검색 완료 시 호출되는 콜백함수입니다
-    function placesSearchCB(data, status, pagination) {
-        if (status === kakao.maps.services.Status.OK) {
-            for (var i = 0; i < data.length; i++) {
-                displayMarker(data[i]);
-            }
-        }
-    }
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+    
+    
+    marker.setMap(map);
+    
 </script>
 
 </body>
