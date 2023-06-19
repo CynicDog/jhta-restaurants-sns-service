@@ -47,7 +47,11 @@
     	 	text-decoration: none;
     	 	font-size: large; 
     		font-weight: bold
-    	}  
+    	}
+    	img {
+            	height: 380px;
+                object-fit: cover;
+            }  
     	
     </style>
 </head>
@@ -57,31 +61,37 @@
     </jsp:include>
 <div class="container-fluid text-center">
 	<h3 class="title">평점순</h3>
-    <div class="row my-4">
-            <div class="row mx-1" >
-<% for (StoreByRating store : stores) { 
-	int storeId = store.getId();
-	StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
-%>              
-                
-                <div class="col-6">
-                    <div class="card m-2 sm-14 shadow bg-body rounded">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <% if(storePicture != null){%>
-			                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
-			                                            class="card-img-top embed-responsive-item" alt="..." ></a>
-		                    <%}%>
-                        </div>
-                        <div class="card-body" style="cursor: pointer;" onclick="">
-                            <a class="card-title a-tag-no-dec" href="storeDetail.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
-                            <p class="card-text"><%=store.getReviewAvg() %></p>
-                        </div>
-                    </div>
-                </div>
-                
-<% } %>              
-            </div>
-        </div>
+	<div class=row> 
+	<div class=col-2></div>
+		<div class=col>
+	    	<div class="row my-4">
+	            <div class="row mx-1" >
+	<% for (StoreByRating store : stores) { 
+		int storeId = store.getId();
+		StorePicture storePicture = storePictureDao.getStorePictureByStoreId(storeId);
+	%>              
+	                
+	                <div class="col-4">
+	                    <div class="card m-2 sm-14 shadow bg-body rounded">
+	                        <div class="embed-responsive embed-responsive-4by3">
+	                            <% if(storePicture != null){%>
+				                            <a href="storeDetail.jsp?storeId=<%=storeId %>"><img src="resources/storePicture/<%=storePicture.getFileLocation() %>"
+				                                            class="card-img-top embed-responsive-item" alt="..." ></a>
+			                    <%}%>
+	                        </div>
+	                        <div class="card-body" style="cursor: pointer;" onclick="">
+	                            <a class="card-title a-tag-no-dec" href="storeDetail.jsp?storeId=<%=store.getId() %>"><%=store.getName() %></a>
+	                            <p class="card-text"><%=store.getReviewAvg() %></p>
+	                        </div>
+	                    </div>
+	                </div>
+	                
+	<% } %>              
+	            </div>
+	        </div>
+		</div>
+	<div class=col-2></div>	        
+    </div>
         <div class="col-1"></div>
     </div>
     <nav>
