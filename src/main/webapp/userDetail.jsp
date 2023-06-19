@@ -236,7 +236,7 @@
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
                                 <div class="fw-bold">가게명: <%=review.getStore().getName() %></div>
-                                <%=review.getText() %> 
+                                <%=review.getText() %>  
                             </div>
                             <a href="deleteReview.jsp?storeId=<%=review.getStore().getId() %>&reviewId=<%=review.getId() %>&fromUserDetails=true"  class="btn btn-danger btn-sm my-3" >삭제</a>
                         </li>
