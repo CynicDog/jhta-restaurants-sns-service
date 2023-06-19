@@ -32,12 +32,16 @@
 		}
 		
 		int totalRows = storeDao.getTotalRowsByFoodCategory(category); 
+		System.out.println("totalRows:"+totalRows);
 
 		Pagination pagination = new Pagination(pageNo, totalRows); 
 		
-		int start = pagination.getStartingRow(); 	
+		int start = pagination.getStartingRow(); 
+		System.out.println("start:"+start);
+
 		int end = pagination.getEndingRow();	 
-		
+		System.out.println("end:"+end);
+
 		storeList = storeDao.getStoresPaginatedByCategory(start, end, category);
 
 %>
@@ -146,12 +150,18 @@ img {
  <nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item <%=pageNo <= 1 ? "disabled" : ""%>">
+					<%System.out.println("pageNo:"+pageNo); %>
 						<a href="searchByCategory.jsp?page=<%=pageNo - 1%>" class="page-link">이전</a>
 					</li>
 <%
 	for (int num = pagination.getStartingPage(); num <= pagination.getEndingPage(); num++) {
 %>
 					<li class="page-item <%=pageNo == num? "active" : ""%>">
+				<%System.out.println("num:"+num);
+				System.out.println("pagination.getEndingPage():"+pagination.getEndingPage());
+
+				%>
+					
 						<a href="searchByCategory.jsp?page=<%=num%>" class="page-link"><%=num%></a> 
 					</li>
 <%

@@ -38,9 +38,14 @@ public class Pagination {
     public int getStartingPage() { return (getCurrentBlock() - 1)  * pages + 1; }
     
     public int getEndingPage() {
-        if (getCurrentBlock() == getTotalBlocks()) {
+    	System.out.println("getCurrentBlock():"+getCurrentBlock());
+    	System.out.println("getTotalBlocks():"+getTotalBlocks());
+        if (getCurrentBlock() >= getTotalBlocks()) {
+        	System.out.println("getTotalPages()"+getTotalPages());
+
             return getTotalPages();
         }
+    	System.out.println("getCurrentBlock() * pages:"+getCurrentBlock() * pages);
 
         return getCurrentBlock() * pages; 
     }	
