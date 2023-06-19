@@ -147,9 +147,9 @@
 									<% } %> --%>
 		                        </div>
 		                        
-		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
-		                            <h5 class="card-title"><%=store.getName() %></h5>
-		                            <p class="card-text"><%=avgRatingStr %></p>
+		                        <div class="card-body" style=" cursor: pointer; font-weight:bold; font-size:x-large;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
+		                            <p class="card-title"><%=store.getName() %></p>
+		                            <p class="card-text" style="color: #FFC107;" ><%=avgRatingStr %></p>
 		                        </div>
 		                    </div>
 		                </div>

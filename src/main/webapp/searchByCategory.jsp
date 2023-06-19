@@ -150,8 +150,8 @@ img {
 		                        </div>
 		                        
 		                        <div class="card-body"  onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
-		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=store.getName() %></p>
-		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center;"><%=avgRatingStr %></p>
+		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center; font-weight:bold;"><%=store.getName() %></p>
+		                            <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center; color: #FFC107; font-weight:bold;"><%=avgRatingStr %></p>
 		                        </div>
 		                    </div>
 		                </div>
