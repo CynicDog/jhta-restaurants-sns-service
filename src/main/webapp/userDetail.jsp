@@ -199,6 +199,7 @@
                                 <div class="fw-bold"><%=store.getName() %></div>
                                 <%=store.getBusinessLicenseNumber() %>
                             </div>
+                            <a href="menuRegFormPage.jsp?storeId=<%=store.getId() %>&&fromUserDetails=true"  class="btn btn-light btn-sm my-3 mx-2" >메뉴 등록</a>
                             <a href="deleteStore.jsp?storeId=<%=store.getId() %>"  class="btn btn-danger btn-sm my-3" >삭제</a>
                         </li>
 <%  

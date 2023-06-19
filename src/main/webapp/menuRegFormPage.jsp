@@ -1,6 +1,18 @@
 <%@page import="vo.Store"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<% 
+	int storeId = -1; 
+	if (request.getParameter("storeId") != null) {
+		storeId = Integer.parseInt(request.getParameter("storeId")); 
+	}
+	
+	String fromUserDetails = null;
+	if (request.getParameter("fromUserDetails") != null) {
+		fromUserDetails = "true"; 
+	}
+	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,8 +61,10 @@ pageEncoding="UTF-8"%>
                         </div>
                     </div>
                 </div>
-                <form method="post" action="menuReg.jsp">
+                <form method="post" action="<%= (fromUserDetails == null) ? "menuReg.jsp" : "menuRegFromUserDetails.jsp" %>">
+                <!-- <form method="post" action="menuReg.jsp"> -->
                     <div class="card-body">
+                    	<input type="text" hidden=true name="storeId" value=<%=storeId %>>
                         <div class="my-3">
                             <label for="name" class="form-label">메뉴 이름</label>
                             <input type="text" class="form-control" id="name" name="name" required>
