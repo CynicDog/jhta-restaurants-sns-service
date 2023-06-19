@@ -18,8 +18,10 @@ public class ReviewDao {
 		return instance;
 	}
 	
-	public List<Review> getReviewByCustomerId(int userId) {
-		return DaoHelper.selectList("ReviewDao.getReviewByCustomerId", rs -> {
+
+	public List<Review> getRecentReviewsByStoreId(int storeId) {
+		return DaoHelper.selectList("ReviewDao.getRecentReviewsByStoreId", rs -> {
+			
 			Review review = new Review();
 			
 			review.setId(rs.getInt(1)); 
@@ -36,7 +38,27 @@ public class ReviewDao {
 			
 			return review;
 			
-		}, userId);		
+		}, storeId);
+	}
+
+	public List<Review> getReviewByCustomerId(int customerId) {
+		return DaoHelper.selectList("ReviewDao.getReviewByCustomerId", rs -> {
+			Review review = new Review();
+			
+			review.setId(rs.getInt(1)); 
+			review.setRating(rs.getDouble(2));
+			review.setText(rs.getString(3)); 
+			review.setCreateDate(rs.getDate(4)); 
+			review.setUpdateDate(rs.getDate(5)); 
+			
+			Customer customer = customerDao.getCustomerById(rs.getInt(6));
+			review.setCustomer(customer); 
+			
+			Store store = storeDao.getStoreById(rs.getInt(7)); 
+			review.setStore(store);
+			
+			return review;
+		}, customerId);		
 	} 
 	
 	public Review getReviewByText(String text) {
