@@ -1,3 +1,4 @@
+<%@page import="java.util.Comparator"%>
 <%@page import="dto.ReviewPictureRecent"%>
 <%@page import="utils.EngKorConverter"%>
 <%@page import="vo.ReviewPicture"%>
@@ -30,6 +31,26 @@
 	List<StoreOpentime> storeOpentimes = storeOpenTimeDao.getStoreOpenTimeByStoreId(storeId); // fk -> 여러개
 	
 	List<Review> reviews = reviewDao.getRecentReviewsByStoreId(storeId); // fk 조회 -> 여러개
+
+/* 	List<Review> reviewsStream = reviewDao.getReviewsByStoreId(storeId);
+	List<Review> reviews = reviewsStream.stream()
+										 .sorted(
+											// functional interface -> functional 인터페이스는 abstract 메소드를 하나만 가지는 인터페이스다! 
+											// [ Comparator ] 
+											
+											// abstract method -> abstract 메소드는 람다식으로 구현한다! (람다란 인자, 로직 구현, 반환값만 맞추면 됨)
+											// [ int compare​(T o1, T o2) ]  
+											(review1, review2) -> { 
+												int review1Int = -1; 
+												int review2Int = -1; 
+												
+												review1Int = (int) review1.getCreateDate().getTime();  
+												review2Int = (int) review2.getCreateDate().getTime();  
+													
+												return review1Int - review2Int; 
+											}
+										).collect(Collectors.toList()); */
+							
 		
 	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
 	
