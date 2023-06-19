@@ -134,6 +134,7 @@
 	                			.mapToDouble(review -> review.getRating())
 	                			.average()
 	                			.orElse(0.0);
+	                	String avgRatingStr = String.format("%.2f", avgRating);
 	                %>
 	               		<!-- <div class="col"></div> -->
 		                <div class="col-6">
@@ -151,7 +152,7 @@
 		                        
 		                        <div class="card-body" style=" cursor: pointer;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
 		                            <h5 class="card-title"><%=store.getName() %></h5>
-		                            <p class="card-text"><%=avgRating %></p>
+		                            <p class="card-text"><%=avgRatingStr %></p>
 		                        </div>
 		                    </div>
 		                </div>
