@@ -1,3 +1,4 @@
+<%@page import="dto.ReviewPictureRecent"%>
 <%@page import="utils.EngKorConverter"%>
 <%@page import="vo.ReviewPicture"%>
 <%@page import="java.util.stream.Collectors"%>
@@ -32,8 +33,7 @@
 		
 	List<Food> foods = foodDao.getFoodsByStoreId(storeId); // fk 조회 -> 여러개
 	
-	// TODO 
-	// List<ReviewPicture> recentPictures = reviewPictureDao.getRecentPicturesByStoreId(storeId);
+	List<ReviewPictureRecent> recentPictures = reviewPictureDao.getRecentPicturesByStoreId(storeId);
 	
 	// Food -> String 이후 영어 ->한글 (korean, chinese... -> 한식, 중식, ...)
 	String foodsCategory = foods.stream()
@@ -53,6 +53,7 @@
 			.mapToDouble(review -> review.getRating())
 			.average()
 			.orElse(0.0);
+	String avgRatingStr = String.format("%.2f", avgRating);
 	
 	// `월요일 ~ 월요일 : 06:00 ~ 06:00.화요일 ~ 목요일 : 06:00 ~ 08:00....` -> comma(`.`) 기준 parsing 
 	List<String> storeOpenTimesParsed = Arrays.asList(
@@ -100,13 +101,11 @@
     </jsp:include>
 
     <div class="container">
-        <div class="row row-cols-5">
-        <%-- TODO 
-        	<% for (ReviewPicture recentPicture : recentPictures) { %>                 	
-            	<img class="img-thumbnail" src="resources/reviewPicture/<%=recentPicture.getFileLocation() %>" style="width: 320px; max-width: 320px;" alt="...">
-            <% } %>
-         --%>    
-            <div class="col">            
+        <div class="row row-cols-5"> 
+        	<% for (ReviewPictureRecent recentPicture : recentPictures) { %>                 	
+            	<img class="img-thumbnail" src="resources/reviewPicture/<%= recentPicture.getFileLocation() %>" style="max-width: 100%; height: auto;" alt="...">
+            <% } %>          
+         <!--    <div class="col">            
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/688135_1508733757417689.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
             </div>          
             <div class="col">
@@ -120,7 +119,7 @@
             </div>
             <div class="col">
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/332683/569295_1680599766207_1000011433?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="container">
@@ -130,7 +129,7 @@
                     <header>
                         <div class="row">
                             <div class="col-8">
-                                <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"><%=store.getName() %></span><span class="rate-point mx-3" style="font-weight: bold; font-size: large"><%=avgRating %></span></p>
+                                <p class="restaurants_name my-3"><span style="font-size: x-large; font-weight: bold"><%=store.getName() %></span><span class="rate-point mx-3" style="font-weight: bold; font-size: large"><%=avgRatingStr %></span></p>
                             </div>
                             <div class="col-4">
                             <% if ("customer".equals(loginType)) { %>
