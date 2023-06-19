@@ -31,7 +31,7 @@ public class StoreServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		Store store = (Store) request.getSession().getAttribute("storeComplete");
-		StoreDao storeDao = StoreDao.getInstance();
+		StorePictureDao storepictureDao = StorePictureDao.getInstance();
 		
 		HttpSession session =request.getSession();
 		int loginId = (int)session.getAttribute("loginId"); 
@@ -49,11 +49,8 @@ public class StoreServlet extends HttpServlet {
 			
 			InputStream in = part.getInputStream();
 			OutputStream out = new FileOutputStream(new File(saveDirectory, fileName));
-
 			IOUtils.copy(in, out);
-			
-			StorePictureDao storepictureDao = StorePictureDao.getInstance();
-			
+
 			StorePicture sp = new StorePicture();
 			sp.setFileLocation(fileName);
 			sp.setStore(store);

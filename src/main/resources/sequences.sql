@@ -1,3 +1,15 @@
+drop sequence customer_sequence ;
+drop sequence customers_sequence ;
+drop sequence admins_sequence;
+drop sequence foods_sequence ;
+drop sequence food_pictures_sequence ;
+drop sequence owners_sequence;
+drop sequence reviews_sequence ;
+drop sequence reviews_pictures_sequence; 
+drop sequence stores_sequence;
+drop sequence store_open_times_sequence;
+drop sequence store_pictures_sequence;
+
 create sequence customers_sequence 
 increment by 1 
 start with 1;
