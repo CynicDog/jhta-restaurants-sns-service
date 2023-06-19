@@ -1,3 +1,5 @@
+<%@page import="vo.Review"%>
+<%@page import="dao.ReviewDao"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="vo.Store"%>
 <%@page import="java.util.List"%>
@@ -15,6 +17,7 @@
 <%
 	CustomerDao customerDao = CustomerDao.getInstance();
 	StoreDao storeDao = StoreDao.getInstance(); 
+	ReviewDao reviewDao = ReviewDao.getInstance(); 
 	OwnerDao ownerDao = OwnerDao.getInstance();
 	AdminDao adminDao = AdminDao.getInstance(); 
 
@@ -47,6 +50,7 @@
 	String gender = null; 
 	
 	List<Store> stores = new ArrayList<Store>();
+	List<Review> reviews = new ArrayList<Review>();
 			
 	if (customer != null) {
 		memberId = customer.getUserId(); 
@@ -56,6 +60,8 @@
 		birthday = customer.getBirthday();
 		gender = customer.getGender();
 		grade = customer.getGrade();
+		
+		reviews = reviewDao.getReviewByCustomerId(customer.getId()); 
 		
 	} else if (owner != null) {
 		memberId = owner.getOwnerId(); 
@@ -183,7 +189,7 @@
 <% 
 	if (!stores.isEmpty()) {		
 %>                    
-        <div class="row justify-content-center align-items-center mt-3">
+    <div class="row justify-content-center align-items-center mt-3">
         <div class="col-md-7">
             <div class="card shadow p-3 mb-5 bg-white rounded">
                 <div class="card-header">
@@ -213,6 +219,42 @@
 <% 
 	} 
 %>
+<% 
+	if (!reviews.isEmpty()) {		
+%>                    
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-md-7">
+            <div class="card shadow p-3 mb-5 bg-white rounded">
+                <div class="card-header">
+                    <p class="my-2">리뷰 목록</p>
+                </div>
+                <div class="card-body">
+                    <ol class="list-group list-group-numbered">
+<%  
+		for (Review review : reviews) {  
+%>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold">가게명: <%=review.getStore().getName() %></div>
+                                <%=review.getText() %>
+                            </div>
+                            <a href="deleteReview.jsp?storeId=<%=review.getStore().getId() %>&reviewId=<%=review.getId() %>&fromUserDetails=true"  class="btn btn-danger btn-sm my-3" >삭제</a>
+                        </li>
+<%  
+		}   
+%>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+<% 
+	} 
+%>
+
+
+
+
 </div>
 </body>
 </html>
