@@ -92,6 +92,49 @@
             display: flex;
             justify-content: flex-end;
         }
+        
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -103,7 +146,7 @@
     <div class="container">
         <div class="row row-cols-5"> 
         	<% for (ReviewPictureRecent recentPicture : recentPictures) { %>                 	
-            	<img class="img-thumbnail" src="resources/reviewPicture/<%= recentPicture.getFileLocation() %>" style="max-width: 100%; height: auto;" alt="...">
+            	<img class="img-thumbnail" src="resources/reviewPicture/<%= recentPicture.getFileLocation() %>" style="max-width: 100%; height: auto;" alt="..." onclick="openModal(this)">
             <% } %>          
          <!--    <div class="col">            
                 <img src="https://mp-seoul-image-production-s3.mangoplate.com/688135_1508733757417689.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="img-fluid" alt="...">
@@ -122,6 +165,27 @@
             </div> -->
         </div>
     </div>
+    <!-- 모달 창 -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <script>
+        // 모달 열기
+        function openModal(img) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("modalImg");
+            modal.style.display = "block";
+            modalImg.src = img.src;
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
     <div class="container">
         <div class="row">
             <div class="col-8">
