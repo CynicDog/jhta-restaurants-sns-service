@@ -70,36 +70,14 @@
 					</div>
 					<div class="card-body">
 						<form id="form-edit-detail" method="post" action="editUserDetail.jsp">
-							<div class="mb-3">
-								<div class="row">
-									<div class="col-3 my-1">
-										<input class="form-check-input" type="radio" name="member"
-											id="member-radio-1" value="customer" checked> <label
-											class="form-check-label" for="member-radio-1">손님</label>
-									</div>
-									<div class="col-3 my-1">
-										<input class="form-check-input" type="radio" name="member"
-											id="member-radio-2" value="owner"> <label
-											class="form-check-label" for="member-radio-2">사장님</label>
-									</div>
-								</div>
-							</div>
+							
 
-							<div class="mb-3">
-								<label for="user_id" class="form-label">아이디</label> <input
-									type="text" class="form-control" id="id" name="member-id"
-									required>
-							</div>
 							<div class="mb-3">
 								<label for="password" class="form-label">비밀번호</label> <input
 									type="password" class="form-control" id="password"
 									name="password" required>
 							</div>
-							<div class="mb-3">
-								<label for="password_check" class="form-label">비밀번호 확인</label> <input
-									type="password" class="form-control" id="password_check"
-									required>
-							</div>
+						
 							<div class="mb-3">
 								<label for="name" class="form-label">성함</label> <input
 									type="text" class="form-control" id="name" placeholder="성함"
@@ -115,30 +93,7 @@
 									type="text" class="form-control" id="phone"
 									placeholder="010-0000-0000" name="phone" required>
 							</div>
-							<div class="mb-3">
-								<label for="birthday" class="form-label">생년월일</label> <input
-									type="date" class="form-control" id="birthday"
-									placeholder="YYYY-MM-DD" name="birthday" required>
-							</div>
-							<div class="mb-3">
-								성별
-								<div class="row">
-									<div class="col-3 my-1">
-										<input class="form-check-input" type="radio" name="gender"
-											id="gender-radio-1" value="male" checked> <label
-											class="form-check-label" for="gridRadios1"> 남 </label>
-									</div>
-									<div class="col-3 my-1">
-										<input class="form-check-input" type="radio" name="gender"
-											id="gender-radio-2" value="female"> <label
-											class="form-check-label" for="gridRadios2"> 여 </label>
-									</div>
-									<div class="col-6">
-										<input type="text" class="form-control" id="gender"
-											placeholder="직접 입력">
-									</div>
-								</div>
-							</div>
+							
 							<div class="button-container col my-1 mt-4" style="text-align: right; ">
 								<button type="submit" class="btn btn-primary btn m-1">완료</button>
 								<button type="button" class="btn btn-secondary btn m-1"
