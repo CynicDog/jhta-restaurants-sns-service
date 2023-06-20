@@ -102,6 +102,20 @@
 		        justify-content: center;
 		        align-items: center; */
 		    }
+		    
+		    .card-body{
+		    	cursor: pointer; 
+		    	font-weight:bold; 
+		    }
+		    
+		    .card-text{
+		    	margin-left: 20px; 
+		    	margin-bottom:0px; 
+		    	margin-right: 20px;
+		    	font-size: 25px; 
+		    	display: flex; 
+		    	align-items: center;
+		    }
         </style>
 
     </head>
@@ -109,7 +123,7 @@
     <jsp:include page="nav.jsp">
         <jsp:param name="menu" value="홈"/>
     </jsp:include>
-    <div class="container-fluid text-center">
+    <div class="container-fluid ">
 		<div class="row">
 			<div class="col-1"></div>
 	        <div class="col-6">
@@ -147,9 +161,9 @@
 									<% } %> --%>
 		                        </div>
 		                        
-		                        <div class="card-body" style=" cursor: pointer; font-weight:bold; font-size:x-large;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
-		                            <p class="card-title"><%=store.getName() %></p>
-		                            <p class="card-text" style="color: #FFC107;" ><%=avgRatingStr %></p>
+		                        <div class="card-body" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>';">
+		                            <p class="card-text" ><%=store.getName() %></p>
+		                            <p class="card-text" style="color: #FFC107;"><%=avgRatingStr %></p>
 		                        </div>
 		                    </div>
 		                </div>

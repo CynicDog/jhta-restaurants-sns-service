@@ -51,7 +51,20 @@
     	img {
             	height: 380px;
                 object-fit: cover;
-            }  
+            }
+	    .card-body{
+	    	cursor: pointer; 
+	    	font-weight:bold; 
+	    }
+	    
+	    .card-text{
+	    	margin-left: 20px; 
+	    	margin-bottom:0px; 
+	    	margin-right: 20px;
+	    	font-size: 25px; 
+	    	display: flex; 
+	    	align-items: center;
+	    }  
     	
     </style>
 </head>
@@ -81,9 +94,9 @@
 				                                            class="card-img-top embed-responsive-item" alt="..." ></a>
 			                    <%}%>
 	                        </div>
-	                        <div class="card-body" style="cursor: pointer; font-weight:bold; font-size:x-large;" onclick="">
-	                        	<p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center; font-weight:bold;" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>'"><%=store.getName() %></p>
-		                        <p class="card-text" style="margin-left: 20px; margin-bottom:0px; margin-right: 20px; font-size: 25px; display: flex; align-items: center; color: #FFC107; font-weight:bold;"><%=avgRatingStr %></p>
+	                        <div class="card-body" onclick="location.href='storeDetail.jsp?storeId=<%=storeId %>'">
+	                        	<p class="card-text"><%=store.getName() %></p>
+		                        <p class="card-text" style="color: #FFC107;"><%=avgRatingStr %></p>
 	                        </div>
 	                    </div>
 	                </div>
