@@ -65,10 +65,13 @@
 								.toString(); 
 	
 	// 영어 -> 한글 (day1, day2... -> 월요일, 화요일...)
-	String dayOffs = Arrays.asList(store.getDayOffs().split(",")).stream()
-			.map(dayOff -> EngKorConverter.dayOffsToKorean(dayOff))
-			.collect(Collectors.toList())
-			.toString(); 
+	String dayOffs = ""; 
+	if (store.getDayOffs() != null) {
+		 dayOffs = Arrays.asList(store.getDayOffs().split(",")).stream()
+				.map(dayOff -> EngKorConverter.dayOffsToKorean(dayOff))
+				.collect(Collectors.toList())
+				.toString(); 
+	} 
 	
 	double avgRating = reviews.stream()
 			.mapToDouble(review -> review.getRating())
@@ -83,6 +86,7 @@
 								.collect(Collectors.joining("\\."))
 								.split("\\.")
 				); 
+	
 %>
 <!doctype html>
 <html lang="ko">
