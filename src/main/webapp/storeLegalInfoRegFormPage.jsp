@@ -167,6 +167,20 @@
             }
         }).open();
     }
+    
+    
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            var buizNum = parseInt($('#business-license-number').val());
+
+            if (isNaN(buizNum) || buizNum.toString().length > 10) {
+                alert("Business license number should be a numeric value with a maximum length of 10 digits.");
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    });
+    
+    
 </script>
 </body>
 </html>
