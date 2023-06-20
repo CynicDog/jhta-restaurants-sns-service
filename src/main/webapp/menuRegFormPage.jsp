@@ -62,7 +62,6 @@ pageEncoding="UTF-8"%>
                     </div>
                 </div>
                 <form method="post" action="<%= (fromUserDetails == null) ? "menuReg.jsp" : "menuRegFromUserDetails.jsp" %>">
-                <!-- <form method="post" action="menuReg.jsp"> -->
                     <div class="card-body">
                     	<input type="text" hidden=true name="storeId" value=<%=storeId %>>
                         <div class="my-3">
@@ -91,10 +90,6 @@ pageEncoding="UTF-8"%>
                                 
                             </select>
                         </div>
-                        <!-- <div class="my-3">
-                            <label for="picture" class="form-label">메뉴 사진 첨부</label>
-                            <input type="file" class="form-control" id="picture" min="0" name="picture" required>
-                        </div> -->
                     </div>
                     <div class="button-container">
                         <button class="btn btn-primary" type="submit">입력</button>
