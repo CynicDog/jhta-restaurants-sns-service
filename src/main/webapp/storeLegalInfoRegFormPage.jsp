@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	String message = null; 
+
+	if (request.getParameter("message") != null) {
+		message = "Y"; 	
+	}
+	
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,10 +86,10 @@
                             <input class="form-control" type="text" id="sample6_address" placeholder="주소" name="address" required>
                         </div>
                         <div class="col my-3">
-                            <input class="form-control" type="text" id="sample6_detailAddress" placeholder="상세주소">
+                            <input class="form-control" type="text" id="sample6_detailAddress" placeholder="상세주소" required>
                         </div>
                         <div class="col my-2">
-                            <input class="form-control" type="text" id="sample6_extraAddress" placeholder="참고항목">
+                            <input class="form-control" type="text" id="sample6_extraAddress" placeholder="참고항목" required>
                         </div>
                         <div>
                         	<input hidden=true id="storeLongitude" name="longitude">
@@ -179,8 +187,12 @@
             }
         });
     });
-    
-    
 </script>
+
+<% if (message != null) { %>
+<script>
+	alert("Store already exists with the given business license number.");
+</script>
+<% }%>
 </body>
 </html>
