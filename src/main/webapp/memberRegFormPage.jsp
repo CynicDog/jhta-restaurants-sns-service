@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    
+<%
+	String message = null; 
+
+	if (request.getParameter("message") != null) {
+		message = request.getParameter("message"); 
+	} 
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +69,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="password_check" class="form-label">비밀번호 확인</label>
-                            <input type="password" class="form-control" id="password_check" required>
+                            <input type="password" class="form-control" id="password_check" name="password_check" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">성함</label>
@@ -107,4 +113,22 @@
     </div>
 </div>
 </body>
+<% if (message != null) {  %>
+	<script>
+		alert("User already exists with the given id or phone number."); 
+	</script>
+<% }%>
+<script>
+$(document).ready(function() {
+    $('form').submit(function(event) {
+        var password = $('#password').val();
+        var passwordCheck = $('#password_check').val();
+
+        if (password !== passwordCheck) {
+            alert("Passwords do not match. Please enter the same password in both fields.");
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+});
+</script>
 </html>
