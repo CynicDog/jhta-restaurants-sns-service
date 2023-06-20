@@ -139,19 +139,21 @@
 					// 별점
 					
 					let pointEls = document.querySelectorAll("[name=starpoint]");
+					let textEls = document.getElementById("floatingTextarea");
 					
 					let isChecked = false;
 					
 					pointEls.forEach(function(el){
 						console.log(el, el.checked);
 						if(el.checked){
-							isChecked = true;	
+							if(textEls.value.trim() !== ""){
+								isChecked = true;	
+							}
 						}
-						
 					});
-				
+					
 					if(!isChecked){
-						alert("별점은 꼭 입력해주세요!");
+						alert("별점과 리뷰는 꼭 입력해주세요!");
 						e.preventDefault();
 					}
 				}
