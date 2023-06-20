@@ -47,13 +47,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <style type="text/css">
-            #test_btn_group {
+/*             #test_btn_group {
                 boarder: 1px solid skyblue;
                 background-color: rgba(0, 0, 25, 0);
                 color: skyblue;
                 padding: 5px;
                 margin-left: 12px;
-            }
+            } */
 
             .test_btn_group {
                 boarder: 1px solid skyblue;
@@ -75,12 +75,12 @@
                 /* padding:55px; */
             }
 
-            .btn {
+/*             .btn {
                 margin-right: 15px;
                 margin-left: 15px;
                 padding: 10px;
                 background-color: rgb(125, 185, 182);
-            }
+            } */
 
             img {
             	height: 380px;
@@ -123,14 +123,14 @@
     <jsp:include page="nav.jsp">
         <jsp:param name="menu" value="홈"/>
     </jsp:include>
-    <div class="container-fluid ">
+    <div class="container-fluid text-center">
 		<div class="row">
 			<div class="col-1"></div>
 	        <div class="col-6">
 	            <div class="row">
 	                <div id="test_btn_group">
-	                    <a class="btn" role="button" onclick="location.href='storesByRating.jsp?page=1'">평점순</a>
-	                    <a href="searchByCategory.jsp" class="btn" role="button">카테고리별</a>
+	                    <a class="btn btn-light my-2 mx-2" role="button" onclick="location.href='storesByRating.jsp?page=1'">평점순</a>
+	                    <a href="searchByCategory.jsp" class="btn btn-light my-2 mx-2" role="button">카테고리별</a>
 	                </div>
 	            </div>
 	            <!-- <div class="card-container"> -->
