@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="button-container col my-1 mt-4" style="text-align: center; ">
-                            <button type="submit" class="btn btn-primary btn-lg m-1">완료</button>
+                            <button type="submit" class="btn btn-primary btn-lg m-1" onclick="isPhoneValid(event)">완료</button>
                         </div>
                     </form>
                 </div>
@@ -130,5 +130,19 @@ $(document).ready(function() {
         }
     });
 });
+
+function isPhoneValid(event) {
+	
+    var phone = document.getElementById("phone").value; 
+    if (!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(phone) || phone.length > 13) {
+    	event.preventDefault();
+    	
+    	alert("Invalid format of phone number."); 
+        return false;	
+    } 
+    
+    return true;
+};
+
 </script>
 </html>
