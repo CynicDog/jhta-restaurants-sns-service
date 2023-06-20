@@ -190,27 +190,74 @@
             <% } %>          
         </div>
     </div>
+
     <!-- 모달 창 -->
-    <div id="myModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImg">
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="row">
+        <div class="col-4 d-flex justify-content-center align-items-center">
+            <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)">&#10094;</button>
+        </div>
+        <div class="col-4 text-center">
+            <img class="modal-content" id="modalImg">
+        </div>
+        <div class="col-4 d-flex justify-content-center align-items-center">
+            <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)">&#10095;</button>
+        </div>
     </div>
+</div>
 
-    <script>
-        // 모달 열기
-        function openModal(img) {
-            var modal = document.getElementById("myModal");
-            var modalImg = document.getElementById("modalImg");
-            modal.style.display = "block";
-            modalImg.src = img.src;
-        }
+<script>
+	var modal = document.getElementById("myModal");
+	var modalImg = document.getElementById("modalImg");
+	var images = document.getElementsByClassName("img-thumbnail");
+	var currentIndex;
+	
+	function openModal(image) {
+	    modal.style.display = "block";
+	    modalImg.src = image.src;
+	    currentIndex = Array.from(images).indexOf(image);
+	    updateNavButtons();
+	}
+	
+	function closeModal() {
+	    modal.style.display = "none";
+	}
+	
+	function changeImage(n) {
+	    currentIndex += n;
+	    if (currentIndex < 0) {
+	        currentIndex = images.length - 1;
+	    } else if (currentIndex >= images.length) {
+	        currentIndex = 0;
+	    }
+	    modalImg.src = images[currentIndex].src;
+	    updateNavButtons();
+	}
+	
+	function updateNavButtons() {
+	    var prevButton = document.getElementById("prevButton");
+	    var nextButton = document.getElementById("nextButton");
+	    if (images.length <= 1) {
+	        prevButton.style.display = "none";
+	        nextButton.style.display = "none";
+	    } else {
+	        prevButton.style.display = "block";
+	        nextButton.style.display = "block";
+	    }
+	}
+	
+	document.addEventListener("keydown", function(event) {
+	    if (event.keyCode === 27) {
+	        closeModal();
+	    } else if (event.keyCode === 37) {
+	        changeImage(-1); // 왼쪽으로 이동
+	    } else if (event.keyCode === 39) {
+	        changeImage(1); // 오른쪽으로 이동
+	    }
+	});
+</script>
 
-        // 모달 닫기
-        function closeModal() {
-            var modal = document.getElementById("myModal");
-            modal.style.display = "none";
-        }
-    </script>
     <div class="container">
         <div class="row">
             <div class="col-8">
