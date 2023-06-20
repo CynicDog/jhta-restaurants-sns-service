@@ -237,6 +237,10 @@
                                 <td><%=store.getPhone() %></td>
                             </tr>
                             <tr>
+                                <th>가게 소개</th>
+                                <td><%=store.getText() %></td>
+                            </tr>
+                            <tr>
                                 <th>음식 종류</th>
                                 <td><%=foodsCategory %></td>
                             </tr>
