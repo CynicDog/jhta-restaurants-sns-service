@@ -12,13 +12,12 @@
 	store.setZipcode(zipCode);
 	store.setPhone(phone);
 	
-	if(request.getParameter("longitude") != null && request.getParameter("latitude") != null){
+	if(!request.getParameter("longitude").isEmpty() && !request.getParameter("latitude").isEmpty()){
 		double longitude = Double.parseDouble(request.getParameter("longitude"));
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		store.setLongitude(longitude);
 		store.setLatitude(latitude);
 	}
-	
 	
 	session.setAttribute("storePartial", store);	
 	

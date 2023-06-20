@@ -24,18 +24,23 @@
 	
 	Owner onwer = ownerDao.getOwnerById(ownerId); 
 	store.setOwner(onwer); 
-	
-	storeDao.insertStore(store); 
-	
-	Store store_found = storeDao.getStoreByBusinessLicenseNumber(store.getBusinessLicenseNumber()); 
-	
-	StoreOpentime storeOpentime = new StoreOpentime();
-	storeOpentime.setOperationTime(operationTimes); 
-	storeOpentime.setStore(store_found);	
-	
-	storeOpenTimeDao.insertStoreOpenTime(storeOpentime);
-	
-	session.setAttribute("storeComplete", store_found);	
-	
-	response.sendRedirect("storePictureRegFormPage.jsp"); 
+		
+	try {
+		storeDao.insertStore(store); 
+		
+		Store store_found = storeDao.getStoreByBusinessLicenseNumber(store.getBusinessLicenseNumber()); 
+		
+		StoreOpentime storeOpentime = new StoreOpentime();
+		storeOpentime.setOperationTime(operationTimes); 
+		storeOpentime.setStore(store_found);	
+
+		storeOpenTimeDao.insertStoreOpenTime(storeOpentime);	
+		
+		session.setAttribute("storeComplete", store_found);	
+		response.sendRedirect("storePictureRegFormPage.jsp");
+		
+	} catch (Exception e) { 
+		
+		response.sendRedirect("storeLegalInfoRegFormPage.jsp?message=uniqueConstraint");
+	}
 %>
