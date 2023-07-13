@@ -1,6 +1,6 @@
 # 내장 웹 서버의 포트 번호 지정
 server:
-  port: 8081
+  port: 80
 
 # 로그레벨 지정하기
 logging:
