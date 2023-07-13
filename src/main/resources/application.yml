@@ -1,0 +1,26 @@
+# 내장 웹 서버의 포트 번호 지정
+server:
+  port: 8081
+
+# 로그레벨 지정하기
+logging:
+  level:
+  # 애플리케이션의 기본 로그레벨을 info로 지정
+    root: info
+    #org.springframework.web 패키지에 대해서는 로그레벨을 trace로 지정
+#    '[org.springframework.web]': trace
+    # mybatis 실행시 sql및 sql 실행결과가 로그로 출력됨
+    '[kr.co.jhta.mapper]': trace
+    
+spring:
+# 커넥션 풀 설정
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: hr
+    password: zxcv1234
+# spring web mvc의 뷰 템플릿 경로 설정    
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp    
