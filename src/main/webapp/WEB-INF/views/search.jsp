@@ -12,17 +12,8 @@
 		height: 150px;
 	}
 	
-	.category {
-		padding: 10px;
-		font-size: 16px;
-		text-align: center;
-		margin-bottom: 40px;
-	}
-	
-	
 	.card-body{
-		cursor: pointer; 
-		font-weight:bold; 
+
 	}
 	
 	.card-text{
@@ -44,7 +35,7 @@
 </head>
 <body>
 
-<jsp:include page="nav.jsp">
+<jsp:include page="common/navbar.jsp">
 	<jsp:param name="menu" value="search"/>
 </jsp:include>	
 
@@ -65,23 +56,56 @@
 			<div class="col-7">
 				<div class="row mb-3">
 				
-<%
-					for(int i=0; i<4; i++){
-%>
+
 					<div class="col-5">
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="/jhta-restaurants-sns-service/src/main/resources/image/검색결과 col.png">
+								 <img src="resources/image/example.png"
+								 	  class="card-img-top embed-responsive-item">
 							</div>
-							<div class="card-body">
+							<div class="card-body" cursor= "pointer" font-weight="bold" >
 								<p class="card-text">${store }</p>
 								<p class="card-text" style="color: #FFC107;">평점</p>
 							</div>
 						</div>
 					</div>
-<%
-					}
-%>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.png"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" cursor= "pointer" font-weight="bold" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.png"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" cursor= "pointer" font-weight="bold" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.png"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" cursor= "pointer" font-weight="bold" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 
@@ -103,7 +127,7 @@
 
 	</div>
 	
-	<jsp:include page="footer.jsp">
+	<jsp:include page="common/footer.jsp">
 		<jsp:param name="menu" value="search"/>
 	</jsp:include>	
 	
