@@ -6,7 +6,7 @@ server:
 logging:
   level:
   # 애플리케이션의 기본 로그레벨을 info로 지정
-    root: debug
+    root: info
     #org.springframework.web 패키지에 대해서는 로그레벨을 trace로 지정
 #    '[org.springframework.web]': trace
     # mybatis 실행시 sql및 sql 실행결과가 로그로 출력됨
@@ -17,8 +17,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:xe
-    username: hr
-    password: zxcv1234
+    username: C##jhta
+    password: 1234
 # spring web mvc의 뷰 템플릿 경로 설정    
   mvc:
     view:
