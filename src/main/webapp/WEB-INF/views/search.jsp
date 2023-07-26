@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-   <title>검색결과</title>
+   <title>검색 결과</title>
    <style type="text/css">
    
 	img {
@@ -20,7 +20,7 @@
 		margin-left: 20px; 
 		margin-bottom:0px; 
 		margin-right: 20px;
-		font-size: 25px; 
+		font-size: 15px; 
 		display: flex; 
 		align-items: center;
 	}
@@ -41,7 +41,7 @@
 
 <div class="container text-center">
 	<header></header>
-		<h4 class="title">카테고리</h4>					
+		<h4 class="title">검색 결과</h4>					
 				<a class="btn" role="button" href="searchByCategory.jsp">전체</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=korean">한식</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=chinese">중식</a>
@@ -60,10 +60,10 @@
 					<div class="col-5">
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.png"
+								 <img src="resources/image/example.jpg"
 								 	  class="card-img-top embed-responsive-item">
 							</div>
-							<div class="card-body" cursor= "pointer" font-weight="bold" >
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
 								<p class="card-text">${store }</p>
 								<p class="card-text" style="color: #FFC107;">평점</p>
 							</div>
@@ -72,10 +72,10 @@
 					<div class="col-5">
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.png"
+								 <img src="resources/image/example.jpg"
 								 	  class="card-img-top embed-responsive-item">
 							</div>
-							<div class="card-body" cursor= "pointer" font-weight="bold" >
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
 								<p class="card-text">${store }</p>
 								<p class="card-text" style="color: #FFC107;">평점</p>
 							</div>
@@ -84,10 +84,10 @@
 					<div class="col-5">
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.png"
+								 <img src="resources/image/example.jpg"
 								 	  class="card-img-top embed-responsive-item">
 							</div>
-							<div class="card-body" cursor= "pointer" font-weight="bold" >
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
 								<p class="card-text">${store }</p>
 								<p class="card-text" style="color: #FFC107;">평점</p>
 							</div>
@@ -96,15 +96,28 @@
 					<div class="col-5">
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.png"
+								 <img src="resources/image/example.jpg"
 								 	  class="card-img-top embed-responsive-item">
 							</div>
-							<div class="card-body" cursor= "pointer" font-weight="bold" >
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
 								<p class="card-text">${store }</p>
 								<p class="card-text" style="color: #FFC107;">평점</p>
 							</div>
 						</div>
 					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					
 
 				</div>
 			</div>
@@ -117,7 +130,16 @@
 					<p>지도</p>
 				</div>
 				<div class="card m-2 sm-14 shadow bg-body rounded ">
-					<p>맛집 리스트</p>
+					<div class="card-header">관련 콘텐츠</div>
+					<div class="card m-2 sm-14 shadow bg-body rounded ">
+						<div class="embed-responsive embed-responsive-4by3">
+							<img src="resources/image/example.jpg"
+								class="card-img-top embed-responsive-item">
+						</div>
+						<div class="card-body" style="cursor: pointer; font-weight: bold;">
+							<p class="card-text">콘텐츠 설명</p>
+						</div>
+					</div>
 				</div>
 				
 				
