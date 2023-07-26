@@ -41,7 +41,7 @@
 
 <div class="container text-center">
 	<header></header>
-		<h4 class="title">검색 결과</h4>					
+		<h4 class="title">검색결과</h4>					
 				<a class="btn" role="button" href="searchByCategory.jsp">전체</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=korean">한식</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=chinese">중식</a>
