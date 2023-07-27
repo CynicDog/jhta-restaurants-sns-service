@@ -11,11 +11,7 @@
 		width: 200px;
 		height: 150px;
 	}
-	
-	.card-body{
-
-	}
-	
+		
 	.card-text{
 		margin-left: 20px; 
 		margin-bottom:0px; 
@@ -32,16 +28,18 @@
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+   
 </head>
 <body>
 
-<jsp:include page="common/navbar.jsp">
-	<jsp:param name="menu" value="search"/>
-</jsp:include>	
+<%@ include file="common/navbar.jsp" %>
+
 
 <div class="container text-center">
 	<header></header>
-		<h4 class="title">검색결과</h4>					
+		<h4 class="title" style="text-align: left" >검색 결과</h4>					
 				<a class="btn" role="button" href="searchByCategory.jsp">전체</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=korean">한식</a>
 				<a class="btn" role="button" href="searchByCategory.jsp?category=chinese">중식</a>
@@ -117,6 +115,67 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-5">
+						<div class="card m-2 sm-14 shadow bg-body rounded ">
+							<div class="embed-responsive embed-responsive-4by3">
+								 <img src="resources/image/example.jpg"
+								 	  class="card-img-top embed-responsive-item">
+							</div>
+							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+								<p class="card-text">${store }</p>
+								<p class="card-text" style="color: #FFC107;">평점</p>
+							</div>
+						</div>
+					</div>
+					
 					
 
 				</div>
@@ -126,11 +185,13 @@
 			<div class="col-1"></div>
 			
 			<div class="col-3">
-				<div class="card m-2 sm-14 shadow bg-body rounded ">
-					<p>지도</p>
+<!-- 지도 -->
+				<div id="map" style="width:300px; height:400px; margin-bottom: 30px;" >
 				</div>
+				
+
 				<div class="card m-2 sm-14 shadow bg-body rounded ">
-					<div class="card-header">관련 콘텐츠</div>
+					<div class="card-header" style="text-align:left;">관련 콘텐츠</div>
 					<div class="card m-2 sm-14 shadow bg-body rounded ">
 						<div class="embed-responsive embed-responsive-4by3">
 							<img src="resources/image/example.jpg"
@@ -148,10 +209,40 @@
 		</div>
 
 	</div>
+	<script>
+		var container = document.getElementById('map');
+		var options = {
+// 										  latitude,longitude 순으로 입력
+			center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+			level: 4
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(37.5729587735263, 126.992241734889); 
+		var markerPosition2  = new kakao.maps.LatLng(37.5699451391001, 126.988087440713); 
+
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+		    position: markerPosition
+		});
+		var marker2 = new kakao.maps.Marker({
+		    position: markerPosition2
+		});
+
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+		marker2.setMap(map);
+
+		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+		// marker.setMap(null);    
+		
+	</script>
 	
-	<jsp:include page="common/footer.jsp">
-		<jsp:param name="menu" value="search"/>
-	</jsp:include>	
+<%@ include file="common/footer.jsp" %>	
+
+
 	
 </body>
 </html>
