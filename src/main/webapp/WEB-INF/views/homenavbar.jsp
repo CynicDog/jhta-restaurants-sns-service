@@ -3,10 +3,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<style type="text/css">
+    	html, body{
+    		height:100%;
+    	}	
+    	
+    	.wrap{
+    		position: relative;
+  			min-height: 100%;
+  			padding-bottom: 100px;
+    	}
+    	
+    	.card-img-overlay{
+    		position: absolute;
+  			top: 30%;
+  			font-size: 22px;
+  			text-light: white;
+    	}
+    	
+    	img{
+    		width: 100%;
+    		height: 200px;
+    		object-fit:cover;
+    		filter: brightness(70%);
+    	}
+    	
+    	.search-bar {
+      width: 500px;
+    }
+</style>
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-    	<div class="row">
-    		<div class="col-12">
 				<a class="navbar-brand" href="/">🧑🏻‍💻</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,8 +71,6 @@
 				    </div>
 				</div>
     		</div>
-    	</div>
-    </div>
     <script>
         function toggleDarkMode() {
             const htmlElement = document.querySelector('html');
@@ -80,9 +105,10 @@
     <div class="row">
     	<div class="col-12">
     		<form action="https://www.google.com/search" method="GET">
-				<div class="mx-auto mt-2 search-bar input-group mb-3">
-  					<input name="q" type="text" class="form-control rounded-pill" placeholder="Google 검색 또는 URL 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<div class="mx-auto my-5 search-bar input-group">
+  					<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
   					<div class="input-group-append"></div>
+					<button class="btn btn-search btn-dark rounded ms-2">검색</button>
 				</div>
 			</form>
     	</div>

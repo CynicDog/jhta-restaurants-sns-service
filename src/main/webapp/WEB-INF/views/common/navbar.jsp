@@ -3,6 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<style type="text/css">
+    	html, body{
+    		height:100%;
+    	}	
+    	
+    	.wrap{
+    		position: relative;
+  			min-height: 100%;
+  			padding-bottom: 100px;
+    	}
+    	
+    	.search-bar {
+      width: 500px;
+    }
+</style>
 <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container">
         <a class="navbar-brand" href="/">🧑🏻‍💻</a>

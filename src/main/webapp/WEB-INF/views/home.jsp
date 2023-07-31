@@ -9,40 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <style type="text/css">
-    	html, body{
-    		height:100%;
-    	}	
-    	
-    	.wrap{
-    		position: relative;
-  			min-height: 100%;
-  			padding-bottom: 50px;
-    	}
-    	
-    	.card-img-overlay{
-    		position: absolute;
-  			top: 30%;
-  			font-size: 22px;
-  			text-light: white;
-    	}
-    	
-    	img{
-    		width: 100%;
-    		height: 200px;
-    		object-fit:cover;
-    		filter: brightness(70%);
-    	}
-    	
-    	.search-bar {
-      width: 500px;
-    }
-    </style>
+    
 </head>
 <body>
 <%@ include file="homenavbar.jsp" %>
 <div class="wrap">
-	<div class="container wrap">
+	<div class="container">
 		<h4 class="my-3">최근에 찾아본 맛집</h4>
 		<div class="row mt-4 mb-3">
 			<div class="col-4">
