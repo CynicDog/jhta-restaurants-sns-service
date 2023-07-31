@@ -11,9 +11,21 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+   <style type="text/css">
+   		html, body{
+    		height:100%;
+    	}	
+    	
+    	.wrap{
+    		position: relative;
+  			min-height: 100%;
+  			padding-bottom: 70px;
+    	}
+   </style>
 </head>
 <body>
 <%@ include file="common/navbar.jsp" %>
+<div class="wrap">
 <div class="container">
 	<div class="row row-cols-5">
 		<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="..." >
@@ -240,6 +252,8 @@
    		</div>
    	</div>
 </div>   	
+<%@ include file="common/footer.jsp" %>
+</div>
 <script>
 	var container = document.getElementById('map');
 	var options = {
@@ -271,6 +285,5 @@
 	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 	// marker.setMap(null);
 </script>
-<%@ include file="common/footer.jsp" %>
 </body>
 </html>
