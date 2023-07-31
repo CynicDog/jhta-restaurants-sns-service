@@ -28,7 +28,6 @@ spring:
 mybatis:
   mapper-locations:
     - META-INF/mybatis/mappers/*.xml
-  type-aliases-package: kr.co.jhta.restaurants_service.vo
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
