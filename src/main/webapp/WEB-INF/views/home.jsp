@@ -23,7 +23,6 @@
     	.card-img-overlay{
     		position: absolute;
   			top: 30%;
-  			
   			font-size: 22px;
   			text-light: white;
     	}
@@ -34,10 +33,14 @@
     		object-fit:cover;
     		filter: brightness(70%);
     	}
+    	
+    	.search-bar {
+      width: 500px;
+    }
     </style>
 </head>
 <body>
-<%@ include file="common/navbar.jsp" %>
+<%@ include file="homenavbar.jsp" %>
 <div class="wrap">
 	<div class="container wrap">
 		<h4 class="my-3">최근에 찾아본 맛집</h4>
@@ -47,7 +50,7 @@
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
 					<div class="card-img-overlay">
-						<strong><p>인생 카페 10선</p></strong>
+						<p><strong>인생 카페 10선</strong></p>
 					</div>
 				</div>
 			</div>
@@ -122,8 +125,6 @@
 				</div>
 			</div>
 		</div>
-		
-		
 	
 	</div>
 	<%@ include file="common/footer.jsp" %>
