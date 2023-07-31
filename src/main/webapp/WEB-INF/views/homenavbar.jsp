@@ -29,7 +29,7 @@
     	}
     	
     	.search-bar {
-      width: 500px;
+      width: 800px;
     }
 </style>
 <nav class="navbar navbar-expand-lg">
@@ -101,14 +101,14 @@
         applyColorModePreference();
     </script>
 </nav>
-<div class="container border-bottom">
-    <div class="row">
+<div class="container">
+    <div class="row border-bottom">
     	<div class="col-12">
     		<form action="https://www.google.com/search" method="GET">
 				<div class="mx-auto my-5 search-bar input-group">
   					<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
   					<div class="input-group-append"></div>
-					<button class="btn btn-search btn-dark rounded ms-2">검색</button>
+					<!--  <button class="btn btn-search btn-dark rounded-pill ms-2">검색</button> -->
 				</div>
 			</form>
     	</div>

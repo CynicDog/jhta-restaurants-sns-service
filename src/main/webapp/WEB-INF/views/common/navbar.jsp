@@ -15,7 +15,7 @@
     	}
     	
     	.search-bar {
-      width: 500px;
+      width: 1000px;
     }
 </style>
 <nav class="navbar navbar-expand-lg border-bottom">
@@ -52,10 +52,21 @@
                     </li>
                 </sec:authorize>
             </ul>
+            <div class="row">
+				<div class="col-12">
+					<form action="https://www.google.com/search" method="GET">
+					<div class="me-5 search-bar input-group">
+						<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+						<div class="input-group-append"></div>
+					</div>
+					</form>
+				</div>
+			</div>
             <div class="form-check form-switch m-1">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked value="" onclick="toggleDarkMode()">
             </div>
         </div>
+        
     </div>
     <script>
         function toggleDarkMode() {
