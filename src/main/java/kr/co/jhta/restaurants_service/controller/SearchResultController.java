@@ -19,10 +19,6 @@ public class SearchResultController {
 	public String searchResult(Model model) {
 		model.addAttribute("store", "가게 정보");
 		
-		Test test = new Test();
-		test.setId(15);
-		test.setName("ryu");
-		testService.insertTest(test);
 		
 		return "search";
 	}

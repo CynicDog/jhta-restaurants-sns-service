@@ -202,7 +202,31 @@
 						</div>
 					</div>
 				</div>
+				<div class="card m-2 sm-14 shadow bg-body rounded ">
+					<div class="card-header" style="text-align:left;">관련 콘텐츠</div>
+					<div class="card m-2 sm-14 shadow bg-body rounded ">
+						<div class="embed-responsive embed-responsive-4by3">
+							<img src="resources/image/example.jpg"
+								class="card-img-top embed-responsive-item">
+						</div>
+						<div class="card-body" style="cursor: pointer; font-weight: bold;">
+							<p class="card-text">콘텐츠 설명</p>
+						</div>
+					</div>
+				</div>
 				
+				<div class="card m-2 sm-14 shadow bg-body rounded ">
+					<div class="card-header" style="text-align:left;">관련 콘텐츠</div>
+					<div class="card m-2 sm-14 shadow bg-body rounded ">
+						<div class="embed-responsive embed-responsive-4by3">
+							<img src="resources/image/example.jpg"
+								class="card-img-top embed-responsive-item">
+						</div>
+						<div class="card-body" style="cursor: pointer; font-weight: bold;">
+							<p class="card-text">콘텐츠 설명</p>
+						</div>
+					</div>
+				</div>
 				
 				
 			</div>
