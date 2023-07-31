@@ -15,10 +15,16 @@ logging:
 spring:
 # 커넥션 풀 설정
   datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: C##jhta
-    password: 1234
+    url: jdbc:mysql://database-1.csebivwnfevt.us-east-2.rds.amazonaws.com:3306/database1
+    username: admin
+    password: zxcv1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource:
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    url: jdbc:oracle:thin:@localhost:1521:xe
+#    username: C##jhta
+#    password: 1234
+
 # spring web mvc의 뷰 템플릿 경로 설정    
   mvc:
     view:

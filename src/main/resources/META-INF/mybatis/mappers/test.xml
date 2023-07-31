@@ -2,7 +2,7 @@
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.TestMapper">
 
 	<insert id="insertTest" parameterType="kr.co.jhta.restaurants_service.vo.Test">
-		insert into TEST
+		insert into test
 		(id, name)
 		values
 		(#{id},#{name})
