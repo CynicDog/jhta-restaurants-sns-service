@@ -1,10 +1,10 @@
 {
 	"folders": {},
 	"connections": {
-		"mysql8-189aa6e182e-1f3899f49c32d8e7": {
+		"mysql8-189aa3db17f-5a90fd6e8dc30692": {
 			"provider": "mysql",
 			"driver": "mysql8",
-			"name": "database1 2",
+			"name": "database1",
 			"save-password": true,
 			"configuration": {
 				"host": "database-1.csebivwnfevt.us-east-2.rds.amazonaws.com",

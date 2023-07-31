@@ -9,20 +9,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
+public class Store {
 
     private int id;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private int businessLicense;
+    private String address;
+    private String category;
+    private int zipcode;
+    private double latitude;
+    private double longitude;
+    private String text;
     private String phone;
-    private Date birthday;
-    private String gender;
-    private String grade;
+    private int readCount;
     private Date createDate;
     private Date updateDate;
     private String disabled;
-
 }

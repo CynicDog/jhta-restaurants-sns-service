@@ -20,8 +20,8 @@ public class SearchResultController {
 		model.addAttribute("store", "가게 정보");
 		
 		Test test = new Test();
-		test.setId(11);
-		test.setName("park");
+		test.setId(15);
+		test.setName("ryu");
 		testService.insertTest(test);
 		
 		return "search";
