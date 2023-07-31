@@ -6,7 +6,7 @@
 <style>
     .footer {
         padding: 20px 0;
-        position: relative;
+        position: absolute;
         bottom: 0;
         width: 100%;
     }
