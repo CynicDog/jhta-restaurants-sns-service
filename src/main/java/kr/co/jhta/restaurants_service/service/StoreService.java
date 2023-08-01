@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.jhta.restaurants_service.dao.StoreDao;
+import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.vo.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class StoreService {
 	
 	@Autowired
-	private final StoreDao storeDao;
+	private final StoreMapper storeDao;
 	
 	public List<Store> getAllStores() {
 		List<Store> stores = storeDao.getAllStores();
