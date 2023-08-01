@@ -14,7 +14,7 @@ public class Store {
     private int id;
     private int businessLicense;
     private String address;
-    private String subscription; 
+    private String subscribed; 
     private String category;
     private int zipcode;
     private double latitude;
