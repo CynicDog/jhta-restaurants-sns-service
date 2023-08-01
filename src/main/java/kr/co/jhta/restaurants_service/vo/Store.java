@@ -13,9 +13,10 @@ public class Store {
 
     private int id;
     private int businessLicense;
+    private String name;
     private String address;
     private String subscribed; 
-    private String category;
+    private int category;
     private int zipcode;
     private double latitude;
     private double longitude;

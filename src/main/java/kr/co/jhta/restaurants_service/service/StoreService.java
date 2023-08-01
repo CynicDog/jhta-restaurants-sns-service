@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.dao.StoreDao;
@@ -11,7 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class StoreService {
-
+	
+	@Autowired
 	private final StoreDao storeDao;
 	
 	public List<Store> getAllStores() {
