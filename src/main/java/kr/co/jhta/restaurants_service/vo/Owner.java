@@ -20,7 +20,6 @@ public class Owner {
     private Date birthday;
     private String gender;
     private String grade;
-    private String subscription; 
     private Date createDate;
     private Date updateDate;
     private String disabled;

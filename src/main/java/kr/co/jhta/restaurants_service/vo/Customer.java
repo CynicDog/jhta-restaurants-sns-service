@@ -24,5 +24,7 @@ public class Customer {
     private Date createDate;
     private Date updateDate;
     private String disabled;
+    private String nickname;
+    private String profilePictureName;
 
 }
