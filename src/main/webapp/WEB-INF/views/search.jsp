@@ -33,10 +33,8 @@
    
 </head>
 <body>
-<div class="wrap">
 <%@ include file="common/navbar.jsp" %>
-
-
+<div class="wrap">
 <div class="container text-center">
 	<header></header>
 		<h4 class="title" style="text-align: left" >검색 결과</h4>					

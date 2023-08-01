@@ -25,4 +25,5 @@ public class Store {
     private Date createDate;
     private Date updateDate;
     private String disabled;
+    private Owner owner;
 }
