@@ -7,9 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.co.jhta.restaurants_service.service.StoreService;
-import kr.co.jhta.restaurants_service.service.TestService;
 import kr.co.jhta.restaurants_service.vo.Store;
-import kr.co.jhta.restaurants_service.vo.Test;
 import lombok.RequiredArgsConstructor;
 
 @Controller
