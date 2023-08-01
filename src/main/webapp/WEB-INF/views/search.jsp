@@ -33,7 +33,7 @@
    
 </head>
 <body>
-
+<div class="wrap">
 <%@ include file="common/navbar.jsp" %>
 
 
@@ -265,7 +265,7 @@
 	</script>
 	
 <%@ include file="common/footer.jsp" %>	
-
+</div>
 
 	
 </body>
