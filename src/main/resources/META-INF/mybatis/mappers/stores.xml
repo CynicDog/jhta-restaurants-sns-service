@@ -1,20 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
 
-	<insert id="insertStore" parameterType="kr.co.jhta.restaurants_service.vo.Store">
-		insert into STORES
-			(
-			{STORE_BUSINESS_LICENSE},{STORE_ADDRESS},{STORE_CATEGORY},
-			{STORE_ZIPCODE},{STORE_LATITUDE},{STORE_LONGITUDE},
-			{STORE_TEXT},{STORE_PHONE},{OWNER_ID}
-			)
-		values
-			(
-			#{businessLicense},#{address},#{category},
-			#{zipcode},#{latitude},#{longitude},
-			#{text},#{phone},#{owner.id}
-			)
-	</insert>
 
 	<select id = "getAllStores" resultType="kr.co.jhta.restaurants_service.vo.Store">
 		select 
@@ -33,7 +19,11 @@
 			STORE_UPDATE_DATE			as updateDate,
 			OWNER_ID					as "owner.id",
 			STORE_DISABLED				as disabled,
-			SUBSCRIBED					as subscription
+			STORE_SUBSCRIBED			as subscribed,
+			STORE_QUALIFIED				as qualified,
+			STORE_CHALLENGE_START_DATE	as challengeStartDate,	
+			STORE_CHALLENGE_END_DATE	as challengeEndDate
+			
 		from 
 			STORES
 	</select>
