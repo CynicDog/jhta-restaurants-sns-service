@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
-<%@ include file="common/navbar.jsp" %>
+<%@ include file="../common/navbar.jsp" %>
 <div class="wrap"> 
 	<div class="container border-top mt-3" >
 		<div class="row text-center border-bottom">
@@ -92,7 +92,7 @@
 			</div>
 		</div>
 	</div>
-	<%@ include file="common/footer.jsp" %>
+	<%@ include file="../common/footer.jsp" %>
 </div>
 
 <script type="text/javascript">

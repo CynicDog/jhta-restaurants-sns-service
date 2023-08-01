@@ -10,8 +10,12 @@ public class PostController {
 
 	@GetMapping("")
 	public String Post() {
-		return "posting";
+		return "post/posting";
 	}
 	
+	@GetMapping("/postRegFormPageFirst")
+	public String RegFormFirst() {
+		return "post/postRegFormPageFirst";
+	}
 	
 }

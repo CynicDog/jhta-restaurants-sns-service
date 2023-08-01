@@ -47,6 +47,9 @@
 				        <li class="nav-item">
 				            <a class="nav-link" href="/stores/list">Stores</a>
 				        </li>
+				        <li class="nav-item">
+				        	<a class="nav-link" href="/post/postRegFormPageFirst">RegPost</a>
+				        </li>
 				    </ul>
 				    <ul class="navbar-nav">
 				        <sec:authorize access="isAnonymous()">
