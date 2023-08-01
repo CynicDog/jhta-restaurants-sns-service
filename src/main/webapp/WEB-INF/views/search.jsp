@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -51,131 +55,19 @@
 			<div class="col-1"></div>
 			<div class="col-7">
 				<div class="row mb-3">
-				
-
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
+					<c:forEach var="store" items="${stores}">
+						<div class="col-5">
+							<div class="card m-2 sm-14 shadow bg-body rounded ">
+								<div class="embed-responsive embed-responsive-4by3">
+									 <img src="resources/image/example.jpg" class="card-img-top embed-responsive-item">
+								</div>
+								<div class="card-body" style="cursor: pointer; font-weight:bold;" >
+									<p class="card-text">${store.name}</p>
+									<p class="card-text" style="color: #FFC107;">평점</p>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-5">
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								 <img src="resources/image/example.jpg"
-								 	  class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body" style="cursor: pointer; font-weight:bold;" >
-								<p class="card-text">${store }</p>
-								<p class="card-text" style="color: #FFC107;">평점</p>
-							</div>
-						</div>
-					</div>
-					
-					
-
+					</c:forEach>
 				</div>
 			</div>
 

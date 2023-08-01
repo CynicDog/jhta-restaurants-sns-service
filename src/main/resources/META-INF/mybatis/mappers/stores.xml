@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreDao">
+<mapper namespace="kr.co.jhta.restaurants_service.dao.StoreDao">
 
 	<insert id="insertStore" parameterType="kr.co.jhta.restaurants_service.vo.Store">
 		insert into STORES
@@ -18,15 +18,16 @@
 
 	<select id = "getAllStores" resultType="kr.co.jhta.restaurants_service.vo.Store">
 		select 
-			ID							as id
+			ID							as id,
 			STORE_BUSINESS_LICENSE		as businessLicense,
+			STORE_NAME					as name,
 			STORE_ADDRESS				as address,
 			STORE_CATEGORY				as category,
 			STORE_ZIPCODE				as zipcode,
 			STORE_LATITUDE				as latitude,
 			STORE_LONGITUDE				as longitude,
-			STORE_TEXT					as text,
-			STORE_PHONE	as phone,		as phone
+			STORE_DESCRIPTION			as text,
+			STORE_PHONE					as phone,
 			STORE_READ_COUNT			as readCount,
 			STORE_CREATE_DATE			as createDate,
 			STORE_UPDATE_DATE			as updateDate,

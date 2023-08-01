@@ -16,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 public class SearchResultController {
-
-	private final TestService testService;
+	
 	private final StoreService storeService;
 	
 	@GetMapping("/search")
 	public String searchResult(Model model) {
 		List<Store> stores = storeService.getAllStores();
+		
 		model.addAttribute("stores", stores);
 		
 		return "search";
