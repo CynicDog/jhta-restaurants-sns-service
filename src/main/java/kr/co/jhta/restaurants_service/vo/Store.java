@@ -27,4 +27,7 @@ public class Store {
     private Date updateDate;
     private String disabled;
     private Owner owner;
+    private String qualified;
+    private Date challengeStartDate;
+    private Date challengeEndDate;
 }
