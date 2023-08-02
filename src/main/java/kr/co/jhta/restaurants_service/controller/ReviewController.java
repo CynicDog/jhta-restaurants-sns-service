@@ -12,4 +12,10 @@ public class ReviewController {
 		
 		return "review";
 	}
+	
+	@GetMapping("/reviewDetail")
+	public String reviewDetail(Model model) {
+		
+		return "reviewDetail";
+	}
 }
