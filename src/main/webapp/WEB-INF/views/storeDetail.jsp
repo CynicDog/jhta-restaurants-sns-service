@@ -13,15 +13,20 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 <style type="text/css">
-html, body {
-	height: 100%;
-}
+	html, body {
+		height: 100%;
+	}
 
-.wrap {
-	position: relative;
-	min-height: 100%;
-	padding-bottom: 70px;
-}
+	.wrap {
+		position: relative;
+		min-height: 100%;
+		padding-bottom: 70px;
+	}
+	
+	.border-opacity-10.active {
+  		color: orange;
+	}
+   
 </style>
 </head>
 <body>
@@ -48,7 +53,7 @@ html, body {
 							</div>
 							<div class="col-4">
 								<span class="my-3 float-end">
-									<button type="button" class="btn btn-outline-primary ">리뷰작성</button>
+									<button type="button" class="btn btn-outline-primary" onclick="location.href='review'">리뷰작성</button>
 									<button class="btn" id="box">
 										<i class="bi bi-star" style="color:gold; font-size:28px;" ></i>
 									</button>
@@ -106,14 +111,14 @@ html, body {
 				<span style="font-size: x-large; font-weight: bold">리뷰</span> 
 				<span style="font-size: x-large; font-weight: bold; color: #adb5bd;">(3)</span>
 				<div class="btn-group p-1 float-end">
-					<button type="button" class="btn border-opacity-10" >전체(3)</button>
-					<button type="button" class="btn border-opacity-10 " >
+					<button type="button" class="btn border-opacity-10" style="background: none; border: none;" >전체(3)</button>
+					<button type="button" class="btn border-opacity-10 " style="background: none; border: none;" >
 						<span class="visually-hidden">Button</span> 맛있다(3)
 					</button>
-					<button type="button" class="btn border-opacity-10" >
+					<button type="button" class="btn border-opacity-10" style="background: none; border: none;" >
 						<span class="visually-hidden">Button</span> 괜찮다(0)
 					</button>
-					<button type="button" class="btn border-opacity-10" >
+					<button type="button" class="btn border-opacity-10" style="background: none; border: none;" >
 						<span class="visually-hidden">Button</span> 별로(0)
 					</button>
 				</div>
@@ -384,21 +389,30 @@ html, body {
 	$('i').click(function(){
 	if($(this).hasClass('bi-star-fill')){
 		$(this).removeClass('bi-star-fill')
-				.addClass('bi-star')
-	}else {
+			   .addClass('bi-star')
+	} else {
 		$(this).removeClass('bi-star')
-					.addClass('bi-star-fill')
+			   .addClass('bi-star-fill')
 		}
 	})
 	
-	$('.btn-group').click(function() {
-		let hasSecondaryClass = $(this).hasClass('border-opacity-10');
-		if (hasSecondaryClass) {
-			$(this).removeClass('border-opacity-10').addClass('btn-warning');
-		} else {
-			$(this).removeClass('btn-warning').addClass('border-opacity-10');
-		}
-	}) 
+	//$('.btn-group').click(function() {
+		//let hasSecondaryClass = $(this).hasClass('border-opacity-10');
+		//if (hasSecondaryClass) {
+		//	$(this).removeClass('border-opacity-10').addClass('btn-warning');
+		//} else {
+		//	$(this).removeClass('btn-warning').addClass('border-opacity-10');
+	//	}
+	//})
+	$(document).ready(function() {
+            // '.emoji-btn' 클래스를 가진 버튼을 클릭할 때 실행되는 함수를 정의합니다.
+            $('.border-opacity-10').click(function() {
+                // 모든 버튼에 있는 'active' 클래스를 제거합니다.
+                $('.border-opacity-10').removeClass('active');
+                // 클릭한 버튼에만 'active' 클래스를 추가합니다.
+                $(this).addClass('active');
+            });
+        });
 
 </script>
 </body>
