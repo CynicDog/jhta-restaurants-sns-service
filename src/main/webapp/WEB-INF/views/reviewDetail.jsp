@@ -21,8 +21,10 @@ html, body {
 }
 </style>
 </head>
+
 <body>
 <%@ include file="common/navbar.jsp"%>
+
 <div class="wrap">
 	<div class="container">
 		<div class="card border border-success p-2 border-opacity-10">
@@ -56,14 +58,35 @@ html, body {
 					<p>리뷰 내용</p>
 				</div>
 				<div class="row">
+					<!-- Button trigger modal -->
 					<div class="col-4">
-						<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
+						<button type="button" class="btn border-opacity-10" data-bs-toggle="modal" data-bs-target="#imgModal">
+							<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
+						</button>
 					</div>
 					<div class="col-4">
-						<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
+						<button type="button" class="btn border-opacity-10" data-bs-toggle="modal" data-bs-target="#imgModal">
+							<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
+						</button>
 					</div>
 					<div class="col-4">
-						<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
+						<button type="button" class="btn border-opacity-10" data-bs-toggle="modal" data-bs-target="#imgModal">
+							<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
+						</button>
+					</div>
+					
+					<!-- Modal -->
+					<div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-fullscreen">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+							<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
+					      </div>
+					    </div>
+					  </div>
 					</div>
 				</div>
   			</div>
@@ -80,7 +103,6 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
-	
 </script>
 </body>
 </html>
