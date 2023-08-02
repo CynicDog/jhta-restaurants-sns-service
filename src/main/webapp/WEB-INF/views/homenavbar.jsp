@@ -48,7 +48,7 @@
 				            <a class="nav-link" href="/stores/list">Stores</a>
 				        </li>
 				        <li class="nav-item">
-				        	<a class="nav-link" href="/post/postRegFormPageFirst">RegPost</a>
+				        	<a class="nav-link" href="/post/postRegFormPage">RegPost</a>
 				        </li>
 				    </ul>
 				    <ul class="navbar-nav">

@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>Insert title here</title>
@@ -45,13 +46,13 @@
 	    	</div>
 	    	
 	    	<div class="col-md-8">
-      			<div class="card shadow p-3 mb-5  rounded">
+      			<div class="card shadow p-3 mb-5 rounded">
 	          		<div class="card-body">
 	            		<form method="post">
 	              			<div class="row">
-	              				<div class="col-4">
-	              					<div class="card-body">
-	              						<img src="../../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+	              				<div class="col-4" style="display:flex; align-items:center;">
+	              					<div class="card-body text-center ">
+	              						<button class="btn"><i class="bi bi-plus-square-dotted" style="font-size:30px;"></i></button> 
 	              					</div>
 	              				</div>
 	              				
