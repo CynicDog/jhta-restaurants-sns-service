@@ -1,16 +1,17 @@
 package kr.co.jhta.restaurants_service.controller;
 
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.service.UserService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
+import kr.co.jhta.restaurants_service.vo.Otp;
 import org.jboss.logging.Logger;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -23,10 +24,12 @@ public class UserController {
 
     private final EmailSender emailSender;
     private final UserService userService;
+    private final OtpService otpService;
 
-    public UserController(EmailSender emailSender, UserService userService) {
+    public UserController(EmailSender emailSender, UserService userService, OtpService otpService) {
         this.emailSender = emailSender;
         this.userService = userService;
+        this.otpService = otpService;
     }
 
     @GetMapping("/signup")
@@ -35,24 +38,22 @@ public class UserController {
         return "user/signup-form";
     }
 
-    @PostMapping("/signup")
-    public String signup(@Valid UserCommand userCommand,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes,
-                         Model model) {
+    @ResponseBody
+    @PostMapping(value = "/signup", consumes = "application/json")
+    public ResponseEntity signup(@RequestBody UserCommand userCommand) {
 
-        if (bindingResult.hasErrors()) {
+        // database constraint validation
 
-            model.addAttribute("userCommand", userCommand);
-            return "user/signup-form"; // Return to the form page with error messages
-        }
-
-        // TODO: AJAX communication for the validation on the command properties && OTP validation
-
-        return "redirect:/user/login"; // Redirect to the OTP validation page
+        return null;
     }
 
+    @GetMapping("/otp")
+    public ResponseEntity otp(@RequestParam("email") String email) {
 
+        Otp otp = otpService.issueOtp(email);
+
+        return ResponseEntity.ok().body("Otp got successfully issued");
+    }
 
     @GetMapping("/login")
     public String loginForm() {

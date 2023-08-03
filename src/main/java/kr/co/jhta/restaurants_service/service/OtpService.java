@@ -23,6 +23,7 @@ public class OtpService {
         otp.setOtpCode(OtpGenerator.generateCode());
 
         otpMapper.insert(otp);
+        emailSender.sendEmail(email, otp.getOtpCode());
 
         return otp;
     }

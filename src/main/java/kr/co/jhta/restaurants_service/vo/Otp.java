@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter @Setter @Alias("Otp")
 public class Otp {
 
+    private int id;
     private String email;
     private String otpCode;
 

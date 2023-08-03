@@ -40,7 +40,8 @@ spring:
       mail:
         smtp:
           starttls:
-            enable=true
+           enable: true
+
 
 mybatis:
   mapper-locations:
