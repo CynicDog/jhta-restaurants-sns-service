@@ -17,9 +17,9 @@ public class OtpService {
         this.otpMapper = otpMapper;
     }
 
-    public Otp issueOtp(int userId) {
+    public Otp issueOtp(String email) {
 
-        Otp otp = new Otp(userId);
+        Otp otp = new Otp(email);
         otp.setOtpCode(OtpGenerator.generateCode());
 
         otpMapper.insert(otp);
@@ -27,9 +27,9 @@ public class OtpService {
         return otp;
     }
 
-    public Otp renewOtp(int userId) {
+    public Otp renewOtp(String email) {
 
-        Otp otp = otpMapper.findByUserId(userId);
+        Otp otp = otpMapper.findByUserId(email);
         otp.setOtpCode(OtpGenerator.generateCode());
 
         otpMapper.update(otp);

@@ -5,21 +5,21 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into OTP (
-            USER_ID, OTP_CODE
+            EMAIL, OTP_CODE
         ) values (
-            #{userId}, #{otpCode}
+            #{email}, #{otpCode}
         )
     </insert>
 
-    <select id="findByUserId" parameterType="int" resultType="Otp">
+    <select id="findByEmail" parameterType="string" resultType="Otp">
         select
-            USER_ID as userId,
+            EMAIL as email,
             OTP_CODE as otpCode,
             CREATE_DATE as createDate
         from
             OTP
         where
-            USER_ID = #{value}
+            EMAIL = #{value}
     </select>
 
     <update id="update" parameterType="Otp">
@@ -29,13 +29,13 @@
             OTP_CODE = #{otpCode}
             CREATE_DATE = #{createDate}
         where
-            USER_ID = #{userId}
+            EMAIL = #{email}
     </update>
 
     <delete id="delete" parameterType="Otp">
         delete from
             OTP
         where
-            USER_ID = #{userId}
+            EMAIL = #{email}
     </delete>
 </mapper>

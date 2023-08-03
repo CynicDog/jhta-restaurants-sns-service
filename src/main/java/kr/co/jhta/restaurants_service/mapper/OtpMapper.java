@@ -8,7 +8,7 @@ public interface OtpMapper {
 
     void insert(Otp otp);
 
-    Otp findByUserId(int userId);
+    Otp findByUserId(String email);
 
     void update(Otp otp);
 
