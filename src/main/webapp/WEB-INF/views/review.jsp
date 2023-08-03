@@ -17,11 +17,6 @@
 .emoji-btn.active {
   	color: orange;
 }
-
-.modal-img {
-        max-width: 100%;
-        max-height: 100%;
-    }
     
 </style>
 </head>
@@ -77,9 +72,9 @@
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
 			        <div class="modal-content">
-			            <div class="modal-body">
-			                <img id="modal-img" class="custom-modal-img" style="object-fit: cover;"  alt="...">
-			            </div>
+			            <div class="modal-body" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
+			                <img id="modal-img" class="custom-modal-img" style="max-width: 100%; max-height: 100%;" alt="...">
+			            </div>  
 			        </div>
 			    </div>
 			</div>
