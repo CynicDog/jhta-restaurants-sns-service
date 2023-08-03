@@ -10,13 +10,13 @@ import java.util.Date;
 @Getter @Setter @Alias("Otp")
 public class Otp {
 
-    private int userId;
+    private String email;
     private String otpCode;
 
     @CreatedDate
     private Date createDate;
 
-    public Otp(int userId) {
-        this.userId = userId;
+    public Otp(String email) {
+        this.email = email;
     }
 }

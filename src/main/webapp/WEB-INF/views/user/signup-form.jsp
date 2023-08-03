@@ -18,7 +18,7 @@
 <div class="container">
     <div>
         <div class="row my-2 justify-content-center align-items-center">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card shadow my-5">
                     <div class="card-header">가입</div>
                     <div class="card-body">
@@ -71,17 +71,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group my-5">
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <input type="text" class="form-control" placeholder="OTP"/>
-                                        </div>
-                                        <div class="col-3 d-flex justify-content-center align-items-center">
-                                            <a class="btn btn-outline-secondary btn-sm my-1 w-100">OTP 전송</a>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="text-end my-2">
                                     <button class="btn btn-outline-secondary btn-sm">submit</button>
                                 </div>
@@ -92,6 +81,8 @@
             </div>
         </div>
     </div>
+
+<%--    TODO: Instead of the form submission, use ajax communication. After validation on properties, toast for otp validation would show up :) --%>
 </div>
 </body>
 </html>
