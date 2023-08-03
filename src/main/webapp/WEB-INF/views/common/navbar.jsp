@@ -34,13 +34,23 @@
                     <a class="nav-link" href="/stores/list">Stores</a>
                 </li>
             </ul>
+            <div class="row">
+				<div class="col-12">
+					<form action="https://www.google.com/search" method="GET">
+					<div class="mx-5 search-bar input-group">
+						<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+						<div class="input-group-append"></div>
+					</div>
+					</form>
+				</div>
+			</div>
             <ul class="navbar-nav">
                 <sec:authorize access="isAnonymous()">
                     <li class="nav-item">
                         <a class="nav-link" href="/user/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/add">Signup</a>
+                        <a class="nav-link" href="/user/signup">Signup</a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
@@ -52,16 +62,6 @@
                     </li>
                 </sec:authorize>
             </ul>
-            <div class="row">
-				<div class="col-12">
-					<form action="https://www.google.com/search" method="GET">
-					<div class="me-5 search-bar input-group">
-						<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
-						<div class="input-group-append"></div>
-					</div>
-					</form>
-				</div>
-			</div>
             <div class="form-check form-switch m-1">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked value="" onclick="toggleDarkMode()">
             </div>
