@@ -14,9 +14,15 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
-	.emoji-btn.active {
+.emoji-btn.active {
   	color: orange;
 }
+
+.modal-img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
 </style>
 </head>
 <body>
@@ -57,58 +63,80 @@
 			</div>
 	    </div>
 	</div>
+	<div class="row">
 	    <div class="photo-section">
-	    	<form method="post" enctype="multipart/form-data">
+	    	<form method="post" enctype="multipart/form-data" id="form-image">
 			    <div>
 			        <label for="imageFile">
 	       				<a class="btn"><i class="bi bi-plus-square-dotted" style="font-size: 65px;"></i></a> 
+						<span></span>	
 			        </label>
 			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 			    </div>
 			</form>
-			<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#previewModal">
-			    <img id="preview" style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;">
-			</button>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
 			        <div class="modal-content">
 			            <div class="modal-body">
-			                <img class="modal-img" style="object-fit: cover;" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="...">
+			                <img id="modal-img" class="custom-modal-img" style="object-fit: cover;"  alt="...">
 			            </div>
 			        </div>
 			    </div>
 			</div>
-	    <div class="buttons" style="margin-left: 1100px;">
-	        <button type="button" class="btn btn-light">취소</button>
-	        <button type="button" class="btn btn-outline-success">리뷰 올리기</button>
-	    </div>
+		    <div class="buttons" style="margin-left: 1100px;">
+		        <button type="button" class="btn btn-light">취소</button>
+		        <button type="button" class="btn btn-outline-success">리뷰 올리기</button>
+		    </div>
+		</div>
 	</div>
 	</div>
 <%@ include file="common/footer.jsp"%>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		  $('.emoji-btn').click(function() {
-		    // 모든 버튼에 있는 'active' 클래스를 제거합니다.
-		    $('.emoji-btn').removeClass('active');
-		    // 클릭한 버튼에만 'active' 클래스를 추가합니다.
-		    $(this).addClass('active');
-		});
+$(function() {
+	
+	let previewModal = new bootstrap.Modal("#previewModal");
+	
+	$('.emoji-btn').click(function() {
+		 // 모든 버튼에 있는 'active' 클래스를 제거합니다.
+		$('.emoji-btn').removeClass('active');
+		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
+		$(this).addClass('active');
 	});
 	
+	// 이미지를 감싸는 버튼을 클릭할 때 마다 실행되는 이벤트 핸들러 함수를 추가하였다.
+	$("#form-image span").on('click', 'button', function() {
+		// 클릭한 버튼의 자손중에서 img 엘리먼트를 검색하고, src 속성값을 읽어온다.
+		let imageSource = $(this).find("img").attr("src");
+		// 조회된 이미지소스를 모달창의 img엘리먼트에 적용한다.
+		$("#modal-img").attr("src", imageSource);
+		previewModal.show();
+	})
+	
+	// 이미지 필드의 이미지가 변경되면 
 	$("#imageFile").on("change", function(event) {
-
+		// 버튼과  이미지태그르 생성한다.
+		let content = `
+			<button type="button" class="btn">
+				<img style="width: 100px; height: 100px; object-fit: cover;">
+			</button>
+		`;
+		// 생성된 태그를 span에 추가한다.	
+		$("#form-image span").append(content);
+		
+		// 파일데이터를 읽어오는 FileReader객체를 생성한다.
 	    var file = event.target.files[0];
-
 	    var reader = new FileReader(); 
+	    // FileReader가 전부 파일을 읽어오면 새로 추가한 이미지태그에 표시한다.
 	    reader.onload = function(e) {
-
-	        $("#preview").attr("src", e.target.result);
+	    	$("#form-image button img:last").attr("src", e.target.result);
 	    }
 
+	    // FileReader객체로 파일을 읽어온다.
 	    reader.readAsDataURL(file);
 	});
+});
 </script>
 </body>
 </html>
