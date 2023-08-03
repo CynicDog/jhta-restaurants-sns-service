@@ -5,20 +5,20 @@
 	<select id = "getAllStores" resultType="kr.co.jhta.restaurants_service.vo.Store">
 		select 
 			ID							as id,
-			STORE_BUSINESS_LICENSE		as businessLicense,
-			STORE_NAME					as name,
-			STORE_ADDRESS				as address,
-			STORE_CATEGORY				as category,
-			STORE_ZIPCODE				as zipcode,
-			STORE_LATITUDE				as latitude,
-			STORE_LONGITUDE				as longitude,
-			STORE_DESCRIPTION			as text,
-			STORE_PHONE					as phone,
-			STORE_READ_COUNT			as readCount,
-			STORE_CREATE_DATE			as createDate,
-			STORE_UPDATE_DATE			as updateDate,
-			OWNER_ID					as "owner.id",
-			STORE_DISABLED				as disabled
+			BUSINESS_LICENSE		as businessLicense,
+			NAME					as name,
+			ADDRESS					as address,
+			CATEGORY				as category,
+			ZIPCODE					as zipcode,
+			LATITUDE				as latitude,
+			LONGITUDE				as longitude,
+			DESCRIPTION				as description,
+			PHONE					as phone,
+			READ_COUNT				as readCount,
+			CREATE_DATE				as createDate,
+			UPDATE_DATE				as updateDate,
+			OWNER_ID				as "owner.id",
+			DISABLED				as disabled
 			
 		from 
 			STORES
