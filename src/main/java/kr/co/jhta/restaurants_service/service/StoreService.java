@@ -14,10 +14,10 @@ import lombok.RequiredArgsConstructor;
 public class StoreService {
 	
 	@Autowired
-	private final StoreMapper storeDao;
+	private final StoreMapper storeMapper;
 	
 	public List<Store> getAllStores() {
-		List<Store> stores = storeDao.getAllStores();
+		List<Store> stores = storeMapper.getAllStores();
 		return stores;
 	}
 	
