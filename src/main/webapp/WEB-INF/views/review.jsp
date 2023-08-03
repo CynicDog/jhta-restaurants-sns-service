@@ -66,7 +66,7 @@
 			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 			    </div>
 			</form>
-			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewModal">
+			<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#previewModal">
 			    <img id="preview" style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ccc;">
 			</button>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
