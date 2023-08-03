@@ -78,7 +78,9 @@
 			</div>
 			<div class="col-6 my-5 text-left">
 				<div class="d-flex">
-					<h3>1. 망우로30</h3>
+					<div onclick="location.href='post'" style=" cursor: pointer;">
+						<h3>1. 망우로30</h3>
+					</div> 
 					<h3 class="text-warning ms-3">5.0</h3>
 				</div>
 				<p class="text-secondary">서울특별시 동대문구 망우로 30</p>
@@ -105,19 +107,6 @@
 					.addClass('bi-star-fill')
 		}
 	})
-	
-	
-	/* let i = 0;
-       $('i').on('click',function(){
-           if(i==0){
-               $(this).attr('class','bi-star-fill');
-               i++;
-           }else if(i==1){
-               $(this).attr('class','bi-star');
-               i--;
-           }
-
-       }); */
 </script>
 </body>
 </html>
