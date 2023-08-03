@@ -13,9 +13,9 @@ public class PostController {
 		return "post/posting";
 	}
 	
-	@GetMapping("/postRegFormPage")
+	@GetMapping("/register")
 	public String RegFormFirst() {
-		return "post/postRegFormPage";
+		return "post/register";
 	}
 	
 }
