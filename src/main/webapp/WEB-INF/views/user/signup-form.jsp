@@ -42,7 +42,7 @@
                                     <div class="col">
                                         <div class="row">
                                             <div class="col-8">
-                                                <input type="date" class="form-control" name="birthday" />
+                                                <input type="date" class="form-control" name="birthday"/>
                                             </div>
                                             <div class="col-4">
                                                 <select class="form-select" name="gender">
@@ -101,10 +101,21 @@
             }
         }
 
+        function displaySuccessMessage(input) {
+            input.classList.add("is-valid");
+        }
+
+        function removeSuccessMessage(input) {
+            input.classList.remove("is-valid");
+        }
+
         usernameInput.addEventListener("blur", function () {
             removeErrorMessage(this);
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
+            } else {
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
@@ -112,18 +123,23 @@
             removeErrorMessage(this);
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
+            } else {
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
-        fullNameInput.addEventListener("blur", function() {
+        fullNameInput.addEventListener("blur", function () {
+            const koreanNamePattern = /^[가-힣]{2,5}$/;
+
             removeErrorMessage(this);
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.")
+            } else if (!koreanNamePattern.test(this.value.trim())) {
+                displayErrorMessage(this, "올바른 형식의 성함을 적어주세요.");
             } else {
-                const koreanNamePattern = /^[가-힣]{2,5}$/;
-                if (!koreanNamePattern.test(this.value.trim())) {
-                    displayErrorMessage(this, "올바른 형식의 성함을 적어주세요.");
-                }
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         })
 
@@ -132,18 +148,23 @@
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(this.value.trim())) {
                 displayErrorMessage(this, "올바른 형식의 이메일을 적어주세요.");
+            } else {
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
         phoneInput.addEventListener("blur", function () {
+            const phonePattern = /^010-[0-9]{4}-[0-9]{4}$/;
+
             removeErrorMessage(this);
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
+            } else if (!phonePattern.test(this.value.trim())) {
+                displayErrorMessage(this, "올바른 형식의 전화번호를 적어주세요.");
             } else {
-                const phonePattern = /^010-[0-9]{4}-[0-9]{4}$/;
-                if (!phonePattern.test(this.value.trim())) {
-                    displayErrorMessage(this, "올바른 형식의 전화번호를 적어주세요.");
-                }
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
@@ -151,6 +172,9 @@
             removeErrorMessage(this);
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
+            } else {
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
@@ -158,6 +182,9 @@
             removeErrorMessage(this);
             if (this.value === '') {
                 displayErrorMessage(this, "성별을 선택해주세요.");
+            } else {
+                removeSuccessMessage(this);
+                displaySuccessMessage(this);
             }
         });
 
@@ -167,7 +194,7 @@
             const errorMessages = document.querySelectorAll('.invalid-feedback');
             if (errorMessages.length > 0) {
                 // do nothing
-                return;
+
             } else {
                 const formData = {
                     username: usernameInput.value.trim(),
