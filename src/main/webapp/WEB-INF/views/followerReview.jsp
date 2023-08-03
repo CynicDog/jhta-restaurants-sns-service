@@ -22,51 +22,204 @@
 <body>
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
+	<div class="container border-top mt-3" >
+		<div class="row text-center border-bottom">
+			<div class="col-12 my-5">
+				<h2>Follower Review</h2>
+				<h4 class="text-secondary">( 내가 팔로우한 사람들의 리뷰를 확인해보세요! )</h4>
+			</div>
+		</div>
+	</div>
 	<div class="container">
 		<div class="row mt-4 mb-3">
-			<div class="col-4 my-3">
-				<div class="card text-bg-light shadow" style=" cursor: pointer;">
-					<div class="card-header" onclick="location.href='post'">
-	          			<p class="my-2">포스팅의 제목과 소제목을 적어주세요!</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body d-flex">
-						<h4>가게이름</h4>
-						
-					</div>
-				</div>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
 			
 			<div class="col-4 my-3">
-				<div class="card text-bg-light shadow" style=" cursor: pointer;">
-					<div class="card-header" onclick="location.href='post'">
-	          			<p class="my-2">포스팅의 제목과 소제목을 적어주세요!</p>
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
 	        		</div>
 					<img src="../resources/image/cafe1.jpg" alt="...">
 					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
 					</div>
 				</div>
+				<p class="text-end text-secondary" >3분전</p>
 			</div>
 			<div class="col-4 my-3">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
+          		<strong class="my-2 text-end" >리뷰어 닉네임</strong>
+				<div class="card text-bg-white shadow rounded" style=" cursor: pointer;">
+					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
 				</div>
+				<p class="text-end text-secondary" >3분전</p>
 			</div>
 			<div class="col-4 my-3">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
 				</div>
+				<p class="text-end text-secondary" >3분전</p>
 			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<div class="card-header text-end " onclick="location.href='post'">
+	          			<p class="my-2">리뷰어 닉네임</p>
+	        		</div>
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			<div class="col-4 my-3">
+	          		<p class="my-2 text-end" >리뷰어 닉네임</p>
+				<div class="card text-bg-white shadow" style=" cursor: pointer;">
+					<img src="../resources/image/cafe1.jpg" alt="...">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<p style="font-size:22px;">가게이름</p>
+							</div>
+							<div class="col-6 text-end ">
+								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="text-end text-secondary" >3분전</p>
+			</div>
+			
 		</div>
 	
 	
