@@ -1,7 +1,5 @@
 package kr.co.jhta.restaurants_service.vo;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,13 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReviewComment {
-
+public class ReviewKeyword {
+	
 	private int id;
-	private String content;
-	private Date createDate;
-	private Date updateDate;
-	private String disabled;
+	private String keyword;
 	private Review review;
 	
 }
