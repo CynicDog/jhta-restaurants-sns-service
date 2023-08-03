@@ -1,0 +1,41 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.OtpMapper">
+    <insert id="insert" parameterType="Otp">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into OTP (
+            USER_ID, OTP_CODE
+        ) values (
+            #{userId}, #{otpCode}
+        )
+    </insert>
+
+    <select id="findByUserId" parameterType="int" resultType="Otp">
+        select
+            USER_ID as userId,
+            OTP_CODE as otpCode,
+            CREATE_DATE as createDate
+        from
+            OTP
+        where
+            USER_ID = #{value}
+    </select>
+
+    <update id="update" parameterType="Otp">
+        update
+            OTP
+        set
+            OTP_CODE = #{otpCode}
+            CREATE_DATE = #{createDate}
+        where
+            USER_ID = #{userId}
+    </update>
+
+    <delete id="delete" parameterType="Otp">
+        delete from
+            OTP
+        where
+            USER_ID = #{userId}
+    </delete>
+</mapper>
