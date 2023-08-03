@@ -18,4 +18,9 @@ public class ReviewController {
 		
 		return "reviewDetail";
 	}
+	
+	@GetMapping("/followerReview")
+	public String followerReview(){
+		return "followerReview";
+	}
 }

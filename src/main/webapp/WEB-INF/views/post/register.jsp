@@ -20,8 +20,9 @@
 	<form method="post" enctype="multipart/form-data">
 		
   		<div class="row justify-content-center align-items-center mt-5" >
+  			
 	   		<div class="col-md-8">
-	     			<div class="card shadow p-3 mb-5  rounded">
+	     			<div class="card shadow p-3 mb-5 rounded">
 	        		<div class="card-header">
 	          			<p class="my-2">포스팅의 제목과 소제목을 적어주세요!</p>
 	        		</div>
@@ -42,11 +43,11 @@
 	    	</div>
 	    	
 	    	<div class="col-md-8" id="box">
-	     			<div class="card shadow p-3 mb-5 rounded">
+     			<div class="card shadow p-3 mb-5 rounded">
 	          		<div class="card-body">
               			<div class="row justify-content-center align-items-center">
               				<div class="col-4">
-              					<div class="pos display:none">
+              					<div class="pos">
 									    <div class="text-center">
 									        <label for="imageFile">
               									<a class="btn"><i class="bi bi-plus-square-dotted" style="font-size:30px;"></i></a> 
@@ -54,16 +55,17 @@
 									    </div>
 									    <input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" >
               					</div>
-              					<div class="pos display:none">
-									<img id="preview" class="img-thumbnail border-0">
+              					<div class="pos" style="display:none;">
+									<img class="img-thumbnail border-0" style="width: 231px;height: 225px;object-fit:cover;">
               					</div>
               				</div>
               				<div class="col-8"> 
-              					<input class="form-control mt-3 mb-4" placeholder="가게명을 작성해주세요.">
+              					<input class="form-control mb-4" placeholder="가게명을 작성해주세요.">
               					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60"></textarea>
               				</div>
               			</div>
 	          		</div>
+		      		<button class="btn btn-outline-secondary">delete</button>
 	      		</div>
 	    	</div>
 		    	
@@ -151,16 +153,17 @@ $(function(){
 									    </div>
 									    <input style="visibility: hidden" type="file" id="imageFile-\${unixTime}" name="chooseFile" accept="image/*" >
 	          					</div>
-	          					<div class="pos display:none">
-									<img id="preview" class="img-thumbnail border-0">
+	          					<div class="pos" style="display:none;">
+									<img id="preview" class="img-thumbnail border-0" style="width: 231px;height: 225px;object-fit:cover;">
 	          					</div>
 	      				</div>
 	      				<div class="col-8"> 
-	      					<input class="form-control mt-3 mb-4" placeholder="가게명을 작성해주세요.">
+	      					<input class="form-control mb-4" placeholder="가게명을 작성해주세요.">
 	      					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60"></textarea>
 	      				</div>
 	      			</div>
 	      		</div>
+      			<button class="btn btn-outline-secondary">delete</button>
 	  		</div>
 			
 		`
