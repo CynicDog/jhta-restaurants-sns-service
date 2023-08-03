@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <style type="text/css">
-    	html, body{
-    		height:100%;
-    	}	
-    	
-    	.wrap{
-    		position: relative;
-  			min-height: 100%;
-  			padding-bottom: 100px;
-    	}
-    	
-    	.search-bar {
-      width: 1000px;
+    html, body {
+        height: 100%;
+    }
+
+    .wrap {
+        position: relative;
+        min-height: 100%;
+        padding-bottom: 100px;
+    }
+
+    .search-bar {
+        width: 1000px;
     }
 </style>
 <nav class="navbar navbar-expand-lg border-bottom">
@@ -25,8 +25,8 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="collapse navbar-collapse my-1" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
@@ -34,16 +34,9 @@
                     <a class="nav-link" href="/stores/list">Stores</a>
                 </li>
             </ul>
-            <div class="row">
-				<div class="col-12">
-					<form action="https://www.google.com/search" method="GET">
-					<div class="mx-5 search-bar input-group">
-						<input name="q" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
-						<div class="input-group-append"></div>
-					</div>
-					</form>
-				</div>
-			</div>
+            <form class="w-25 me-3">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            </form>
             <ul class="navbar-nav">
                 <sec:authorize access="isAnonymous()">
                     <li class="nav-item">
@@ -63,10 +56,10 @@
                 </sec:authorize>
             </ul>
             <div class="form-check form-switch m-1">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked value="" onclick="toggleDarkMode()">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked
+                       value="" onclick="toggleDarkMode()">
             </div>
-        </div>
-        
+        </ul>
     </div>
     <script>
         function toggleDarkMode() {
@@ -95,6 +88,7 @@
                 document.documentElement.removeAttribute('data-bs-theme');
             }
         }
+
         applyColorModePreference();
     </script>
 </nav>
