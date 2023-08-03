@@ -19,7 +19,7 @@ public class SecurityConfiguration {
                     // TODO: authentication specification on urls later to be configured
                     urlRegistry.anyRequest().permitAll();
 //                    urlRegistry.antMatchers("/user/my-page").authenticated();
-//                    urlRegistry.antMatchers("/article/add").authenticated();
+//                    urlRegistry.antMatchers("/article/signup").authenticated();
 //                    urlRegistry.antMatchers("/article/leave-comment").authenticated();
                 })
 
