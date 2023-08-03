@@ -31,10 +31,22 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: thecynicdog0328@gmail.com
+    password: qnrgaosvbyyasouh
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable=true
+
 mybatis:
   mapper-locations:
     - META-INF/mybatis/mappers/*.xml
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+  type-aliases-package: kr.co.jhta.restaurants_service.vo
 
