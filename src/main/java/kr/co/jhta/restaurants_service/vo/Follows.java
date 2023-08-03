@@ -14,5 +14,5 @@ public class Follows {
 
 	private int followerId;
 	private int followedId;
-	private Date timestamp;
+	private Date createDate;
 }
