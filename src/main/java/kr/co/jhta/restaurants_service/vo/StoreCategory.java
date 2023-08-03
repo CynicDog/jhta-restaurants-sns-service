@@ -4,15 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-public class StoreOpentime {
-
+public class StoreCategory {
+	
 	private int id;
-	private String Category;
-	private String day;
-	private String opentime;
-	private String closetime;
-	private Store store;
+	private String category;
+
 }

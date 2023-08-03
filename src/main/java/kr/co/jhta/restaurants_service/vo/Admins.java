@@ -14,7 +14,7 @@ public class Admins {
 	private int id;
 	private String username;
 	private String password;
-	private String name;
+	private String fullname;
 	private String email;
 	private String phone;
 	private Date birthday;

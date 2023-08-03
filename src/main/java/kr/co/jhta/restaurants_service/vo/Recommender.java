@@ -4,13 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class Aavertise {
-	
-	private int id;
-	private int storeId;
-	private String subscribed;
+public class Recommender {
 
+	private int id;
+	private Customer customer;
+	private Review review;
 }

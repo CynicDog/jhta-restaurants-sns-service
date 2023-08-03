@@ -17,5 +17,6 @@ public class PostComment {
 	private Date createDate;
 	private Date updateDate;
 	private Post post;
+	private Customer customer;
 	
 }

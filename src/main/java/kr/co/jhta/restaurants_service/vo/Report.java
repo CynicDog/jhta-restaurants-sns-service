@@ -16,7 +16,6 @@ public class Report {
 	private String content;
 	private Date createDate;
 	private Date confirmDate;
-	private int count;
 	private Customer reporter;
 	private Review review;
 	private Post post;

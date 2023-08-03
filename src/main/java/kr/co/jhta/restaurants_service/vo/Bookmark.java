@@ -12,8 +12,8 @@ import lombok.Setter;
 public class Bookmark {
 
 	private int id;
-	private Date CreateDate;
-	private String username;
 	private Store store;
+	private String username;
+	private Date CreateDate;
 
 }

@@ -16,7 +16,9 @@ public class Post {
 	private String content;
 	private Date createDate;
 	private Date updateDate;
-	private String disabled;
 	private Customer customer;
 	private Store store;
+	private String disabled;
+	private String blocked;
+	private String reportCount;
 }
