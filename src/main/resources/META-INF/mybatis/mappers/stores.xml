@@ -18,11 +18,7 @@
 			STORE_CREATE_DATE			as createDate,
 			STORE_UPDATE_DATE			as updateDate,
 			OWNER_ID					as "owner.id",
-			STORE_DISABLED				as disabled,
-			STORE_SUBSCRIBED			as subscribed,
-			STORE_QUALIFIED				as qualified,
-			STORE_CHALLENGE_START_DATE	as challengeStartDate,	
-			STORE_CHALLENGE_END_DATE	as challengeEndDate
+			STORE_DISABLED				as disabled
 			
 		from 
 			STORES
