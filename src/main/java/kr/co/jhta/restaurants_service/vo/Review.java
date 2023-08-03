@@ -19,6 +19,9 @@ public class Review {
 	private int recommendCount;
 	private Customer customer;
 	private Store store;
+	private int reportCount;
+	private String disabled;
+	private String blocked;
 	
 	
 }
