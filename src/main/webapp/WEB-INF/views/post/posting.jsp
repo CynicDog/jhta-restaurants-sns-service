@@ -96,7 +96,7 @@
 </div>
 
 <script type="text/javascript">
-	$('i').click(function(){
+	$('#box i').click(function(){
 		if($(this).hasClass('bi-star-fill')){
 			$(this).removeClass('bi-star-fill')
 					.addClass('bi-star')
