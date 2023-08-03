@@ -18,4 +18,9 @@ public class PostController {
 		return "post/register";
 	}
 	
+	@GetMapping("/followerPost")
+	public String followerPost() {
+		return "post/followerPost";
+	}
+	
 }

@@ -18,7 +18,6 @@
     		position: absolute;
   			top: 30%;
   			font-size: 22px;
-  			text-light: white;
     	}
     	
     	img{
