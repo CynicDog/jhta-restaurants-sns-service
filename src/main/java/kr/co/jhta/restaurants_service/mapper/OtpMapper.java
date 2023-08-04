@@ -13,4 +13,6 @@ public interface OtpMapper {
     void update(Otp otp);
 
     void delete(Otp otp);
+
+    boolean validateByEmail(Otp otp);
 }

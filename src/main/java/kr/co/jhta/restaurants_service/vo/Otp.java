@@ -20,4 +20,9 @@ public class Otp {
     public Otp(String email) {
         this.email = email;
     }
+
+    public Otp(String email, String otpCode) {
+        this.email = email;
+        this.otpCode = otpCode;
+    }
 }

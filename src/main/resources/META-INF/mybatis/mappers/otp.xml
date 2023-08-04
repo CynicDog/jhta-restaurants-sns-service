@@ -39,4 +39,16 @@
         where
             ID = #{id}
     </delete>
+
+    <select id="validateByEmail" parameterType="Otp" resultType="boolean">
+        select
+            exists (
+                select
+                    1
+                from
+                    OTP
+                where
+                    OTP_CODE = #{otpCode} AND EMAIL = #{email}
+            )
+    </select>
 </mapper>

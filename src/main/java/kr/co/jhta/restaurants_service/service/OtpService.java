@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
+import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.mapper.OtpMapper;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.util.OtpGenerator;
@@ -41,5 +42,11 @@ public class OtpService {
     public void invalidateOtp(Otp otp) {
 
         otpMapper.delete(otp);
+    }
+
+    public boolean validateOtp(OtpCommand otpCommand) {
+        Otp otp = new Otp(otpCommand.getEmail(), otpCommand.getOtpCode());
+
+        return otpMapper.validateByEmail(otp);
     }
 }
