@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.vo.Store;
 
 @Mapper
@@ -12,7 +13,7 @@ public interface StoreMapper {
 
 	void insertStore(Store store);
 	
-	List<Store> getStores(Map<String,Object>param);
+	List<SearchedStore> getStores(Map<String,Object> param);
 	
 	Store getStoreByNo();
 	

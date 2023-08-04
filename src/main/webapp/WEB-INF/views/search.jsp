@@ -81,7 +81,7 @@ img {
 				<div class="col-7">
 					<div class="row mb-3">
 						<c:forEach var="store" items="${stores}">
-							<div class="col-5">
+							<div class="col-5 mb-5">
 								<div class="card m-2 sm-14 shadow bg-body rounded ">
 									<div class="embed-responsive embed-responsive-4by3">
 										<img src="resources/image/example.jpg"

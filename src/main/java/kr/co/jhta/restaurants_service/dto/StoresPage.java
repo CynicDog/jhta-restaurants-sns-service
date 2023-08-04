@@ -8,8 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StoreList {
+public class StoresPage {
 
 	private Pagination pagination;
-	private List<Store> stores;
+	private List<SearchedStore> stores;
 }
