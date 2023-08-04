@@ -55,9 +55,18 @@
 				            <li class="nav-item">
 				                <a class="nav-link" href="/user/login">Login</a>
 				            </li>
-				            <li class="nav-item">
-				                <a class="nav-link" href="/user/signup">Signup</a>
-				            </li>
+							<li class="nav-item">
+								<a class="nav-link"
+								   data-bs-container="body"
+								   data-bs-toggle="popover"
+								   data-bs-placement="bottom"
+								   data-bs-html="true"
+								   data-bs-content="
+									   <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/customer/signup'>손님</a> /
+									   <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/owner/signup'>사장님</a>
+								   "
+								>Signup</a>
+							</li>
 				        </sec:authorize>
 				        <sec:authorize access="isAuthenticated()">
 				            <li class="nav-item">
@@ -101,6 +110,11 @@
             }
         }
         applyColorModePreference();
+
+		let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+		let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+			return new bootstrap.Popover(popoverTriggerEl)
+		});
     </script>
 </nav>
 <div class="container">

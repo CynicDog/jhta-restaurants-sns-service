@@ -14,39 +14,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-<%@ include file="../common/navbar.jsp" %>
+<%@ include file="../../common/navbar.jsp" %>
 <div class="container">
     <div class="row my-2 justify-content-center align-items-center">
         <div class="col-md-6">
             <div class="card shadow my-5">
-                <div class="card-header">가입</div>
+                <div class="fw-light text-center my-3">손님 회원 가입</div>
                 <div class="card-body">
-                    <div class="row my-2 p-2">
+                    <div class="row my-1 p-1">
                         <form method="post" action="signup" modelAttribute="userCommand">
-                            <div class="form-group my-3">
-                                <input type="text" class="form-control" name="username" placeholder="유저 아이디"/>
+                            <div class="form-floating my-3">
+                                <input type="text" class="form-control" name="username" id="username" placeholder=""/>
+                                <label class="fw-lighter" for="username">유저 아이디</label>
                             </div>
-                            <div class="form-group my-3">
-                                <input type="password" class="form-control" name="password" placeholder="비밀번호"/>
+                            <div class="form-floating my-3">
+                                <input type="password" class="form-control" name="password" id="password" placeholder=""/>
+                                <label class="fw-lighter" for="password">비밀번호</label>
                             </div>
-                            <div class="form-group my-3">
-                                <input type="text" class="form-control" name="fullName" placeholder="성함"/>
+                            <div class="form-floating my-3">
+                                <input type="text" class="form-control" name="fullName" id="fullName" placeholder=""/>
+                                <label class="fw-lighter" for="fullName">성함</label>
                             </div>
-                            <div class="form-group my-3">
-                                <input type="email" class="form-control" name="email" placeholder="이메일"/>
+                            <div class="form-floating my-3">
+                                <input type="email" class="form-control" name="email" id="email" placeholder=""/>
+                                <label class="fw-lighter" for="email">성함</label>
                             </div>
-                            <div class="form-group my-3">
-                                <input type="text" class="form-control" name="phone" placeholder="010-9999-9999"/>
+                            <div class="form-floating my-3">
+                                <input type="text" class="form-control" name="phone" id="phone" placeholder=""/>
+                                <label class="fw-lighter" for="phone">전화번호</label>
                             </div>
                             <div class="form-group my-3">
                                 <div class="row">
                                     <div class="col">
                                         <div class="row">
                                             <div class="col-8">
-                                                <input type="date" class="form-control" name="birthday"/>
+                                                <input type="date" class="form-control fw-lighter" name="birthday"/>
                                             </div>
                                             <div class="col-4">
-                                                <select class="form-select" name="gender">
+                                                <select class="form-select fw-lighter" name="gender">
                                                     <option value="">성별</option>
                                                     <option value="male">남</option>
                                                     <option value="female">여</option>
@@ -69,7 +74,7 @@
                                     submit
                                 </button>
                             </div>
-<%--                            TODO: OTP validation --%>
+                            <%--                            TODO: OTP validation --%>
                             <div class="collapse mt-3" id="otpCollapse">
                                 <div class="card card-body">
                                     <label class="fw-lighter" for="otp">OTP</label>
@@ -80,7 +85,7 @@
                                             </div>
                                             <div class="col-1 d-flex justify-content-center align-items-center">
                                             <span class="">
-                                                <i class="bi bi-send"></i>
+                                                <i class="bi bi-send" onclick="otpValidationRequest()"></i>
                                             </span>
                                             </div>
                                         </div>
@@ -274,10 +279,10 @@
 
             if (Object.values(validationStatus).some(status => status === false)) {
                 // do nothing
-                return;
+
             } else if (errorMessages.length > 0) {
                 // do nothing
-                return;
+
             } else {
                 const formData = {
                     username: usernameInput.value.trim(),
@@ -289,7 +294,7 @@
                     gender: genderInput.value
                 };
 
-                fetch("/user/signup", {
+                fetch("/customer/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -301,22 +306,44 @@
 
                             const email = encodeURIComponent(formData.email);
 
-                            fetch(`/user/otp?email=\${email}`, {
+                            fetch(`/customer/otp?email=\${email}`, {
                                 method: "GET"
                             }).then(response => {
                                 if (response.ok) {
+                                    // do nothing
                                 }
                             });
                         } else {
-                            // constraints violation
+                            // TODO: handle signup errors
                         }
                     })
-                    .catch(error => {
-                        // handle errors by showing toast
-                    });
             }
         });
     });
+
+    function otpValidationRequest() {
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const otpCode = document.querySelector('#otp').value
+
+        const formData = {
+            email: email,
+            otpCode: otpCode
+        }
+
+        fetch(`/customer/otp-check`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/user/login"
+            } else {
+                // TODO: handle errors on bad credentials
+            }
+        })
+    }
 </script>
 </body>
 </html>
