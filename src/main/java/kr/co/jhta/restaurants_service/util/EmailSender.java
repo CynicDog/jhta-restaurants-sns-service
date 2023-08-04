@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailSender {
 
-
-    @Value("${spring.mail.username}")
-    private String sender;
+    // @Value("${spring.mail.username}")
+    private String sender = "thecynicdog0328@gmail.com";
 
     private final Logger logger = Logger.getLogger(EmailSender.class);
 
@@ -21,13 +20,13 @@ public class EmailSender {
         this.mailSender = mailSender;
     }
 
-    public void sendEmail(String fullName, String receivingEmailAddress, String subject, String otpCode) {
+    public void sendEmail(String receivingEmailAddress, String otpCode) {
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
         mailMessage.setFrom(sender);
         mailMessage.setTo(receivingEmailAddress);
-        mailMessage.setSubject(subject);
+        mailMessage.setSubject("[ OTP Code from Jhta restaurants service team ]");
 
         String text =
                 "Welcome!\n\n" +
@@ -42,6 +41,6 @@ public class EmailSender {
 
         mailSender.send(mailMessage);
 
-        logger.info("Sent email to " + fullName + "...");
+        logger.info("Sent email to " + receivingEmailAddress + "...");
     }
 }
