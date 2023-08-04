@@ -16,8 +16,7 @@
 <style type="text/css">
 .emoji-btn.active {
   	color: orange;
-}
-    
+}   
 </style>
 </head>
 <body>
@@ -25,7 +24,7 @@
 <div class="wrap">
 	<div class="container">
 	    <div class="restaurant-name">
-	        <strong>맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
+	        <strong style="color: orange;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
 	    </div>
 	<div class="review-section mt-3" >
 		<div class="row">
@@ -53,7 +52,8 @@
 			             	</li>
 	              		</ul>
 	          		</div>
-	        		<textarea class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
+	        		<textarea id="textLength" name="count" class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
+		        	<p><span id="text-count">0</span>/4000</p>
 				</div>
 			</div>
 	    </div>
@@ -71,11 +71,9 @@
 			</form>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
-			        <div class="modal-content">
-			            <div class="modal-body" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
-			                <img id="modal-img" class="custom-modal-img" style="max-width: 100%; max-height: 100%;" alt="...">
-			            </div>  
-			        </div>
+		            <div class="modal-body" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
+		                <img id="modal-img" class="custom-modal-img" style="max-width: 100%; max-height: 100%;" alt="...">
+		            </div>  
 			    </div>
 			</div>
 		    <div class="buttons" style="margin-left: 1100px;">
@@ -131,7 +129,18 @@ $(function() {
 	    // FileReader객체로 파일을 읽어온다.
 	    reader.readAsDataURL(file);
 	});
+	
+	$('textarea[name=count]').keydown(function() {
+		let strLength = $(this).val().length + 1;
+		$("#text-count").text(strLength);
+		
+		if (strLength+2 >= 9) {
+			console.log(strLength)
+			$(this).val($(this).val().substring(0, 8))
+		}	
+	})
 });
+
 </script>
 </body>
 </html>

@@ -52,8 +52,10 @@
 								</p>
 							</div>
 							<div class="col-4">
-								<span class="my-3 float-end">
-									<button type="button" class="btn btn-outline-primary" onclick="location.href='review'">리뷰작성</button>
+								<span class="my-2 float-end">
+									<button type="button" class="btn" style="color: orange;" onclick="location.href='/review'">
+										리뷰<i class="bi bi-brush"></i>
+									</button>
 									<button class="btn" id="box">
 										<i id="star" class="bi bi-star" style="color:gold; font-size:28px;" ></i>
 									</button>
@@ -108,7 +110,7 @@
 		</div>
 			<div class="row">
 				<div class="col-8">
-					<span style="font-size: x-large; font-weight: bold">리뷰</span> 
+					<span style="font-size: x-large; font-weight: bold;">리뷰</span> 
 					<span style="font-size: x-large; font-weight: bold; color: #adb5bd;">(3)</span>
 					<div class="btn-group p-1 float-end">
 						<button type="button" class="btn border-opacity-10" style="background: none; border: none;" >전체(3)</button>
@@ -140,17 +142,18 @@
 									</div>
 									<div class="col-10">
 										<div class="row mb-2">
-											<div class="col-9">
+											<div class="col-10">
 												<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
 												<p class="col card-text">리뷰 내용</p>
 											</div>
-											<div class="col-3 d-flex justify-content-end align-items-center">
-										        <button class="btn btn-light" style="margin-left: 15px;">
+											<div class="col-1">
+										        <button class="btn" style="margin-left: 15px;">
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
-										            <span>별로</span>
 										        </button>
-										        <button type="button" class="btn btn-outline-primary">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+										    </div>
+										    <div class="col-1">
+										        <button type="button" class="btn">
+										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
 										</div>
@@ -168,8 +171,10 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-outline-primary btn-sm">수정</button>
-													<button type="button" class="btn btn-outline-danger btn-sm">
+													<button type="button" class="btn btn-sm" style="color: blue;">
+														<i class="bi bi-pencil-square"></i>
+													</button>
+													<button type="button" class="btn btn-sm" style="color: red;">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>
@@ -195,17 +200,18 @@
 									</div>
 									<div class="col-10">
 										<div class="row mb-2">
-											<div class="col-9">
+											<div class="col-10">
 												<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
 												<p class="col card-text">리뷰 내용</p>
 											</div>
-											<div class="col-3 d-flex justify-content-end align-items-center">
-										        <button class="btn btn-light" style="margin-left: 15px;">
+											<div class="col-1">
+										        <button class="btn" style="margin-left: 15px;">
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
-										            <span>별로</span>
 										        </button>
-										        <button type="button" class="btn btn-outline-primary">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+										    </div>
+										    <div class="col-1">
+										        <button type="button" class="btn">
+										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
 										</div>
@@ -223,8 +229,10 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-outline-primary btn-sm">수정</button>
-													<button type="button" class="btn btn-outline-danger btn-sm">
+													<button type="button" class="btn btn-sm" style="color: blue;">
+														<i class="bi bi-pencil-square"></i>
+													</button>
+													<button type="button" class="btn btn-sm" style="color: red;">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>
@@ -250,17 +258,18 @@
 									</div>
 									<div class="col-10">
 										<div class="row mb-2">
-											<div class="col-9">
+											<div class="col-10">
 												<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
 												<p class="col card-text">리뷰 내용</p>
 											</div>
-											<div class="col-3 d-flex justify-content-end align-items-center">
-										        <button class="btn btn-light" style="margin-left: 15px;">
+											<div class="col-1">
+										        <button class="btn" style="margin-left: 15px;">
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
-										            <span>별로</span>
 										        </button>
-										        <button type="button" class="btn btn-outline-primary">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+										    </div>
+										    <div class="col-1">
+										        <button type="button" class="btn">
+										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
 										</div>
@@ -278,8 +287,10 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-outline-primary btn-sm">수정</button>
-													<button type="button" class="btn btn-outline-danger btn-sm">
+													<button type="button" class="btn btn-sm" style="color: blue;">
+														<i class="bi bi-pencil-square"></i>
+													</button>
+													<button type="button" class="btn btn-sm" style="color: red;">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>
@@ -366,7 +377,7 @@
 	})
 	
 
-	$(document).ready(function() {
+	$(function() {
             // '.emoji-btn' 클래스를 가진 버튼을 클릭할 때 실행되는 함수를 정의합니다.
             $('.border-opacity-10').click(function() {
                 // 모든 버튼에 있는 'active' 클래스를 제거합니다.
