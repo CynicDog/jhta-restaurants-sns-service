@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-floating my-3">
                                 <input type="email" class="form-control" name="email" id="email" placeholder=""/>
-                                <label class="fw-lighter" for="email">성함</label>
+                                <label class="fw-lighter" for="email">이메일</label>
                             </div>
                             <div class="form-floating my-3">
                                 <input type="text" class="form-control" name="phone" id="phone" placeholder=""/>
