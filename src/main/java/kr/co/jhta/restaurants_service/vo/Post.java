@@ -2,6 +2,8 @@ package kr.co.jhta.restaurants_service.vo;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Alias("Post")
 public class Post {
 
 	private int id;
@@ -18,7 +21,7 @@ public class Post {
 	private Date updateDate;
 	private Customer customer;
 	private Store store;
+	private String reportCount;
 	private String disabled;
 	private String blocked;
-	private String reportCount;
 }

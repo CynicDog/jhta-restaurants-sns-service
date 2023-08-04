@@ -93,6 +93,70 @@
 				
 			</div>
 		</div>
+		
+		<div class="row my-3 justify-content-center">
+			<div class="col-11 position-relative">
+				<span style="font-size: x-large;"><strong>리뷰</strong></span> 
+				<span class="text-secondary" style="font-size: x-large; font-weight: bold;">(3)</span>
+				
+				<div class="position-absolute" style="bottom:0;right:0;">
+					<button type="button" class="btn btn-outline-secondary">
+			            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+			            <span class="visually-hidden">추천</span>
+			        </button>
+			        <button type="button" class="btn btn-outline-danger">
+			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+			            <span class="visually-hidden">신고</span>
+			        </button>
+				</div>
+				
+			</div>
+			<div class="col-11 border-top border-bottom my-3">
+				<div class="row my-3">
+					<div class="col-2">
+						<div class="text-center card-title my-1">
+							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+								<span style="font-size: medium; font-weight: bold;">정손님</span>
+							<p style="font-size: small; color: #adb5bd;">회원 등급</p>
+						</div>
+						<div class="text-center card-title my-1">
+							<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
+						</div>
+					</div>
+					<div class="col-10 position-relative ">
+						<div class="row mb-2">
+							<div class="col-9">
+								<p class="col card-text text-muted" style="font-size: small; ">리뷰 작성일</p>
+								<p class="col card-text">리뷰 내용</p>
+								<p class="col card-text"> 정말 맛있어요</p>
+							</div>
+							<div class="col-3 d-flex justify-content-end align-items-center">
+						    </div>
+						</div>
+						<div class="row position-absolute" style="bottom:0;right:0;">
+							<div class="col">
+								<span class="text-end">
+									<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+							        <button type="button" class="btn btn-outline-secondary btn-sm">
+							            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+							            <span class="visually-hidden">추천</span>
+							        </button>
+									<button type="button" class="btn btn-outline-danger btn-sm">
+										<i class="bi bi-trash3"></i>
+										<span class="visually-hidden">삭제</span>
+									</button>
+									<button type="button" class="btn btn-outline-danger btn-sm">
+							            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+							            <span class="visually-hidden">신고</span>
+							        </button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
 	</div>
 	<%@ include file="../common/footer.jsp" %>
 </div>

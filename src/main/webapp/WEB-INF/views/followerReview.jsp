@@ -13,8 +13,19 @@
     <style type="text/css">
     	img{
     		width: 100%;
-    		height: 300px;
+    		height: 250px;
     		object-fit:cover;
+    		filter: brightness(70%);
+    	}
+    	.cardname{
+    		position: absolute;
+  			top:30%;
+  			font-size: 22px;
+    	}
+    	.cardratting{
+    		position: absolute;
+    		top:80%;
+  			font-size: 20px;
     	}
     </style>
 <title>Insert title here</title>
@@ -34,191 +45,49 @@
 		<div class="row mt-4 mb-3">
 			
 			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-          		<strong class="my-2 text-end" >리뷰어 닉네임</strong>
-				<div class="card text-bg-white shadow rounded" style=" cursor: pointer;">
+       			<p class="my-2"><strong>리뷰어 닉네임</strong></p>
+				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
+
+					<div class="card-img-overlay cardname">
+						<p><strong>인생 카페 10선</strong></p>
+					</div>
+					<div class="card-img-overlay cardratting text-end text-warning">
+						<strong style="font-size:20px;">5.0</strong>
 					</div>
 				</div>
-				<p class="text-end text-secondary" >3분전</p>
+				<div class="row text-warning">
+					<div class="col">
+						<strong style="font-size:20px;">5.0</strong>
+					</div>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
+					</div>
+				</div>
 			</div>
+			
 			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
+				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
+					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+
+					<div class="card-img-overlay cardname">
+						<p><strong>인생 카페 10선</strong></p>
+					</div>
+					<div class="card-img-overlay cardratting text-end text-warning">
+						<strong style="font-size:20px;">5.0</strong>
 					</div>
 				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
+				<div class="row">
+					<div class="col">
+						<strong >리뷰어 닉네임</strong>
+					</div>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
 					</div>
 				</div>
-				<p class="text-end text-secondary" >3분전</p>
 			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
-			<div class="col-4 my-3">
-	          		<p class="my-2 text-end" >리뷰어 닉네임</p>
-				<div class="card text-bg-white shadow" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" alt="...">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-6">
-								<p style="font-size:22px;">가게이름</p>
-							</div>
-							<div class="col-6 text-end ">
-								<strong class="text-warning ms-3" style="margin: 0; font-size:22px;">5.0</strong>
-							</div>
-						</div>
-					</div>
-				</div>
-				<p class="text-end text-secondary" >3분전</p>
-			</div>
+			
+			
 			
 		</div>
 	
