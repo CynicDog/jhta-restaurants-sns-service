@@ -9,6 +9,7 @@
 <html lang="ko">
 <head>
 <title>검색 결과</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <style type="text/css">
 img {
 	object-fit: cover;
@@ -57,8 +58,7 @@ img {
 							${param.sort eq 'favorite' ? 'selected' : '' }>즐겨찾기 순</option>
 						<option value="reviews"
 							${param.sort eq 'reviews' ? 'selected' : '' }>리뷰수 순</option>
-						<option value="distance"
-							${param.sort eq 'distance' ? 'selected' : '' }>거리 순</option>
+
 					</select>
 				</div>
 				
@@ -101,8 +101,15 @@ img {
 
 				<div class="col-3">
 					<!-- 지도 -->
-					<div id="map"
-						style="width: 300px; height: 400px; margin-bottom: 30px;"></div>
+					<div>
+					
+						<div id="map"
+							style="width: 300px; height: 400px;">
+						</div>
+
+					
+					</div>
+					
 
 					<div class="card m-2 sm-14 shadow bg-body rounded ">
 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
@@ -176,33 +183,90 @@ img {
 			document.querySelector("#form-employee-search").submit();	
 		}
 	
+		<!--카카오 지도 -->
 		var container = document.getElementById('map');
+		
+		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+		var bounds = new kakao.maps.LatLngBounds();    
 		var options = {
-// 										  latitude,longitude 순으로 입력
+			//latitude,longitude 순으로 입력
 			center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
-			level: 4
+			level: 3
 		};
-
+		// map 생성
 		var map = new kakao.maps.Map(container, options);
 		
-		// 마커가 표시될 위치입니다 
-		var markerPosition  = new kakao.maps.LatLng(37.5729587735263, 126.992241734889); 
-		var markerPosition2  = new kakao.maps.LatLng(37.5699451391001, 126.988087440713); 
+		// 지도에 표시할 좌표 목록
+		var points = [
+		    new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+		    new kakao.maps.LatLng(37.5699451391001, 126.988087440713)
+		];
+		
+		var i, marker;
+		for (i = 0; i < points.length; i++) {
+		    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+		    marker = new kakao.maps.Marker({ position : points[i] });
+		    marker.setMap(map);
+		    
+		    // LatLngBounds 객체에 좌표를 추가합니다
+		    bounds.extend(points[i]);
+		}		
+		setBounds();
+		
+		
+		var customOverlay; 
+		
+ 		// 마우스 드래그로 지도 이동/ 지도 확대,축소가 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+		kakao.maps.event.addListener(map, 'bounds_changed', function() {      
+			
+			setButton();
 
-		// 마커를 생성합니다
-		var marker = new kakao.maps.Marker({
-		    position: markerPosition
 		});
-		var marker2 = new kakao.maps.Marker({
-		    position: markerPosition2
-		});
 
-		// 마커가 지도 위에 표시되도록 설정합니다
-		marker.setMap(map);
-		marker2.setMap(map);
+ 		
+		function setBounds() {
+    	// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+  	 	 // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+  	 		map.setBounds(bounds);
+		}
+		
+		function setButton(){
+			  if (customOverlay) {
+			        customOverlay.setMap(null);
+			    }
+			
+		   		// 지도 중심좌표를 얻어옵니다 
+		   		let center = map.getCenter();
+		   		let mapBounds = map.getBounds();
+			    // 영역의 중앙 좌표를 얻어옵니다 
+			    // 영역의 남서쪽 좌표를 얻어옵니다 
+			    let swLatLng = mapBounds.getSouthWest(); 
+			    // 영역의 북동쪽 좌표를 얻어옵니다 
+			    let neLatLng = mapBounds.getNorthEast(); 
+			    let distance =  neLatLng.getLat() - swLatLng.getLat();
+			    
+				// 커스텀 오버레이가 표시될 위치입니다 
+		   		var position = new kakao.maps.LatLng(swLatLng.getLat() + (0.1)*distance, center.getLng());  
 
-		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-		// marker.setMap(null);    
+				var content = '<button type="button" id="search-button" class="btn btn-primary">이 지역 검색</button>';
+				
+					customOverlay = new kakao.maps.CustomOverlay({
+				    position: position,
+				    content: content   
+				});
+				
+				customOverlay.setMap(map);
+				
+		        // 커스텀 오버레이의 버튼에 이벤트를 추가
+		        var button = document.getElementById('search-button');
+		        button.addEventListener('click', showOverlayMessage);
+			
+		        // 오버레이를 클릭하면 메시지를 띄우도록 이벤트 처리
+		        function showOverlayMessage() {
+		          alert("이 지역 검색");
+		        }
+		}
+		
 		
 	</script>
 

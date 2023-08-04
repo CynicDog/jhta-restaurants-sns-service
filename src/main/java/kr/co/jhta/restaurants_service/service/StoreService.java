@@ -27,7 +27,7 @@ public class StoreService {
 	
 	public StoresPage getStores(Map<String,Object> param){
 		
-		int totalRows = storeDao.getTotalRows(param);
+		int totalRows = storeMapper.getTotalRows(param);
 		// 요청한 페이지를 pagination 객체에 저장
 		int page = (int)param.get("page");
 		Pagination pagination = new Pagination(page, totalRows);
@@ -37,7 +37,7 @@ public class StoreService {
 		StoresPage result = new StoresPage();
 		param.put("begin", begin);
 		param.put("end", end);
-		List<SearchedStore> stores = storeDao.getStores(param);
+		List<SearchedStore> stores = storeMapper.getStores(param);
 		result.setPagination(pagination);
 		
 	
