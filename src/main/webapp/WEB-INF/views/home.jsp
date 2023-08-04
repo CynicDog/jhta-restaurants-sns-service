@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="row mt-3">
 			<div class="col">
-				<h4 class="my-3">최근에 찾아본 맛집</h4>
+				<h4 class="my-3">팔로워의 포스트</h4>
 			</div>
 			<div class="col text-end">
 				<button type="button" class="btn btn-outline-secondary my-3" onclick="location.href='/post/followerPost'"> more</button>
@@ -82,7 +82,7 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col">
-				<h4 class="my-3">최근에 찾아본 맛집</h4>
+				<h4 class="my-3">인기 맛집</h4>
 			</div>
 			<div class="col text-end">
 				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
@@ -114,7 +114,7 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col">
-				<h4 class="my-3">최근에 찾아본 맛집</h4>
+				<h4 class="my-3">인기 리뷰</h4>
 			</div>
 			<div class="col text-end">
 				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
