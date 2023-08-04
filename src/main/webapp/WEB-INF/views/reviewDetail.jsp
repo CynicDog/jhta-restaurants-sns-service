@@ -90,33 +90,31 @@ html, body {
 				<div class="row" id="image-row">
 				
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." style="max-width: 100%; max-height: 100%;">
+						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
 					</div>
 					<div class="col-4" >
 						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="max-width: 100%; max-height: 100%;">
 					</div>
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="2" src="https://th.bing.com/th/id/OIP.3HkokfTVX7Emj6-phqbdKAHaE8?w=257&h=180&c=7&r=0&o=5&pid=1.7" alt="..." style="max-width: 100%; max-height: 100%;">
+						<img class="img-thumbnail" data-image-index="2" src="https://th.bing.com/th/id/OIP.3HkokfTVX7Emj6-phqbdKAHaE8?w=257&h=180&c=7&r=0&o=5&pid=1.7" alt="..." >
 					</div>
 					
 					<!-- Modal -->
 					<div id="Modal" class="modal fade" aria-hidden="true" tabindex="-1">
 						<div class="modal-dialog modal-dialog-centered modal-xl">
-						 <div class="modal-content" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
-					    	<span id="span-close-modal" class="close float-end" style="font-size:50px;" >&times;</span>
-					    	<div class="modal-body" style="max-width: 100%; max-height: 100%;">
-							    <div class="row m-5">
-							        <div class="col-2 d-flex justify-content-center align-items-center">
+						 <div class="modal-content justify-content-center" style="background-color: black; display: flex;  height: 90vh;">
+					    		<span id="span-close-modal" class="close position-absolute top-0 end-0 text-white-50" style="font-size:50px;" >&times;</span>
+							    <div class="row" >
+							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="prevButton" >&#10094;</button>
 							        </div>
-							        <div class="col-8 text-center">
-							            <img class="modal-content" id="modalImg">
+							        <div class="col-10 text-center">
+							            <img class="modal-content" id="modalImg" style="width: 100%; height: 100%;">
 							        </div>
-							        <div class="col-2 d-flex justify-content-center align-items-center">
+							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="nextButton" >&#10095;</button>
 							        </div>
 							    </div>
-					    	</div>
 						  </div> 
 						</div>
 					</div>	
