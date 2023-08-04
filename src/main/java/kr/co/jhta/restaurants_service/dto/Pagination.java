@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class Pagination {
 
-	private int rows;
+	private int rows = 10;
 	private int pages = 5;
 	private int page;
 	private int totalRows;
@@ -21,9 +21,15 @@ public class Pagination {
 	private int begin;
 	private int end;
 	
-	public Pagination(int rows, int page, int totalRows) {
-		this.rows = rows;
+	public Pagination(int page, int totalRows) {
 		this.page = page;
+		this.totalRows = totalRows;
+		
+		init();
+	}
+	public Pagination(int rows,int page, int totalRows) {
+		this.page = page;
+		this.rows = rows;
 		this.totalRows = totalRows;
 		
 		init();
