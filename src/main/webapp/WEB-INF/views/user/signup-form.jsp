@@ -69,6 +69,7 @@
                                     submit
                                 </button>
                             </div>
+<%--                            TODO: OTP validation --%>
                             <div class="collapse mt-3" id="otpCollapse">
                                 <div class="card card-body">
                                     <label class="fw-lighter" for="otp">OTP</label>
@@ -203,6 +204,7 @@
             updateSubmitButton();
         })
 
+        // TODO: DB constraint (unique) validation via ajax
         emailInput.addEventListener("blur", function () {
             removeErrorMessage(this);
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -218,6 +220,7 @@
             updateSubmitButton();
         });
 
+        // TODO: DB constraint (unique) validation via ajax
         phoneInput.addEventListener("blur", function () {
             const phonePattern = /^010-[0-9]{4}-[0-9]{4}$/;
 
