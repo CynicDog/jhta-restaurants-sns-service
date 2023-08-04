@@ -263,7 +263,9 @@ img {
 			
 		        // 오버레이를 클릭하면 메시지를 띄우도록 이벤트 처리
 		        function showOverlayMessage() {
+			      customOverlay.setMap(null);
 		          alert("이 지역 검색");
+		          
 		        }
 		}
 		

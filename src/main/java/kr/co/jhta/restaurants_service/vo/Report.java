@@ -2,6 +2,8 @@ package kr.co.jhta.restaurants_service.vo;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
+@Alias("Report")
 public class Report {
 
 	private int id;
