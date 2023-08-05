@@ -37,7 +37,7 @@ html, body {
 						<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5"><strong>정손님</strong></p>
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>정손님</strong></p>
 					</div>
 					<div class="col-6">
 						<span class="float-end">
@@ -85,24 +85,24 @@ html, body {
 					<p class="mx-3">가게명-서울시 종로구</p>
 				</div>	
 				<div class="row m-3">
-					<p>리뷰 내용</p>
+					<p style="font-size:20px;">리뷰 내용</p>
 				</div>
 				<div class="row" id="image-row">
 				
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..." >
+						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..."  style="width: 100%; height: 100%; ">
 					</div>
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="max-width: 100%; max-height: 100%;">
+						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="width: 100%; height: 100%;">
 					</div>
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="2" src="https://th.bing.com/th/id/OIP.3HkokfTVX7Emj6-phqbdKAHaE8?w=257&h=180&c=7&r=0&o=5&pid=1.7" alt="..." >
+						<img class="img-thumbnail " data-image-index="2" src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/12e66f74-ca37-4a97-b19e-8e9231541a4a.jpeg" alt="..." style="width: 100%; height: 100%;">
 					</div>
 					
 					<!-- Modal -->
 					<div id="Modal" class="modal fade" aria-hidden="true" tabindex="-1">
 						<div class="modal-dialog modal-dialog-centered modal-xl">
-						 <div class="modal-content justify-content-center" style="background-color: black; display: flex;  height: 90vh;">
+						 <div class="modal-content justify-content-center" style="background-color: black; display: flex;  height: 90vh;">;
 					    		<span id="span-close-modal" class="close position-absolute top-0 end-0 text-white-50" style="font-size:50px;" >&times;</span>
 							    <div class="row" >
 							        <div class="col-1 d-flex justify-content-center align-items-center">
@@ -120,6 +120,11 @@ html, body {
 					</div>	
 				</div>
   			</div>
+			<div class="m-2">
+				<span class="border border-primary-subtle m-2 p-1">#주차가 편해요</span>
+				<span class="border border-primary-subtle m-2 p-1">#청결해요</span>
+				<span class="border border-primary-subtle m-2 p-1">#분위기가 좋아요</span>
+			</div>
 		</div>
 		<div class="h4 pb-2 mb-4 border-bottom border-secondary"></div>
 		<div class="row m-3">
@@ -182,6 +187,10 @@ $("#nextButton").click(function() {
 $("#span-close-modal").click(function() {
 	modal.hide();
 });
+
+const popover = new bootstrap.Popover('.popover-dismiss', {
+	  trigger: 'focus'
+	})
 
 /*
 	var modal = document.getElementById("Modal");
