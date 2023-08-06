@@ -52,8 +52,8 @@
 			             	</li>
 	              		</ul>
 	          		</div>
-	        		<textarea id="textLength" name="count" class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
-		        	<p><span id="text-count">0</span>/4000</p>
+	        		<textarea id="textLength" name="content" rows=20 class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
+		        	<p style="text-align: right;"><span id="text-count">0</span>/2000</p>
 				</div>
 			</div>
 	    </div>
@@ -74,8 +74,9 @@
 		            <div class="modal-body" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
 		                <img id="modal-img" class="custom-modal-img" style="max-width: 100%; max-height: 100%;" alt="...">
 		            </div>  
-			    </div>
+			    </div> 
 			</div>
+		        <p><span id="text-count">0</span>/10</p>
 		    <div class="buttons" style="margin-left: 1100px;">
 		        <button type="button" class="btn btn-light">취소</button>
 		        <button type="button" class="btn btn-outline-success">리뷰 올리기</button>
@@ -130,15 +131,22 @@ $(function() {
 	    reader.readAsDataURL(file);
 	});
 	
-	$('textarea[name=count]').keydown(function() {
-		let strLength = $(this).val().length + 1;
-		$("#text-count").text(strLength);
+	$("textarea[name=content]").keyup(function() {
 		
-		if (strLength+2 >= 9) {
-			console.log(strLength)
-			$(this).val($(this).val().substring(0, 8))
-		}	
-	})
+	    let maxLength = 2000; 
+	    let text = $(this).val(); 
+	    let totalLength = text.length;
+	   
+	    if (totalLength > maxLength) {
+	        $(this).val("");
+	        let sub = text.slice(0, maxLength);
+	        $(this).val(sub);
+	        totalLength = 2000;
+	        text = '';
+	        
+	    }
+	        $("#text-count").text(totalLength)
+	});
 });
 
 </script>
