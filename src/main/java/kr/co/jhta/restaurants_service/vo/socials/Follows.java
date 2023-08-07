@@ -1,4 +1,4 @@
-package kr.co.jhta.restaurants_service.vo;
+package kr.co.jhta.restaurants_service.vo.socials;
 
 
 import lombok.Getter;
@@ -9,21 +9,20 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Getter @Setter
 @Alias("Follows")
 public class Follows {
 
 	private int followerId;
 	private int followedId;
-
-	@CreatedDate
 	private Date createDate;
 
 	public Follows() {
+		this.createDate = new Date();
 	}
 
 	public Follows(int followerId, int followedId) {
+		this.createDate = new Date();
 		this.followerId = followerId;
 		this.followedId = followedId;
 	}

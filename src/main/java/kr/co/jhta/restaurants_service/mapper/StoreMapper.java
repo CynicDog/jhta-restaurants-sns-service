@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
-import kr.co.jhta.restaurants_service.vo.Store;
+import kr.co.jhta.restaurants_service.vo.store.Store;
 
 @Mapper
 public interface StoreMapper {

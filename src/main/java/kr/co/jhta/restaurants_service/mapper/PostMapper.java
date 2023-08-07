@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import kr.co.jhta.restaurants_service.vo.Post;
+import kr.co.jhta.restaurants_service.vo.post.Post;
 
 @Mapper
 public interface PostMapper {

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.PostPictureMapper;
-import kr.co.jhta.restaurants_service.vo.Post;
-import kr.co.jhta.restaurants_service.vo.PostPicture;
+import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostPicture;
 import lombok.RequiredArgsConstructor;
 
 @Service

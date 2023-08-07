@@ -1,6 +1,6 @@
 package kr.co.jhta.restaurants_service.mapper;
 
-import kr.co.jhta.restaurants_service.vo.Otp;
+import kr.co.jhta.restaurants_service.vo.user.Otp;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
