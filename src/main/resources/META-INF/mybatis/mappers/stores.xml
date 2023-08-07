@@ -4,21 +4,20 @@
 
 	<select id = "getAllStores" resultType="Store">
 		select 
-			ID						as id,
-			BUSINESS_LICENSE		as businessLicense,
-			NAME					as name,
-			ADDRESS					as address,
-			CATEGORY				as category,
-			ZIPCODE					as zipcode,
-			LATITUDE				as latitude,
-			LONGITUDE				as longitude,
-			DESCRIPTION				as description,
-			PHONE					as phone,
-			READ_COUNT				as readCount,
-			CREATE_DATE				as createDate,
-			UPDATE_DATE				as updateDate,
-			OWNER_ID				as "owner.id",
-			DISABLED				as disabled
+			business_license	as businesslicense,
+			name				as name,
+			address				as address,
+			category			as category,
+			zipcode				as zipcode,
+			latitude			as latitude,
+			longitude			as longitude,
+			description			as description,
+			phone				as phone,
+			read_count			as readcount,
+			create_date			as createdate,
+			update_date			as updatedate,
+			owner_id			as "owner.id",
+			disabled			as disabled
 			
 		from 
 			STORES
