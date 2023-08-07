@@ -130,7 +130,12 @@ html, body {
 		<div class="row m-3">
 			<div class="card">
   				<div class="card-body">
-    				답글입니다
+    				<p>답글입니다</p>
+    				<span class="float-end">
+						<button type="button" class="btn btn-sm" style="color: blue;">
+							<i class="bi bi-pencil-square"></i>
+						</button>
+					</span>
   				</div>
 			</div>
 		</div>	

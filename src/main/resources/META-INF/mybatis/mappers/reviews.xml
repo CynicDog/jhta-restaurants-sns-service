@@ -10,9 +10,9 @@
 			UPDATE_DATE		as	updateDate,
 			RECOMMEND_COUNT	as	recommendCount,
 			CUSTOMER_ID		as  "customer.id",
-			STORED_ID		as	"store.id",
+			STORE_ID		as	"store.id",
 			REPORT_COUNT	as  reportCount,
-			DISABLED		
+			DISABLED,		
 			BLOCKED 
 		from 
 			REVIEWS
@@ -29,9 +29,9 @@
 			UPDATE_DATE		as	updateDate,
 			RECOMMEND_COUNT	as	recommendCount,
 			CUSTOMER_ID		as  "customer.id",
-			STORED_ID		as	"store.id",
+			STORE_ID		as	"store.id",
 			REPORT_COUNT	as  reportCount,
-			DISABLED		
+			DISABLED,		
 			BLOCKED 
 		from 
 			REVIEWS
