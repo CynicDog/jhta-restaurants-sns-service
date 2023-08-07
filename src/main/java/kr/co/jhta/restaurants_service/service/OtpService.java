@@ -4,7 +4,7 @@ import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.mapper.OtpMapper;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.util.OtpGenerator;
-import kr.co.jhta.restaurants_service.vo.Otp;
+import kr.co.jhta.restaurants_service.vo.user.Otp;
 import org.springframework.stereotype.Service;
 
 @Service

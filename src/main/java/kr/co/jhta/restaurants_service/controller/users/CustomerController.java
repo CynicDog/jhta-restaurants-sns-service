@@ -5,7 +5,7 @@ import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.CustomerService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
-import kr.co.jhta.restaurants_service.vo.Otp;
+import kr.co.jhta.restaurants_service.vo.user.Otp;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

@@ -2,7 +2,7 @@
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
 
 
-	<select id = "getAllStores" resultType="kr.co.jhta.restaurants_service.vo.Store">
+	<select id = "getAllStores" resultType="kr.co.jhta.restaurants_service.vo.store.Store">
 		select 
 			ID						as id,
 			BUSINESS_LICENSE		as businessLicense,

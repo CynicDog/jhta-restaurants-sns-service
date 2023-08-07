@@ -1,19 +1,14 @@
 package kr.co.jhta.restaurants_service.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import kr.co.jhta.restaurants_service.dto.StoresPage;
 import kr.co.jhta.restaurants_service.service.StoreService;
-import kr.co.jhta.restaurants_service.vo.Store;
+import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

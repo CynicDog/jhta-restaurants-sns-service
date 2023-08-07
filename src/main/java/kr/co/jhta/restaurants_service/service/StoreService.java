@@ -10,7 +10,7 @@ import kr.co.jhta.restaurants_service.dto.Pagination;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.dto.StoresPage;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
-import kr.co.jhta.restaurants_service.vo.Store;
+import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
 @Service

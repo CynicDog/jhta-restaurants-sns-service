@@ -1,13 +1,15 @@
-package kr.co.jhta.restaurants_service.vo;
+package kr.co.jhta.restaurants_service.vo.socials;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
+import org.springframework.data.annotation.Id;
 
 @Getter @Setter
 @Alias("FollowRequests")
 public class FollowRequests {
 
+    @Id
     private int id;
     private int senderId;
     private int recipientId;
@@ -23,8 +25,6 @@ public class FollowRequests {
     }
 
     public enum RequestStatus {
-        PENDING,
-        ACCEPTED,
-        DECLINED
+        PENDING, ACCEPTED, DECLINED
     }
 }
