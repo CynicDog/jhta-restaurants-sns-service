@@ -39,7 +39,6 @@
 	<div class="container justify-content-center align-items-center">
 		<div class="row mt-4 mb-3">
 			<div class="col-4 my-3">
-       			<p class="my-2"><strong>리뷰어 닉네임</strong></p>
 				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
@@ -48,14 +47,17 @@
 					</div>
 					
 				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
+				<div class="row">
+					<div class="col">
+						<strong >리뷰어 닉네임</strong>
+					</div>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
+					</div>
+				</div>
 			</div>
 			<div class="col-4 my-3">
 				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
 					<div class="card-img-overlay">
@@ -63,14 +65,18 @@
 					</div>
 					
 				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
+				<div class="row">
+					<div class="col">
+						<strong >리뷰어 닉네임</strong>
+					</div>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
+					</div>
+				</div>
 			</div>
+			
 			<div class="col-4 my-3">
 				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
 					<div class="card-img-overlay">
@@ -78,14 +84,18 @@
 					</div>
 					
 				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
+				<div class="row">
+					<div class="col">
+						<strong >리뷰어 닉네임</strong>
+					</div>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
+					</div>
+				</div>
 			</div>
+			
 			<div class="col-4 my-3">
 				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
 					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
 					<div class="card-img-overlay">
@@ -93,102 +103,16 @@
 					</div>
 					
 				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
+				<div class="row">
+					<div class="col">
+						<strong >리뷰어 닉네임</strong>
 					</div>
-					
-				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
+					<div class="col text-end">
+						<p class="text-end text-secondary">3분전</p>
 					</div>
-					
 				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					
-				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					
-				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					
-				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
-			</div>
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<div class="card-header text-end " onclick="location.href='post'">
-	          			<p class="my-2">리뷰어 닉네임</p>
-	        		</div>
-					
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					
-				</div>
-				<p class="text-end text-secondary" style="margin: 0;">3분전</p>
 			</div>
 		</div>
-			
-	
-	
 	</div>
 	<%@ include file="../common/footer.jsp" %>
 </div>

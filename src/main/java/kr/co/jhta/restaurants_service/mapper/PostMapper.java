@@ -15,7 +15,7 @@ public interface PostMapper {
 	
 	void deletePost(int postId);
 	
-	List<Post> getAllPost();
+	List<Post> getAllPosts();
 	
 	Post getPostById(int postId);
 	
