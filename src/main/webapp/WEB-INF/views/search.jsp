@@ -79,10 +79,37 @@ img {
 					<a class="btn" role="button" href="list?category=11">디저트</a>
 				</div>
 			</div>
-..
+
 			<div class="row mb-3">
 				<div class="col-7">
 					<div class="row mb-3">
+							<div class="col-5 mb-5">
+								<div class="card m-2 sm-14 shadow bg-body rounded ">
+									<div class="embed-responsive embed-responsive-4by3">
+										<img src="/resources/image/cafe1.jpg"
+											class="card-img-top embed-responsive-item">
+									</div>
+									<div class="card-body" style="cursor: pointer; font-weight: bold;">
+										<p class="card-text">가게명</p>
+										<p class="card-text" style="color: #FFC107;">평점</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-5 mb-5">
+								<div class="card m-2 sm-14 shadow bg-body rounded ">
+									<div class="embed-responsive embed-responsive-4by3">
+										<img src="/resources/image/cafe1.jpg"
+											class="card-img-top embed-responsive-item">
+									</div>
+									<div class="card-body" style="cursor: pointer; font-weight: bold;">
+										<p class="card-text">가게명</p>
+										<p class="card-text" style="color: #FFC107;">평점</p>
+									</div>
+								</div>
+							</div>
+
+					
+					
 						<c:forEach var="store" items="${result.stores}">
 							<div class="col-5 mb-5">
 								<div class="card m-2 sm-14 shadow bg-body rounded ">
@@ -107,7 +134,7 @@ img {
 					<div>
 					
 						<div id="map"
-							style="width: 300px; height: 400px;">
+							style="width: 400px; height: 400px;">
 						</div>
 
 					
