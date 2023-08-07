@@ -55,9 +55,9 @@
 		        	 )
 		
 					where
-						(			
-							S.CATEGORY = #{category}
-						)
+					
+						S.CATEGORY = #{category}
+						
 					 ) as TEMP) AS TEMP2
 				 
 			where ROWNUM between #{begin} and #{end}       
