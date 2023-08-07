@@ -92,7 +92,7 @@ img {
 									</div>
 									<div class="card-body" style="cursor: pointer; font-weight: bold;">
 										<p class="card-text">${store.name}</p>
-										<p class="card-text" style="color: #FFC107;">평점</p>
+										<p class="card-text" style="color: #FFC107;">${store.reviewAvg}</p>
 									</div>
 								</div>
 							</div>
