@@ -71,8 +71,30 @@
                                         aria-controls="otpCollapse"
                                         disabled
                                 >
-                                    submit
+                                    OTP
                                 </button>
+                            </div>
+                            <div class="toast-container position-fixed bottom-0 end-0 p-4">
+                                <div id="successfulToast" class="toast align-items-center text-bg-primary border-0" role="alert"
+                                     aria-live="assertive" aria-atomic="true">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            OTP가 발송되었습니다. 이메일을 확인해주세요 :)
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div
+                            <div class="toast-container position-fixed bottom-0 end-0 p-4">
+                                <div id="failedToast" class="toast align-items-center text-bg-secondary border-0" role="alert"
+                                     aria-live="assertive" aria-atomic="true">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            OTP 발송 중 문제가 생겼습니다. 다시 한 번 시도해주세요.
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                    </div>
+                                </div>
                             </div>
                             <%--                            TODO: OTP validation --%>
                             <div class="collapse mt-3" id="otpCollapse">
@@ -310,7 +332,17 @@
                                 method: "GET"
                             }).then(response => {
                                 if (response.ok) {
-                                    // do nothing
+
+                                    // show successful message in toast
+                                    let successfulToast = document.getElementById('successfulToast')
+                                    const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast)
+                                    toastSentBootstrap.show()
+                                } else {
+
+                                    // show failed message in toast
+                                    let failedToast = document.getElementById('failedToast')
+                                    const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(failedToast)
+                                    toastSentBootstrap.show()
                                 }
                             });
                         } else {

@@ -2,43 +2,45 @@ package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
-import kr.co.jhta.restaurants_service.controller.users.UserController;
 import kr.co.jhta.restaurants_service.service.OtpService;
-import kr.co.jhta.restaurants_service.service.UserService;
+import kr.co.jhta.restaurants_service.security.service.CustomerService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.vo.Otp;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/customer")
+@SessionAttributes("userCommand")
 public class CustomerController {
 
     Logger logger = Logger.getLogger(UserController.class);
 
     private final EmailSender emailSender;
-    private final UserService userService;
+    private final CustomerService customerService;
     private final OtpService otpService;
 
-    public CustomerController(EmailSender emailSender, UserService userService, OtpService otpService) {
+    public CustomerController(EmailSender emailSender, CustomerService customerService, OtpService otpService) {
         this.emailSender = emailSender;
-        this.userService = userService;
+        this.customerService = customerService;
         this.otpService = otpService;
     }
 
     @ResponseBody
     @PostMapping(value = "/otp-check", consumes = "application/json")
-    public ResponseEntity otpCheck(
-            @RequestBody OtpCommand otpCommand,
-            @RequestBody UserCommand userCommand) {
+    public ResponseEntity otpCheck(@RequestBody OtpCommand otpCommand, HttpSession session) {
+
+        UserCommand userCommand = (UserCommand) session.getAttribute("userCommand");
 
         boolean isValid = otpService.validateOtp(otpCommand);
 
         if (isValid) {
-            userService.insertUser(userCommand);
+            customerService.insertCustomer(userCommand);
+
             return ResponseEntity.ok("Valid otp!");
         } else {
             return ResponseEntity.badRequest().body("Invalid otp!");
@@ -55,15 +57,16 @@ public class CustomerController {
 
     @ResponseBody
     @PostMapping(value = "/signup", consumes = "application/json")
-    public ResponseEntity signup(@RequestBody UserCommand userCommand) {
+    public ResponseEntity signup(@RequestBody UserCommand userCommand, HttpSession session) {
 
-        // database constraint validation
+        session.setAttribute("userCommand", userCommand);
+
+        // Perform database constraint validation and other operations
         return null;
     }
 
     @GetMapping("/signup")
-    public String signupForm(Model model) {
-        model.addAttribute("userCommand", new UserCommand());
+    public String signupForm() {
         return "user/customer/signup-form";
     }
 }

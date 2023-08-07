@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class OtpService {
 
+    // TODO: migration to Spring Data Jdbc
+
     private final EmailSender emailSender;
     private final OtpMapper otpMapper;
 
@@ -45,6 +47,7 @@ public class OtpService {
     }
 
     public boolean validateOtp(OtpCommand otpCommand) {
+
         Otp otp = new Otp(otpCommand.getEmail(), otpCommand.getOtpCode());
 
         return otpMapper.validateByEmail(otp);

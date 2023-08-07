@@ -2,7 +2,7 @@ package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.service.OtpService;
-import kr.co.jhta.restaurants_service.service.UserService;
+import kr.co.jhta.restaurants_service.security.service.CustomerService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +17,12 @@ public class OwnerController {
     Logger logger = Logger.getLogger(UserController.class);
 
     private final EmailSender emailSender;
-    private final UserService userService;
+    private final CustomerService customerService;
     private final OtpService otpService;
 
-    public OwnerController(EmailSender emailSender, UserService userService, OtpService otpService) {
+    public OwnerController(EmailSender emailSender, CustomerService customerService, OtpService otpService) {
         this.emailSender = emailSender;
-        this.userService = userService;
+        this.customerService = customerService;
         this.otpService = otpService;
     }
 

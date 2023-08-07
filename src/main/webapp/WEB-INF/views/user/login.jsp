@@ -25,7 +25,7 @@
                         <div class="row my-2 p-2">
                             <form method="post" action="login">
                                 <div class="form-group my-3">
-                                    <input type="email" class="form-control" name="username" placeholder="username">
+                                    <input type="text" class="form-control" name="username" placeholder="username">
                                 </div>
                                 <div class="form-group my-3">
                                     <input type="password" class="form-control" name="password" placeholder="password">
