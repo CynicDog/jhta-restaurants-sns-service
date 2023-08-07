@@ -8,24 +8,28 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.dto.Pagination;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
-import kr.co.jhta.restaurants_service.dto.StoresPage;
+import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.vo.Store;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class StoreService {
 	
 	@Autowired
 	private final StoreMapper storeMapper;
+
+	
 	
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;
 	}
 	
-	public StoresPage getStores(Map<String,Object> param){
+	public PagedStores getStores(Map<String,Object> param){
 		
 		int totalRows = storeMapper.getTotalRows(param);
 		// 요청한 페이지를 pagination 객체에 저장
@@ -34,11 +38,14 @@ public class StoreService {
 		int begin = pagination.getBegin();
 		int end = pagination.getEnd();
 		
-		StoresPage result = new StoresPage();
+		PagedStores result = new PagedStores();
 		param.put("begin", begin);
 		param.put("end", end);
+		
 		List<SearchedStore> stores = storeMapper.getStores(param);
+		log.info("서비스 : '{}'",stores);
 		result.setPagination(pagination);
+		result.setStores(stores);;
 		
 	
 		return result;

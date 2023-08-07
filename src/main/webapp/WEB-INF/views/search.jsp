@@ -65,26 +65,29 @@ img {
 			</div>
 			<div class="row mb-3">
 				<div class="col-12 " style="text-align: left;">
-					<a class="btn" role="button" href="searchByCategory.jsp">전체</a> 
-					<a class="btn" role="button" href="searchByCategory.jsp?category=korean">한식</a>
-					<a class="btn" role="button" href="searchByCategory.jsp?category=chinese">중식</a>
-					<a class="btn" role="button" href="searchByCategory.jsp?category=japanese">일식</a> 
-					<a class="btn" role="button" href="searchByCategory.jsp?category=western">양식</a> 
-					<a class="btn" role="button" href="searchByCategory.jsp?category=fastFood">패스트푸드</a>
-					<a class="btn" role="button" href="searchByCategory.jsp?category=snack">분식</a> 
-					<a class="btn" role="button" href="searchByCategory.jsp?category=asian">아시안</a> 
-					<a class="btn" role="button" href="searchByCategory.jsp?category=dessert">디저트</a>
+					<a class="btn" role="button" href="list">전체</a> 
+					<a class="btn" role="button" href="list?category=1">한식</a>
+					<a class="btn" role="button" href="list?category=2">중식</a>
+					<a class="btn" role="button" href="list?category=3">일식</a> 
+					<a class="btn" role="button" href="list?category=4">분식</a> 
+					<a class="btn" role="button" href="list?category=5">카페</a>
+					<a class="btn" role="button" href="list?category=6">이탈리안</a> 
+					<a class="btn" role="button" href="list?category=7">치킨</a> 
+					<a class="btn" role="button" href="list?category=8">패스트푸드</a>
+					<a class="btn" role="button" href="list?category=9">바</a>
+					<a class="btn" role="button" href="list?category=10">양식</a>
+					<a class="btn" role="button" href="list?category=11">디저트</a>
 				</div>
 			</div>
-
+..
 			<div class="row mb-3">
 				<div class="col-7">
 					<div class="row mb-3">
-						<c:forEach var="store" items="${stores}">
+						<c:forEach var="store" items="${result.stores}">
 							<div class="col-5 mb-5">
 								<div class="card m-2 sm-14 shadow bg-body rounded ">
 									<div class="embed-responsive embed-responsive-4by3">
-										<img src="resources/image/example.jpg"
+										<img src="/resources/image/cafe1.jpg"
 											class="card-img-top embed-responsive-item">
 									</div>
 									<div class="card-body" style="cursor: pointer; font-weight: bold;">
@@ -115,7 +118,7 @@ img {
 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								<img src="resources/image/example.jpg"
+								<img src="../resources/image/example.jpg"
 									class="card-img-top embed-responsive-item">
 							</div>
 							<div class="card-body"
@@ -128,7 +131,7 @@ img {
 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								<img src="resources/image/example.jpg"
+								<img src="../resources/image/example.jpg"
 									class="card-img-top embed-responsive-item">
 							</div>
 							<div class="card-body"
@@ -142,7 +145,7 @@ img {
 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
 						<div class="card m-2 sm-14 shadow bg-body rounded ">
 							<div class="embed-responsive embed-responsive-4by3">
-								<img src="resources/image/example.jpg"
+								<img src="../resources/image/example.jpg"
 									class="card-img-top embed-responsive-item">
 							</div>
 							<div class="card-body"
@@ -157,13 +160,15 @@ img {
 				<div class="col-12">
 					<nav>
 						<ul class="pagination justify-content-center">
-							<li class="page-item ${first ? 'disabled' : ''}"><a
-								href="list?page=${prePage }" class="page-link">이전</a></li>
-							<c:forEach var="num" begin="${beginPage }" end="${endPage }">
+							<li class="page-item ${result.pagination.isfirst ? 'disabled' : ''}"><a
+								href="list?page=${result.pagination.prePage }" class="page-link">이전</a></li>
+								
+							<c:forEach var="num" items="${result.pagination}" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
 								<li class="page-item ${currentPage eq num ? 'active' : '' }">
 									<a href="list?page=${num }" class="page-link">${num }</a>
 								</li>
 							</c:forEach>
+							
 							<li class="page-item ${last ? 'disabled' : ''}"><a
 								href="list?page=${nextPage }" class="page-link">다음</a></li>
 						</ul>

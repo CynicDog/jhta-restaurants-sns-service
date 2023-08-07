@@ -16,7 +16,7 @@ public class Store {
 
     private int id;
     private String name;
-    private int businessLicense;
+    private String businessLicense;
     private String address;
     private int category;
     private int zipcode;
