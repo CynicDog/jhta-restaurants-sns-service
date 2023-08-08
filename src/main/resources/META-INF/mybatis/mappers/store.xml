@@ -35,30 +35,30 @@
 		select *
 		from (
 				select
-		            ID      			as id,
-		            NAME    			as name,
-		           	REVIEW_AVG			as reviewAvg,
-		            ROW_NUMBER() over (order by REVIEW_AVG DESC) as ROWNUM
+		            id      			as id,
+		            name    			as name,
+		           	review_avg			as reviewAvg,
+		            row_number() over (order by review_avg desc) as rownum
 
 		        from
 		        	(
-		        	 select S.ID,
-		        	 		IFNULL(REVIEW_AVG,0) REVIEW_AVG,
-		        	 		S.NAME
+		        	 select S.id,
+		        	 		ifnull(review_avg,0) review_avg,
+		        	 		S.name
 		        	 from(
-		        	 	(select STORE_ID, avg(RATING) as REVIEW_AVG
+		        	 	(select store_id, avg(rating) as review_avg
 			        	 from REVIEWS
-			        	 group by STORE_ID) R
-			        	 RIGHT JOIN STORES S ON R.STORE_ID = S.ID
+			        	 group by store_id) R
+			        	 right join STORES S on R.store_id = S.id
 		        	 )
 
 					where
 
-						S.CATEGORY = #{category}
+						S.category = #{category}
 
-					 ) as TEMP) AS TEMP2
+					 ) as TEMP) as TEMP2
 
-			where ROWNUM between #{begin} and #{end}
+			where rownum between #{begin} and #{end}
 
 	</select>
 
