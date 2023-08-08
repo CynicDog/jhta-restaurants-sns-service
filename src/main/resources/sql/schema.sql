@@ -45,9 +45,9 @@ CREATE TABLE STORE_OPEN_TIMES (
 );
 
 CREATE TABLE ROLES (
+                            id INT PRIMARY KEY AUTO_INCREMENT,
                             user_id INT NOT NULL,
                             role VARCHAR(50) NOT NULL,
-                            PRIMARY KEY (user_id, role),
                             FOREIGN KEY (user_id) REFERENCES USERS(id)
 );
 
@@ -179,8 +179,7 @@ CREATE TABLE OTP (
                       id INT PRIMARY KEY AUTO_INCREMENT,
                       email VARCHAR(255) NOT NULL,
                       otp_code VARCHAR(10) NOT NULL,
-                      create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                      FOREIGN KEY (email) REFERENCES USERS(email)
+                      create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE FOODS (

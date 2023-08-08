@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.service;
 
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.mapper.OtpMapper;
+import kr.co.jhta.restaurants_service.repository.OtpRepository;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.util.OtpGenerator;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
@@ -10,14 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class OtpService {
 
-    // TODO: migration to Spring Data Jdbc
-
     private final EmailSender emailSender;
-    private final OtpMapper otpMapper;
+    private final OtpRepository otpRepository;
 
-    public OtpService(EmailSender emailSender, OtpMapper otpMapper) {
+    public OtpService(EmailSender emailSender, OtpRepository otpRepository) {
         this.emailSender = emailSender;
-        this.otpMapper = otpMapper;
+        this.otpRepository = otpRepository;
     }
 
     public Otp issueOtp(String email) {
@@ -25,7 +24,7 @@ public class OtpService {
         Otp otp = new Otp(email);
         otp.setOtpCode(OtpGenerator.generateCode());
 
-        otpMapper.insert(otp);
+        otpRepository.save(otp);
         emailSender.sendEmail(email, otp.getOtpCode());
 
         return otp;
@@ -33,23 +32,21 @@ public class OtpService {
 
     public Otp renewOtp(String email) {
 
-        Otp otp = otpMapper.findByUserId(email);
+        Otp otp = otpRepository.findByEmail(email);
         otp.setOtpCode(OtpGenerator.generateCode());
 
-        otpMapper.update(otp);
+        otpRepository.save(otp);
 
         return otp;
     }
 
     public void invalidateOtp(Otp otp) {
 
-        otpMapper.delete(otp);
+        otpRepository.delete(otp);
     }
 
     public boolean validateOtp(OtpCommand otpCommand) {
 
-        Otp otp = new Otp(otpCommand.getEmail(), otpCommand.getOtpCode());
-
-        return otpMapper.validateByEmail(otp);
+        return otpRepository.validateByEmail(otpCommand.getOtpCode(), otpCommand.getEmail());
     }
 }

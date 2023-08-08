@@ -5,13 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 @Alias("Customer")
-@Table("CUSTOMERS")
+@Table("USERS")
 public class User {
 
     @Id
@@ -29,6 +32,9 @@ public class User {
     private String nickname;
     private String profilePictureName;
     private TYPE type;
+
+    @Transient
+    private List<String> roles;
 
     public User() {
 
@@ -66,5 +72,13 @@ public class User {
 
     public enum DISABLED {
         YES, NO
+    }
+
+    public void addRole(String role) {
+        if (this.roles == null) {
+            this.roles = new ArrayList<>();
+        }
+
+        this.roles.add(role);
     }
 }
