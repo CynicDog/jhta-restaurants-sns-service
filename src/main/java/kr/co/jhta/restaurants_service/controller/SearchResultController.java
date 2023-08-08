@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchResultController {
 
-	private final kr.co.jhta.restaurants_service.security.service.StoreService storeService;
+	private final kr.co.jhta.restaurants_service.service.StoreService storeService;
 
 //	@GetMapping("/list")
 //	public String searchResult(@RequestParam(name="sort", required = false, defaultValue="rating") String sort,

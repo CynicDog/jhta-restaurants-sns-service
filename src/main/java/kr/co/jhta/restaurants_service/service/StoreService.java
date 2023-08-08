@@ -1,4 +1,4 @@
-package kr.co.jhta.restaurants_service.security.service;
+package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
 import java.util.Map;
