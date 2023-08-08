@@ -36,10 +36,12 @@ public class UserService implements UserDetailsService {
         User user = UserCommand.toCustomer(userCommand);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        userRepository.save(user);
+        logger.info(user.getId()); // 8
 
         Role role = new Role(user, "USER_CUSTOMER");
-        roleRepository.insertRole(role.getUser().getId(), role.getRole());
+        user.addRole(role);
+
+        userRepository.save(user);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class UserService implements UserDetailsService {
 
         List<Role> roles = roleRepository.findByUserId(user.getId());
         roles.forEach(role -> {
-            user.addRole(role.getRole());
+            user.addRole(role);
         });
 
         UserDetails userDetails = new SecurityUser(user);
