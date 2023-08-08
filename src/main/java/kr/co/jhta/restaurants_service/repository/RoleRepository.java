@@ -1,18 +1,17 @@
 package kr.co.jhta.restaurants_service.repository;
 
 import kr.co.jhta.restaurants_service.vo.user.Role;
-import org.springframework.data.jdbc.repository.query.Modifying;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-public interface RoleRepository extends PagingAndSortingRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
-    // Cannot query by nested property: user.id
-    @Query("SELECT * FROM ROLES WHERE user_id = :userId")
+    @Query("SELECT r FROM Role r WHERE r.user.id = :userId") // Use the entity alias "r"
     List<Role> findByUserId(int userId);
 }

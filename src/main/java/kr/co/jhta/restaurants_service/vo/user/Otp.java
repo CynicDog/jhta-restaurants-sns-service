@@ -4,21 +4,29 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter @Setter
 @Alias("Otp")
-@Table("OTP")
+@Table(name = "OTP")
+@Entity
 public class Otp {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String email;
+
+    @Column(name = "otp_code")
     private String otpCode;
+
+    @CreatedDate
+    @Column(name = "create_date")
     private Date createDate;
+
+    public Otp() {
+    }
 
     public Otp(String email) {
         this.createDate = new Date();

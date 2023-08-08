@@ -2,17 +2,19 @@ package kr.co.jhta.restaurants_service.vo.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Table;
+
+import javax.persistence.*;
 
 @Getter @Setter
-@Table("ROLES")
+@Table(name = "ROLES")
+@Entity
 public class Role {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private String role;
 

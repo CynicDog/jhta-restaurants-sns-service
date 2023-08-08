@@ -4,36 +4,59 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.ibatis.type.Alias;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.relational.core.mapping.Table;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter @Setter
 @Alias("Customer")
-@Table("USERS")
+@Table(name = "USERS")
+@Entity
 public class User {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
     private String password;
+
+    @Column(name = "full_name")
     private String fullName;
+
     private String email;
     private String phone;
     private Date birthday;
     private String gender;
+
+    @CreatedDate
+    @Column(name = "create_date")
     private Date createDate;
+
+    @LastModifiedDate
+    @Column(name = "update_date")
     private Date updateDate;
+
+    @Enumerated(EnumType.STRING)
     private DISABLED disabled;
     private String nickname;
+
+    @Column(name = "profile_picture_name")
     private String profilePictureName;
+
+    @Enumerated(EnumType.STRING)
     private TYPE type;
 
-    @Transient
+    @OneToMany(
+            mappedBy = "user",
+            cascade = javax.persistence.CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private List<Role> roles;
 
     public User() {
@@ -79,6 +102,7 @@ public class User {
             this.roles = new ArrayList<>();
         }
 
+        role.setUser(this);
         this.roles.add(role);
     }
 }
