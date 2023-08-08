@@ -41,7 +41,8 @@ spring:
         smtp:
           starttls:
            enable: true
-
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis:
   mapper-locations:
