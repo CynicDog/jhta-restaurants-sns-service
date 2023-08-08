@@ -1,8 +1,8 @@
 package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
-import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class OwnerController {
 
     Logger logger = Logger.getLogger(UserController.class);
-
-    private final EmailSender emailSender;
     private final UserService userService;
     private final OtpService otpService;
 
-    public OwnerController(EmailSender emailSender, UserService userService, OtpService otpService) {
-        this.emailSender = emailSender;
+    public OwnerController(UserService userService, OtpService otpService) {
         this.userService = userService;
         this.otpService = otpService;
     }
@@ -30,8 +27,8 @@ public class OwnerController {
     @PostMapping(value = "/signup", consumes = "application/json")
     public ResponseEntity signup(@RequestBody UserCommand userCommand) {
 
-        // database constraint validation
-        return null;
+        userService.insertOwner(userCommand);
+        return ResponseEntity.ok("Valid otp!");
     }
 
     @GetMapping("/signup")
