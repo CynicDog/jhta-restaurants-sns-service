@@ -10,6 +10,7 @@
 <head>
 <title>검색 결과</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   
 <style type="text/css">
 img {
 	object-fit: cover;
@@ -17,30 +18,18 @@ img {
 	height: 200px;
 }
 
-.card-text {
-	margin-left: 20px;
-	margin-bottom: 0px;
-	margin-right: 20px;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-}
+
 </style>
 
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 
 </head>
 <body>
@@ -48,7 +37,7 @@ img {
 	<div class="wrap">
 		<div class="container text-center ">
 			<div class="row mt-3">
-				<div class="col-9 d-flex justify-content-between">
+				<div class="col-8 d-flex justify-content-between">
 					<h4 class="title" >검색 결과</h4>
 					<select class="form-select me-3" style="width: 150px;" name="sort"
 						onchange="changeSort()">
@@ -83,27 +72,61 @@ img {
 			<div class="row mb-3">
 				<div class="col-7">
 					<div class="row mb-3">
-							<div class="col-5 mb-5">
+							<div class="col-5 mb-3">
 								<div class="card m-2 sm-14 shadow bg-body rounded ">
 									<div class="embed-responsive embed-responsive-4by3">
 										<img src="/resources/image/cafe1.jpg"
 											class="card-img-top embed-responsive-item">
 									</div>
-									<div class="card-body" style="cursor: pointer; font-weight: bold;">
-										<p class="card-text">가게명</p>
-										<p class="card-text" style="color: #FFC107;">평점</p>
+									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px;">
+										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
+										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
+										<div class="d-flex justify-content-between">
+											<p class="fs-6">카페</p>
+											<div>
+												<i class="bi bi-pencil-square">15 </i>
+												<i class="bi bi-star">78</i>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-5 mb-5">
+							
+							<div class="col-5 mb-3">
 								<div class="card m-2 sm-14 shadow bg-body rounded ">
 									<div class="embed-responsive embed-responsive-4by3">
 										<img src="/resources/image/cafe1.jpg"
 											class="card-img-top embed-responsive-item">
 									</div>
-									<div class="card-body" style="cursor: pointer; font-weight: bold;">
-										<p class="card-text">가게명</p>
-										<p class="card-text" style="color: #FFC107;">평점</p>
+									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px ">
+										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
+										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
+										<div class="d-flex justify-content-between">
+											<p class="fs-6">카페</p>
+											<div>
+												<i class="bi bi-pencil-square">15 </i>
+												<i class="bi bi-star">78</i>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-5 mb-3">
+								<div class="card m-2 sm-14 shadow bg-body rounded ">
+									<div class="embed-responsive embed-responsive-4by3">
+										<img src="/resources/image/cafe1.jpg"
+											class="card-img-top embed-responsive-item">
+									</div>
+									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px ">
+										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
+										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
+										<div class="d-flex justify-content-between">
+											<p class="fs-6">카페</p>
+											<div>
+												<i class="bi bi-pencil-square">15 </i>
+												<i class="bi bi-star">78</i>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -127,9 +150,9 @@ img {
 					</div>
 				</div>
 
-				<div class="col-2"></div>
+				<div class="col-1"></div>
 
-				<div class="col-3">
+				<div class="col-4">
 					<!-- 지도 -->
 					<div>
 					
@@ -141,17 +164,16 @@ img {
 					</div>
 					
 
-					<div class="card m-2 sm-14 shadow bg-body rounded ">
-						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								<img src="../resources/image/example.jpg"
-									class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body"
-								style="cursor: pointer; font-weight: bold;">
-								<p class="card-text">콘텐츠 설명</p>
-							</div>
+					<div class="card text-center text-light font-weight-bold shadow mb-2" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3">관련 콘텐츠</p>
+						</div>
+					</div>
+					<div class="card text-center text-light font-weight-bold shadow mb-2" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 						</div>
 					</div>
 					<div class="card m-2 sm-14 shadow bg-body rounded ">
