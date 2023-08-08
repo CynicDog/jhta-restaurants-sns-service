@@ -15,17 +15,21 @@ public class ReviewReport {
 
 	@Id
 	private int id;
-	private String category;
 	private String content;
 	private Date createDate;
 	private Date updateDate;
 	private User reporter;
 	private Review review;
 	private STATUS status;
+	private CATEGORY category;
 	private User admin;
 
 	public enum STATUS {
 		PENDING, CONFIRMED, REJECTED
+	}
+
+	public enum CATEGORY {
+		PROFANITY, FALSEHOOD, PROMOTIONAL, SPAM, OBSCENITY, OTHERS
 	}
 
 	public ReviewReport() {

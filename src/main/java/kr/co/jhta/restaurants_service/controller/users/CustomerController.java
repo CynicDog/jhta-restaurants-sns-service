@@ -3,7 +3,7 @@ package kr.co.jhta.restaurants_service.controller.users;
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.service.OtpService;
-import kr.co.jhta.restaurants_service.security.service.CustomerService;
+import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
 import org.jboss.logging.Logger;
@@ -21,12 +21,12 @@ public class CustomerController {
     Logger logger = Logger.getLogger(UserController.class);
 
     private final EmailSender emailSender;
-    private final CustomerService customerService;
+    private final UserService userService;
     private final OtpService otpService;
 
-    public CustomerController(EmailSender emailSender, CustomerService customerService, OtpService otpService) {
+    public CustomerController(EmailSender emailSender, UserService userService, OtpService otpService) {
         this.emailSender = emailSender;
-        this.customerService = customerService;
+        this.userService = userService;
         this.otpService = otpService;
     }
 
@@ -39,8 +39,7 @@ public class CustomerController {
         boolean isValid = otpService.validateOtp(otpCommand);
 
         if (isValid) {
-            customerService.insertCustomer(userCommand);
-
+            userService.insertCustomer(userCommand);
             return ResponseEntity.ok("Valid otp!");
         } else {
             return ResponseEntity.badRequest().body("Invalid otp!");

@@ -16,23 +16,24 @@ CREATE TABLE USERS (
 );
 
 CREATE TABLE STORES (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        name VARCHAR(255) NOT NULL,
-                        business_license INT NOT NULL UNIQUE,
-                        address VARCHAR(255) NOT NULL,
-                        category VARCHAR(50) NOT NULL,
-                        zipcode INT NOT NULL,
-                        latitude DOUBLE NOT NULL,
-                        longitude DOUBLE NOT NULL,
-                        description TEXT,
-                        phone VARCHAR(20) NOT NULL UNIQUE,
-                        read_count INT NOT NULL,
-                        create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                        disabled ENUM('NO', 'YES') NOT NULL DEFAULT 'NO',
-                        owner_id INT NOT NULL,
-                        FOREIGN KEY (owner_id) REFERENCES USERS(id)
+                       id INT PRIMARY KEY AUTO_INCREMENT,
+                       name VARCHAR(255) NOT NULL,
+                       category VARCHAR(50) NOT NULL,
+                       business_license VARCHAR(255) NOT NULL,
+                       address VARCHAR(255) NOT NULL,
+                       zipcode INT NOT NULL,
+                       latitude DOUBLE NOT NULL,
+                       longitude DOUBLE NOT NULL,
+                       description TEXT NOT NULL,
+                       phone VARCHAR(20) NOT NULL,
+                       read_count INT NOT NULL DEFAULT 0,
+                       create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                       update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                       disabled ENUM('NO', 'YES') NOT NULL DEFAULT 'NO',
+                       owner_id INT NOT NULL,
+                       FOREIGN KEY (owner_id) REFERENCES USERS (id)
 );
+
 
 CREATE TABLE STORE_OPEN_TIMES (
                                   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -101,25 +102,18 @@ CREATE TABLE REVIEW_LIKES (
 );
 
 CREATE TABLE REVIEW_REPORTS (
-                              id INT PRIMARY KEY AUTO_INCREMENT,
-                              category VARCHAR(50) NOT NULL,
-                              content TEXT NOT NULL,
-                              create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                              update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                              status ENUM('PENDING', 'CONFIRMED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
-                              reporter_id INT,
-                              admin_id INT,
-                              review_id INT,
-                              FOREIGN KEY (review_id) REFERENCES REVIEWS(id),
-                              FOREIGN KEY (reporter_id) REFERENCES USERS(id),
-                              FOREIGN KEY (admin_id) REFERENCES USERS(id)
-);
-
-CREATE TABLE REVIEW_REPORT_CATEGORIES (
-                                        id INT PRIMARY KEY AUTO_INCREMENT,
-                                        category VARCHAR(50) NOT NULL,
-                                        report_id INT NOT NULL,
-                                        FOREIGN KEY (report_id) REFERENCES REVIEW_REPORTS(id)
+                               id INT PRIMARY KEY AUTO_INCREMENT,
+                               content TEXT NOT NULL,
+                               create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                               update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                               reporter_id INT NOT NULL,
+                               review_id INT NOT NULL,
+                               admin_id INT NOT NULL,
+                               status ENUM('PENDING', 'CONFIRMED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
+                               category ENUM('PROFANITY', 'FALSEHOOD', 'PROMOTIONAL', 'SPAM', 'OBSCENITY', 'OTHERS') NOT NULL DEFAULT 'OTHERS',
+                               FOREIGN KEY (reporter_id) REFERENCES USERS (id),
+                               FOREIGN KEY (review_id) REFERENCES REVIEWS (id),
+                               FOREIGN KEY (admin_id) REFERENCES USERS (id)
 );
 
 CREATE TABLE POSTS (
@@ -158,26 +152,20 @@ CREATE TABLE POST_PICTURES (
 );
 
 CREATE TABLE POST_REPORTS (
-                         id INT PRIMARY KEY AUTO_INCREMENT,
-                         category VARCHAR(50) NOT NULL,
-                         content TEXT NOT NULL,
-                         create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                         update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                         status ENUM('PENDING', 'CONFIRMED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
-                         reporter_id INT,
-                         post_id INT,
-                         admin_id INT,
-                         FOREIGN KEY (reporter_id) REFERENCES USERS(id),
-                         FOREIGN KEY (post_id) REFERENCES POSTS(id),
-                         FOREIGN KEY (admin_id) REFERENCES USERS(id)
+                             id INT PRIMARY KEY AUTO_INCREMENT,
+                             content TEXT NOT NULL,
+                             create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                             update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                             status ENUM('PENDING', 'CONFIRMED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
+                             reporter_id INT NOT NULL,
+                             post_id INT NOT NULL,
+                             category ENUM('PROFANITY', 'FALSEHOOD', 'PROMOTIONAL', 'SPAM', 'OBSCENITY', 'OTHERS') NOT NULL DEFAULT 'OTHERS',
+                             admin_id INT NOT NULL,
+                             FOREIGN KEY (reporter_id) REFERENCES USERS(id),
+                             FOREIGN KEY (post_id) REFERENCES POSTS(id),
+                             FOREIGN KEY (admin_id) REFERENCES USERS(id)
 );
 
-CREATE TABLE POST_REPORT_CATEGORIES (
-                                   id INT PRIMARY KEY AUTO_INCREMENT,
-                                   category VARCHAR(50) NOT NULL,
-                                   report_id INT NOT NULL,
-                                   FOREIGN KEY (report_id) REFERENCES POST_REPORTS(id)
-);
 
 CREATE TABLE POST_LIKES (
                             customer_id INT NOT NULL,

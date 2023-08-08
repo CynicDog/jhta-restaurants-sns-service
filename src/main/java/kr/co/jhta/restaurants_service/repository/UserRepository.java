@@ -1,10 +1,11 @@
 package kr.co.jhta.restaurants_service.repository;
 
+import kr.co.jhta.restaurants_service.vo.user.User;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends PagingAndSortingRepository<Customer, Integer> {
+public interface UserRepository extends PagingAndSortingRepository<User, Integer> {
 
-    Customer findByUsername(String usernmae);
+    User findByUsername(String username);
 }

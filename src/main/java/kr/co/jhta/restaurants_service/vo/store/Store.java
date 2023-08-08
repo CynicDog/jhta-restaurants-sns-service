@@ -16,9 +16,9 @@ public class Store {
     @Id
     private int id;
     private String name;
-    private int businessLicense;
-    private String address;
     private String category;
+    private String businessLicense;
+    private String address;
     private int zipcode;
     private double latitude;
     private double longitude;
@@ -37,7 +37,18 @@ public class Store {
         this.disabled = DISABLED.NO; // default to `NO`
     }
 
+//    public Store(String category) {
+//        if (CATEGORY.valueOf(category) != null) {
+//            // String
+//            this.category = CATEGORY.ASIAN.name();
+//        }
+//    }
+
     public enum DISABLED {
         YES, NO
     }
+
+//    public enum CATEGORY {
+//        KOREAN, JAPANESE, CHINESE, ASIAN, WESTERN, FASTFOOD, SNACK, DESSERT, CHICKEN, PIZZA, BAR, ITALIAN
+//    }
 }
