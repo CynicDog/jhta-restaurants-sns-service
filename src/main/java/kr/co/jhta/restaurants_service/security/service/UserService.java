@@ -32,17 +32,15 @@ public class UserService implements UserDetailsService {
     }
 
     public void insertCustomer(UserCommand userCommand) {
-
         User user = UserCommand.toCustomer(userCommand);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        logger.info(user.getId()); // 8
 
         Role role = new Role(user, "USER_CUSTOMER");
         user.addRole(role);
 
         userRepository.save(user);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
