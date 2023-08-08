@@ -16,7 +16,13 @@
 <style type="text/css">
 .emoji-btn.active {
   	color: orange;
-}   
+} 
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+}
 </style>
 </head>
 <body>
@@ -76,8 +82,8 @@
 		            </div>  
 			    </div> 
 			</div>
-		        <p><span id="text-count">0</span>/10</p>
-		    <div class="buttons" style="margin-left: 1100px;">
+		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
+		    <div class="buttons">
 		        <button type="button" class="btn btn-light">취소</button>
 		        <button type="button" class="btn btn-outline-success">리뷰 올리기</button>
 		    </div>
@@ -147,6 +153,26 @@ $(function() {
 	    }
 	        $("#text-count").text(totalLength)
 	});
+	
+	// 초기값이 0인 이미지 수를 나타내는 변수
+    let imageCount = 0;
+    const maxImageCount = 10;
+
+    $("#imageFile").on("change", function() {
+	    
+    	// imageCount가 maxImageCount보다 작다면 이미지 카운트를 증가
+        if (imageCount < maxImageCount) {
+            imageCount++;
+            // imageCount가 증가할 때 마다 텍스트 내용을 변경
+            $("#image-count").text(imageCount);
+            
+            // imageCount와 maxImageCount가 같다면 이미지 선택 버튼 비활성화
+            if (imageCount === maxImageCount) {
+                $("#imageFile").prop("disabled", true); 
+            }
+        } 
+    });
+    
 });
 
 </script>
