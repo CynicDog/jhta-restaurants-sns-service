@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-@Alias("PostReport")
+@Alias("ReviewReport")
 public class ReviewReport {
 
 	@Id

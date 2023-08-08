@@ -8,7 +8,7 @@ import org.apache.ibatis.type.Alias;
 
 @Getter @Setter
 @NoArgsConstructor
-@Alias("ReviewLikes")
+@Alias("PostLikes")
 public class PostLikes {
 
 	private User customer;

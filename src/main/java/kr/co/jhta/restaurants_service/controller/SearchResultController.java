@@ -20,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/search")
 @Slf4j
 public class SearchResultController {
-	
+
 	private final kr.co.jhta.restaurants_service.security.service.StoreService storeService;
-	
+
 //	@GetMapping("/list")
 //	public String searchResult(@RequestParam(name="sort", required = false, defaultValue="rating") String sort,
 //							   @RequestParam(name="page", required = false, defaultValue="1") int page,
@@ -34,33 +34,33 @@ public class SearchResultController {
 //		Map<String, Object> param = new HashMap<String, Object>();
 //		param.put("sort", sort);
 //		param.put("page", page);
-//		
+//
 //		if (StringUtils.hasText(keyword)) {
 //			param.put("keyword", keyword);
 //		}
 //		if (category>0) {
 //			param.put("category", category);
 //		}
-//		
-//		
+//
+//
 //		PagedStores result = storeService.getStores(param);
-//		
+//
 //		model.addAttribute("result",result);
-//		
+//
 //		log.info("가게='{}'", result.getStores());
 //
-//		
+//
 //		return "search";
 //	}
-	
+
 	@GetMapping("/list")
 	public String searchBasic(Model model) {
-		
+
 //		List<Store> stores = storeService.getAllStores();
 //		model.addAttribute("stores", stores);
 		return "search";
 	}
-	
 
-	
+
+
 }
