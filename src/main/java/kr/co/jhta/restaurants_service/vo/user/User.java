@@ -37,7 +37,15 @@ public class User {
         this.disabled = DISABLED.NO; // default to `NO`
     }
 
-    public User(String username, String password, String fullName, String email, String phone, Date birthday, String gender, Date createDate, Date updateDate, TYPE type) {
+    public User(TYPE type) {
+        this.type = type;
+
+        this.createDate = new Date(); // default to current time
+        this.updateDate = new Date(); // default to current time
+        this.disabled = DISABLED.NO; // default to `NO`
+    }
+
+    public User(String username, String password, String fullName, String email, String phone, Date birthday, String gender, TYPE type) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
@@ -45,8 +53,6 @@ public class User {
         this.phone = phone;
         this.birthday = birthday;
         this.gender = gender;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
         this.type = type;
 
         this.createDate = new Date(); // default to current time

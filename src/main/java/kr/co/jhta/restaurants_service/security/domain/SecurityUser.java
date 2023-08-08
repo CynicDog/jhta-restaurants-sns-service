@@ -1,18 +1,19 @@
-package kr.co.jhta.restaurants_service.security;
+package kr.co.jhta.restaurants_service.security.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class SecurityCustomer implements UserDetails {
+public class SecurityUser implements UserDetails {
 
-    private final Customer customer;
+    private final User user;
 
-    public SecurityCustomer(Customer customer) {
-        this.customer = customer;
+    public SecurityUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -22,12 +23,12 @@ public class SecurityCustomer implements UserDetails {
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return customer.getUsername();
+        return user.getUsername();
     }
 
     @Override
