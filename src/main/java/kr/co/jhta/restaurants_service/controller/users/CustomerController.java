@@ -43,6 +43,7 @@ public class CustomerController {
         }
     }
 
+    @ResponseBody
     @GetMapping("/otp")
     public ResponseEntity otpIssue(@RequestParam("email") String email) {
 

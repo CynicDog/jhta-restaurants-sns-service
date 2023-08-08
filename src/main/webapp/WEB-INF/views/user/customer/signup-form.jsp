@@ -28,7 +28,8 @@
                                 <label class="fw-lighter" for="username">유저 아이디</label>
                             </div>
                             <div class="form-floating my-3">
-                                <input type="password" class="form-control" name="password" id="password" placeholder=""/>
+                                <input type="password" class="form-control" name="password" id="password"
+                                       placeholder=""/>
                                 <label class="fw-lighter" for="password">비밀번호</label>
                             </div>
                             <div class="form-floating my-3">
@@ -37,11 +38,23 @@
                             </div>
                             <div class="form-floating my-3">
                                 <input type="email" class="form-control" name="email" id="email" placeholder=""/>
-                                <label class="fw-lighter" for="email">이메일</label>
+                                <label class="fw-lighter d-flex" for="email">이메일
+                                    <div class="ms-auto">
+                                        <div id="emailLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
                             <div class="form-floating my-3">
                                 <input type="text" class="form-control" name="phone" id="phone" placeholder=""/>
-                                <label class="fw-lighter" for="phone">전화번호</label>
+                                <label class="fw-lighter d-flex" for="phone">전화번호
+                                    <div class="ms-auto">
+                                        <div id="phoneLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
                             <div class="form-group my-3">
                                 <div class="row">
@@ -75,24 +88,28 @@
                                 </button>
                             </div>
                             <div class="toast-container position-fixed bottom-0 end-0 p-4">
-                                <div id="successfulToast" class="toast align-items-center text-bg-primary border-0" role="alert"
+                                <div id="successfulToast" class="toast align-items-center text-bg-primary border-0"
+                                     role="alert"
                                      aria-live="assertive" aria-atomic="true">
                                     <div class="d-flex">
                                         <div class="toast-body">
                                             OTP가 발송되었습니다. 이메일을 확인해주세요 :)
                                         </div>
-                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                data-bs-dismiss="toast" aria-label="Close"></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="toast-container position-fixed bottom-0 end-0 p-4">
-                                <div id="failedToast" class="toast align-items-center text-bg-secondary border-0" role="alert"
+                                <div id="failedToast" class="toast align-items-center text-bg-secondary border-0"
+                                     role="alert"
                                      aria-live="assertive" aria-atomic="true">
                                     <div class="d-flex">
                                         <div class="toast-body">
                                             OTP 발송 중 문제가 생겼습니다. 다시 한 번 시도해주세요.
                                         </div>
-                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                data-bs-dismiss="toast" aria-label="Close"></button>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +141,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
         const signupButton = document.getElementById("signupButton");
 
         const usernameInput = document.querySelector('input[name="username"]');
@@ -133,6 +151,9 @@
         const phoneInput = document.querySelector('input[name="phone"]');
         const birthdayInput = document.querySelector('input[name="birthday"]');
         const genderInput = document.querySelector('select[name="gender"]');
+
+        const emailSpinner = emailInput.parentElement.querySelector('.spinner-border');
+        const phoneSpinner = phoneInput.parentElement.querySelector('.spinner-border');
 
         let validationStatus = { // default to false
             usernameInput: false,
@@ -231,23 +252,38 @@
             updateSubmitButton();
         })
 
-        // TODO: DB constraint (unique) validation via ajax
         emailInput.addEventListener("blur", function () {
+
             removeErrorMessage(this);
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(this.value.trim())) {
                 displayErrorMessage(this, "올바른 형식의 이메일을 적어주세요.");
                 validationStatus.emailInput = false;
             } else {
-                removeSuccessMessage(this);
-                displaySuccessMessage(this);
+                const email = encodeURIComponent(this.value.trim())
+                emailSpinner.style.display = "block";
 
-                validationStatus.emailInput = true;
+                fetch(`/user/check-email?email=\${email}`, {
+                    method: "GET"
+                }).then(response => {
+                    emailSpinner.style.display = "none";
+                    if (response.ok) {
+                        removeSuccessMessage(this);
+                        displaySuccessMessage(this);
+
+                        validationStatus.emailInput = true;
+                        updateSubmitButton();
+                    } else {
+                        removeErrorMessage(this)
+                        displayErrorMessage(this, "이미 사용 중인 이메일 주소입니다.");
+                        validationStatus.emailInput = false;
+                        updateSubmitButton();
+                    }
+                })
             }
             updateSubmitButton();
         });
 
-        // TODO: DB constraint (unique) validation via ajax
         phoneInput.addEventListener("blur", function () {
             const phonePattern = /^010-[0-9]{4}-[0-9]{4}$/;
 
@@ -259,10 +295,27 @@
                 displayErrorMessage(this, "올바른 형식의 전화번호를 적어주세요.");
                 validationStatus.phoneInput = false;
             } else {
-                removeSuccessMessage(this);
-                displaySuccessMessage(this);
+                const phone = this.value.trim();
+                phoneSpinner.style.display = "block";
 
-                validationStatus.phoneInput = true;
+                fetch(`/user/check-phone?phone=\${phone}`, {
+                    method: "GET"
+                }).then(response => {
+                    phoneSpinner.style.display = "none";
+
+                    if (response.ok) {
+                        removeSuccessMessage(this);
+                        displaySuccessMessage(this);
+
+                        validationStatus.phoneInput = true;
+                        updateSubmitButton();
+                    } else {
+                        removeErrorMessage(this)
+                        displayErrorMessage(this, "이미 사용 중인 전화번호입니다.");
+                        validationStatus.emailInput = false;
+                        updateSubmitButton();
+                    }
+                })
             }
             updateSubmitButton();
         });

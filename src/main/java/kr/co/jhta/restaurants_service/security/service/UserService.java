@@ -46,6 +46,16 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
+    public boolean existsDuplicateUsersByEmail(String email) {
+
+        return userRepository.existsUserByEmail(email) ? true : false;
+    }
+
+    public boolean existsDuplicateUsersByPhone(String phone) {
+
+        return userRepository.existsUserByPhone(phone) ? true : false;
+    }
+
     public void insertCustomer(UserCommand userCommand) {
         User user = UserCommand.toCustomer(userCommand);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
