@@ -5,10 +5,13 @@ import lombok.Setter;
 import org.apache.ibatis.type.Alias;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
 
-@Getter @Setter @Alias("Otp")
+@Getter @Setter
+@Alias("Otp")
+@Table("OTP")
 public class Otp {
 
     @Id
