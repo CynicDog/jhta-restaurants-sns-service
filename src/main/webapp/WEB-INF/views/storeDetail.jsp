@@ -151,11 +151,6 @@
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
-										    <div class="col-1">
-										        <button type="button" class="btn">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
-										        </button>
-										    </div>
 										</div>
 										<div class="row">
 											<div class="col-4">
@@ -171,10 +166,12 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-sm" style="color: blue;">
-														<i class="bi bi-pencil-square"></i>
-													</button>
-													<button type="button" class="btn btn-sm" style="color: red;">
+													<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+							        				<button type="button" class="btn btn-outline-secondary btn-sm">
+											            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+											            <span class="visually-hidden">추천</span>
+											        </button>
+													<button type="button" class="btn btn-outline-danger btn-sm">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>
@@ -209,11 +206,6 @@
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
-										    <div class="col-1">
-										        <button type="button" class="btn">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
-										        </button>
-										    </div>
 										</div>
 										<div class="row">
 											<div class="col-4">
@@ -229,10 +221,12 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-sm" style="color: blue;">
-														<i class="bi bi-pencil-square"></i>
-													</button>
-													<button type="button" class="btn btn-sm" style="color: red;">
+													<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+							        				<button type="button" class="btn btn-outline-secondary btn-sm">
+											            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+											            <span class="visually-hidden">추천</span>
+											        </button>
+													<button type="button" class="btn btn-outline-danger btn-sm">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>
@@ -267,11 +261,6 @@
 										            <i class="bi bi-emoji-angry" style="font-size: 20px;"></i>
 										        </button>
 										    </div>
-										    <div class="col-1">
-										        <button type="button" class="btn">
-										            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 20px;"></i>
-										        </button>
-										    </div>
 										</div>
 										<div class="row">
 											<div class="col-4">
@@ -287,10 +276,12 @@
 										<div class="row">
 											<div class="col">
 												<span class="float-end">
-													<button type="button" class="btn btn-sm" style="color: blue;">
-														<i class="bi bi-pencil-square"></i>
-													</button>
-													<button type="button" class="btn btn-sm" style="color: red;">
+													<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+							        				<button type="button" class="btn btn-outline-secondary btn-sm">
+											            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+											            <span class="visually-hidden">추천</span>
+											        </button>
+													<button type="button" class="btn btn-outline-danger btn-sm">
 														<i class="bi bi-trash3"></i>
 														<span class="visually-hidden">삭제</span>
 													</button>

@@ -15,7 +15,7 @@ public class ReviewController {
 		return "review";
 	}
 	
-	@GetMapping("/Detail")
+	@GetMapping("/detail")
 	public String reviewDetail(Model model) {
 		
 		return "reviewDetail";
