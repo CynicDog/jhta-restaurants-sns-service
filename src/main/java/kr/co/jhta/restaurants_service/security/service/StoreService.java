@@ -18,37 +18,37 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreService {
-	
+
 	@Autowired
 	private final StoreMapper storeMapper;
 
-	
-	
+
+
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;
 	}
-	
+
 	public PagedStores getStores(Map<String,Object> param){
-		
+
 		int totalRows = storeMapper.getTotalRows(param);
 		// 요청한 페이지를 pagination 객체에 저장
 		int page = (int)param.get("page");
 		Pagination pagination = new Pagination(page, totalRows);
 		int begin = pagination.getBegin();
 		int end = pagination.getEnd();
-		
+
 		PagedStores result = new PagedStores();
 		param.put("begin", begin);
 		param.put("end", end);
-		
+
 		List<SearchedStore> stores = storeMapper.getStores(param);
 		log.info("서비스 : '{}'",stores);
 		result.setPagination(pagination);
 		result.setStores(stores);;
-		
-	
+
+
 		return result;
 	}
-	
+
 }

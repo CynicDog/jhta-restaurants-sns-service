@@ -49,9 +49,7 @@ mybatis:
   configuration:
     jdbc-type-for-null: 'NULL'
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
-  type-aliases-package: kr.co.jhta.restaurants_service.dto, kr.co.jhta.restaurants_service.vo.user, kr.co.jhta.restaurants_service.vo.store, kr.co.jhta.restaurants_service.vo.socials, kr.co.jhta.restaurants_service.vo.review, kr.co.jhta.restaurants_service.vo.post
-
-
+  type-aliases-package: kr.co.jhta.restaurants_service.vo.store, kr.co.jhta.restaurants_service.dto, kr.co.jhta.restaurants_service.vo.user, kr.co.jhta.restaurants_service.vo.store, kr.co.jhta.restaurants_service.vo.socials, kr.co.jhta.restaurants_service.vo.review, kr.co.jhta.restaurants_service.vo.post
 
 
 
