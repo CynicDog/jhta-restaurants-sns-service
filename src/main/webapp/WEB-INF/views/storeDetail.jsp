@@ -26,7 +26,6 @@
 	.border-opacity-10.active {
   		color: orange;
 	}
-   
 </style>
 </head>
 <body>
@@ -34,11 +33,25 @@
 <div class="wrap">
 	<div class="container">
 		<div class="row row-cols-5">
-			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="..."> 
-			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="..."> 
-			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="..."> 
-			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="..."> 
-			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" style="max-width: 100%; height: auto;" alt="...">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 1" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 2" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 3" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 4" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 5" onclick="openModal(this)">
+        </div>
+		<div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
+		    <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+		    <div class="row d-flex justify-content-center align-items-center" style="height: 100%;">
+		        <div class="col-4 d-flex justify-content-center align-items-center">
+		            <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10094;</button>
+		        </div>
+		        <div class="col-4 text-center">
+		            <img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
+		        </div>
+		        <div class="col-4 d-flex justify-content-center align-items-center">
+		            <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10095;</button>
+		        </div>
+		    </div>
 		</div>
 		<div class="row">
 			<div class="col-8">
@@ -376,10 +389,58 @@
                 // 클릭한 버튼에만 'active' 클래스를 추가합니다.
                 $(this).addClass('active');
             });
+            
+            let previewModal = new bootstrap.Modal("#previewModal");
         });
 	
-	// const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-	// const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+	var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("modalImg");
+    var images = document.getElementsByClassName("img-thumbnail");
+    var currentIndex;
+
+    function openModal(image) {
+        modal.style.display = "block";
+        modalImg.src = image.src;
+        currentIndex = Array.from(images).indexOf(image);
+        updateNavButtons();
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function changeImage(n) {
+        currentIndex += n;
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0;
+        }
+        modalImg.src = images[currentIndex].src;
+        updateNavButtons();
+    }
+
+    function updateNavButtons() {
+        var prevButton = document.getElementById("prevButton");
+        var nextButton = document.getElementById("nextButton");
+        if (images.length <= 1) {
+            prevButton.style.display = "none";
+            nextButton.style.display = "none";
+        } else {
+            prevButton.style.display = "block";
+            nextButton.style.display = "block";
+        }
+    }
+
+    document.addEventListener("keydown", function(event) {
+        if (event.keyCode === 27) {
+            closeModal();
+        } else if (event.keyCode === 37) {
+            changeImage(-1);
+        } else if (event.keyCode === 39) {
+            changeImage(1);
+        }
+    });
 
 </script>
 </body>
