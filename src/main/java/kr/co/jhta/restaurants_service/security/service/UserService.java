@@ -31,17 +31,6 @@ public class UserService implements UserDetailsService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void insertCustomer(UserCommand userCommand) {
-        User user = UserCommand.toCustomer(userCommand);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-
-        Role role = new Role(user, "USER_CUSTOMER");
-        user.addRole(role);
-
-        userRepository.save(user);
-    }
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -56,4 +45,25 @@ public class UserService implements UserDetailsService {
 
         return userDetails;
     }
+
+    public void insertCustomer(UserCommand userCommand) {
+        User user = UserCommand.toCustomer(userCommand);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        Role role = new Role(user, "USER_CUSTOMER");
+        user.addRole(role);
+
+        userRepository.save(user);
+    }
+
+    public void insertOwner(UserCommand userCommand) {
+        User user = UserCommand.toOwner(userCommand);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        Role role = new Role(user, "USER_OWNER");
+        user.addRole(role);
+
+        userRepository.save(user);
+    }
 }
+

@@ -19,13 +19,10 @@ import javax.servlet.http.HttpSession;
 public class CustomerController {
 
     Logger logger = Logger.getLogger(UserController.class);
-
-    private final EmailSender emailSender;
     private final UserService userService;
     private final OtpService otpService;
 
-    public CustomerController(EmailSender emailSender, UserService userService, OtpService otpService) {
-        this.emailSender = emailSender;
+    public CustomerController(UserService userService, OtpService otpService) {
         this.userService = userService;
         this.otpService = otpService;
     }
