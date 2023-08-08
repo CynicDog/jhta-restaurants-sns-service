@@ -42,8 +42,8 @@ html, body {
 					<div class="col-6">
 						<span class="float-end">
 							<i class="bi bi-emoji-angry" style="font-size:40px;"></i>
-                           	<button type="button" class="btn border-opacity-10 mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-                         		<i class="bi bi-megaphone" style="color:red; font-size:35px;"></i>
+                           	<button type="button" class="btn btn-outline-danger mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                         		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
                             		<span class="visually-hidden">신고</span>
                           	</button>
 						</span>
