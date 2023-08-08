@@ -34,7 +34,7 @@ public class User {
     private TYPE type;
 
     @Transient
-    private List<String> roles;
+    private List<Role> roles;
 
     public User() {
 
@@ -74,7 +74,7 @@ public class User {
         YES, NO
     }
 
-    public void addRole(String role) {
+    public void addRole(Role role) {
         if (this.roles == null) {
             this.roles = new ArrayList<>();
         }

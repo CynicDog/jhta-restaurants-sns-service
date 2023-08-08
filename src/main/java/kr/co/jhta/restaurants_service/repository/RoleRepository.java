@@ -12,11 +12,7 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends PagingAndSortingRepository<Role, Integer> {
 
+    // Cannot query by nested property: user.id
     @Query("SELECT * FROM ROLES WHERE user_id = :userId")
     List<Role> findByUserId(int userId);
-
-    @Transactional
-    @Modifying
-    @Query(value = "INSERT INTO ROLES (user_id, role) VALUES (:userId, :role)")
-    void insertRole(int userId, String role);
 }

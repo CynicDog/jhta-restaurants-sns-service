@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.security.domain;
 
 import kr.co.jhta.restaurants_service.repository.RoleRepository;
+import kr.co.jhta.restaurants_service.vo.user.Role;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,8 +25,8 @@ public class SecurityUser implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        for (String role : this.user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role));
+        for (Role role : this.user.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
 
         return authorities;
