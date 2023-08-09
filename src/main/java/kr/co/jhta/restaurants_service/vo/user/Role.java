@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.vo.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ public class Role {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonIgnore // for resolving the circular reference between `Role` and `User` entities
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
