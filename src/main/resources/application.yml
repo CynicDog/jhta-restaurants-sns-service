@@ -10,7 +10,7 @@ logging:
     #org.springframework.web 패키지에 대해서는 로그레벨을 trace로 지정
 #    '[org.springframework.web]': trace
     # mybatis 실행시 sql및 sql 실행결과가 로그로 출력됨
-    '[kr.co.jhta.mapper]': trace
+    '[kr.co.jhta.restaurants_service.mapper]': trace
     
 spring:
 # 커넥션 풀 설정

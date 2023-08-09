@@ -1,11 +1,15 @@
 package kr.co.jhta.restaurants_service.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class Pagination {
 
-	private int rows = 10;
+	private int rows = 6;
 	private int pages = 5;
 	private int page;
 	private int totalRows;
