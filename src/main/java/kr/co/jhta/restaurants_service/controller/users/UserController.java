@@ -17,11 +17,11 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/check-phone")
-    public ResponseEntity isPhoneUnique(@RequestParam("phone") String phone) {
+    @GetMapping("/check-username")
+    public ResponseEntity isUsernameUnique(@RequestParam("username") String username) {
 
-        if (userService.existsDuplicateUsersByPhone(phone)) {
-            return ResponseEntity.badRequest().body("User already exists with the given email.");
+        if (userService.existsDuplicateUsersByUsername(username)) {
+            return ResponseEntity.badRequest().body("User already exists with the given username.");
         } else {
             return ResponseEntity.ok().body("Unique email!");
         }
@@ -37,6 +37,18 @@ public class UserController {
             return ResponseEntity.ok().body("Unique email!");
         }
     }
+
+    @ResponseBody
+    @GetMapping("/check-phone")
+    public ResponseEntity isPhoneUnique(@RequestParam("phone") String phone) {
+
+        if (userService.existsDuplicateUsersByPhone(phone)) {
+            return ResponseEntity.badRequest().body("User already exists with the given email.");
+        } else {
+            return ResponseEntity.ok().body("Unique email!");
+        }
+    }
+
     @GetMapping("/login")
     public String loginForm() {
         return "user/login";
