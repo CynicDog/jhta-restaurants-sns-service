@@ -40,7 +40,9 @@
                                 <input type="email" class="form-control" name="email" id="email" placeholder=""/>
                                 <label class="fw-lighter d-flex" for="email">이메일
                                     <div class="ms-auto">
-                                        <div id="emailLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                        <div id="emailLoadingSpinner"
+                                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                             style="display: none;">
                                             <span class="visually-hidden">Loading...</span>
                                         </div>
                                     </div>
@@ -50,7 +52,9 @@
                                 <input type="text" class="form-control" name="phone" id="phone" placeholder=""/>
                                 <label class="fw-lighter d-flex" for="phone">전화번호
                                     <div class="ms-auto">
-                                        <div id="phoneLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                        <div id="phoneLoadingSpinner"
+                                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                             style="display: none;">
                                             <span class="visually-hidden">Loading...</span>
                                         </div>
                                     </div>
@@ -75,28 +79,42 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-end my-2">
-                                <button id="signupButton"
-                                        class="btn btn-outline-secondary btn-sm"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target="#otpCollapse"
-                                        aria-expanded="false"
-                                        aria-controls="otpCollapse"
-                                        disabled
-                                >
-                                    OTP
+                            <div class="text-center my-3 pt-4">
+                                <button id="signupButton" class="btn btn-light btn-sm" disabled>
+                                    <span id="otpRequest" class="fw-lighter">
+                                        OTP
+                                    </span>
+                                    <div id="otpLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                         style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </button>
                             </div>
                             <div class="toast-container position-fixed bottom-0 end-0 p-4">
-                                <div id="successfulToast" class="toast align-items-center text-bg-primary border-0"
-                                     role="alert"
-                                     aria-live="assertive" aria-atomic="true">
+                                <div id="successfulToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="d-flex">
                                         <div class="toast-body">
-                                            OTP가 발송되었습니다. 이메일을 확인해주세요 :)
+                                            OTP를 발송하였습니다. 이메일을 확인해주세요 :)
                                         </div>
                                         <button type="button" class="btn-close btn-close-white me-2 m-auto"
                                                 data-bs-dismiss="toast" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                                <div id="otpInputToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="fw-lighter" for="otp">OTP</label>
+                                                    <input class="form-control-plaintext" id="otp" name="otp">
+                                                </div>
+                                            </div>
+                                            <div class="text-start">
+                                                <i class="fs-6 bi bi-send m-1" style="color: #838383"
+                                                   onclick="otpValidationRequest()"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -110,24 +128,6 @@
                                         </div>
                                         <button type="button" class="btn-close btn-close-white me-2 m-auto"
                                                 data-bs-dismiss="toast" aria-label="Close"></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <%--                            TODO: OTP validation --%>
-                            <div class="collapse mt-3" id="otpCollapse">
-                                <div class="card card-body">
-                                    <label class="fw-lighter" for="otp">OTP</label>
-                                    <div class="row">
-                                        <div class="input-group">
-                                            <div class="col-11">
-                                                <input class="form-control-plaintext" id="otp" name="otp">
-                                            </div>
-                                            <div class="col-1 d-flex justify-content-center align-items-center">
-                                            <span class="">
-                                                <i class="bi bi-send" onclick="otpValidationRequest()"></i>
-                                            </span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -351,6 +351,8 @@
         signupButton.addEventListener("click", function (event) {
             event.preventDefault();
             const errorMessages = document.querySelectorAll('.invalid-feedback');
+            const buttonMessage = document.getElementById("otpRequest");
+            const otpSpinner = document.getElementById("otpLoadingSpinner")
 
             if (Object.values(validationStatus).some(status => status === false)) {
                 // do nothing
@@ -359,6 +361,11 @@
                 // do nothing
 
             } else {
+                signupButton.setAttribute("disabled", "disabled");
+                // buttonMessage.style.display = "none";
+                buttonMessage.textContent = "";
+                otpSpinner.style.display = "block";
+
                 const formData = {
                     username: usernameInput.value.trim(),
                     password: passwordInput.value.trim(),
@@ -385,11 +392,18 @@
                                 method: "GET"
                             }).then(response => {
                                 if (response.ok) {
+                                    otpSpinner.style.display = "none";
+                                    buttonMessage.innerHTML = "<i class='bi bi-check' style='color: #838383'></i>"
 
                                     // show successful message in toast
                                     let successfulToast = document.getElementById('successfulToast')
-                                    const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast)
-                                    toastSentBootstrap.show()
+                                    const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast)
+                                    successfulToastBootstrap.show()
+
+                                    let otpInputToast = document.getElementById('otpInputToast')
+                                    const otpToastBootstrap = bootstrap.Toast.getOrCreateInstance(otpInputToast)
+                                    otpToastBootstrap.show()
+
                                 } else {
 
                                     // show failed message in toast
