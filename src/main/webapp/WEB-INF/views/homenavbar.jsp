@@ -68,14 +68,21 @@
 								>Signup</a>
 							</li>
 				        </sec:authorize>
-				        <sec:authorize access="isAuthenticated()">
-				            <li class="nav-item">
-				                <a class="nav-link" href="/user/my-page">My Page</a>
-				            </li>
-				            <li class="nav-item">
-				                <a class="nav-link" href="/user/logout">Logout</a>
-				            </li>
-				        </sec:authorize>
+						<sec:authorize access="isAuthenticated()">
+							<sec:authorize access="hasRole('ROLE_CUSTOMER')">
+								<li class="nav-item">
+									<a class="nav-link" href="/customer/my-page">My Page</a>
+								</li>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_OWNER')">
+								<li class="nav-item">
+									<a class="nav-link" href="/owner/my-page">My Page</a>
+								</li>
+							</sec:authorize>
+							<li class="nav-item">
+								<a class="nav-link" href="/user/logout">Logout</a>
+							</li>
+						</sec:authorize>
 				    </ul>
 				    <div class="form-check form-switch m-1">
 				        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked value="" onclick="toggleDarkMode()">

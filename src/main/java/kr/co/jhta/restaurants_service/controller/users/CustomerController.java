@@ -2,13 +2,15 @@ package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.UserService;
-import kr.co.jhta.restaurants_service.util.EmailSender;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,16 @@ public class CustomerController {
     public CustomerController(UserService userService, OtpService otpService) {
         this.userService = userService;
         this.otpService = otpService;
+    }
+
+    @GetMapping("/my-page")
+    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
+
+
+        model.addAttribute("customerEmail", securityUser.getUser().getEmail());
+
+
+        return "/user/customer/my-page";
     }
 
     @ResponseBody
