@@ -17,7 +17,7 @@
 <%@ include file="../common/navbar.jsp" %>
 <div class="wrap">
 	<div class="container">
-	<form method="post" enctype="multipart/form-data">
+	<form method="post" enctype="multipart/form-data" action="register">
 		
   		<div class="row justify-content-center align-items-center mt-5" >
   			
@@ -29,11 +29,11 @@
 	          		<div class="card-body">
               			<div class="mb-3">
               				<div class="form-floating">
-								<input class="form-control mb-4" placeholder="Leave a comment here">
+								<input class="form-control mb-4" placeholder="Leave a comment here" name="title">
   								<label for="floatingTextarea">제목을 작성해 주세요!</label>
 							</div>
 							<div class="form-floating mb-4">
-								<input class="form-control" placeholder="Leave a comment here">
+								<input class="form-control" placeholder="Leave a comment here" name="subtitle">
   								<label for="floatingTextarea">소제목을 작성해 주세요!</label>
 							</div>
               			</div>
@@ -60,8 +60,8 @@
               					</div>
               				</div>
               				<div class="col-8"> 
-              					<input class="form-control mb-4" placeholder="가게명을 작성해주세요.">
-              					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60"></textarea>
+              					<input class="form-control mb-4" placeholder="가게명을 작성해주세요." name="heading">
+              					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60" name="content"></textarea>
               				</div>
               			</div>
 	          		</div>
@@ -158,8 +158,8 @@ $(function(){
 	          					</div>
 	      				</div>
 	      				<div class="col-8"> 
-	      					<input class="form-control mb-4" placeholder="가게명을 작성해주세요.">
-	      					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60"></textarea>
+	      					<input class="form-control mb-4" placeholder="가게명을 작성해주세요." name="heading">
+	      					<textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60" name="content"></textarea>
 	      				</div>
 	      			</div>
 	      		</div>

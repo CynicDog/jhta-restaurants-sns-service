@@ -53,7 +53,7 @@
 				<h4 class="my-3">팔로워의 리뷰</h4>
 			</div>
 			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3" onclick="location.href='followerReview'"> more</button>
+				<button type="button" class="btn btn-outline-secondary my-3" onclick="location.href='/review/follower'"> more</button>
 			</div>
 		</div>
 		<div class="row mb-3 border-bottom">
