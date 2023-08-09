@@ -5,11 +5,10 @@
 		select 
 			id				as id,
 			title			as title,
-			content			as content,
+			sub_title		as subTitle,
 			create_date		as createDate,
 			update_date		as updateDate,
 			user_id			as "customer.id",
-			store_id		as "store.id",
 			report_count	as reportCount,
 			disabled		as disabled,
 			blocked			as blocked
@@ -22,11 +21,11 @@
 		select 
 			id				as id,
 			title			as title,
+			sub_title		as subTitle,
 			content			as content,
 			create_date		as createDate,
 			update_date		as updateDate,
 			user_id			as "customer.id",
-			store_id		as "store.id",
 			report_count	as reportCount,
 			disabled		as disabled,
 			blocked			as blocked
@@ -40,11 +39,17 @@
 		<selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-		insert into post
-		(title, content, user_id, store_id, report_count, disabled, blocked)
+		insert into POSTS
+		(title, sub_title)
 		values
-		(#{title}, #{content}, #{"customer.id"}, #{"store.id"}, #{reportCount}, #{disabled}, #{blocked})
-		
+		(#{title}, #{subTitle})
+	</insert>
+	
+	<insert id="insertPostData" parameterType="kr.co.jhta.restaurants_service.vo.post.PostData">
+	    INSERT INTO POST_DATA
+	    (post_id, store_id, content, picture_file) 
+	    VALUES 
+	    (#{post.id}, #{store.id}, #{content}, #{pictureFile})
 	</insert>
 	
 	<update id="updatePost" parameterType="int">
@@ -52,7 +57,7 @@
             post
         set
             title = #{title},
-            content = #{content},
+            sub_title = #{subTitle},
             update_date = #{updateDate},
             report_count = #{reportCount},
             disabled = #{disabled},

@@ -33,7 +33,7 @@
   								<label for="floatingTextarea">제목을 작성해 주세요!</label>
 							</div>
 							<div class="form-floating mb-4">
-								<input class="form-control" placeholder="Leave a comment here" name="subtitle">
+								<input class="form-control" placeholder="Leave a comment here" name="subTitle">
   								<label for="floatingTextarea">소제목을 작성해 주세요!</label>
 							</div>
               			</div>
