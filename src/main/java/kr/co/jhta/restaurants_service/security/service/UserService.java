@@ -36,10 +36,11 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByUsername(username);
 
-        List<Role> roles = roleRepository.findByUserId(user.getId());
-        roles.forEach(role -> {
-            user.addRole(role);
-        });
+        // EAGER fetching on `user.roles`, so below 4 lines are done by Hibernate.
+//        List<Role> roles = roleRepository.findByUserId(user.getId());
+//        roles.forEach(role -> {
+//            user.addRole(role);
+//        });
 
         UserDetails userDetails = new SecurityUser(user);
 
@@ -65,7 +66,7 @@ public class UserService implements UserDetailsService {
         User user = UserCommand.toCustomer(userCommand);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        Role role = new Role(user, "USER_CUSTOMER");
+        Role role = new Role(user, "ROLE_CUSTOMER");
         user.addRole(role);
 
         userRepository.save(user);
@@ -75,7 +76,7 @@ public class UserService implements UserDetailsService {
         User user = UserCommand.toOwner(userCommand);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        Role role = new Role(user, "USER_OWNER");
+        Role role = new Role(user, "ROLE_OWNER");
         user.addRole(role);
 
         userRepository.save(user);

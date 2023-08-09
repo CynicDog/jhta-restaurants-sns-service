@@ -43,8 +43,8 @@
                         <a class="nav-link" href="/user/login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-<%--                           href="/user/signup"--%>
+                        <a id="signupPopover"
+                           class="nav-link"
                            data-bs-container="body"
                            data-bs-toggle="popover"
                            data-bs-placement="bottom"
@@ -55,11 +55,21 @@
                            "
                         >Signup</a>
                     </li>
+                    <script>
+                        new bootstrap.Popover(document.querySelector('#signupPopover'))
+                    </script>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/my-page">My Page</a>
-                    </li>
+                    <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+                        <li class="nav-item">
+                            <a id="customerMyPage" class="nav-link" href="/customer/my-page">My Page</a>
+                        </li>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_OWNER')">
+                        <li class="nav-item">
+                            <a id="ownerMyPage" class="nav-link" href="/owner/my-page">My Page</a>
+                        </li>
+                    </sec:authorize>
                     <li class="nav-item">
                         <a class="nav-link" href="/user/logout">Logout</a>
                     </li>
@@ -100,10 +110,5 @@
         }
 
         applyColorModePreference();
-
-        let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        });
     </script>
 </nav>
