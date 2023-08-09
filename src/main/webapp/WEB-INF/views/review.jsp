@@ -41,19 +41,19 @@
 	                  		<li style="display: inline-block;">
 	                      		<button class="emoji-btn" data-recommend-type="3" style="background: none; border: none;">
 	                          		<i class="bi bi-emoji-heart-eyes" style="font-size: 25px;"></i>
-	                          		맛있다
+	                          		맛있어요!
 	                      		</button>
 	                  		</li>
 			                <li style="display: inline-block;">
 			                	<button class="emoji-btn" data-recommend-type="2" style="background: none; border: none;">
 			                    	<i class="bi bi-emoji-smile" style="font-size: 25px;"></i>
-			                    	괜찮다
+			                    	괜찮아요!
 			              		</button>
 			     			</li>
 			                <li style="display: inline-block;">
 			               		<button class="emoji-btn" data-recommend-type="1" style="background: none; border: none;">
 			                		<i class="bi bi-emoji-angry" style="font-size: 25px;"></i>
-			                        별로
+			                        별로에요!
 			                	</button>
 			             	</li>
 	              		</ul>
@@ -69,7 +69,7 @@
 	    	<form method="post" enctype="multipart/form-data" id="form-image">
 			    <div>
 			        <label for="imageFile">
-	       				<a class="btn"><i class="bi bi-plus-square-dotted" style="font-size: 65px;"></i></a> 
+	       				<a class="btn" style="position: relative; display: inline-block;"><i class="bi bi-plus-square-dotted" style="font-size: 65px; color: #000;"></i></a> 
 						<span></span>	
 			        </label>
 			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
@@ -105,20 +105,23 @@ $(function() {
 		$(this).addClass('active');
 	});
 	
-	// 이미지를 감싸는 버튼을 클릭할 때 마다 실행되는 이벤트 핸들러 함수를 추가하였다.
-	$("#form-image span").on('click', 'button', function() {
-		// 클릭한 버튼의 자손중에서 img 엘리먼트를 검색하고, src 속성값을 읽어온다.
-		let imageSource = $(this).find("img").attr("src");
-		// 조회된 이미지소스를 모달창의 img엘리먼트에 적용한다.
-		$("#modal-img").attr("src", imageSource);
-		previewModal.show();
-	})
+	$("#form-image span").on('click', 'button', function(event) {
+		// !$(event.target): 이벤트가 발생한 HTML 엘리먼트를 jQuery 객체로 감싼 것, .hasClass: text-danger를 갖고 있는지 물어보는코드
+        if (!$(event.target).hasClass('text-danger')) {
+            // 클릭한 버튼의 자손중에서 img 엘리먼트를 검색하고, src 속성값을 읽어온다.
+            let imageSource = $(this).find("img").attr("src");
+            // 조회된 이미지소스를 모달창의 img엘리먼트에 적용한다.
+            $("#modal-img").attr("src", imageSource);
+            previewModal.show(); // 이미지를 감싸는 버튼 클릭 시 모달 창을 보여줌
+        }
+    });
 	
 	// 이미지 필드의 이미지가 변경되면 
 	$("#imageFile").on("change", function(event) {
 		// 버튼과  이미지태그르 생성한다.
 		let content = `
-			<button type="button" class="btn">
+			<button type="button" class="btn position-relative">
+				<i class="bi bi-x position-absolute fw-bold text-danger bg-secondary" style="top: 8px; right:15px; padding-left:1px;"></i>
 				<img style="width: 100px; height: 100px; object-fit: cover;">
 			</button>
 		`;
@@ -172,6 +175,39 @@ $(function() {
             }
         } 
     });
+    
+    $("#form-image").on('click', 'i.text-danger', function(event) {
+    	event.stopImmediatePropagation()
+    	
+    	$(this).parent().remove();
+    	
+    	// imageCount가 감소할 때 마다 텍스트 내용을 변경
+    	 imageCount--;
+         $("#image-count").text(imageCount);
+         
+      // imageCount가 maxImageCount보다 작다면 이미지 선택 버튼 활성화
+         if (imageCount < maxImageCount) { 
+         	$("#imageFile").prop("disabled", false);
+         }
+    	
+    	event.preventDefault()
+    	return false;
+    })
+    
+    $("#textLength").on("input", function() {
+        // textarea 내용 가져오기
+        let textareaContent = $(this).val().trim();
+        
+        // 리뷰 올리기 버튼 활성화/비활성화
+        if (textareaContent === "") {
+            $("button.btn-outline-success").prop("disabled", true);
+        } else {
+            $("button.btn-outline-success").prop("disabled", false);
+        }
+    });
+
+    // 초기 상태에서 textarea의 내용 확인하여 버튼 상태 설정
+    $("#textLength").trigger("input");
     
 });
 
