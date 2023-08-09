@@ -29,6 +29,8 @@ public class OwnerController {
 
         userService.insertOwner(userCommand);
         return ResponseEntity.ok("Valid otp!");
+
+        // TODO: Session clear
     }
 
     @GetMapping("/signup")

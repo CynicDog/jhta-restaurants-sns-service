@@ -92,6 +92,17 @@
                                 </button>
                             </div>
                             <div class="toast-container position-fixed bottom-0 end-0 p-4">
+                                <div id="failedToast" class="toast align-items-center text-bg-secondary border-0"
+                                     role="alert"
+                                     aria-live="assertive" aria-atomic="true">
+                                    <div class="d-flex">
+                                        <div class="toast-body">
+                                            OTP가 일치하지 않습니다. 다시 한 번 확인해주세요.
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                                data-bs-dismiss="toast" aria-label="Close"></button>
+                                    </div>
+                                </div>
                                 <div id="successfulToast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="d-flex">
                                         <div class="toast-body">
@@ -102,33 +113,20 @@
                                     </div>
                                 </div>
                                 <div id="otpInputToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
-                                    <div class="d-flex">
                                         <div class="toast-body">
                                             <div class="row">
                                                 <div class="col">
                                                     <label class="fw-lighter" for="otp">OTP</label>
                                                     <input class="form-control-plaintext" id="otp" name="otp">
+                                                    <div class="d-flex justify-content-end align-items-end">
+                                                        <i id="otpRequestIcon" class="fs-6 bi bi-send m-1" style="color: #838383"></i>
+                                                        <div id="otpRequestLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                                            <span class="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="text-start">
-                                                <i class="fs-6 bi bi-send m-1" style="color: #838383"
-                                                   onclick="otpValidationRequest()"></i>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="toast-container position-fixed bottom-0 end-0 p-4">
-                                <div id="failedToast" class="toast align-items-center text-bg-secondary border-0"
-                                     role="alert"
-                                     aria-live="assertive" aria-atomic="true">
-                                    <div class="d-flex">
-                                        <div class="toast-body">
-                                            OTP 발송 중 문제가 생겼습니다. 다시 한 번 시도해주세요.
-                                        </div>
-                                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                                data-bs-dismiss="toast" aria-label="Close"></button>
-                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -155,6 +153,8 @@
         const emailSpinner = emailInput.parentElement.querySelector('.spinner-border');
         const phoneSpinner = phoneInput.parentElement.querySelector('.spinner-border');
 
+        const otpValidationRequestIcon = document.querySelector('#otpRequestIcon');
+
         let validationStatus = { // default to false
             usernameInput: false,
             passwordInput: false,
@@ -163,46 +163,6 @@
             phoneInput: false,
             birthdayInput: false,
             genderInput: false
-        }
-
-        function updateSubmitButton() {
-            const submitButton = document.getElementById("signupButton");
-            if (Object.values(validationStatus).every(status => status === true)) {
-                submitButton.removeAttribute("disabled");
-            } else {
-                submitButton.setAttribute("disabled", "disabled");
-            }
-        }
-
-        function displayErrorMessage(input, message) {
-
-            input.classList.add('is-invalid');
-
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'invalid-feedback';
-            errorDiv.textContent = message;
-
-            const parentDiv = input.parentElement;
-            parentDiv.appendChild(errorDiv);
-        }
-
-        function removeErrorMessage(input) {
-
-            input.classList.remove('is-invalid');
-
-            const parentDiv = input.parentElement;
-            const errorDiv = parentDiv.querySelector('.invalid-feedback');
-            if (errorDiv) {
-                parentDiv.removeChild(errorDiv);
-            }
-        }
-
-        function displaySuccessMessage(input) {
-            input.classList.add("is-valid");
-        }
-
-        function removeSuccessMessage(input) {
-            input.classList.remove("is-valid");
         }
 
         usernameInput.addEventListener("blur", function () {
@@ -362,7 +322,7 @@
 
             } else {
                 signupButton.setAttribute("disabled", "disabled");
-                // buttonMessage.style.display = "none";
+
                 buttonMessage.textContent = "";
                 otpSpinner.style.display = "block";
 
@@ -395,7 +355,7 @@
                                     otpSpinner.style.display = "none";
                                     buttonMessage.innerHTML = "<i class='bi bi-check' style='color: #838383'></i>"
 
-                                    // show successful message in toast
+                                    // initialization needed, clearing all the previously given input data..
                                     let successfulToast = document.getElementById('successfulToast')
                                     const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast)
                                     successfulToastBootstrap.show()
@@ -406,7 +366,6 @@
 
                                 } else {
 
-                                    // show failed message in toast
                                     let failedToast = document.getElementById('failedToast')
                                     const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(failedToast)
                                     toastSentBootstrap.show()
@@ -418,31 +377,108 @@
                     })
             }
         });
-    });
 
-    function otpValidationRequest() {
-        const email = document.querySelector('input[name="email"]').value.trim();
-        const otpCode = document.querySelector('#otp').value
+        otpValidationRequestIcon.addEventListener("click", function () {
+            this.style.display = 'none';
 
-        const formData = {
-            email: email,
-            otpCode: otpCode
+            const requestLoadingIcon = document.getElementById('otpRequestLoadingSpinner')
+            requestLoadingIcon.style.display = 'block'
+
+            const email = document.querySelector('input[name="email"]').value.trim();
+            const otpCode = document.querySelector('#otp').value;
+
+            otpValidationRequest(email, otpCode);
+        });
+
+        function updateSubmitButton() {
+
+            // if checked, uncheck the otp request button
+            const otpRequestElement = document.getElementById("otpRequest");
+            const biCheckElement = otpRequestElement.querySelector("i.bi.bi-check[style='color: #838383']");
+            if (biCheckElement) {
+                otpRequestElement.innerHTML = "OTP";
+            }
+
+            const submitButton = document.getElementById("signupButton");
+            if (Object.values(validationStatus).every(status => status === true)) {
+                submitButton.removeAttribute("disabled");
+            } else {
+                submitButton.setAttribute("disabled", "disabled");
+            }
         }
 
-        fetch(`/customer/otp-check`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        }).then(response => {
-            if (response.ok) {
-                window.location.href = "/user/login"
-            } else {
-                // TODO: handle errors on bad credentials
+        function displayErrorMessage(input, message) {
+
+            input.classList.add('is-invalid');
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback';
+            errorDiv.textContent = message;
+
+            const parentDiv = input.parentElement;
+            parentDiv.appendChild(errorDiv);
+        }
+
+        function removeErrorMessage(input) {
+
+            input.classList.remove('is-invalid');
+
+            const parentDiv = input.parentElement;
+            const errorDiv = parentDiv.querySelector('.invalid-feedback');
+            if (errorDiv) {
+                parentDiv.removeChild(errorDiv);
             }
-        })
-    }
+        }
+
+        function displaySuccessMessage(input) {
+            input.classList.add("is-valid");
+        }
+
+        function removeSuccessMessage(input) {
+            input.classList.remove("is-valid");
+        }
+
+        function otpValidationRequest(email, otpCode) {
+
+            const formData = {
+                email: email,
+                otpCode: otpCode
+            }
+
+            fetch(`/customer/otp-check`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "/user/login"
+                } else {
+
+                    // clear and erase toasts
+                    otpValidationRequestIcon.style.display = 'block';
+                    const otpInput = document.getElementById('otp');
+                    otpInput.value = '';
+                    const requestLoadingIcon = document.getElementById('otpRequestLoadingSpinner')
+                    requestLoadingIcon.style.display = 'none'
+
+                    const toastElList = document.querySelectorAll('.toast')
+                    const toastList = [...toastElList]
+                        .map(toastEl => new bootstrap.Toast(toastEl))
+                        .map(toast => toast.hide());
+
+                    let failedToast = document.getElementById('failedToast')
+                    const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(failedToast)
+                    toastSentBootstrap.show()
+
+                    updateSubmitButton()
+                }
+            })
+        }
+    });
+
+
 </script>
 </body>
 </html>
