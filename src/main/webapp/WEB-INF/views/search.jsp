@@ -12,11 +12,7 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
    
 <style type="text/css">
-img {
-	object-fit: cover;
-	width: 300px;
-	height: 200px;
-}
+
 
 
 </style>
@@ -35,207 +31,199 @@ img {
 <body>
 	<%@ include file="common/navbar.jsp"%>
 	<div class="wrap">
-		<div class="container text-center ">
-			<div class="row mt-3">
+		<div class="container-fluid text-center" style="padding-left: 100px;">
+			<div class="row my-3">
 				<div class="col-8 d-flex justify-content-between">
 					<h4 class="title" >검색 결과</h4>
 					<select class="form-select me-3" style="width: 150px;" name="sort"
 						onchange="changeSort()">
 						<option value="rating"
 							${param.sort eq 'rating' ? 'selected' : '' }>평점 순</option>
-						<option value="favorite"
-							${param.sort eq 'favorite' ? 'selected' : '' }>즐겨찾기 순</option>
-						<option value="reviews"
-							${param.sort eq 'reviews' ? 'selected' : '' }>리뷰수 순</option>
+						<option value="bookmark"
+							${param.sort eq 'bookmark' ? 'selected' : '' }>즐겨찾기 순</option>
+						<option value="review"
+							${param.sort eq 'review' ? 'selected' : '' }>리뷰수 순</option>
 
 					</select>
 				</div>
 				
 			</div>
 			<div class="row mb-3">
-				<div class="col-12 " style="text-align: left;">
-					<a class="btn" role="button" href="list">전체</a> 
-					<a class="btn" role="button" href="list?category=1">한식</a>
-					<a class="btn" role="button" href="list?category=2">중식</a>
-					<a class="btn" role="button" href="list?category=3">일식</a> 
-					<a class="btn" role="button" href="list?category=4">분식</a> 
-					<a class="btn" role="button" href="list?category=5">카페</a>
-					<a class="btn" role="button" href="list?category=6">이탈리안</a> 
-					<a class="btn" role="button" href="list?category=7">치킨</a> 
-					<a class="btn" role="button" href="list?category=8">패스트푸드</a>
-					<a class="btn" role="button" href="list?category=9">바</a>
-					<a class="btn" role="button" href="list?category=10">양식</a>
-					<a class="btn" role="button" href="list?category=11">디저트</a>
+				<div class="col-12 mb-2" style="text-align: left;">
+					<a class="cat btn" role="button" href="list">전체</a> 
+					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
+					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
+					<a id="JAPANESE" class="cat btn" role="button" href="list?category=JAPANESE" >일식</a> 
+					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
+					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
+					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
+					<a id="CHICKEN" class="cat btn" role="button" href="list?category=CHICKEN" >치킨</a> 
+					<a id="FASTFOOD" class="cat btn" role="button" href="list?category=FASTFOOD" >패스트푸드</a>
+					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
+					<a id="WESTERN" class="cat btn" role="button" href="list?category=WESTERN">양식</a>
 				</div>
 			</div>
 
 			<div class="row mb-3">
-				<div class="col-7">
+				<div class="col-8">
 					<div class="row mb-3">
-							<div class="col-5 mb-3">
-								<div class="card m-2 sm-14 shadow bg-body rounded ">
-									<div class="embed-responsive embed-responsive-4by3">
-										<img src="/resources/image/cafe1.jpg"
-											class="card-img-top embed-responsive-item">
-									</div>
-									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px;">
-										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
-										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
+						<c:forEach var="store" items="${result.stores }">
+							<div class="col-5 mb-3 me-3">
+								<div class="card shadow" onclick="" style="cursor: pointer;">
+									<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
+								</div>
+								<div class="row">
+									<div class="col text-start mt-1">							
 										<div class="d-flex justify-content-between">
-											<p class="fs-6">카페</p>
+											<a class="link-dark fs-4 " style="text-decoration: none;"> ${store.name}</a>
+											<a class="fs-4" style="color: #FFC107; text-decoration: none;">${store.reviewAvg }</a>
+										</div>
+										<div class="d-flex justify-content-between">
+											<p class="fs-6 text-secondary">${store.category}</p>
 											<div>
-												<i class="bi bi-pencil-square">15 </i>
-												<i class="bi bi-star">78</i>
+												<i class="bi bi-pencil-square text-secondary">${store.reviewCnt} </i> 
+												<i class="bi bi-star text-secondary">${store.bookmarkCnt}</i>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							
-							<div class="col-5 mb-3">
-								<div class="card m-2 sm-14 shadow bg-body rounded ">
-									<div class="embed-responsive embed-responsive-4by3">
-										<img src="/resources/image/cafe1.jpg"
-											class="card-img-top embed-responsive-item">
-									</div>
-									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px ">
-										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
-										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
-										<div class="d-flex justify-content-between">
-											<p class="fs-6">카페</p>
-											<div>
-												<i class="bi bi-pencil-square">15 </i>
-												<i class="bi bi-star">78</i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-5 mb-3">
-								<div class="card m-2 sm-14 shadow bg-body rounded ">
-									<div class="embed-responsive embed-responsive-4by3">
-										<img src="/resources/image/cafe1.jpg"
-											class="card-img-top embed-responsive-item">
-									</div>
-									<div class="card-body text-start pb-0" style="cursor: pointer; font-weight: bold; padding: 8px ">
-										<a class="link-dark fs-5" style = "text-decoration: none;">망우로 30 </a>
-										<a class="fs-5" style="color: #FFC107; text-decoration: none;">4.7</a>
-										<div class="d-flex justify-content-between">
-											<p class="fs-6">카페</p>
-											<div>
-												<i class="bi bi-pencil-square">15 </i>
-												<i class="bi bi-star">78</i>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-					
-					
-						<c:forEach var="store" items="${result.stores}">
-							<div class="col-5 mb-5">
-								<div class="card m-2 sm-14 shadow bg-body rounded ">
-									<div class="embed-responsive embed-responsive-4by3">
-										<img src="/resources/image/cafe1.jpg"
-											class="card-img-top embed-responsive-item">
-									</div>
-									<div class="card-body" style="cursor: pointer; font-weight: bold;">
-										<p class="card-text">${store.name}</p>
-										<p class="card-text" style="color: #FFC107;">${store.reviewAvg}</p>
-									</div>
-								</div>
-							</div>
 						</c:forEach>
+	
 					</div>
 				</div>
 
-				<div class="col-1"></div>
 
-				<div class="col-4">
+				<div class="col-3">
 					<!-- 지도 -->
 					<div>
 					
-						<div id="map"
-							style="width: 400px; height: 400px;">
+						<div id="map" class="mb-4"
+							style="width: 100%; height: 400px;">
 						</div>
 
 					
 					</div>
-					
 
-					<div class="card text-center text-light font-weight-bold shadow mb-2" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3">관련 콘텐츠</p>
-						</div>
-					</div>
-					<div class="card text-center text-light font-weight-bold shadow mb-2" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
 						<div class="card-img-overlay d-flex justify-content-center align-items-center">
 							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 						</div>
 					</div>
-					<div class="card m-2 sm-14 shadow bg-body rounded ">
-						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								<img src="../resources/image/example.jpg"
-									class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body"
-								style="cursor: pointer; font-weight: bold;">
-								<p class="card-text">콘텐츠 설명</p>
-							</div>
+					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+						</div>
+					</div>
+					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+						</div>
+					</div>
+					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 						</div>
 					</div>
 
-					<div class="card m-2 sm-14 shadow bg-body rounded ">
-						<div class="card-header" style="text-align: left;">관련 콘텐츠</div>
-						<div class="card m-2 sm-14 shadow bg-body rounded ">
-							<div class="embed-responsive embed-responsive-4by3">
-								<img src="../resources/image/example.jpg"
-									class="card-img-top embed-responsive-item">
-							</div>
-							<div class="card-body"
-								style="cursor: pointer; font-weight: bold;">
-								<p class="card-text">콘텐츠 설명</p>
-							</div>
-						</div>
-					</div>
+
+
+<!-- 					<div class="card m-2 sm-14 shadow bg-body rounded "> -->
+<!-- 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div> -->
+<!-- 						<div class="card m-2 sm-14 shadow bg-body rounded "> -->
+<!-- 							<div class="embed-responsive embed-responsive-4by3"> -->
+<!-- 								<img src="../resources/image/example.jpg" -->
+<!-- 									class="card-img-top embed-responsive-item"> -->
+<!-- 							</div> -->
+<!-- 							<div class="card-body" -->
+<!-- 								style="cursor: pointer; font-weight: bold;"> -->
+<!-- 								<p class="card-text">콘텐츠 설명</p> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 			<div class="row mb-3">
 				<div class="col-12">
-					<nav>
-						<ul class="pagination justify-content-center">
-							<li class="page-item ${result.pagination.isfirst ? 'disabled' : ''}"><a
-								href="list?page=${result.pagination.prePage }" class="page-link">이전</a></li>
-								
-							<c:forEach var="num" items="${result.pagination}" begin="${result.pagination.beginPage }" end="${result.pagination.endPage }">
-								<li class="page-item ${currentPage eq num ? 'active' : '' }">
-									<a href="list?page=${num }" class="page-link">${num }</a>
+					<c:if test="${result.pagination.totalRows gt 0 }">
+						<c:set var="currentPage" value="${result.pagination.page }"></c:set>
+						<c:set var="first" value="${result.pagination.first }" />
+						<c:set var="last" value="${result.pagination.last }" />
+						<c:set var="prePage" value="${result.pagination.prePage }" />
+						<c:set var="nextPage" value="${result.pagination.nextPage }" />
+						<c:set var="beginPage" value="${result.pagination.beginPage }" />
+						<c:set var="endPage" value="${result.pagination.endPage }" />
+						<nav>
+							<ul class="pagination justify-content-center">
+								<li class="page-item ${first ? 'disabled' : '' }">
+									<a href="list?page=${prePage }" class="page-link" onclick="changePage(event,${prePage})">이전</a>
 								</li>
-							</c:forEach>
-							
-							<li class="page-item ${last ? 'disabled' : ''}"><a
-								href="list?page=${nextPage }" class="page-link">다음</a></li>
-						</ul>
-					</nav>
+								<c:forEach var="num" begin="${beginPage }" end="${endPage }">
+									<li class="page-item ${currentPage eq num ? 'active' : '' }">
+										<a href="" class="page-link" onclick="changePage(event, ${num})">${num }</a>
+									</li>
+								</c:forEach>
+								<li class="page-item ${last ? 'disabled' : '' }">
+									<a href="list?page=${nextPage }" class="page-link" onclick="changePage(event,${nextPage})">다음</a>
+								</li>
+							</ul>
+						</nav>
+					</c:if>
+					<div class="d-flex justify-content-center">
+						<form id="form-pagination" class="" method="get" action="list">
+							<input type="hidden" name="sort" value="${param.sort }">
+							<input type="hidden" name="page" value="${param.page }">
+							<input type="hidden" name="category" value="${param.category }">
+						</form>
+					</div>
+					
 				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
-	
-		function changeSort() {
-			let sort = document.querySelector("select[name=sort]").value;	
-// 			let sort = $(select[name=sort]).val();
-// 			$(select[name=sort]).val(sort);
+		
+		$(function(){
+			$(".cat").click(function(event){
+				event.preventDefault();
+				let category = $(this).attr("id");
+				$("input[name=category]").val(category);
+				$("input[name=page]").val(1);
+				document.querySelector("#form-pagination").submit();
+			})
+		})
 			
-			document.querySelector("input[name=sort]").value = sort;	
-			document.querySelector("input[name=page]").value = 1;		
-			document.querySelector("#form-employee-search").submit();	
+			
+		function changeSort() {
+			let sort = document.querySelector("select[name=sort]").value;
+			document.querySelector("input[name=sort]").value = sort;
+			document.querySelector("input[name=page]").value = 1;
+			
+			document.querySelector("#form-pagination").submit();
 		}
+		
+		function changePage(event, page){
+			event.preventDefault();
+			
+			document.querySelector("input[name=page]").value = page;			
+			document.querySelector("#form-pagination").submit();
+		}
+		
+		function changeCat(event, category){
+			event.preventDefault();
+			
+			let $cat = $(this).v
+			
+			document.querySelector("input[name=page]").value = 1;			
+			document.querySelector("input[name=category]").value = category;			
+			document.querySelector("#form-pagination").submit();
+		}
+		
+		
 	
 		<!--카카오 지도 -->
 		var container = document.getElementById('map');

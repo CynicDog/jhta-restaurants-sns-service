@@ -15,5 +15,8 @@ public class SearchedStore {
 	private int id;
 	private String name;
 	private double reviewAvg;
+	private int reviewCnt;
+	private int bookmarkCnt;
+	private String category;
 
 }

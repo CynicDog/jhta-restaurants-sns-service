@@ -37,18 +37,18 @@ public class Store {
         this.disabled = DISABLED.NO; // default to `NO`
     }
 
-//    public Store(String category) {
-//        if (CATEGORY.valueOf(category) != null) {
-//            // String
-//            this.category = CATEGORY.ASIAN.name();
-//        }
-//    }
+    public Store(String category) {
+        if (CATEGORY.valueOf(category) != null) {
+            // String
+            this.category = CATEGORY.ASIAN.name();
+        }
+    }
 
     public enum DISABLED {
         YES, NO
     }
 
-//    public enum CATEGORY {
-//        KOREAN, JAPANESE, CHINESE, ASIAN, WESTERN, FASTFOOD, SNACK, DESSERT, CHICKEN, PIZZA, BAR, ITALIAN
-//    }
+    public enum CATEGORY {
+        KOREAN, JAPANESE, CHINESE, ASIAN, WESTERN, FASTFOOD, SNACK, CHICKEN, BAR, ITALIAN
+    }
 }

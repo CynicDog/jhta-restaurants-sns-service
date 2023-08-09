@@ -3,7 +3,7 @@
 
 	<select id = "getAllStores" resultType="Store">
 		select
-			business_license	as businesslicense,
+			business_license	as businessLicense,
 			name				as name,
 			address				as address,
 			category			as category,
@@ -12,9 +12,9 @@
 			longitude			as longitude,
 			description			as description,
 			phone				as phone,
-			read_count			as readcount,
-			create_date			as createdate,
-			update_date			as updatedate,
+			read_count			as readCount,
+			create_date			as createDate,
+			update_date			as updateDate,
 			owner_id			as "owner.id",
 			disabled			as disabled
 
@@ -22,94 +22,84 @@
 			STORES
 	</select>
 
-<!--		일단 외부는 ROWNUMBER 포함한 테이블로 'BEGIN~ROWNUMBER~END'
-			내부는
-			SELECT 필요한거, ROWNUMBER로 정렬 ORDERBY(평점-리뷰테이블에서 평균(일단 이거만.),즐겨찾기-북마크테이블,리뷰순-리뷰테이블)
-			FROM STORES, STORE_CATEGORY,
-			WHERE 카테고리~~ AND 키워드~~ 가게 이름으로 고정하자.
-		-->
-	<!-- 카테고리 적용, 리뷰평점 순 정렬, 페이지네이션 적용 -->
-
 
 	<select id = "getStores" parameterType="map" resultType="SearchedStore">
 		select *
 		from (
-				select
-		            id      			as id,
-		            name    			as name,
-		           	review_avg			as reviewAvg,
-		            row_number() over (order by review_avg desc) as rownum
-
-		        from
-		        	(
-		        	 select S.id,
-		        	 		ifnull(review_avg,0) review_avg,
-		        	 		S.name
-		        	 from(
-		        	 	(select store_id, avg(rating) as review_avg
-			        	 from REVIEWS
-			        	 group by store_id) R
-			        	 right join STORES S on R.store_id = S.id
-		        	 )
-
-					where
-
-						S.category = #{category}
-
-					 ) as TEMP) as TEMP2
-
-			where rownum between #{begin} and #{end}
+						select
+				            id      			as id,
+				            name    			as name,
+				           	review_avg			as reviewAvg,
+				           	review_cnt			as reviewCnt,
+				           	bookmark_cnt		as bookmarkCnt,
+				           	category			as category,
+							<choose>
+								<when test="sort == 'rating'">
+									row_number() over (order by review_avg desc) row_num
+								</when>
+								<when test="sort == 'bookmark'">
+									row_number() over (order by bookmark_cnt desc) row_num
+								</when>
+								<when test="sort == 'review'">
+									row_number() over (order by review_cnt desc) row_num
+								</when>
+							</choose>
+				        from
+				        	 (select id,
+				        	 		name,
+				        	 		category,
+				        	 		IFNULL(review_cnt,0) review_cnt,
+				        	 		IFNULL(review_avg,0) review_avg,
+				        	 		IFNULL(bookmark_cnt,0) bookmark_cnt
+				        	 	
+				        	 from
+					        	   STORES S left join 
+					        	   (select 
+						        	 	store_id, 
+						        	 	AVG(rating) as review_avg, 
+						        	 	COUNT(*) as review_cnt
+							        from REVIEWS
+							        group by store_id
+						           ) R on S.id = R.store_id
+						        	 
+						        	 left join
+						        	 (
+						        	 	select
+							        	 	store_id,
+							        	 	COUNT(*) as bookmark_cnt
+						        	 	
+							        	from BOOKMARKS
+							        	group by store_id
+						        	 ) B on S.id = B.store_id
+							<where>
+								<if test="category != null">
+								     S.category =  #{category}
+							    </if>
+							</where>
+							) as SUB
+						   
+			) as TEMP
+		
+		where row_num between #{begin} and #{end};
 
 	</select>
 
-<!--
-	<select id = "getStores" parameterType="map" resultType="kr.co.jhta.restaurants_service.dto.SearchedStore">
-		select *
-		from (
-			select
-	            S.ID      				as id,
-	            S.NAME    				as name,
-	           	nvl(R.REVIEW_AVG,0)		as reviewAvg,
-
-	            ROW_NUMBER() over (order by R.REVIEW_AVG DESC) as ROW_NUMBER
-
-	        from
-	        	(select STORE_ID, avg(RATING) REVIEW_AVG from REVIEWS group by STORE_ID) R,
-	        	STORES S
-
-			where
-				S.ID = R.STORE_ID and
-
-				<if test="category =! null">
-					S.CATEGORY = #{category}
-				</if>
-					S.NAME = #{keyword}
-			 )
-
-		where ROW_NUMBER between #{begin} and #{end}
-
-	</select>
--->
 
 
 	<!--키워드검색,  카테고리화 할때 전체 row 자체가 해당 되는 row만 잡혀야함 -->
 	<select id="getTotalRows" parameterType="map" resultType="int">
+	
 	  select count(*)
 	  from STORES
-	  <where>
-	  	<choose>
-
-			<when test="category ge 1 and category le 11">
-				CATEGORY =  #{category}
-			</when>
-
-		</choose>
- <!--
-	    <if test="keyword != null">
-		     keyword가 null이 아닌 경우에만 NAME 컬럼의 값이 keyword를 포함하는지 검사
-		     NAME like concat('%', #{keyword}, '%')
-	    </if>
--->
-	  </where>
+		  <where>
+		  	<if test="category != null">
+			     category =  #{category}
+		    </if>
+		  	<if test="keyword != null">
+			     and name like CONCAT('%', #{keyword}, '%')
+		    </if>
+	
+		  </where>
+	 
 	</select>
 </mapper>
