@@ -15,7 +15,7 @@ public interface StoreMapper {
 	
 	List<SearchedStore> getStores(Map<String,Object> param);
 	
-	Store getStoreByNo();
+	Store getStoreById(int storeId);
 	
 	void updateStore(Store store);
 	

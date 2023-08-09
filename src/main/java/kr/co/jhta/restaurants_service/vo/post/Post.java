@@ -18,7 +18,7 @@ public class Post {
 	@Id
 	private int id;
 	private String title;
-	private String content;
+	private String subTitle;
 	private Date createDate;
 	private Date updateDate;
 	private User customer;
