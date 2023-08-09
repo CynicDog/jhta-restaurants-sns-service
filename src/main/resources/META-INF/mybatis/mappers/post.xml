@@ -1,0 +1,71 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.PostMapper">
+
+	<select id="getAllPost" resultType="Post">
+		select 
+			id				as id,
+			title			as title,
+			content			as content,
+			create_date		as createDate,
+			update_date		as updateDate,
+			user_id			as "customer.id",
+			store_id		as "store.id",
+			report_count	as reportCount,
+			disabled		as disabled,
+			blocked			as blocked
+		from
+			post
+		order by id asc	
+	</select>
+	
+	<select id="getPostById" parameterType="int" resultType="Post">
+		select 
+			id				as id,
+			title			as title,
+			content			as content,
+			create_date		as createDate,
+			update_date		as updateDate,
+			user_id			as "customer.id",
+			store_id		as "store.id",
+			report_count	as reportCount,
+			disabled		as disabled,
+			blocked			as blocked
+		from
+			post
+		where	
+			id = #{id}
+	</select>
+	
+	<insert id="insertPost" parameterType="Post">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+		insert into post
+		(title, content, user_id, store_id, report_count, disabled, blocked)
+		values
+		(#{title}, #{content}, #{"customer.id"}, #{"store.id"}, #{reportCount}, #{disabled}, #{blocked})
+		
+	</insert>
+	
+	<update id="updatePost" parameterType="int">
+		update
+            post
+        set
+            title = #{title},
+            content = #{content},
+            update_date = #{updateDate},
+            report_count = #{reportCount},
+            disabled = #{disabled},
+            blocked = #{blocked}
+        where
+            id = #{id}
+	</update>
+	
+	<delete id="deletePost" parameterType="int">
+		delete from 
+			post
+		where 
+			id = #{id}
+	</delete>
+	
+</mapper>

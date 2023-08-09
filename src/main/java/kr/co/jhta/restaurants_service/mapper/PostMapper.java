@@ -9,7 +9,7 @@ import kr.co.jhta.restaurants_service.vo.post.Post;
 
 @Mapper
 public interface PostMapper {
-	void insertPost(Post post);
+	void insertPost(List<Post> posts);
 	
 	void updatePost(int postId);
 	
