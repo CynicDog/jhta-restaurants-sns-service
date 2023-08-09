@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -71,37 +73,40 @@ public class PostService {
 //	}
 	
 	
-    public void insertPost(AddPostForm form) throws IOException {
-       
-		Post post = new Post();
-		post.setTitle(form.getTitle());
-		post.setSubTitle(form.getSubTitle());
+    public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
 		
 		postmapper.insertPost(post);
-		
-		List<String> contents = form.getContent();
-		List<Integer> storeid = form.getStoreId();
-		List<MultipartFile> chooseFiles = form.getChooseFile();
-		
-		for (int i=0; i<contents.size(); i++) {
-			PostData postData = new PostData();
-			postData.setPost(post);
-			postData.setContent(contents.get(i));
-		
-//			Store store = storeMapper.getStoreById(stores.get(i).getId());
-//			postData.setStore(store);
-			
-			Store store = storeMapper.getStoreById(storeid.get(i));
-			if (store != null) {
-			    postData.setStore(store);
-			} else {
-			    throw new RuntimeException("Store not found");
-			}
-			
-			postData.setPictureFile(saveFile(chooseFiles.get(i)));
-			
-			postDataMapper.insertPostData(postData);
-		}
+
+		// TODO: each PostDataCommand converted to PostData then save it.
+//		postData.stream()
+//				.map(postDatum -> {
+//					postDatum.setPost(post);
+//					return postDatum;
+//				}).map(postDatum -> {
+//
+//					Store store = storeMapper.getStoreById(postDatum.getStore().getId());
+//					postDatum.setStore(store);
+//				})
+
+//		for (int i = 0; i < postData.size(); i++) {
+//
+//			postData.setPost(post);
+//			postData.setContent(contents.get(i));
+//
+////			Store store = storeMapper.getStoreById(stores.get(i).getId());
+////			postData.setStore(store);
+//
+//			Store store = storeMapper.getStoreById(storeid.get(i));
+//			if (store != null) {
+//			    postData.setStore(store);
+//			} else {
+//			    throw new RuntimeException("Store not found");
+//			}
+//
+//			postData.setPictureFile(saveFile(chooseFiles.get(i)));
+//
+//			postDataMapper.insertPostData(postData);
+//		}
     }
 	
 	public void updatePost(String title, String content, String pictureName) {
