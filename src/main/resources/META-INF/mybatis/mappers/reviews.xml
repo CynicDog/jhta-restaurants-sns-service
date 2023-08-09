@@ -7,13 +7,7 @@
 	  values
 	  (#{rating}, #{content}, #{likedCount}, #{reportCount}, #{customer.id}, #{store.id})
 	</insert>
-	
-	<insert id="insertReviewPicture" parameterType="Review">
-	  insert into REVIEW_PICTURES
-	  (picture_name, review_id)
-	  values
-	  (#{pictureName}, #{review.id})
-	</insert>
+
 	
 	<select id = "getReviewById" parameterType="int" resultType="Review">
 		select 
