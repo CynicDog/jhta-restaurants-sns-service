@@ -34,7 +34,9 @@ html, body {
 				<div class="row m-3">
 					<div class="col-3">
 						<p class="m-1 text-center">리뷰추천수</p>
-						<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님" data-bs-content="Follow">
+							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						</a>
 					</div>
 					<div class="col-2">
 						<p class="mb-5 my-5" style="font-size:30px;"><strong>정손님</strong></p>
@@ -144,6 +146,13 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
+	// popover 자바스크립트 
+	document.addEventListener("DOMContentLoaded", () => {
+		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+		const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+	})
+
+	
 // 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
 let modal = new bootstrap.Modal("#Modal");
 // 전체 이미지 갯수를 조회해서 대입한다.
@@ -192,10 +201,6 @@ $("#nextButton").click(function() {
 $("#span-close-modal").click(function() {
 	modal.hide();
 });
-
-const popover = new bootstrap.Popover('.popover-dismiss', {
-	  trigger: 'focus'
-	})
 
 /*
 	var modal = document.getElementById("Modal");
