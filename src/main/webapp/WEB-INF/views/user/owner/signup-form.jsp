@@ -25,7 +25,15 @@
                         <form method="post" action="signup" modelAttribute="userCommand">
                             <div class="form-floating my-3">
                                 <input type="text" class="form-control" name="username" id="username" placeholder=""/>
-                                <label class="fw-lighter" for="username">유저 아이디</label>
+                                <label class="fw-lighter d-flex" for="username">유저 아이디
+                                    <div class="ms-auto">
+                                        <div id="usernameLoadingSpinner"
+                                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                             style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
                             <div class="form-floating my-3">
                                 <input type="password" class="form-control" name="password" id="password" placeholder=""/>
@@ -99,6 +107,7 @@
         const birthdayInput = document.querySelector('input[name="birthday"]');
         const genderInput = document.querySelector('select[name="gender"]');
 
+        const usernameSpinner = usernameInput.parentElement.querySelector('.spinner-border')
         const emailSpinner = emailInput.parentElement.querySelector('.spinner-border');
         const phoneSpinner = phoneInput.parentElement.querySelector('.spinner-border');
 
@@ -157,11 +166,30 @@
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
                 validationStatus.usernameInput = false;
+            } else if (this.value.trim().includes(' ')) {
+                displayErrorMessage(this, "사용자 이름에 공백을 포함할 수 없습니다.");
+                validationStatus.usernameInput = false;
             } else {
-                removeSuccessMessage(this);
-                displaySuccessMessage(this);
+                const username = encodeURIComponent(this.value.trim())
+                usernameSpinner.style.display = "block";
 
-                validationStatus.usernameInput = true;
+                fetch(`/user/check-username?username=\${username}`, {
+                    method: "GET"
+                }).then(response => {
+                    usernameSpinner.style.display = "none";
+                    if (response.ok) {
+                        removeSuccessMessage(this);
+                        displaySuccessMessage(this);
+
+                        validationStatus.usernameInput = true;
+                        updateSubmitButton();
+                    } else {
+                        removeErrorMessage(this)
+                        displayErrorMessage(this, "이미 사용 중인 사용자 이름입니다.");
+                        validationStatus.usernameInput = false;
+                        updateSubmitButton();
+                    }
+                })
             }
             updateSubmitButton();
         });
