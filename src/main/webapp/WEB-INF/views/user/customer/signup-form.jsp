@@ -102,20 +102,22 @@
                                     </div>
                                 </div>
                                 <div id="otpInputToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
-                                    <div class="d-flex">
+<%--                                    <div class="d-flex">--%>
                                         <div class="toast-body">
                                             <div class="row">
                                                 <div class="col">
                                                     <label class="fw-lighter" for="otp">OTP</label>
                                                     <input class="form-control-plaintext" id="otp" name="otp">
+                                                    <div class="text-end">
+                                                        <i class="fs-6 bi bi-send m-1" style="color: #838383"
+                                                           onclick="otpValidationRequest()"></i>
+                                                    </div>
                                                 </div>
+
                                             </div>
-                                            <div class="text-start">
-                                                <i class="fs-6 bi bi-send m-1" style="color: #838383"
-                                                   onclick="otpValidationRequest()"></i>
-                                            </div>
+
                                         </div>
-                                    </div>
+<%--                                    </div>--%>
                                 </div>
                             </div>
                             <div class="toast-container position-fixed bottom-0 end-0 p-4">
