@@ -67,6 +67,8 @@ public class PostController {
 
 		postService.insertPost(new Post(title, subTitle, securityUser.getUser()), postDataCommand);
 
+		// TODO: Session Clear
+
 		return null;
 	}
 

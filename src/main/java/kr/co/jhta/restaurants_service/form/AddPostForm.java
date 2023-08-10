@@ -9,14 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter@Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class AddPostForm {
 
 	private String title;
 	private String subTitle;
-	
-	private List<Integer> storeId;
-    private List<String> content;
-    private List<MultipartFile> chooseFile;
 }
