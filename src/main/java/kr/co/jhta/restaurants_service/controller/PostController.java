@@ -43,7 +43,7 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("/register-post-data")
-	public ResponseEntity insertPostData(
+	public ResponseEntity<String> insertPostData(
 			MultipartFile chooseFile, int storeId, String content,
 			HttpSession httpSession) throws IOException{
 
