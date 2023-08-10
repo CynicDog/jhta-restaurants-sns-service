@@ -41,7 +41,7 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/detail")
-	public String reviewDetail(Model model, int ReviewId) {
+	public String reviewDetail(Model model) {
 		 
 //		 List<ReviewPicture> reviewPictures = reviewService.getReviewPicturesByReviewId(ReviewId);
 //		 model.addAttribute("reviewPicture", reviewPictures);
