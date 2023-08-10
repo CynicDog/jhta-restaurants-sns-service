@@ -22,7 +22,6 @@ public class Post {
 	private Date createDate;
 	private Date updateDate;
 	private User customer;
-	private Store store;
 	private int reportCount;
 	private int likedCount;
 	private DISABLED disabled;
@@ -34,6 +33,12 @@ public class Post {
 		this.updateDate = new Date(); // default to current time
 		this.disabled = Post.DISABLED.NO; // default to `NO`
 		this.blocked = Post.BLOCKED.NO; // default to `NO`
+	}
+
+	public Post(String title, String subTitle, User customer) {
+		this.title = title;
+		this.subTitle = subTitle;
+		this.customer = customer;
 	}
 
 	public enum DISABLED  {

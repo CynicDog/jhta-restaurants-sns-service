@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.PostDataMapper">
+	<insert id="insertPostData" parameterType="PostData">
+	    INSERT INTO POST_DATA
+	    	(post_id, store_id, content, picture_file)
+	    VALUES 
+	    	(#{post.id}, #{store.id}, #{content}, #{pictureFile})
+	</insert>
+</mapper>

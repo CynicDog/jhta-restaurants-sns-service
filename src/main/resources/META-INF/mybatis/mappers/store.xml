@@ -116,8 +116,28 @@
 		  	<if test="keyword != null">
 			     and name like CONCAT('%', #{keyword}, '%')
 		    </if>
-	
 		  </where>
-	 
+	</select>
+
+	<select id="getStoreById" parameterType="int" resultType="Store">
+		select
+			id 					as id,
+			business_license	as businessLicense,
+			name				as name,
+			address				as address,
+			category			as category,
+			zipcode				as zipcode,
+			latitude			as latitude,
+			longitude			as longitude,
+			description			as description,
+			phone				as phone,
+			read_count			as readCount,
+			create_date			as createDate,
+			update_date			as updateDate,
+			owner_id			as "owner.id",
+			disabled			as disabled
+		from
+			STORES
+		where id = #{value}
 	</select>
 </mapper>
