@@ -116,20 +116,20 @@ CREATE TABLE REVIEW_REPORTS (
                                FOREIGN KEY (admin_id) REFERENCES USERS (id)
 );
 
-CREATE TABLE POSTS (
-                       id INT PRIMARY KEY AUTO_INCREMENT,
-                       title VARCHAR(255) NOT NULL,
-                       content TEXT NOT NULL,
-                       create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                       update_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                       customer_id INT NOT NULL,
-                       store_id INT NOT NULL,
-                       report_count INT DEFAULT 0,
-                       liked_count INT DEFAULT 0,
-                       disabled ENUM('NO', 'YES') NOT NULL DEFAULT 'NO',
-                       blocked ENUM('NO', 'YES') NOT NULL DEFAULT 'NO',
-                       FOREIGN KEY (customer_id) REFERENCES USERS(id),
-                       FOREIGN KEY (customer_id) REFERENCES STORES(id)
+CREATE TABLE `POSTS` (
+                         `id` int NOT NULL AUTO_INCREMENT,
+                         `title` varchar(255) NOT NULL,
+                         `sub_title` varchar(100) NOT NULL,
+                         `create_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                         `update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                         `customer_id` int DEFAULT NULL,
+                         `report_count` int DEFAULT '0',
+                         `liked_count` int DEFAULT '0',
+                         `disabled` enum('NO','YES') NOT NULL DEFAULT 'NO',
+                         `blocked` enum('NO','YES') NOT NULL DEFAULT 'NO',
+                         PRIMARY KEY (`id`),
+                         KEY `POSTS_FK` (`customer_id`),
+                         CONSTRAINT `POSTS_FK` FOREIGN KEY (`customer_id`) REFERENCES `USERS` (`id`)
 );
 
 CREATE TABLE POST_COMMENTS (

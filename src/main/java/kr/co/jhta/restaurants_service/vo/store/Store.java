@@ -51,4 +51,25 @@ public class Store {
     public enum CATEGORY {
         KOREAN, JAPANESE, CHINESE, ASIAN, WESTERN, FASTFOOD, SNACK, CHICKEN, BAR, ITALIAN
     }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", businessLicense='" + businessLicense + '\'' +
+                ", address='" + address + '\'' +
+                ", zipcode=" + zipcode +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", description='" + description + '\'' +
+                ", phone='" + phone + '\'' +
+                ", readCount=" + readCount +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
+                ", disabled=" + disabled +
+                ", owner=" + owner +
+                '}';
+    }
 }

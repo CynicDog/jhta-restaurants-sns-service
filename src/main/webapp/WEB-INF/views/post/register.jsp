@@ -17,8 +17,7 @@
 <%@ include file="../common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
-        <form method="post" enctype="multipart/form-data" action="register">
-
+        <form method="post" action="register">
             <div class="row justify-content-center align-items-center mt-5">
                 <div class="col-md-8">
                     <div class="card shadow p-3 mb-5 rounded">
@@ -48,12 +47,12 @@
                                 <div class="col-4">
                                     <div class="pos">
                                         <div class="text-center">
-                                            <label for="imageFile">
+                                            <label for="imageFile-0">
                                                 <a class="btn"><i class="bi bi-plus-square-dotted"
                                                                   style="font-size:30px;"></i></a>
                                             </label>
                                         </div>
-                                        <input style="visibility: hidden" type="file" id="imageFile" name="chooseFile"
+                                        <input style="visibility: hidden" type="file" id="imageFile-0" name="chooseFile"
                                                accept="image/*">
                                     </div>
                                     <div class="pos" style="display:none;">
@@ -91,7 +90,7 @@
                 <div class="col-md-8 text-end">
 
                     <a href="javascript:window.history.back();" class="btn btn-secondary">cancel</a>
-                    <button class="btn btn-secondary">submit</button>
+                    <button id="postSubmit" class="btn btn-secondary">submit</button>
                 </div>
             </div>
 
@@ -159,11 +158,11 @@
                                 <div class="col-4">
                                     <div class="pos">
                                         <div class="text-center">
-                                            <label for="imageFile">
+                                            <label for="imageFile-\${formIndex}">
                                                 <a class="btn"><i class="bi bi-plus-square-dotted" style="font-size:30px;"></i></a>
                                             </label>
                                         </div>
-                                        <input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*">
+                                        <input style="visibility: hidden" type="file" id="imageFile-\${formIndex}" name="chooseFile" accept="image/*">
                                     </div>
                                     <div class="pos" style="display:none;">
                                         <img class="img-thumbnail border-0" style="width: 231px;height: 225px;object-fit:cover;">
@@ -192,45 +191,86 @@
         $('#box').on('click', '.btn-delete', function () {
             $(this).closest('.card').remove();
         })
+    })
 
-        $('#box').on('click', '.btn-save', function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        const postSubmitButton = document.getElementById("postSubmit");
 
-            const card = $(this).closest('.card');
+        postSubmitButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const postTitle = document.getElementById("postTitle").value;
+            const postSubTitle = document.getElementById("postSubTitle").value;
 
-            // Find the specific input fields and textarea elements within the card
-            const chooseFileInput = card.find('input[name=chooseFile]')[0];
-            const storeIdInput = card.find('input[name=storeId]');
-            const contentTextarea = card.find('textarea[name=content]');
+            // TODO: Perform validation on postTitle and postSubTitle
 
-            $(this).preventDefault();
-
-            const formData = {
-                chooseFile: chooseFileInput.files[0],
-                storeId: storeIdInput.val(),
-                content: contentTextarea.val()
+            const postForm = {
+                postTitle: postTitle,
+                postSubtitle: postSubTitle
             };
 
-            const formDataToSend = new FormData();
-            formDataToSend.append('chooseFile', formData.chooseFile);
-            formDataToSend.append('storeId', formData.storeId);
-            formDataToSend.append('content', formData.content);
-
-            fetch('/post/register-post-data', {
+            // Send a POST request using fetch()
+            fetch('/post/register-post', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: formDataToSend
-            }).then(response => {
-                if (response.ok) {
-                    // do nothing
-                }
-            }).catch(error => {
-                // TODO: error handling
+                body: JSON.stringify(postForm)
             })
-        })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/";
+                    } else {
+                        // TODO: Handle error response
+                        console.error("Form submission failed.");
+                    }
+                })
+                .catch(error => {
+                    // TODO: Handle fetch error
+                    console.error("Error submitting form:", error);
+                });
+        });
 
-    })
+        const box = document.getElementById('box');
+        box.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-save')) {
+                event.preventDefault();
+                event.stopPropagation();
+                event.target.disabled = true;
+
+                const card = event.target.closest('.card');
+
+                const inputsAndTextarea = card.querySelectorAll('input, textarea');
+                inputsAndTextarea.forEach(element => {
+                    element.disabled = true;
+                });
+
+                const chooseFileInput = card.querySelector('input[name=chooseFile]');
+                const storeIdInput = card.querySelector('input[name=storeId]');
+                const contentTextarea = card.querySelector('textarea[name=content]');
+
+                const formDataToSend = new FormData();
+                formDataToSend.append('chooseFile', chooseFileInput.files[0]);
+                formDataToSend.append('storeId', storeIdInput.value);
+                formDataToSend.append('content', contentTextarea.value);
+
+                fetch('/post/register-post-data', {
+                    method: 'POST',
+                    body: formDataToSend
+                })
+                    .then(response => {
+                        if (response.ok) { // SC_200
+                            // TODO: success toast
+                        }
+                    })
+                    .catch(error => {
+                        // TODO: error handling
+                    });
+            }
+        });
+
+    });
+
 </script>
 
 </body>

@@ -40,18 +40,11 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
 		insert into POSTS
-		(title, sub_title)
+		(title, sub_title, customer_id)
 		values
-		(#{title}, #{subTitle})
+		(#{title}, #{subTitle}, #{customer.id})
 	</insert>
-	
-	<insert id="insertPostData" parameterType="kr.co.jhta.restaurants_service.vo.post.PostData">
-	    INSERT INTO POST_DATA
-	    (post_id, store_id, content, picture_file) 
-	    VALUES 
-	    (#{post.id}, #{store.id}, #{content}, #{pictureFile})
-	</insert>
-	
+
 	<update id="updatePost" parameterType="int">
 		update
             post
