@@ -212,6 +212,9 @@
             if (this.value.trim() === '') {
                 displayErrorMessage(this, "필수 입력 사항입니다.");
                 validationStatus.passwordInput = false;
+            } else if (this.value.trim().includes(' ')) {
+                displayErrorMessage(this, "사용자 비밀번호에 공백을 포함할 수 없습니다.");
+                validationStatus.usernameInput = false;
             } else {
                 removeSuccessMessage(this);
                 displaySuccessMessage(this);

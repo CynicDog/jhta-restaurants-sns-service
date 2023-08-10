@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -16,47 +16,186 @@
 <body>
 <%@ include file="../common/navbar.jsp" %>
 <div class="container">
-    <div>
-        <div class="row my-2 justify-content-center align-items-center">
-            <div class="col-8">
-                <div class="card shadow my-5">
-                    <div class="card-header">로그인</div>
-                    <div class="card-body">
-                        <div class="row my-2 p-2">
-                            <form method="post" action="login">
-                                <div class="form-group my-3">
-                                    <input type="text" class="form-control" name="username" placeholder="username">
-                                </div>
-                                <div class="form-group my-3">
-                                    <input type="password" class="form-control" name="password" placeholder="password">
-                                </div>
-                                <div class="text-end my-2">
-                                    <button class="btn btn-outline-secondary btn-sm">login</button>
-                                </div>
-                            </form>
-                        </div>
+    <div class="row my-4 justify-content-center align-items-center">
+        <div class="col-md-5 my-4">
+            <div class="card shadow my-5">
+                <div class="fw-lighter m-4 p-2">
+                    <span class="fs-3">로그인</span>
+                </div>
+                <div class="card-body">
+                    <div class="row p-2">
+                        <form method="post" action="login">
+                            <div class="form-floating my-2">
+                                <input id="username-input" type="text" class="form-control-plaintext my-1"
+                                       name="username" placeholder="username">
+                                <label for="username-input">username</label>
+                            </div>
+                            <div class="form-floating my-2">
+                                <input id="password-input" type="password" class="form-control-plaintext"
+                                       name="password" placeholder="password">
+                                <label for="username-input">password</label>
+                            </div>
+                            <div class="text-end my-2">
+                                <button id="login-btn" class="btn btn-sm border-light-subtle" disabled>
+                                    <span id="loginRequest" class="fw-light">login</span>
+                                    <div id="loginLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x mt-5 pt-5">
+        <div id="badCredentialsToast" class="toast align-items-center text-bg-secondary border-0"
+             role="alert"
+             aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    로그인 정보가 올바르지 않습니다.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <div id="authenticationEntryToast" class="toast align-items-center text-bg-primary border-0"
+             role="alert"
+             aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    로그인을 먼저 해주세요 :)
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <div id="deniedToast" class="toast align-items-center text-bg-secondary border-0"
+             role="alert"
+             aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    접근할 수 없는 페이지입니다 😢
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
 </div>
-<c:choose>
-    <c:when test="${param.error eq 'fail'}">
-        <script>
-            alert("Bad Credentials");
-        </script>
-    </c:when>
-    <c:when test="${param.error eq 'denied'}">
-        <script>
-            alert("You may need to be authenticated first.");
-        </script>
-    </c:when>
-    <c:when test="${param.error eq 'forbidden'}">
-        <script>
-            alert("Not allowed with the granted authority of yours.");
-        </script>
-    </c:when>
-</c:choose>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const usernameInput = document.querySelector('input[name="username"]');
+        const passwordInput = document.querySelector('input[name="password"]');
+        const loginButton = document.getElementById('login-btn');
+        const buttonMessage = document.getElementById("loginRequest");
+        const loginSpinner = document.querySelector('.spinner-border')
+
+        let validationStatus = {
+            usernameInput: false,
+            passwordInput: false
+        }
+
+        usernameInput.addEventListener("blur", function () {
+            if (this.value.trim() === '') {
+                validationStatus.usernameInput = false;
+            } else if (this.value.trim().includes(' ')) {
+                validationStatus.usernameInput = false;
+            } else {
+                validationStatus.usernameInput = true;
+            }
+            updateLoginButton();
+        })
+
+        passwordInput.addEventListener("blur", function () {
+            if (this.value.trim() === '') {
+                validationStatus.passwordInput = false;
+            } else if (this.value.trim().includes(' ')) {
+                validationStatus.passwordInput = false;
+            } else {
+                validationStatus.passwordInput = true;
+            }
+            updateLoginButton();
+        })
+
+        loginButton.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            if (Object.values(validationStatus).some(status => status === false)) {
+                // do nothing
+            } else {
+                loginButton.setAttribute("disabled", "disabled");
+                buttonMessage.textContent = "";
+                loginSpinner.style.display = "block"
+
+                fetch("/user/login", {
+                    method: "POST",
+                    headers: {
+                        "Connection": "keep-alive",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams({
+                        "username": usernameInput.value,
+                        "password": passwordInput.value
+                    }).toString()
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.href = "/"
+                    } else {
+
+                        loginSpinner.style.display = "none";
+                        buttonMessage.textContent = "login";
+
+                        // response from `RestAuthenticationFailureHandler`
+                        badCredentialsToast()
+
+                        usernameInput.value = "";
+                        passwordInput.value = "";
+                    }
+                })
+            }
+        })
+
+        function updateLoginButton() {
+            if (Object.values(validationStatus).every(status => status === true)) {
+                loginButton.removeAttribute("disabled");
+            } else {
+                loginButton.setAttribute("disabled", "disabled");
+            }
+        }
+
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("error") === "fail") {
+            badCredentialsToast();
+        } else if (params.get("error") === "anonymous") {
+            authenticationEntryToast();
+        } else if (params.get("error") === "denied") {
+            deniedToast();
+        }
+
+        function badCredentialsToast() {
+            let badCredentialsToast = document.getElementById('badCredentialsToast')
+            const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(badCredentialsToast)
+            toastSentBootstrap.show()
+        }
+
+        function authenticationEntryToast() {
+            let authenticationEntryToast = document.getElementById('authenticationEntryToast')
+            const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(authenticationEntryToast)
+            toastSentBootstrap.show()
+        }
+
+        function deniedToast() {
+            let deniedToast = document.getElementById('deniedToast')
+            const toastSentBootstrap = bootstrap.Toast.getOrCreateInstance(deniedToast)
+            toastSentBootstrap.show()
+        }
+    })
+</script>
 </body>
 </html>
