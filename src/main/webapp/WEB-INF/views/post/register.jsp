@@ -27,88 +27,89 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="form-floating">
-                                    <input class="form-control-plaintext mb-4" placeholder="Leave a comment here" name="title"
+                                    <input class="form-control-plaintext mb-4" placeholder="Leave a comment here"
+                                           name="title"
                                            id="postTitle">
                                     <label for="postTitle">제목을 작성해 주세요!</label>
                                 </div>
                                 <div class="form-floating mb-5">
-                                    <input class="form-control-plaintext" placeholder="Leave a comment here" name="subTitle"
+                                    <input class="form-control-plaintext" placeholder="Leave a comment here"
+                                           name="subTitle"
                                            id="postSubTitle">
                                     <label for="postSubTitle">소제목을 작성해 주세요!</label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md" id="box">
-			                    <div class="card shadow p-3 mb-5 rounded">
-			                        <div class="card-body justify-content-center align-items-center">
-			                            <div class="row justify-content-center align-items-center">
-			                                <div class="col-4">
-			                                    <div class="pos">
-			                                        <div class="text-center">
-													    <label for="imageFile-0">
-														    <a class="btn"><i class="bi bi-plus-square-dotted" style="font-size:30px;"></i></a>
-														</label>
-			                                        </div>
-			                                        <input style="visibility: hidden;" type="file" id="imageFile-0" name="chooseFile"
-			                                               accept="image/*">
-			                                    </div>
-			                                    <div class="text-center" style="display:none;">
-			                                        <img class="img-thumbnail border-0"
-			                                             style="width: 245px;height: 245px;object-fit:cover;margin-top:-55px">
-			                                    </div>
-			                                </div>
-			                                <div class="col-8">
-			                                    <div class="form-floating">
-			                                        <input id="storeIdInput" class="form-control-plaintext mb-4" placeholder="가게명을 작성해주세요." name="storeId">
-			                                        <label for="storeIdInput">가게명을 작성해주세요 :)</label>
-			                                    </div>
-												<div class="form-floating">
-				                                    <textarea class="form-control-plaintext" placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
-				                                              name="content" style="min-height:10rem"></textarea>
-				                                    <label for="storeIdInput">원하는 글을 작성해주세요</label>
-			                                    </div>       
-			                                    <div class="row">
-			                                        <div class="col-12 text-end mt-4">
-			                                            <button class="btn btn-outline-secondary btn-delete">delete</button>
-			                                            <button class="btn btn-outline-secondary btn-save">save</button>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
-		
-			                <div class="col-md">
-			                    <div class="card shadow p-3 mb-5 rounded">
-			                        <div class="card-body">
-			                            <div class="card-body text-center ">
-			                                <a class="btn" id="btn-add-field">
-			                                    <i class="bi bi-plus-square-dotted" style="font-size:30px;"></i>
-			                                </a>
-			                            </div>
-			                        </div>
-			                    </div>
-			                </div>
+                                <div class="card shadow p-3 mb-5 rounded">
+                                    <div class="card-body justify-content-center align-items-center">
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-4">
+                                                <div class="pos">
+                                                    <div class="text-center">
+                                                        <label for="imageFile-0">
+                                                            <a class="btn"><i class="bi bi-plus-square-dotted"
+                                                                              style="font-size:30px;"></i></a>
+                                                        </label>
+                                                    </div>
+                                                    <input style="visibility: hidden;" type="file" id="imageFile-0"
+                                                           name="chooseFile"
+                                                           accept="image/*">
+                                                </div>
+                                                <div class="text-center" style="display:none;">
+                                                    <img class="img-thumbnail border-0"
+                                                         style="width: 245px;height: 245px;object-fit:cover;margin-top:-55px">
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="form-floating">
+                                                    <input id="storeIdInput" class="form-control-plaintext mb-4"
+                                                           placeholder="가게명을 작성해주세요." name="storeId">
+                                                    <label for="storeIdInput">가게명을 작성해주세요 :)</label>
+                                                </div>
+                                                <div class="form-floating">
+				                                    <textarea class="form-control-plaintext"
+                                                              placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
+                                                              name="content" style="min-height:10rem"></textarea>
+                                                    <label for="storeIdInput">원하는 글을 작성해주세요</label>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 text-end mt-4">
+                                                        <button class="btn btn-outline-secondary btn-delete">delete
+                                                        </button>
+                                                        <button class="btn btn-outline-secondary btn-save">save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md">
+                                <div class="card shadow p-3 mb-5 rounded">
+                                    <div class="card-body">
+                                        <div class="card-body text-center ">
+                                            <a class="btn" id="btn-add-field">
+                                                <i class="bi bi-plus-square-dotted" style="font-size:30px;"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center my-3 pt-4">
-                                <button id="signupButton" class="btn btn-light btn-sm" disabled>
-                                    <span id="otpRequest" class="fw-lighter">
-                                        OTP
-                                    </span>
-                                    <div id="otpLoadingSpinner"
-                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
-                                         style="display: none;">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </button>
-                            </div>
                 <div class="col-md-10 text-end">
-
                     <a href="javascript:window.history.back();" class="btn btn-secondary">cancel</a>
-                    <button id="postSubmit" class="btn btn-secondary">submit</button>
+                    <button id="postSubmit" class="btn border-light-subtle">
+                        <div id="submitRequest">submit</div>
+                        <div id="submitLoadingSpinner"
+                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                             style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>
                 </div>
             </div>
 
@@ -192,7 +193,7 @@
                                     <div class="row">
                                         <div class="col-12 text-end mt-4">
                                             <button class="btn btn-outline-secondary btn-delete">delete</button>
-                                            <button class="btn btn-outline-secondary btn-save">save</button>
+                                            <button class="btn btn-save border-light-subtle">save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -211,12 +212,17 @@
         })
     })
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const postSubmitButton = document.getElementById("postSubmit");
+        const buttonMessage = document.getElementById("submitRequest");
+        const submitLoadingSpinner = document.getElementById("submitLoadingSpinner");
 
-        postSubmitButton.addEventListener("click", function(event) {
+        postSubmitButton.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
+            buttonMessage.textContent = "";
+            submitLoadingSpinner.style.display = "block";
+
             const postTitle = document.getElementById("postTitle").value;
             const postSubTitle = document.getElementById("postSubTitle").value;
 
@@ -250,7 +256,7 @@
         });
 
         const box = document.getElementById('box');
-        box.addEventListener('click', function(event) {
+        box.addEventListener('click', function (event) {
             if (event.target.classList.contains('btn-save')) {
                 event.preventDefault();
                 event.stopPropagation();
