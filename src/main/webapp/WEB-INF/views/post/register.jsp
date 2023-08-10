@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="form-floating">
-                                    <input class="form-control mb-4" placeholder="Leave a comment here" name="title"
+                                    <input class="form-control-plaintext mb-4" placeholder="Leave a comment here" name="title"
                                            id="postTitle">
                                     <label for="postTitle">제목을 작성해 주세요!</label>
                                 </div>
@@ -61,7 +61,12 @@
                                     </div>
                                 </div>
                                 <div class="col-8">
-                                    <input class="form-control mb-4" placeholder="가게명을 작성해주세요." name="storeId">
+
+                                    <div class="form-floating">
+                                        <input id="storeIdInput" class="form-control-plaintext mb-4" placeholder="가게명을 작성해주세요." name="storeId">
+                                        <label for="storeIdInput">가게명을 적어주세요 :)</label>
+                                    </div>
+
                                     <textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60"
                                               name="content"></textarea>
                                     <div class="row">
