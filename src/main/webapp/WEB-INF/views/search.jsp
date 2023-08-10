@@ -179,6 +179,7 @@
 							<input type="hidden" name="sort" value="${param.sort }">
 							<input type="hidden" name="page" value="${param.page }">
 							<input type="hidden" name="category" value="${param.category }">
+							<input type="hidden" name="keyword" value="${param.keyword }">
 						</form>
 					</div>
 					
@@ -188,17 +189,21 @@
 		<script type="text/javascript">
 		
 		$(function(){
+			// 카테고리 변경 이벤트 등록
 			$(".cat").click(function(event){
 				event.preventDefault();
 				let category = $(this).attr("id");
 				$("input[name=category]").val(category);
 				$("input[name=page]").val(1);
+				$("input[name=keyword]").val("");
+				
 				document.querySelector("#form-pagination").submit();
 			})
 		})
 			
 			
 		function changeSort() {
+			// 페이지 새로 가져올 때 바뀌는 부분만 새로 값 설정
 			let sort = document.querySelector("select[name=sort]").value;
 			document.querySelector("input[name=sort]").value = sort;
 			document.querySelector("input[name=page]").value = 1;
@@ -213,17 +218,7 @@
 			document.querySelector("#form-pagination").submit();
 		}
 		
-		function changeCat(event, category){
-			event.preventDefault();
-			
-			let $cat = $(this).v
-			
-			document.querySelector("input[name=page]").value = 1;			
-			document.querySelector("input[name=category]").value = category;			
-			document.querySelector("#form-pagination").submit();
-		}
-		
-		
+	
 	
 		<!--카카오 지도 -->
 		var container = document.getElementById('map');
@@ -239,6 +234,8 @@
 		var map = new kakao.maps.Map(container, options);
 		
 		// 지도에 표시할 좌표 목록
+		
+		//ajax 처리 필요
 		var points = [
 		    new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
 		    new kakao.maps.LatLng(37.5699451391001, 126.988087440713)

@@ -33,6 +33,8 @@
 				           	review_cnt			as reviewCnt,
 				           	bookmark_cnt		as bookmarkCnt,
 				           	category			as category,
+				           	latitude			as latitude,
+				           	longitude			as longitude,				           	
 							<choose>
 								<when test="sort == 'rating'">
 									row_number() over (order by review_avg desc) row_num
@@ -45,12 +47,14 @@
 								</when>
 							</choose>
 				        from
-				        	 (select id,
-				        	 		name,
+				        	 (select distinct id,
+				        	 		S.name,
 				        	 		category,
 				        	 		IFNULL(review_cnt,0) review_cnt,
 				        	 		IFNULL(review_avg,0) review_avg,
-				        	 		IFNULL(bookmark_cnt,0) bookmark_cnt
+				        	 		IFNULL(bookmark_cnt,0) bookmark_cnt,
+				        	 		S.latitude,
+				        	 		S.longitude  
 				        	 	
 				        	 from
 					        	   STORES S left join 
@@ -71,14 +75,28 @@
 							        	from BOOKMARKS
 							        	group by store_id
 						        	 ) B on S.id = B.store_id
+						        	 	left join
+						        	 	(
+						        	 		select
+						        	 			store_id,
+						        	 			F.name
+						        	 		from FOODS F
+						        	 	) F on S.id = F.store_id
 							<where>
 								<if test="category != null">
 								     S.category =  #{category}
 							    </if>
+							   
+								<if test="keyword != null">
+									and
+									(S.name like CONCAT('%', #{keyword}, '%')
+									or F.name like CONCAT('%', #{keyword}, '%'))
+								</if>
+							    
 							</where>
-							) as SUB
+							) as RAW
 						   
-			) as TEMP
+			) as RESULT
 		
 		where row_num between #{begin} and #{end};
 
