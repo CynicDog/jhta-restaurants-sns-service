@@ -31,7 +31,7 @@ html, body {
 <%@ include file="common/navbar.jsp"%>
 <div class="wrap">
 	<div class="container">
-		<div class="row row-cols-5">
+		<div class="row row-cols-5" style="cursor: pointer;">
 			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 1" onclick="openModal(this)"> 
 			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 2" onclick="openModal(this)"> 
 			<img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 3" onclick="openModal(this)"> 
@@ -41,13 +41,32 @@ html, body {
 		<div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
 			<span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
 			<div class="row d-flex justify-content-center align-items-center" style="height: 100%;">
-				<div class="col-4 d-flex justify-content-center align-items-center">
+				<div class="col-2 d-flex justify-content-center align-items-center">
 					<button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10094;</button>
 				</div>
-				<div class="col-4 text-center">
-					<img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
+				<div class="col-6 text-center" style="background-color: black;">
+					<img class="modal-content" id="modalImg" style="max-width: 90%; max-height: 80vh; margin: auto; display: block;">
 				</div>
-				<div class="col-4 d-flex justify-content-center align-items-center">
+				<div class="col-2">
+				    <div class="card" style="width:100%; height: 80vh; overflow: hidden;">
+				        <div class="card-body d-flex flex-column align-items-start">
+				            <div class="d-flex align-items-center mb-2">
+				                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 60px; height: 60px;" alt="...">
+				                <div class="ml-2">
+				                    <span style="font-size: medium; font-weight: bold;">정손님</span>
+				                    <p style="font-size: small; color: #adb5bd;">회원 등급</p>
+				                </div>
+				                <div class="p-2 ml-auto">
+				                    <span class="badge text-bg-success fw-lighter">맛있어요!</span>
+				                </div>
+				            </div>
+				            <div>
+				                처음 와봤는데 너무 맛있어요 다음에 재방문 100%입니다! 처음 와봤는데 너무 맛있어요 다음에 재방문 100%입니다! 처음 와봤는데 너무 맛있어요 다음에 재방문 100%입니다!
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="col-2 d-flex justify-content-center align-items-center">
 					<button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10095;</button>
 				</div>
 			</div>
@@ -117,7 +136,24 @@ html, body {
 				</div>
 			</div>
 			<div class="col-4">
-				<div id="map" style="width: 400px; height: 350px;"></div>
+			    <div id="map" style="width: 400px; height: 350px; cursor: pointer;"></div>
+			</div>	
+			<!-- 지도 모달 -->
+			<div class="row">
+				<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+					<div class="col-12">
+						<span class="close" onclick="closeMapModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+					    <div class="modal-dialog modal-xl">
+					        <div class="modal-content">
+					            <div class="modal-header">
+						            <div class="modal-body">
+						                <div id="largeMap" style="width: 100%; height: 800px;"></div>
+						            </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -318,13 +354,14 @@ html, body {
 				<div class="col-4 p-4">
 					<div class="row">
 						<div class="card text-center m-3 text-light font-weight-bold shadow" onclick="location.href='post'" id="cardId" style="height: 200px;">
-							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="card-img" alt="관리자 추천 맛집" style="height: 200px;">
-							<div class="card-img-overlay ">
-								<h3 class="card-title p-5">
-									<strong>관리자 추천 맛집</strong>
-								</h3>
-							</div>
+						    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="card-img" alt="관리자 추천 맛집" style="height: 200px;">
+						    <div class="card-img-overlay">
+						        <h3 class="card-title p-5">
+						            <strong>관리자 추천 맛집</strong>
+						        </h3>
+						    </div>
 						</div>
+
 						<div class="card text-center m-3 text-light font-weight-bold shadow" onclick="location.href='post'" id="cardId" style="height: 200px;">
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="card-img" alt="관리자 추천 맛집" style="height: 200px;">
 							<div class="card-img-overlay ">
@@ -370,6 +407,39 @@ html, body {
 
 	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 	// marker.setMap(null);
+	
+	document.getElementById('map').addEventListener('click', function () {
+        $('#mapModal').modal('show');
+    });
+
+    // 모달 열릴 때 큰 지도 초기화 및 표시
+    $('#mapModal').on('shown.bs.modal', function () {
+        var container = document.getElementById('largeMap');
+        var options = {
+            center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889), // 지도 중심 좌표
+            level: 3 // 지도 확대 레벨
+        };
+        var map = new kakao.maps.Map(container, options);        
+        // 마커 추가 (예시)
+        var markerPosition = new kakao.maps.LatLng(37.5699451391001, 126.988087440713);
+        
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        
+        marker.setMap(map);
+    });
+    
+    function closeMapModal() {
+        $('#mapModal').modal('hide');
+    }
+    
+    // 모달 닫힐 때 큰 지도 초기화
+    $('#mapModal').on('hidden.bs.modal', function () {
+        // 지도를 삭제하여 초기화
+        var mapContainer = document.getElementById('largeMap');
+        mapContainer.innerHTML = '';
+    });
 
 	$('#star').click(function() {
 		if ($(this).hasClass('bi-star-fill')) {
