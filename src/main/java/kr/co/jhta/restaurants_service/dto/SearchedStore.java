@@ -18,5 +18,7 @@ public class SearchedStore {
 	private int reviewCnt;
 	private int bookmarkCnt;
 	private String category;
+    private double latitude;
+    private double longitude;
 
 }
