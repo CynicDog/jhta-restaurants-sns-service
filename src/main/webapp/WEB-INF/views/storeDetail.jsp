@@ -40,15 +40,15 @@ html, body {
 		</div>
 		<div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
 			<span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
-			<div class="row d-flex justify-content-center align-items-center" style="height: 100%;">
-				<div class="col-2 d-flex justify-content-center align-items-center">
+			<div class=" d-flex justify-content-center align-items-center" style="height: 100%;">
+				<div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
 					<button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10094;</button>
 				</div>
-				<div class="col-6 text-center" style="background-color: black;">
-					<img class="modal-content" id="modalImg" style="max-width: 90%; max-height: 80vh; margin: auto; display: block;">
+				<div class=" text-center" style="background-color: black; width: 80%;">
+					<img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
 				</div>
-				<div class="col-2">
-				    <div class="card" style="width:100%; height: 80vh; overflow: hidden;">
+				<div style="width: 400px;" class="2">
+				    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
 				        <div class="card-body d-flex flex-column align-items-start">
 				            <div class="d-flex align-items-center mb-2">
 				                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 60px; height: 60px;" alt="...">
@@ -66,7 +66,7 @@ html, body {
 				        </div>
 				    </div>
 				</div>
-				<div class="col-2 d-flex justify-content-center align-items-center">
+				<div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
 					<button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10095;</button>
 				</div>
 			</div>
@@ -84,7 +84,7 @@ html, body {
 							</div>
 							<div class="col-4">
 								<span class="my-2 float-end">
-									<button type="button" class="btn" style="color: orange;" onclick="location.href='/review'">
+									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review'">
 										리뷰<i class="bi bi-brush"></i>
 									</button>
 									<button class="btn" id="box">
@@ -192,22 +192,18 @@ html, body {
 									<div class="row mb-2">
 										<div class="col-9">
 											<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-											<p class="col card-text">리뷰 내용</p>
+											<p class="col card-text">왁자지껄한 분위기에 날씨가 그리 춥지 않아서 그런지 문을 다 열어 두어서 뭔가 반 야장 같은 느낌을 즐길 수 있었다. 7시가 되면 돌아가는 미러볼과 음악도 차밍 포인트 중에 하나였다 ㅎㅎ
+																	 기본찬은 깻잎, 쌈무,묵은지, 갓김치로 그냥 먹기도 고기랑 함께 싸서 먹기도 좋은 구성이였다. 나중에 콩나물 무침도 나왔는데 양념과 참기름이 적절히 섞여있어 별미였고 쫄면으로 해 먹으면 참 맛있을 것 같았다.
+																	 컨디먼츠는 소금,페페로치노, 홀그레인, 와사비로 역시 딱 깔끔한 구성이였다. 가장 궁금했던 요소 중 하나였던 칠링박스는 술을 주문하면 맥주 4병, 소주 2병 기본으로 나오는데 마신 만큼만 계산하는 시스템이였다. 칠링박스에 넣어두어서 그런지 계속해서 시원한 맥주를 마실 수 있었다.ㅎㅎㅎ</p>
 										</div>
 										<div class="col-3 text-end">
 											<span class="badge text-bg-success fw-lighter">맛있어요!</span>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
+									<div class="d-flex">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 									</div>
 									<div class="row">
 										<div class="col">
@@ -218,6 +214,7 @@ html, body {
 												<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
 											</button>
 											<span class="float-end">
+												<button type="button" class="btn btn-light"><span>답글</span></button>
 												<button type="button" class="btn btn-light btn-sm text-danger">
 													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
@@ -267,16 +264,10 @@ html, body {
 											<span class="badge text-bg-success fw-lighter">괜찮아요!</span>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
+									<div class="d-flex">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 									</div>
 									<div class="row">
 										<div class="col">
@@ -320,16 +311,10 @@ html, body {
 											<span class="badge text-bg-success fw-lighter">별로에요!</span>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
-										<div class="col-4">
-											<img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="...">
-										</div>
+									<div class="d-flex">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 									</div>
 									<div class="row">
 										<div class="col">
@@ -352,25 +337,61 @@ html, body {
 					</div>
 				</div>
 				<div class="col-4 p-4">
-					<div class="row">
-						<div class="card text-center m-3 text-light font-weight-bold shadow" onclick="location.href='post'" id="cardId" style="height: 200px;">
-						    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="card-img" alt="관리자 추천 맛집" style="height: 200px;">
-						    <div class="card-img-overlay">
-						        <h3 class="card-title p-5">
-						            <strong>관리자 추천 맛집</strong>
-						        </h3>
-						    </div>
-						</div>
-
-						<div class="card text-center m-3 text-light font-weight-bold shadow" onclick="location.href='post'" id="cardId" style="height: 200px;">
-							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="card-img" alt="관리자 추천 맛집" style="height: 200px;">
-							<div class="card-img-overlay ">
-								<h3 class="card-title p-5">
-									<strong>관리자 추천 맛집</strong>
-								</h3>
+				    <div class="row">
+				    	<div class="mb-3">
+					        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
+					        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
+							    <div class="d-flex align-items-start">
+							        <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
+							        <div class="ml-3">
+							            <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
+							            <p class="card-text text-sm ml-1">
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
+							            </p>
+							        </div>
+							    </div>
 							</div>
-						</div>
-					</div>
+				    	</div>
+				    	<div class="mb-3">
+					        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
+					        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
+							    <div class="d-flex align-items-start">
+							        <img src="https://mp-seoul-image-production-s3.mangoplate.com/422968/2269093_1684374788537_1000001500?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
+							        <div class="ml-3">
+							            <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
+							            <p class="card-text text-sm ml-1">
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
+							            </p>
+							        </div>
+							    </div>
+							</div>
+				    	</div>
+				    	<div class="mb-3">
+					        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
+					        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
+							    <div class="d-flex align-items-start">
+							        <img src="https://mp-seoul-image-production-s3.mangoplate.com/42185_1657640746441273.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
+							        <div class="ml-3">
+							            <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
+							            <p class="card-text text-sm ml-1">
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
+							                <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
+							            </p>
+							        </div>
+							    </div>
+							</div>
+				    	</div>
+				    	<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+				    	<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+				    	<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+				    	<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+				    	<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+				    </div>
 				</div>
 			</div>
 		</div>
