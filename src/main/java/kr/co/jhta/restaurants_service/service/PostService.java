@@ -37,41 +37,6 @@ public class PostService {
 		return posts;
 	}
 
-//	public void insertPost(String title, String content, String pictureName) {
-//		Post post = new Post();
-//		post.setTitle(title);
-//		post.setContent(content);
-//		
-//		postmapper.insertPost(post);
-//		
-//		PostPicture postPicture = new PostPicture();
-//		postPicture.setPictureName(pictureName);
-//		postPicture.setPost(post);
-//		
-//		postPictureMapper.insertPostPicture(postPicture);
-//	}
-
-//	public void insertPosts(PostData postData) {
-//	    List<Post> posts = new ArrayList<>();
-//	    List<PostPicture> postPictures = new ArrayList<>();
-//	    
-//	    for (int i=0; i < posts.size() ; i++) {
-//	        Post post = new Post();
-//	        post.setStore(posts.get(i).getStore());
-//	        post.setContent(posts.get(i).getContent());
-//	        posts.add(post);
-//
-//	        PostPicture postPicture = new PostPicture();
-//	        postPicture.setPictureName(posts.get(i).getPictureName());
-//	        postPicture.setPost(post);
-//	        postPictures.add(postPicture);
-//	    }
-//	    
-//	    postmapper.insertPost(posts);
-//	    postPictureMapper.insertPostPicture(postPictures);
-//	}
-
-
 	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
 
 

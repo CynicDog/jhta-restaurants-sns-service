@@ -64,22 +64,6 @@ public class PostController {
 	}
 
 	@ResponseBody
-	@GetMapping("/rest-is-fun")
-	public ResponseEntity responseExam() {
-
-		// http http://localhost:80/post/rest-is-fun
-		return ResponseEntity.ok().body("Rest is so much fun!");
-	}
-
-	@ResponseBody
-	@GetMapping("/rest-is-not-fun")
-	public ResponseEntity responseFailedExam() {
-
-		// http http://localhost:80/post/rest-is-not-fun
-		return ResponseEntity.badRequest().body("Rest is so much fun!");
-	}
-
-	@ResponseBody
 	@PostMapping("/register-post")
 	public ResponseEntity insertPost(@RequestBody PostCommand postCommand,
 									 @AuthenticationPrincipal SecurityUser securityUser,
