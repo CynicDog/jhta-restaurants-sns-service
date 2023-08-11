@@ -75,9 +75,8 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 text-end mt-4">
-                                                        <button class="btn btn-outline-secondary btn-delete">delete
-                                                        </button>
-                                                        <button class="btn btn-outline-secondary btn-save">save</button>
+                                                        <button class="btn btn-outline-secondary border-light-subtle btn-delete">delete</button>
+                                                        <button id="save" name="savebutton" class="btn btn-outline-secondary border-light-subtle btn-save">save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,8 +100,8 @@
                     </div>
                 </div>
                 <div class="col-md-10 text-end">
-                    <a href="javascript:window.history.back();" class="btn btn-secondary">cancel</a>
-                    <button id="postSubmit" class="btn border-light-subtle">
+                    <a href="javascript:window.history.back();" class="btn btn-outline-secondary border-light-subtle">cancel</a>
+                    <button id="postSubmit" class="btn btn-outline-secondary border-light-subtle">
                         <div id="submitRequest">submit</div>
                         <div id="submitLoadingSpinner"
                              class="spinner-border spinner-border-sm text-primary m-1" role="status"
@@ -113,7 +112,19 @@
                 </div>
             </div>
 
+			<div class="toast-container position-fixed bottom-0 end-0 p-3">
+			  	<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			    	<div class="toast-header">
+			      		<strong class="me-auto">알림</strong>
+			      		<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			    	</div>
+			    	<div class="toast-body">
+			    		포스트가 게시되었습니다.
+			    	</div>
+			  	</div>
+			</div>
         </form>
+        
     </div>
     <%@ include file="../common/footer.jsp" %>
 </div>
@@ -139,27 +150,6 @@
         reader.readAsDataURL(file);
     })
 
-
-    /* $("#preview").hide();
-    $("#form-box").show();
-    $("#imageFile").on("change", function(event) {
-
-        let file = event.target.files[0];
-
-        let reader = new FileReader();
-        reader.onload = function(e) {
-
-            $("#form-box").hide()
-            $("#preview").show();
-            $("#preview").attr("src", e.target.result).click(function() {
-                $("#form-box").show()
-                $("#preview").hide();
-            });
-        }
-
-        reader.readAsDataURL(file);
-    }); */
-
     $(function () {
 
         let formIndex = 0;
@@ -171,35 +161,51 @@
 
             // 추가할 html 컨텐츠를 정의한다.
             let content = `
-			<div class="card shadow p-3 mb-5 rounded">
-                        <div class="card-body">
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col-4">
-                                    <div class="pos">
-                                        <div class="text-center">
-                                            <label for="imageFile-\${formIndex}">
-                                                <a class="btn"><i class="bi bi-plus-square-dotted" style="font-size:30px;"></i></a>
-                                            </label>
-                                        </div>
-                                        <input style="visibility: hidden" type="file" id="imageFile-\${formIndex}" name="chooseFile" accept="image/*">
-                                    </div>
-                                    <div class="pos" style="display:none;">
-                                        <img class="img-thumbnail border-0" style="width: 231px;height: 225px;object-fit:cover;">
-                                    </div>
+            <div class="card shadow p-3 mb-5 rounded">
+                <div class="card-body justify-content-center align-items-center">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-4">
+                            <div class="pos">
+                                <div class="text-center">
+                                    <label for="imageFile-\${formIndex}">
+                                        <a class="btn"><i class="bi bi-plus-square-dotted"
+                                                          style="font-size:30px;"></i></a>
+                                    </label>
                                 </div>
-                                <div class="col-8">
-                                    <input class="form-control mb-4" placeholder="가게명을 작성해주세요." name="storeId">
-                                    <textarea class="form-control" placeholder="원하는 글을 작성해 보세요." rows="6" cols="60" name="content"></textarea>
-                                    <div class="row">
-                                        <div class="col-12 text-end mt-4">
-                                            <button class="btn btn-outline-secondary btn-delete">delete</button>
-                                            <button class="btn btn-save border-light-subtle">save</button>
-                                        </div>
-                                    </div>
+                                <input style="visibility: hidden;" type="file" id="imageFile-\${formIndex}"
+                                       name="chooseFile"
+                                       accept="image/*">
+                            </div>
+                            <div class="text-center" style="display:none;">
+                                	<img class="img-thumbnail border-0"
+                                     	style="width: 245px;height: 245px;object-fit:cover;margin-top:-55px">
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-floating">
+                                <input id="storeIdInput" class="form-control-plaintext mb-4"
+                                       placeholder="가게명을 작성해주세요." name="storeId">
+                                <label for="storeIdInput">가게명을 작성해주세요 :)</label>
+                            </div>
+                            <div class="form-floating">
+                                <textarea class="form-control-plaintext"
+                                          placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
+                                          name="content" style="min-height:10rem"></textarea>
+                                <label for="storeIdInput">원하는 글을 작성해주세요</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-end mt-4">
+                                    <button class="btn btn-outline-secondary border-light-subtle btn-delete">delete
+                                    </button>
+                                    <button class="btn btn-outline-secondary border-light-subtle btn-save">save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+			
 		`
             // html 컨텐츠가 추가될 부모엘리먼트를 검색한다.
             // 부모엘리먼트가 포함된 jQuery 집합객체를 획득하고, append(컨텐츠)메소드를 이용해서 지정된 컨텐츠를 자식 컨텐츠로 추가한다.
@@ -216,7 +222,7 @@
         const postSubmitButton = document.getElementById("postSubmit");
         const buttonMessage = document.getElementById("submitRequest");
         const submitLoadingSpinner = document.getElementById("submitLoadingSpinner");
-
+ 
         postSubmitButton.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -225,38 +231,47 @@
 
             const postTitle = document.getElementById("postTitle").value;
             const postSubTitle = document.getElementById("postSubTitle").value;
-
+            
+            
+            if (!postTitle || !postSubTitle) {
+                showToast('빈칸을 모두 작성해주세요.');
+                submitLoadingSpinner.style.display = "none";
+                buttonMessage.textContent = "submit";
+                return;
+            }
             // TODO: Perform validation on postTitle and postSubTitle
 
             const postForm = {
                 postTitle: postTitle,
                 postSubtitle: postSubTitle
             };
-
+            
             // Send a POST request using fetch()
-            fetch('/post/register-post', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(postForm)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "/";
-                    } else {
-                        // TODO: Handle error response
-                        console.error("Form submission failed.");
-                    }
-                })
-                .catch(error => {
-                    // TODO: Handle fetch error
-                    console.error("Error submitting form:", error);
-                });
+            
+			fetch('/post/register-post', {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json"
+		        },
+		        body: JSON.stringify(postForm)
+		    })
+		        .then(response => {
+		            if (response.ok) {
+		                window.location.href = "/";
+		            } else {
+		                // TODO: Handle error response
+		                console.error("Form submission failed.");
+		            }
+		        })
+		        .catch(error => {
+		            // TODO: Handle fetch error
+		            console.error("Error submitting form:", error);
+		        });
+				
         });
 
-        const box = document.getElementById('box');
-        box.addEventListener('click', function (event) {
+        const boxInput = document.getElementById('box');
+        boxInput.addEventListener('click', function (event) {
             if (event.target.classList.contains('btn-save')) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -273,6 +288,15 @@
                 const storeIdInput = card.querySelector('input[name=storeId]');
                 const contentTextarea = card.querySelector('textarea[name=content]');
 
+                if (chooseFileInput.files.length === 0 || storeIdInput.value.trim() === '' || contentTextarea.value.trim() === '') {
+                    showToast('사진, 가게명, 게시글을 모두 작성해주세요.');
+                    event.target.disabled = false;
+                    inputsAndTextarea.forEach(element => {
+                        element.disabled = false;
+                    });
+                    return;
+                }
+                
                 const formDataToSend = new FormData();
                 formDataToSend.append('chooseFile', chooseFileInput.files[0]);
                 formDataToSend.append('storeId', storeIdInput.value);
@@ -284,16 +308,32 @@
                 })
                     .then(response => {
                         if (response.ok) { // SC_200
-                            // TODO: success toast
+                        	showToast('블록이 저장되었습니다');
+                        } else{
+                        	showToast('서버 오류가 발생하였습니다.')
                         }
                     })
                     .catch(error => {
                         // TODO: error handling
                     });
             }
+            
         });
-
+        
     });
+    
+    function showToast(message) {
+    	  const toastLiveExample = document.getElementById('liveToast');
+    	  if (toastLiveExample) {
+    	    const toast = new bootstrap.Toast(toastLiveExample);
+    	    const toastBody = toastLiveExample.querySelector('.toast-body');
+    	    
+    	    toastBody.textContent = message; // 원하는 메시지로 변경
+    	    
+    	    toast.show();
+    	  }
+    }
+    
 
 </script>
 
