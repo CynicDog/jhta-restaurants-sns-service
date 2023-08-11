@@ -121,46 +121,6 @@
             genderInput: false
         }
 
-        function updateSubmitButton() {
-            const submitButton = document.getElementById("signupButton");
-            if (Object.values(validationStatus).every(status => status === true)) {
-                submitButton.removeAttribute("disabled");
-            } else {
-                submitButton.setAttribute("disabled", "disabled");
-            }
-        }
-
-        function displayErrorMessage(input, message) {
-
-            input.classList.add('is-invalid');
-
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'invalid-feedback';
-            errorDiv.textContent = message;
-
-            const parentDiv = input.parentElement;
-            parentDiv.appendChild(errorDiv);
-        }
-
-        function removeErrorMessage(input) {
-
-            input.classList.remove('is-invalid');
-
-            const parentDiv = input.parentElement;
-            const errorDiv = parentDiv.querySelector('.invalid-feedback');
-            if (errorDiv) {
-                parentDiv.removeChild(errorDiv);
-            }
-        }
-
-        function displaySuccessMessage(input) {
-            input.classList.add("is-valid");
-        }
-
-        function removeSuccessMessage(input) {
-            input.classList.remove("is-valid");
-        }
-
         usernameInput.addEventListener("blur", function () {
             removeErrorMessage(this);
             if (this.value.trim() === '') {
@@ -363,6 +323,46 @@
                     })
             }
         });
+
+        function updateSubmitButton() {
+            const submitButton = document.getElementById("signupButton");
+            if (Object.values(validationStatus).every(status => status === true)) {
+                submitButton.removeAttribute("disabled");
+            } else {
+                submitButton.setAttribute("disabled", "disabled");
+            }
+        }
+
+        function displayErrorMessage(input, message) {
+
+            input.classList.add('is-invalid');
+
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'invalid-feedback';
+            errorDiv.textContent = message;
+
+            const parentDiv = input.parentElement;
+            parentDiv.appendChild(errorDiv);
+        }
+
+        function removeErrorMessage(input) {
+
+            input.classList.remove('is-invalid');
+
+            const parentDiv = input.parentElement;
+            const errorDiv = parentDiv.querySelector('.invalid-feedback');
+            if (errorDiv) {
+                parentDiv.removeChild(errorDiv);
+            }
+        }
+
+        function displaySuccessMessage(input) {
+            input.classList.add("is-valid");
+        }
+
+        function removeSuccessMessage(input) {
+            input.classList.remove("is-valid");
+        }
     });
 </script>
 </body>
