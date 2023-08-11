@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="toast-container position-fixed top-0 start-50 translate-middle-x mt-5 pt-5">
+    <div class="toast-container position-fixed bottom-0 end-0 p-4">
         <div id="badCredentialsToast" class="toast align-items-center text-bg-secondary border-0"
              role="alert"
              aria-live="assertive" aria-atomic="true">
