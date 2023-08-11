@@ -33,8 +33,7 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<p class="m-1 text-center ">리뷰추천수</p>
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님" data-bs-content="Follow">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 						</a>
 					</div>
@@ -81,9 +80,14 @@ html, body {
               		</div>
 				</div>
 				<div class="row m-3">
-					<p class="mx-3">가게명-서울시 종로구</p>
+					<a href="/store/detail"class="mx-3">@가게명-서울시 종로구</a>
 				</div>	
 				<div class="row m-3">
+						<span style="font-size: 15px;">
+							<i id="recomened" class="bi bi-heart-fill text-danger"></i>
+							<a>3</a>
+							<a class="float-end pt-1 mt-1 text-secondary">2023-08-11</a>
+						</span>
 					<p style="font-size:20px;">리뷰 내용</p>
 				</div>
 				<div class="row" id="image-row">
