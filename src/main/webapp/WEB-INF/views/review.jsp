@@ -23,10 +23,6 @@
     align-items: center;
     padding: 10px;
 }
-#btn-1.active {
-	color: red;
-
-}
 </style>
 </head>
 <body>
@@ -69,14 +65,14 @@
 	    </div>
 	</div>
 	<div class="row">
-		<div class="btn-group m-2" style="background: none; border: none;">
+		<div class="btn-group m-2">
 			<span>
-				<button id="btn-1" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</button>
-				<button id="btn-2" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#주차가 편해요</button>
-				<button id="btn-3" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#매장이 청결해요</button>
-				<button id="btn-4" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#매장이 넓어요</button>
-				<button id="btn-5" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</button>
-				<button id="btn-6" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#친절해요</button>
+				<button type="button" class="btn btn-1 border-secondary rounded-pill text-secondary">#음식이 맛있어요</button>
+				<button type="button" class="btn btn-2 border-secondary rounded-pill text-secondary">#주차가 편해요</button>
+				<button type="button" class="btn btn-3 border-secondary rounded-pill text-secondary">#매장이 청결해요</button>
+				<button type="button" class="btn btn-4 border-secondary rounded-pill text-secondary">#매장이 넓어요</button>
+				<button type="button" class="btn btn-5 border-secondary rounded-pill text-secondary">#분위기가 좋아요</button>
+				<button type="button" class="btn btn-6 border-secondary rounded-pill text-secondary">#친절해요</button>
 			</span>
 		</div>
 	</div>
@@ -225,14 +221,49 @@ $(function() {
     // 초기 상태에서 textarea의 내용 확인하여 버튼 상태 설정
     $("#textLength").trigger("input");
  
- 	// '.emoji-btn' 클래스를 가진 버튼을 클릭할 때 실행되는 함수를 정의합니다.
-	$('#btn-1').click(function() {
-		// 모든 버튼에 있는 'active' 클래스를 제거합니다.
-		$('#btn-1').removeClass('active');
-		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
-		$(this).addClass('active');
-	}); 
-    
+    // 키워드 버튼 상태 설정 
+	$(".btn-1").click(function() {
+		if ($(this).hasClass("btn-1")) {
+			$(this).removeClass("btn-1").addClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white")
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-1 border-secondary rounded-pill text-secondary")
+		}
+	})
+	$(".btn-2").click(function() {
+		if ($(this).hasClass("btn-2")) {
+			$(this).removeClass("btn-2").addClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-2 border-secondary rounded-pill text-secondary")
+		}
+	})
+	$(".btn-3").click(function() {
+		if ($(this).hasClass("btn-3")) {
+			$(this).removeClass("btn-3").addClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white")
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white").addClass("btn btn-3 border-secondary rounded-pill text-secondary")
+		}
+	})
+	$(".btn-4").click(function() {
+		if ($(this).hasClass("btn-4")) {
+			$(this).removeClass("btn-4").addClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ").addClass("btn btn-4 border-secondary rounded-pill text-secondary")
+		}
+	})
+	$(".btn-5").click(function() {
+		if ($(this).hasClass("btn-5")) {
+			$(this).removeClass("btn-5").addClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6").addClass("btn btn-5 border-secondary rounded-pill text-secondary")
+		}
+	})
+	$(".btn-6").click(function() {
+		if ($(this).hasClass("btn-6")) {
+			$(this).removeClass("btn-6").addClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+		} else {
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-6 border-secondary rounded-pill text-secondary")
+		}
+	})
 });
 
 </script>
