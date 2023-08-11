@@ -19,7 +19,7 @@ public class Store {
     private String category;
     private String businessLicense;
     private String address;
-    private int zipcode;
+    private String zipcode;
     private double latitude;
     private double longitude;
     private String description;
