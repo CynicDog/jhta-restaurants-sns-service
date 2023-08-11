@@ -23,6 +23,10 @@
     align-items: center;
     padding: 10px;
 }
+#btn-1.active {
+	color: red;
+
+}
 </style>
 </head>
 <body>
@@ -63,6 +67,18 @@
 				</div>
 			</div>
 	    </div>
+	</div>
+	<div class="row">
+		<div class="btn-group m-2" style="background: none; border: none;">
+			<span>
+				<button id="btn-1" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</button>
+				<button id="btn-2" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#주차가 편해요</button>
+				<button id="btn-3" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#매장이 청결해요</button>
+				<button id="btn-4" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#매장이 넓어요</button>
+				<button id="btn-5" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</button>
+				<button id="btn-6" type="button" class="btn border-opacity-10 fw-lighter fs-6 m-2 p-1">#친절해요</button>
+			</span>
+		</div>
 	</div>
 	<div class="row">
 	    <div class="photo-section">
@@ -208,6 +224,14 @@ $(function() {
 
     // 초기 상태에서 textarea의 내용 확인하여 버튼 상태 설정
     $("#textLength").trigger("input");
+ 
+ 	// '.emoji-btn' 클래스를 가진 버튼을 클릭할 때 실행되는 함수를 정의합니다.
+	$('#btn-1').click(function() {
+		// 모든 버튼에 있는 'active' 클래스를 제거합니다.
+		$('#btn-1').removeClass('active');
+		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
+		$(this).addClass('active');
+	}); 
     
 });
 

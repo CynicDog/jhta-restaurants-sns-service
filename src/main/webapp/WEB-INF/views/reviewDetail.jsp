@@ -32,23 +32,20 @@ html, body {
 		<div class="card border border-success p-2 border-opacity-10">
   			<div class="card-body">
 				<div class="row m-3">
-					<div class="col-3">
-						<p class="m-1 text-center">리뷰추천수</p>
-						<a id="Popover" tabindex="0" class="btn border-opacity-10" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님" data-bs-content="Follow">
+					<div class="col-2">
+						<p class="m-1 text-center ">리뷰추천수</p>
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님" data-bs-content="Follow">
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 						</a>
 					</div>
 					<div class="col-2">
 						<p class="mb-5 my-5" style="font-size:30px;"><strong>정손님</strong></p>
 					</div>
-					<div class="col-6">
-						<span class="float-end">
-							<i class="bi bi-emoji-angry" style="font-size:40px;"></i>
-                           	<button type="button" class="btn btn-outline-danger mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-                         		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
-                            		<span class="visually-hidden">신고</span>
-                          	</button>
-						</span>
+					<div class="col-8">
+						<div class="row float-end">
+							<i class="bi bi-emoji-angry text-center" style="font-size:40px;"></i>
+							<p class="text-center">별로에요!</p>
+						</div>
 					</div>
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        					<div class="modal-dialog">
@@ -123,18 +120,30 @@ html, body {
 				</div>
   			</div>
 			<div class="m-2">
-				<span class="border border-primary-subtle m-2 p-1">#주차가 편해요</span>
-				<span class="border border-primary-subtle m-2 p-1">#청결해요</span>
-				<span class="border border-primary-subtle m-2 p-1">#분위기가 좋아요</span>
+				<span class="badge text-bg-danger bg-opacity-75 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</span>
+				<span class="badge text-bg-secondary bg-opacity-75 fw-lighter fs-6 m-2 p-1">#주차가 편해요</span>
+				<span class="badge text-bg-info bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 청결해요</span>
+				<span class="badge text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 넓어요</span>
+				<span class="badge text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</span>
+				<span class="badge text-bg-success bg-opacity-75 fw-lighter fs-6 m-2 p-1">#친절해요</span>
+				<span class="float-end">
+					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+		          		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
+		              	<span class="visually-hidden">신고</span>
+					</button>
+				</span>
 			</div>
 		</div>
 		<div class="h4 pb-2 mb-4 border-bottom border-secondary"></div>
 		<div class="row m-3">
 			<div class="card">
   				<div class="card-body">
-    				<p>답글입니다</p>
+	  				<div class="form-floating mb-3">
+					 <textarea class="form-control" id="floatingTextarea" readOnly="readOnly" style="height: 200px">답글입니다.</textarea>
+  					 <label for="floatingTextarea2">가게명</label>
+					</div>
     				<span class="float-end">
-						<button type="button" class="btn btn-sm" style="color: blue;">
+						<button id="text-button" type="button" class="btn btn-sm" style="color: blue;">
 							<i class="bi bi-pencil-square"></i>
 						</button>
 					</span>
@@ -146,12 +155,18 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
-	// popover 자바스크립트 
+
+	// popover 생성
 	document.addEventListener("DOMContentLoaded", () => {
 		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 		const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 	})
-
+	
+	
+	$("#text-button").click(function() {
+		$("#floatingTextarea").prop("readOnly", !$("#floatingTextarea").prop("readOnly"))
+	});
+	
 	
 // 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
 let modal = new bootstrap.Modal("#Modal");
