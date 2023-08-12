@@ -30,8 +30,8 @@
                                      data-bs-toggle="popover"
                                      data-bs-placement="bottom"
                                      data-bs-html="true"
-                                     data-bs-content="<p class='link-secondary m-1' id='register-confirmation'>Let's go register your store!</p>">
-                                    <i class="bi bi-plus-circle" style="color: #838383"></i>
+                                     data-bs-content="<a class='link-secondary m-1 link-underline-opacity-0' href='/owner/register'>Let's go register your store!</a>">
+                                    <i type="button" class="bi bi-plus-circle" style="color: #838383"></i>
                                 </div>
                             </div>
                         </div>
@@ -306,12 +306,6 @@
                 followingsPopoverVisible = !followingsPopoverVisible;
             }
         });
-
-        document.body.addEventListener('click', function (event) {
-            if (event.target.matches('#register-confirmation')) {
-                window.location.href = "/owner/register";
-            }
-        })
     });
 </script>
 </html>

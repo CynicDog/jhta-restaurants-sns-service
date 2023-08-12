@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,17 +34,66 @@ public class OwnerController {
         this.otpService = otpService;
     }
 
+    // /owner/unique-day?dayName=\${dayName}
+    @GetMapping("/unique-day")
+    private ResponseEntity uniqueDay(@RequestParam("dayName") String toBeChecked, HttpSession httpSession) {
+
+        logger.info("[ Unique Check ] : " + toBeChecked);
+
+        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
+
+        return days
+                .stream()
+                .anyMatch(dayName -> toBeChecked.equals(dayName)) ?
+                ResponseEntity.badRequest().body("Already added day!") :
+                ResponseEntity.ok().body("Unique day!");
+    }
+
+    @PostMapping("/remove-day")
+    public ResponseEntity removeDay(@RequestParam("dayName") String toBeRemoved, HttpSession httpSession) {
+
+        logger.info("[ Removing day ] : " + toBeRemoved);
+
+        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
+
+        days = days.stream()
+                .filter(day -> !toBeRemoved.equals(day))
+                .collect(Collectors.toList());
+
+        httpSession.setAttribute("days", days);
+
+        logger.info("[ List of days after deletion ]");
+        days.forEach(logger::info);
+        logger.info(" ");
+
+        return ResponseEntity.ok().body("Successfully removed.");
+    }
+    @PostMapping("/register-day")
+    public ResponseEntity registerDay(@RequestParam("dayName") String dayName, HttpSession httpSession) {
+
+        logger.info("[ Adding day ] : " + dayName);
+
+        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
+
+        days.add(dayName);
+        httpSession.setAttribute("days", days);
+
+        logger.info("[ List of days after registration ]");
+        days.forEach(logger::info);
+        logger.info(" ");
+
+        return ResponseEntity.ok().body("Successfully added.");
+    }
+
     @GetMapping("/unique-food")
     public ResponseEntity uniqueFood(@RequestParam("foodName") String toBeChecked, HttpSession httpSession) {
 
-        List<FoodCommand> foods = (List<FoodCommand>) httpSession.getAttribute("foods");
-
-        if (foods == null) { foods = new ArrayList<>(); }
+        List<FoodCommand> foods = Optional.ofNullable((List<FoodCommand>) httpSession.getAttribute("foods")).orElse(new ArrayList<>());
 
         return foods
                 .stream()
                 .map(FoodCommand::getFoodName)
-                .anyMatch(foodName -> foodName.equals(toBeChecked)) ?
+                .anyMatch(foodName -> toBeChecked.equals(foodName)) ?
                 ResponseEntity.badRequest().body("Already exists :(") :
                 ResponseEntity.ok().body("Unique food name!");
     }
@@ -50,34 +101,27 @@ public class OwnerController {
     @PostMapping("/remove-food")
     public ResponseEntity removeFood(@RequestParam("foodName") String toBeRemoved, HttpSession httpSession) {
 
-        List<FoodCommand> foods = (List<FoodCommand>) httpSession.getAttribute("foods");
+        List<FoodCommand> foods = Optional.ofNullable((List<FoodCommand>) httpSession.getAttribute("foods")).orElse(new ArrayList<>());
 
-        if (foods == null) { foods = new ArrayList<>(); }
-
-        foods.stream()
-                .map(FoodCommand::getFoodName)
-                .filter(foodName -> !toBeRemoved.equals(foodName))
+        foods = foods.stream()
+                .filter(food -> !toBeRemoved.equals(food.getFoodName()))
                 .collect(Collectors.toList());
 
         httpSession.setAttribute("foods", foods);
 
-        return ResponseEntity.ok().body("Deleted successfully!");
+        return ResponseEntity.ok().body("Successfully removed.");
     }
+
     @PostMapping("/register-food")
     public ResponseEntity<FoodCommand> registerFood(@RequestBody FoodCommand foodCommand, HttpSession httpSession) {
 
-        List<FoodCommand> foods = (List<FoodCommand>) httpSession.getAttribute("foods");
-
-        if(foods == null) {
-            foods = new ArrayList<>();
-        }
+        List<FoodCommand> foods = Optional.ofNullable((List<FoodCommand>) httpSession.getAttribute("foods")).orElse(new ArrayList<>());
 
         foods.add(foodCommand);
         httpSession.setAttribute("foods", foods);
 
         return new ResponseEntity<>(foodCommand, HttpStatus.OK);
     }
-
 
     @GetMapping("/register")
     public String registerPage(@AuthenticationPrincipal SecurityUser securityUser) {
