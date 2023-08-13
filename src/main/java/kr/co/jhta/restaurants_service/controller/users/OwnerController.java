@@ -1,11 +1,10 @@
 package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
+import kr.co.jhta.restaurants_service.controller.command.StoreOpenTimeCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.security.service.UserService;
-import kr.co.jhta.restaurants_service.service.OtpService;
-import kr.co.jhta.restaurants_service.vo.store.Food;
 import org.jboss.logging.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,32 +16,62 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+// TODO: 1. Session clear after registration of a store
+// TODO: 2. Security specification on methods
 @Controller
 @RequestMapping("/owner")
 public class OwnerController {
 
+    private final Logger logger = Logger.getLogger(UserController.class);
     private final UserService userService;
-    private final OtpService otpService;
-    Logger logger = Logger.getLogger(UserController.class);
 
-    public OwnerController(UserService userService, OtpService otpService) {
+    public OwnerController(UserService userService) {
         this.userService = userService;
-        this.otpService = otpService;
     }
 
-    // /owner/unique-day?dayName=\${dayName}
+    @PostMapping("/register-hour")
+    private ResponseEntity<List<StoreOpenTimeCommand>> registerHour(@RequestBody StoreOpenTimeCommand storeOpenTimeCommand, HttpSession httpSession) {
+
+        List<String> clickedDays = Optional.ofNullable((List<String>) httpSession.getAttribute("clickedDays")).orElse(new ArrayList<>());
+        List<String> registeredDays = Optional.ofNullable((List<String>) httpSession.getAttribute("registeredDays")).orElse(new ArrayList<>());
+
+        // filter out non-ongoing days
+        List<String> toBeRegistered = clickedDays.stream()
+                .filter(day -> !registeredDays.contains(day))
+                .collect(Collectors.toList());
+
+        registeredDays.addAll(toBeRegistered);
+
+        // for flushing resource server
+        List<StoreOpenTimeCommand> storeOpenTimeCommands =
+                registeredDays.stream()
+                        .map(day -> {
+                            return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime());
+                        })
+                        .collect(Collectors.toList());
+
+        httpSession.setAttribute("storeOpenTimeCommands", storeOpenTimeCommands);
+        httpSession.setAttribute("registeredDays", registeredDays);
+
+        // for flushing client representation
+        List<StoreOpenTimeCommand> toBeRegisteredStoreOpenTimeCommands =
+                toBeRegistered.stream()
+                        .map(day -> { return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime()); }
+                        ).collect(Collectors.toList());
+
+        return new ResponseEntity<>(toBeRegisteredStoreOpenTimeCommands, HttpStatus.OK);
+    }
+
     @GetMapping("/unique-day")
     private ResponseEntity uniqueDay(@RequestParam("dayName") String toBeChecked, HttpSession httpSession) {
 
-        logger.info("[ Unique Check ] : " + toBeChecked);
+        List<String> clickedDays = Optional.ofNullable((List<String>) httpSession.getAttribute("clickedDays")).orElse(new ArrayList<>());
 
-        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
-
-        return days
+        return clickedDays
                 .stream()
                 .anyMatch(dayName -> toBeChecked.equals(dayName)) ?
                 ResponseEntity.badRequest().body("Already added day!") :
@@ -52,35 +81,23 @@ public class OwnerController {
     @PostMapping("/remove-day")
     public ResponseEntity removeDay(@RequestParam("dayName") String toBeRemoved, HttpSession httpSession) {
 
-        logger.info("[ Removing day ] : " + toBeRemoved);
+        List<String> clickedDays = Optional.ofNullable((List<String>) httpSession.getAttribute("clickedDays")).orElse(new ArrayList<>());
 
-        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
-
-        days = days.stream()
+        clickedDays = clickedDays.stream()
                 .filter(day -> !toBeRemoved.equals(day))
                 .collect(Collectors.toList());
 
-        httpSession.setAttribute("days", days);
-
-        logger.info("[ List of days after deletion ]");
-        days.forEach(logger::info);
-        logger.info(" ");
+        httpSession.setAttribute("clickedDays", clickedDays);
 
         return ResponseEntity.ok().body("Successfully removed.");
     }
     @PostMapping("/register-day")
     public ResponseEntity registerDay(@RequestParam("dayName") String dayName, HttpSession httpSession) {
 
-        logger.info("[ Adding day ] : " + dayName);
+        List<String> clickedDays = Optional.ofNullable((List<String>) httpSession.getAttribute("clickedDays")).orElse(new ArrayList<>());
 
-        List<String> days = Optional.ofNullable((List<String>) httpSession.getAttribute("days")).orElse(new ArrayList<>());
-
-        days.add(dayName);
-        httpSession.setAttribute("days", days);
-
-        logger.info("[ List of days after registration ]");
-        days.forEach(logger::info);
-        logger.info(" ");
+        clickedDays.add(dayName);
+        httpSession.setAttribute("clickedDays", clickedDays);
 
         return ResponseEntity.ok().body("Successfully added.");
     }
@@ -143,7 +160,7 @@ public class OwnerController {
     public ResponseEntity signup(@RequestBody UserCommand userCommand) {
 
         userService.insertOwner(userCommand);
-        return ResponseEntity.ok("Valid otp!");
+        return ResponseEntity.ok("Successfully signed up!");
 
         // TODO: Session clear
     }

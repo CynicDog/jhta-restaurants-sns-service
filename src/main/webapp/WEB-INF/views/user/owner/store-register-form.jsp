@@ -151,7 +151,8 @@
                                     <div class="row my-4 p-2" id="item-4">
                                         <div class="col-8 fw-lighter fs-3 d-flex my-1">Opening Hours</div>
                                         <div class="col-4 d-flex justify-content-end my-1">
-                                            <i type="button" id="hourAddIcon" class="bi bi-plus-circle my-2"></i>
+                                            <i type="button" id="hourAddIcon" class="bi bi-plus-circle my-2" style="display: block"></i>
+                                            <i id="hourDoneIcon" class="bi bi-check-circle my-2" style="display: none"></i>
                                         </div>
                                     </div>
                                     <div id="hourOutputArea">
@@ -169,7 +170,7 @@
     <div id="successfulToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">
-                Successfully registered the menu :)
+
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
@@ -198,13 +199,13 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-end">
-                    <i id="foodAddRequestIcon" class="bi bi-pencil-square fs-6 m-1"
+                    <i type="button" id="foodAddRequestIcon" class="bi bi-pencil-square fs-6 m-1"
                        style="color: #838383; display: none"></i>
                 </div>
             </div>
         </div>
     </div>
-    <div id="hourAddToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+    <div id="hourAddToast" class="toast toast-add-hour" role="alert" aria-live="assertive" aria-atomic="true"
          data-bs-autohide="false">
         <div class="toast-body">
             <div class="row">
@@ -214,7 +215,6 @@
                     </div>
                     <div>
                         <div class="fw-lighter d-flex" for="day">Day
-                            <div id="dayValidationMessage" class="text-danger mx-2" style="display: none;"></div>
                         </div>
                         <div class="fs-6 mx-3 my-2" id="days">
                             <div type="button" class="badge rounded-pill text-bg-light day-button">Mon</div>
@@ -245,7 +245,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end align-items-end">
-                    <i id="hourAddRequestIcon" class="bi bi-pencil-square fs-6 m-1"
+                    <i type="button" id="hourAddRequestIcon" class="bi bi-pencil-square fs-6 m-1"
                        style="color: #838383; display: none"></i>
                 </div>
             </div>
@@ -276,21 +276,34 @@
         }
 
         const hourAddIcon = document.getElementById('hourAddIcon')
+        const hourDoneIcon = document.getElementById('hourDoneIcon')
         const hourAddRequestIcon = document.getElementById('hourAddRequestIcon')
 
-        const daysDiv = document.getElementById('days');
-        const dayButtons = document.querySelectorAll('.day-button');
+        const daysDiv = document.getElementById('days')
+        const dayButtons = document.querySelectorAll('.day-button')
+
+        const openingTime = document.getElementById('openingTime')
+        const closingTime = document.getElementById('closingTime')
+
+        const hourOutputArea = document.getElementById('hourOutputArea')
 
         let hourValidationStatus = {
             days: false,
             hours: false
         }
-        const dayValidationMessage = document.getElementById("dayValidationMessage");
 
         const selectedDays = {};
+        dayButtons.forEach(button => {
+            const dayName = button.textContent;
+            selectedDays[dayName] = null;
+        })
+
+        const selectedHours = {
+            openingTime: null,
+            closingTime: null
+        };
 
         addressLookupIcon.addEventListener("click", function () {
-            console.log("hi");
             new daum.Postcode({
                 oncomplete: function (data) {
 
@@ -380,7 +393,6 @@
             this.style.display = 'block'
         });
 
-        // event delegation
         foodOutputArea.addEventListener('click', function (event) {
             if (event.target.classList.contains('remove-food-btn')) {
 
@@ -390,7 +402,14 @@
                     foodSpan.remove();
                 }
 
-                foodRemoveRequest(foodName);
+                fetch(`/owner/remove-food?foodName=\${foodName}`, {
+                    method: "POST"
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // do nothing
+                        }
+                    });
             }
         });
 
@@ -408,18 +427,18 @@
                 body: JSON.stringify(formData)
             }).then(response => {
                 if (response.ok) {
+                    clearFoodInputs()
+                    showSuccessfulToast("successfully added menu :)")
+
                     return response.json();
                 }
             }).then(data => {
-                clearFoodInputs()
-                showSuccessfulToast()
-
                 const food = data
 
                 foodOutputArea.innerHTML += `
                     <span id="\${food.foodName}" class="position-relative badge rounded-pill text-bg-light mx-1">
                         \${food.foodName}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-food-btn" data-food-name="\${food.foodName}">
+                        <span data-food-name="\${food.foodName}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-food-btn">
                             x
                         </span>
                     </span>
@@ -458,9 +477,6 @@
                     if (response.ok) {
                         hourValidationStatus.days = Object.values(selectedDays).some(selected => selected === true);
 
-                        // where..?
-                        // dayValidationMessage.style.display = "none";
-
                         fetch(`/owner/register-day?dayName=\${dayName}`, {
                             method: "POST"
                         }).then(response => {
@@ -474,12 +490,6 @@
                     // 2. if not unique, then remove the day in the session
                     else {
                         hourValidationStatus.days = false;
-                        response.text().then(message => {
-                            if (dayButton.classList.contains('text-bg-primary')) {
-                                dayValidationMessage.textContent = message;
-                                dayValidationMessage.style.display = "block";
-                            }
-                        })
 
                         fetch(`/owner/remove-day?dayName=\${dayName}`, {
                             method: "POST"
@@ -496,18 +506,58 @@
             }
         });
 
-        function foodRemoveRequest(foodName) {
-            // Perform fetch or AJAX request to remove the food item
-            fetch(`/owner/remove-food?foodName=\${foodName}`, {
-                method: "POST"
+        openingTime.addEventListener('input', function () {
+            selectedHours['openingTime'] = this.value
+            hourValidationStatus.hours = Object.values(selectedHours).every(selected => !!selected);
+
+            updateHourAddRequestIcon()
+        })
+
+        closingTime.addEventListener('input', function() {
+            selectedHours['closingTime'] = this.value
+            hourValidationStatus.hours = Object.values(selectedHours).every(selected => !!selected);
+
+            updateHourAddRequestIcon()
+        })
+
+        hourAddRequestIcon.addEventListener('click', function() {
+            fetch(`/owner/register-hour`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(selectedHours)
+            }).then(response => {
+                if (response.ok) {
+                    clearHourInputs()
+                    showSuccessfulToast("successfully added hours :)")
+
+                    return response.json();
+                }
+            }).then(data => {
+
+                data.forEach( datum => {
+                    hourOutputArea.innerHTML += `
+                        <span id="\${datum.day}" class="position-relative badge rounded-pill text-bg-light m-4">
+                            \${datum.day}
+                            <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-secondary my-1">
+                                \${datum.openingTime} ~ \${datum.closingTime}
+                                <span data-day-name="\${datum.day}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-hour-btn" style="font-size: 0.6rem">
+                                    x
+                                </span>
+                            </span>
+                        </span>
+                    `
+                })
             })
-                .then(response => {
-                    console.log(foodName)
-                    if (response.ok) {
-                        // do nothing
-                    }
-                });
-        }
+
+            // if all days are added, disable the icon for adding days.
+            // logic would be in reverse for deletion operation
+            if (Object.values(selectedDays).every(selected => !!selected)) {
+                hourAddIcon.style.display = 'none'
+                hourDoneIcon.style.display = 'block'
+            }
+        })
 
         function disableNonUniqueDays(dayButton) {
             const dayName = dayButton.textContent.trim();
@@ -518,12 +568,17 @@
                 if (!response.ok) {
                     dayButton.style.pointerEvents = "none";
                     dayButton.classList.add('text-bg-disabled', 'text-secondary');
+                    dayButton.classList.remove('text-bg-primary');
                 }
             });
         }
 
-        function showSuccessfulToast() {
+        function showSuccessfulToast(message) {
             const successfulToast = document.getElementById('successfulToast');
+            const toastBody = successfulToast.querySelector('.toast-body');
+
+            toastBody.textContent = message;
+
             const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
             successfulToastBootstrap.show();
         }
@@ -540,6 +595,22 @@
             updateFoodAddRequestIcon();
         }
 
+        function clearHourInputs() {
+
+            dayButtons.forEach(dayButton => disableNonUniqueDays(dayButton))
+
+            openingTime.value = ''
+            closingTime.value = ''
+
+            hourValidationStatus.days = false;
+            hourValidationStatus.hours = false;
+
+            hourAddRequestIcon.style.display = 'none';
+            new bootstrap.Toast(document.querySelector('.toast.toast-add-hour')).hide();
+
+            updateHourAddRequestIcon();
+        }
+
         function updateFoodAddRequestIcon() {
             const isValid = Object.values(foodValidationStatus).every(status => status === true);
             foodAddRequestIcon.style.display = isValid ? 'block' : 'none';
@@ -550,6 +621,8 @@
             hourAddRequestIcon.style.display = isValid ? 'block' : 'none';
         }
     });
+
+    // TODO: when reloading, `foodOutputArea` and `hourOutputArea` get disappeared
 </script>
 </body>
 </html>
