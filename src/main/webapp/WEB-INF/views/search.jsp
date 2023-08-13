@@ -35,14 +35,10 @@
 			<div class="row my-3">
 				<div class="col-8 d-flex justify-content-between">
 					<h4 class="title" >검색 결과</h4>
-					<select class="form-select me-3" style="width: 150px;" name="sort"
-						onchange="changeSort()">
-						<option value="rating"
-							${param.sort eq 'rating' ? 'selected' : '' }>평점 순</option>
-						<option value="bookmark"
-							${param.sort eq 'bookmark' ? 'selected' : '' }>즐겨찾기 순</option>
-						<option value="review"
-							${param.sort eq 'review' ? 'selected' : '' }>리뷰수 순</option>
+					<select class="form-select me-3" style="width: 150px;" name="sort">
+						<option value="rating">평점 순</option>
+						<option value="bookmark">즐겨찾기 순</option>
+						<option value="review">리뷰수 순</option>
 
 					</select>
 				</div>
@@ -50,7 +46,7 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-12 mb-2" style="text-align: left;">
-					<a class="cat btn" role="button" href="list">전체</a> 
+					<a id= "" class="cat btn active" role="button" href="list" >전체</a> 
 					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
 					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
 					<a id="JAPANESE" class="cat btn" role="button" href="list?category=JAPANESE" >일식</a> 
@@ -130,7 +126,7 @@
 				<div id = "div-pagination" class="col-12">
 						<nav>
 							<ul class="pagination justify-content-center">
-								<li id = "prepage" class="page-item">
+								<li id = "prepage" class="page-item page-move">
 									<a id = "prepage-link" href="" class="page-link" >이전</a>
 								</li>
 <%-- 								<c:forEach var="num" begin="${beginPage }" end="${endPage }"> --%>
@@ -138,7 +134,7 @@
 <%-- 										<a href="" class="page-link" onclick="changePage(event, ${num})">${num }</a> --%>
 <!-- 									</li> -->
 <%-- 								</c:forEach> --%>
-								<li id = "nextpage" class="page-item">
+								<li id = "nextpage" class="page-item page-move">
 									<a id = "nextpage-link" href="" class="page-link" >다음</a>
 								</li>
 							</ul>
@@ -157,59 +153,85 @@
 		</div>
 		<script type="text/javascript">
 		
-		$(function(){
-
-			getResult();
-			
-		})
-		
-		//	카테고리 변경 이벤트 등록
-			$(".cat").click(function(event){
-				event.preventDefault();
-				let category = $(this).attr("id");
-				$("input[name=category]").val(category);
-				$("input[name=page]").val(1);
-				$("input[name=keyword]").val("");
-				
-				document.querySelector("#form-pagination").submit();
-			})
-			
-		// 페이지 버튼 눌렀을 때의 이벤트 등록
-		$(".page-link").click(function(event) {
-			event.preventDefault();
-			
-			
-			
-// 			document.querySelector("input[name=page]").value = page;			
-// 			document.querySelector("#form-pagination").submit();
-// 			getStores();
-		})
-		
-		
-
-		
-		function getResult() {
-			// 현재 선택된 탭 조회하기
-			// 현재 정렬방식 조회하기
-			// 현재 검색어 조회하기
-			
 			let sortValue = "rating"; 
 			let pageValue = 1; 
 			let categoryValue = "";
 			let keywordValue = "";
 			
+			getResult();
+			
+			function changePage(event,page){
+				event.preventDefault();
+				
+				pageValue = page;
+				console.log("pageValue : " + pageValue);
+				
+				getResult();
+				
+			}
+			
+			//	카테고리 변경 이벤트 등록
+			$(".cat").click(function(event){
+				event.preventDefault();
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				
+				categoryValue = $(this).attr("id");
+				pageValue = 1;
+				
+			
+				getResult();
+			})
+			
+			
+			// 이전/다음 페이지 버튼 눌렀을 때의 이벤트 등록
+			$(".page-move").click(function(event) {
+				console.log("page-move clicked");
+				event.preventDefault();
+				console.log("this : {} ", $(this));
+
+				let id = $(this).attr("id");
+				console.log("id : {} ", id);
+
+				if(id ==='prepage'){
+					pageValue--;
+				}else{
+					pageValue++;
+				}
+				console.log("pageValue : ", pageValue);
+
+				getResult();
+			})
+			
+			//정렬 방식 바꿨을 때 이벤트 등록
+			$(".form-select").change(function(event){
+				event.preventDefault();
+			
+				pageValue = 1; 
+				sortValue = $(this).val();
+				
+				getResult();
+			})		
+		
+
+		
+		function getResult() {
+			console.log("getResult")
+			$("#div-stores").find(".store").remove();
+
 			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue}, function(result) {
 				
 				
-				var points = [];
+				let points = [];
 				
 				result.stores.forEach(function(store){
 					
-					points.push(new kakao.maps.LatLng(store.latitude, store.longitude))
+					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
+					
 					
 						
 					let content = `
-						<div class="col-5 mb-3 me-3">
+						<div class="col-5 mb-3 me-3 store">
 						<div class="card shadow" onclick="" style="cursor: pointer;">
 							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
 						</div>
@@ -242,6 +264,7 @@
 					
 					
 				});
+				console.log("points : ",points);
 				//페이지네이션
 				
 				//페이지-이전/다음
@@ -252,36 +275,42 @@
 					$("#prepage").prop('disabled',false);
 				}
 				
-				$("#prepage-link").attr("href","list?page="+ result.pagination.prePage)	
-
 				if(result.pagination.last){
 					$("#nextpage").prop('disabled',true);
 				}
 				else{
 					$("#nextpage").prop('disabled',false);
 				}
-				
-				$("#nextpage-link").attr("href","list?page="+ result.pagination.nextPage);
-
-				
+	
 				//페이지-숫자
 				let beginPageNum = result.pagination.beginPage;
 				let endPageNum = result.pagination.endPage;
-						
+			    let currentPage = result.pagination.page; 
+
+				$(".page-num").remove();
 				for(let num = beginPageNum; num <= endPageNum; num++){
 					
-				    let isActive = result.pagination.currentPage === num ? 'active' : '';
-
+					let isActive;
+					if(num==currentPage){
+					
+						isActive = 'active';
+					}else{
+						isActive = '';
+					}
+					
+					
 				    let content = `
-				        <li class="page-item \${isActive}">
-				            <a href="list?page=\${num}" class="page-link">\${num}</a>
+				        <li class="page-item page-num ">
+				            <a href="list?page=\${num}" 
+				            		class="page-link num-link \${isActive}"
+				            		onclick="changePage(event, \${num})">\${num}
+				            </a>
 				        </li>
 				    `;
 
 				    $("#nextpage").before(content);
 						
 				}
-
 				drawMarker(points);
 			})
 		}
@@ -292,6 +321,8 @@
 		
 		var container = document.getElementById('map');
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+		
+		var markers = [];
 		var bounds = new kakao.maps.LatLngBounds();    
 		var options = {
 			//latitude,longitude 순으로 입력
@@ -302,26 +333,29 @@
 		var map = new kakao.maps.Map(container, options);
 		var customOverlay; 
 
-		
 		function drawMarker(points) {
-			<!--카카오 지도 -->
-			// 지도에 표시할 좌표 목록
 			
-			//ajax 처리 필요
-			//var points = [
-			//    new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
-			//    new kakao.maps.LatLng(37.5699451391001, 126.988087440713)
-			//];
+			//마커 지우기 - 새 페이지를 위해 
+			if(markers.length!==0){
+				markers.forEach(function(marker) {
+					marker.setMap(null);
+				});
+				markers.length = 0;
+			}
 			
-			var i, marker;
-			for (i = 0; i < points.length; i++) {
+			
+			for (let i = 0; i < points.length; i++) {
 			    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-			    marker = new kakao.maps.Marker({ position : points[i] });
-			    marker.setMap(map);
+			    markers.push (new kakao.maps.Marker({ position : points[i] }));
 			    
 			    // LatLngBounds 객체에 좌표를 추가합니다
 			    bounds.extend(points[i]);
 			}		
+			    
+			markers.forEach(function(marker) {
+				marker.setMap(map);
+			});
+			
 			setBounds();
 			
 			
