@@ -1,12 +1,15 @@
 package kr.co.jhta.restaurants_service.dto;
 
+import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Slf4j
 public class Pagination {
 
 	private int rows = 6;
@@ -45,7 +48,10 @@ public class Pagination {
 		currentBlock = (int) Math.ceil((double) page/pages);
 		beginPage = (currentBlock - 1)*pages + 1;
 		endPage = currentBlock*pages;
-		if (currentBlock == totalBlocks) {
+		
+		log.info("currentBlock, totalBlocks,page : '{}', '{}','{}'",currentBlock,totalBlocks,page);
+		
+		if (currentBlock >= totalBlocks) {
 			endPage = totalPages;
 		}
 		isFirst = page == 1;

@@ -50,14 +50,15 @@
 					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
 					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
 					<a id="JAPANESE" class="cat btn" role="button" href="list?category=JAPANESE" >일식</a> 
-					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
-					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
-					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
 					<a id="CHICKEN" class="cat btn" role="button" href="list?category=CHICKEN" >치킨</a> 
 					<a id="PIZZA" class="cat btn" role="button" href="list?category=PIZZA" >피자</a> 
 					<a id="FASTFOOD" class="cat btn" role="button" href="list?category=FASTFOOD" >패스트푸드</a>
-					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
 					<a id="WESTERN" class="cat btn" role="button" href="list?category=WESTERN">양식</a>
+					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
+					<a id="ASIAN" class="cat btn" role="button" href="list?category=ASIAN" >아시안</a> 
+					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
+					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
+					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
 				</div>
 			</div>
 
@@ -107,8 +108,6 @@
 							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 						</div>
 					</div>
-
-
 
 <!-- 					<div class="card m-2 sm-14 shadow bg-body rounded "> -->
 <!-- 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div> -->
@@ -291,7 +290,13 @@
 				let beginPageNum = result.pagination.beginPage;
 				let endPageNum = result.pagination.endPage;
 			    let currentPage = result.pagination.page; 
+			    
+				console.log("log");
 
+				console.log("beginPageNum : "+beginPageNum);
+				console.log("endPageNum : "+endPageNum);
+				console.log("currentPage : "+currentPage);
+			    
 				$(".page-num").remove();
 				for(let num = beginPageNum; num <= endPageNum; num++){
 					
