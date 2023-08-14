@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.security.config;
 
+import kr.co.jhta.restaurants_service.controller.users.OwnerController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,11 @@ public class SecurityConfiguration {
 
                 .authorizeRequests(urlRegistry -> {
 
-                    // TODO: authentication specification on urls later to be configured
-
                     urlRegistry.antMatchers("/customer/my-page").authenticated();
-                    urlRegistry.antMatchers("/owner/my-page").authenticated();
+
+                    urlRegistry.antMatchers(OwnerController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/owner/**").authenticated();
+
                     urlRegistry.anyRequest().permitAll();
                 })
 

@@ -7,13 +7,15 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.*;
 
 @Getter @Setter
 @Alias("Store")
+@Entity
 public class Store {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String category;
@@ -28,6 +30,8 @@ public class Store {
     private Date createDate;
     private Date updateDate;
     private DISABLED disabled;
+
+    @ManyToOne
     private User owner;
 
     public Store() {
