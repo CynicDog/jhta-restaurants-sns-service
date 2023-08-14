@@ -21,9 +21,9 @@
             <div class="row justify-content-center align-items-center mt-5">
                 <div class="col-md-10">
                     <div class="card shadow p-3 mb-5 rounded">
-                        <div class="card-header">
-                            <p class="my-2">포스팅의 제목과 소제목을 적어주세요!</p>
-                        </div>
+                        <div class="fw-lighter m-4 p-2">
+		                    <span class="fs-3">포스팅을 작성해주세요.</span>
+		                </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <div class="form-floating">
@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="col-md" id="box">
-                                <div class="card shadow p-3 mb-5 rounded">
+                                <div id="post-index-0" class="card shadow p-3 mb-5 rounded">
                                     <div class="card-body justify-content-center align-items-center">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-4">
@@ -75,8 +75,8 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12 text-end mt-4">
-                                                        <button class="btn btn-outline-secondary border-light-subtle btn-delete">delete</button>
-                                                        <button id="save" name="savebutton" class="btn btn-outline-secondary border-light-subtle btn-save">save</button>
+                                                        <button type="button" class="btn btn-outline-secondary border-light-subtle btn-delete">delete</button>
+                                                        <button type="submit" id="save" name="savebutton" class="btn btn-outline-secondary border-light-subtle btn-save">save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-md-10 text-end">
                     <a href="javascript:window.history.back();" class="btn btn-outline-secondary border-light-subtle">cancel</a>
-                    <button id="postSubmit" class="btn btn-outline-secondary border-light-subtle">
+                    <button type="submit" id="postSubmit" class="btn btn-outline-secondary border-light-subtle">
                         <div id="submitRequest">submit</div>
                         <div id="submitLoadingSpinner"
                              class="spinner-border spinner-border-sm text-primary m-1" role="status"
@@ -161,7 +161,7 @@
 
             // 추가할 html 컨텐츠를 정의한다.
             let content = `
-            <div class="card shadow p-3 mb-5 rounded">
+            <div id="post-index-\${formIndex}" class="card shadow p-3 mb-5 rounded post-index">
                 <div class="card-body justify-content-center align-items-center">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-4">
@@ -195,7 +195,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 text-end mt-4">
-                                    <button class="btn btn-outline-secondary border-light-subtle btn-delete">delete
+                                    <button type="button" class="btn btn-outline-secondary border-light-subtle btn-delete">delete
                                     </button>
                                     <button class="btn btn-outline-secondary border-light-subtle btn-save">save</button>
                                 </div>
@@ -204,7 +204,6 @@
                     </div>
                 </div>
             </div>
-            
 			
 		`
             // html 컨텐츠가 추가될 부모엘리먼트를 검색한다.
@@ -213,9 +212,46 @@
         })
 
         // 2. 삭제버튼에 이벤트핸들러 등록하기
-        $('#box').on('click', '.btn-delete', function () {
+        /* $('#box').on('click', '.btn-delete', function () {
             $(this).closest('.card').remove();
-        })
+        }) */
+        
+        $('#box').on('click', '.btn-delete', function () {
+            const card = $(this).closest('.card');
+            
+/*             const formDataToSend = new FormData();
+            
+            fromDataToSend.append('data-id', 0)
+ */            
+ 			const dataId = card.attr('id').split('-')[2];
+ 			/* const dataId = card.find('#post-index').val(); */
+            const storeIdInput = card.find('input[name=storeId]').val();
+            const contentTextarea = card.find('textarea[name=content]').val();
+            
+            if (storeIdInput.trim() !== '' || contentTextarea.trim() !== '') {
+            	const formDataToSend = new FormData();
+                formDataToSend.append('data-id', dataId);
+            	
+	            fetch('/post/delete-post-data', {
+	            	method: 'POST',
+                    body: formDataToSend
+                    
+	            }).then(response => {
+	                if (response.ok) {
+	                    card.remove();
+	                } else {
+	                    showToast('삭제할 수 없습니다.');
+	                }
+	            }).catch(error => {
+	                
+	                console.error('Failed to send delete request:', error);
+	            });
+        
+            } else {
+                // 저장된 값이 없는 경우에는 바로 해당 카드를 제거
+                card.remove();
+            }
+        });
     })
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -290,6 +326,7 @@
                 const chooseFileInput = card.querySelector('input[name=chooseFile]');
                 const storeIdInput = card.querySelector('input[name=storeId]');
                 const contentTextarea = card.querySelector('textarea[name=content]');
+                const dataId = card.getAttribute('id').split('-')[2];
 
                 if (chooseFileInput.files.length === 0 || storeIdInput.value.trim() === '' || contentTextarea.value.trim() === '') {
                     showToast('사진, 가게명, 게시글을 모두 작성해주세요.');
@@ -304,6 +341,7 @@
                 formDataToSend.append('chooseFile', chooseFileInput.files[0]);
                 formDataToSend.append('storeId', storeIdInput.value);
                 formDataToSend.append('content', contentTextarea.value);
+                formDataToSend.append('data-id', dataId);
 
                 fetch('/post/register-post-data', {
                     method: 'POST',
