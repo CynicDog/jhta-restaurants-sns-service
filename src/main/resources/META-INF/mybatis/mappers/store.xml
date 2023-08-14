@@ -1,26 +1,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
 
-	<select id = "getAllStores" resultType="Store">
-		select
-			business_license	as businessLicense,
-			name				as name,
-			address				as address,
-			category			as category,
-			zipcode				as zipcode,
-			latitude			as latitude,
-			longitude			as longitude,
-			description			as description,
-			phone				as phone,
-			read_count			as readCount,
-			create_date			as createDate,
-			update_date			as updateDate,
-			owner_id			as "owner.id",
-			disabled			as disabled
+<!-- 	<select id = "getAllStores" resultType="Store"> -->
+<!-- 		select -->
+<!-- 			business_license	as businessLicense, -->
+<!-- 			name				as name, -->
+<!-- 			address				as address, -->
+<!-- 			category			as category, -->
+<!-- 			zipcode				as zipcode, -->
+<!-- 			latitude			as latitude, -->
+<!-- 			longitude			as longitude, -->
+<!-- 			description			as description, -->
+<!-- 			phone				as phone, -->
+<!-- 			read_count			as readCount, -->
+<!-- 			create_date			as createDate, -->
+<!-- 			update_date			as updateDate, -->
+<!-- 			owner_id			as "owner.id", -->
+<!-- 			disabled			as disabled -->
 
-		from
-			STORES
-	</select>
+<!-- 		from -->
+<!-- 			STORES -->
+<!-- 	</select> -->
 
 
 	<select id = "getStores" parameterType="map" resultType="SearchedStore">
@@ -92,6 +92,12 @@
 									(S.name like CONCAT('%', #{keyword}, '%')
 									or F.name like CONCAT('%', #{keyword}, '%'))
 								</if>
+								
+								<if test="xStart != null">
+									and 
+									(#{xStart} &lt; S.longitude) and (S.longitude &lt; #{xEnd}) and
+									(#{yStart} &lt; S.latitude) and (S.latitude &lt; #{yEnd})
+								</if>
 							    
 							</where>
 							) as RAW
@@ -106,17 +112,24 @@
 
 	<!--키워드검색,  카테고리화 할때 전체 row 자체가 해당 되는 row만 잡혀야함 -->
 	<select id="getTotalRows" parameterType="map" resultType="int">
-	
 	  select count(*)
-	  from STORES
-		  <where>
-		  	<if test="category != null">
-			     category =  #{category}
-		    </if>
-		  	<if test="keyword != null">
-			     and name like CONCAT('%', #{keyword}, '%')
-		    </if>
-		  </where>
+	  from STORES S left join
+	  	FOODS F on S.id = F.store_id
+	  <where>
+		<if test="category != null">
+			     S.category =  #{category}
+		</if>
+		<if test="keyword != null">
+			and
+			(S.name like CONCAT('%', #{keyword}, '%')
+			or F.name like CONCAT('%', #{keyword}, '%'))
+		</if>
+		<if test="xStart != null">
+			and 
+			(#{xStart} &lt; S.longitude) and (S.longitude &lt; #{xEnd}) and
+			(#{yStart} &lt; S.latitude) and (S.latitude &lt; #{yEnd})
+		</if>
+	  </where>
 	</select>
 
 	<select id="getStoreById" parameterType="int" resultType="Store">

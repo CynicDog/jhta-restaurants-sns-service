@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.service.StoreService;
+import kr.co.jhta.restaurants_service.util.FormatUtils;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +34,25 @@ public class SearchResultController {
 							   @RequestParam(name="page", required = false, defaultValue="1") int page,
 							   @RequestParam(name="category", required = false, defaultValue="") String category,
 							   @RequestParam(name="keyword", required = false, defaultValue="") String keyword,
-							   Model model) {
+							   @RequestParam(name="xStart", required = false) Double xStart,
+							   @RequestParam(name="xEnd", required = false) Double xEnd,
+							   @RequestParam(name="yStart", required = false) Double yStart,
+							   @RequestParam(name="yEnd", required = false) Double yEnd) {
 		log.info("sort='{}', page='{}', category='{}', keyword='{}'", sort, page, category, keyword);
+		log.info("xStart='{}', xEnd='{}', yStart='{}', yEnd='{}'", xStart, xEnd, yStart, yEnd);
 
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("sort", sort);
 		param.put("page", page);
+		
+		if(xStart!= null) {
+			log.info("xStart='{}', xEnd='{}', yStart='{}', yEnd='{}'", xStart, xEnd, yStart, yEnd);
+
+			param.put("xStart", xStart);
+			param.put("xEnd", xEnd);
+			param.put("yStart", yStart);
+			param.put("yEnd", yEnd);
+		}
 
 		if (StringUtils.hasText(keyword)) {
 			param.put("keyword", keyword);
@@ -46,14 +60,15 @@ public class SearchResultController {
 		if (StringUtils.hasText(category)) {
 			param.put("category", category);
 		}
-
-
+		
 		return storeService.getStores(param);
 
 	}
 
 	@GetMapping("/list")
-	public String search() {
+	public String search(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+						 Model model) {
+		model.addAttribute("keyword",keyword);
 
 		return "search";
 	}

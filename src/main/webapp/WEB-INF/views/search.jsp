@@ -50,21 +50,25 @@
 					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
 					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
 					<a id="JAPANESE" class="cat btn" role="button" href="list?category=JAPANESE" >일식</a> 
-					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
-					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
-					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
 					<a id="CHICKEN" class="cat btn" role="button" href="list?category=CHICKEN" >치킨</a> 
 					<a id="PIZZA" class="cat btn" role="button" href="list?category=PIZZA" >피자</a> 
 					<a id="FASTFOOD" class="cat btn" role="button" href="list?category=FASTFOOD" >패스트푸드</a>
-					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
 					<a id="WESTERN" class="cat btn" role="button" href="list?category=WESTERN">양식</a>
+					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
+					<a id="ASIAN" class="cat btn" role="button" href="list?category=ASIAN" >아시안</a> 
+					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
+					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
+					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
 				</div>
 			</div>
 
 			<div class="row mb-3">
 				<div class="col-8">
+					<div id="storeLoadingSpinner" class="spinner-border text-primary mt-5" role="status" style="margin: 0 auto;">
+						<span class="visually-hidden" style="display: none;">Loading...</span>
+					</div>
+					
 					<div id="div-stores" class="row mb-3">
-
 					</div>
 				</div>
 
@@ -104,8 +108,6 @@
 							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 						</div>
 					</div>
-
-
 
 <!-- 					<div class="card m-2 sm-14 shadow bg-body rounded "> -->
 <!-- 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div> -->
@@ -155,8 +157,15 @@
 		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
-			let categoryValue = "";
-			let keywordValue = "";
+			let categoryValue ;
+			let keywordValue;
+			if($("input[name=keyword]").val()!=null){
+				keywordValue = $("input[name=keyword]").val();
+			}
+			let xStartValue;
+			let xEndValue;
+			let yStartValue;
+			let yEndValue;
 			
 			getResult();
 			
@@ -216,20 +225,21 @@
 
 		
 		function getResult() {
-			console.log("getResult")
 			$("#div-stores").find(".store").remove();
-
-			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue}, function(result) {
-				
+            $("#storeLoadingSpinner").css("display", "block");
+            $("html, body").scrollTop(0);
+            
+			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
+										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
+				console.log("xStartValue : " + xStartValue);
+				console.log("xEndValue : " + xEndValue);
+				console.log("yStartValue : " + yStartValue);
+				console.log("yEndValue : " + yEndValue);
 				
 				let points = [];
 				
 				result.stores.forEach(function(store){
-					
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
-					
-					
-						
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
 						<div class="card shadow" onclick="" style="cursor: pointer;">
@@ -239,7 +249,7 @@
 							<div class="col text-start mt-1">							
 								<div class="d-flex justify-content-between">
 									<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
-									<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg}</a>
+									<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
 								</div>
 								<div class="d-flex justify-content-between">
 									<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
@@ -269,24 +279,30 @@
 				
 				//페이지-이전/다음
 				if(result.pagination.first){
-					$("#prepage").prop('disabled',true);
+					$("#prepage").addClass('disabled');
 				}
 				else{
-					$("#prepage").prop('disabled',false);
+					$("#prepage").removeClass('disabled');
 				}
 				
 				if(result.pagination.last){
-					$("#nextpage").prop('disabled',true);
+					$("#nextpage").addClass('disabled');
 				}
 				else{
-					$("#nextpage").prop('disabled',false);
+					$("#nextpage").removeClass('disabled');
 				}
 	
 				//페이지-숫자
 				let beginPageNum = result.pagination.beginPage;
 				let endPageNum = result.pagination.endPage;
 			    let currentPage = result.pagination.page; 
+			    
+				console.log("log");
 
+				console.log("beginPageNum : "+beginPageNum);
+				console.log("endPageNum : "+endPageNum);
+				console.log("currentPage : "+currentPage);
+			    
 				$(".page-num").remove();
 				for(let num = beginPageNum; num <= endPageNum; num++){
 					
@@ -311,6 +327,8 @@
 				    $("#nextpage").before(content);
 						
 				}
+	            $("#storeLoadingSpinner").css("display", "none");
+
 				drawMarker(points);
 			})
 		}
@@ -405,9 +423,17 @@
 		        button.addEventListener('click', showOverlayMessage);
 			
 		        // 오버레이를 클릭하면 메시지를 띄우도록 이벤트 처리
-		        function showOverlayMessage() {
+		        function showOverlayMessage() {  
 			      customOverlay.setMap(null);
-		          alert("이 지역 검색");
+			      
+				  xStartValue = swLatLng.getLng();
+				  xEndValue = neLatLng.getLng();
+				  yStartValue = swLatLng.getLat();
+				  yEndValue = neLatLng.getLat();
+				  
+				  pageValue = 1; 
+
+			      getResult();
 		          
 		        }
 		}
