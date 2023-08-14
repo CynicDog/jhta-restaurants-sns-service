@@ -15,7 +15,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 .emoji-btn.active {
-  	color: orange;
+  	color: #ff792a;
 } 
 .buttons {
     display: flex;
@@ -30,7 +30,7 @@
 <div class="wrap">
 	<div class="container">
 	    <div class="restaurant-name">
-	        <strong style="color: orange;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
+	        <strong style="color: #ff792a;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
 	    </div>
 	<div class="review-section mt-3" >
 		<div class="row">
@@ -39,7 +39,7 @@
 	          		<div class="emoji-buttons" >
 	              		<ul style="list-style-type: none; padding: 0;">
 	                  		<li style="display: inline-block;">
-	                      		<button class="emoji-btn" data-recommend-type="3" style="background: none; border: none;">
+	                      		<button class="emoji-btn active" data-recommend-type="3" style="background: none; border: none;">
 	                          		<i class="bi bi-emoji-heart-eyes" style="font-size: 25px;"></i>
 	                          		맛있어요!
 	                      		</button>
@@ -96,8 +96,8 @@
 			</div>
 		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
 		    <div class="buttons">
-		        <button type="button" class="btn btn-light">취소</button>
-		        <button type="button" class="btn btn-outline-success">리뷰 올리기</button>
+		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">취소</button>
+		        <button type="button" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">리뷰 올리기</button>
 		    </div>
 		</div>
 	</div>
@@ -111,6 +111,9 @@ $(function() {
 	let previewModal = new bootstrap.Modal("#previewModal");
 	
 	$('.emoji-btn').click(function() {
+		// 페이지 로드 시 초기 선택값을 설정합니다.
+        $('.emoji-btn').first().addClass('active');
+		
 		 // 모든 버튼에 있는 'active' 클래스를 제거합니다.
 		$('.emoji-btn').removeClass('active');
 		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
