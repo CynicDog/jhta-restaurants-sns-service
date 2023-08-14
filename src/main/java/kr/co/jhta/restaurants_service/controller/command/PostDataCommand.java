@@ -14,9 +14,10 @@ public class PostDataCommand {
     String content;
     int dataId; 
 
-    public PostDataCommand(MultipartFile chooseFile, int storeId, String content) {
+    public PostDataCommand(MultipartFile chooseFile, int storeId, String content, int dataId) {
         this.chooseFile = chooseFile;
         this.storeId = storeId;
         this.content = content;
+        this.dataId = dataId;
     }
 }

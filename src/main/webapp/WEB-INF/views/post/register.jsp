@@ -218,13 +218,8 @@
         
         $('#box').on('click', '.btn-delete', function () {
             const card = $(this).closest('.card');
-            
-/*             const formDataToSend = new FormData();
-            
-            fromDataToSend.append('data-id', 0)
- */            
+
  			const dataId = card.attr('id').split('-')[2];
- 			/* const dataId = card.find('#post-index').val(); */
             const storeIdInput = card.find('input[name=storeId]').val();
             const contentTextarea = card.find('textarea[name=content]').val();
             
@@ -232,7 +227,27 @@
             	const formDataToSend = new FormData();
                 formDataToSend.append('data-id', dataId);
             	
-	            fetch('/post/delete-post-data', {
+                fetch('/post/delete-post-data', {
+                    method: 'POST',
+                    body: formDataToSend
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text(); // 반환된 응답 데이터 읽기
+                    } else {
+                        throw new Error('삭제 실패');
+                    }
+                })
+                .then(data => {
+                    // 서버에서 응답한 메시지를 출력하거나 다른 작업 수행
+                    console.log(data);
+                    card.remove(); // 카드 삭제
+                })
+                .catch(error => {
+                    showToast('삭제할 수 없습니다.');
+                    console.error('Failed to send delete request:', error);
+                });
+	            /* fetch('/post/delete-post-data', {
 	            	method: 'POST',
                     body: formDataToSend
                     
@@ -245,7 +260,7 @@
 	            }).catch(error => {
 	                
 	                console.error('Failed to send delete request:', error);
-	            });
+	            }); */
         
             } else {
                 // 저장된 값이 없는 경우에는 바로 해당 카드를 제거
@@ -374,8 +389,6 @@
     	    toast.show();
     	  }
     }
-    
-
 </script>
 
 </body>
