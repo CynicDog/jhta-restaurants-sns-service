@@ -48,7 +48,7 @@ public class PostController {
 	@ResponseBody
 	@PostMapping("/register-post-data")
 	public ResponseEntity<String> insertPostData(
-			MultipartFile chooseFile, int storeId, String content,
+			MultipartFile chooseFile, int storeId, String content, @RequestParam(name = "data-id") int toBeDeleted,
 			HttpSession httpSession) throws IOException{
 
 		List<PostDataCommand> postDataCommands = (List<PostDataCommand>) httpSession.getAttribute("postData");
@@ -57,7 +57,7 @@ public class PostController {
 			postDataCommands = new ArrayList<>();
 		}
 
-		postDataCommands.add(new PostDataCommand(chooseFile, storeId, content));
+		postDataCommands.add(new PostDataCommand(chooseFile, storeId, content, toBeDeleted));
 
 		httpSession.setAttribute("postData", postDataCommands);
 		
@@ -75,20 +75,20 @@ public class PostController {
 			@RequestParam(name = "data-id") int toBeDeleted, 
 			HttpSession httpSession) throws IOException{
 
-		// TODO: Delete the data based on storeId and content
-	    // 예를 들어, 세션에서 해당 데이터를 찾아 삭제
-		
-		 List<PostDataCommand> postDataList = (List<PostDataCommand>) httpSession.getAttribute("postData");
-		 System.out.println("삭제전 -------------" + postDataList);
-		 postDataList.stream()
-		 				.filter(postData -> postData.getDataId() != toBeDeleted)
-		 				.collect(Collectors.toList()); 
-	    
-	    System.out.println("삭제후 ---------------------" + postDataList);
-		
-		
-	    // 성공적으로 삭제한 경우
-	    return ResponseEntity.ok("Data deleted success");
+		    List<PostDataCommand> postDataList = (List<PostDataCommand>) httpSession.getAttribute("postData");
+		    PostDataCommand toDelete = postDataList.stream()
+		                                            .filter(postData -> postData.getDataId() == toBeDeleted)
+		                                            .findFirst()
+		                                            .orElse(null);
+
+		    if (toDelete != null) {
+		        postDataList.remove(toDelete); // 해당 데이터 삭제
+		        // 성공적으로 삭제한 경우
+		        return ResponseEntity.ok("Data deleted successfully");
+		    } else {
+		        // 해당 데이터를 찾을 수 없는 경우
+		        return ResponseEntity.badRequest().body("Data not found");
+		    }
 
 	}
 
@@ -105,7 +105,6 @@ public class PostController {
 		// TODO: Exception handling in insertion operation
 		httpSession.setAttribute("postData", null);
 
-		// if no error
 		return ResponseEntity.ok().body("Success!");
 	}
 
