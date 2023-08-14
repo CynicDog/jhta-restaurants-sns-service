@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.service.StoreService;
+import kr.co.jhta.restaurants_service.util.FormatUtils;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +47,7 @@ public class SearchResultController {
 		if (StringUtils.hasText(category)) {
 			param.put("category", category);
 		}
-
-
+		
 		return storeService.getStores(param);
 
 	}

@@ -63,8 +63,11 @@
 
 			<div class="row mb-3">
 				<div class="col-8">
+					<div id="storeLoadingSpinner" class="spinner-border text-primary mt-5" role="status" style="margin: 0 auto;">
+						<span class="visually-hidden" style="display: none;">Loading...</span>
+					</div>
+					
 					<div id="div-stores" class="row mb-3">
-
 					</div>
 				</div>
 
@@ -218,7 +221,9 @@
 		function getResult() {
 			console.log("getResult")
 			$("#div-stores").find(".store").remove();
-
+            $("#storeLoadingSpinner").css("display", "block");
+            $("html, body").scrollTop(0);
+            
 			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue}, function(result) {
 				
 				
@@ -239,7 +244,7 @@
 							<div class="col text-start mt-1">							
 								<div class="d-flex justify-content-between">
 									<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
-									<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg}</a>
+									<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
 								</div>
 								<div class="d-flex justify-content-between">
 									<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
@@ -269,17 +274,17 @@
 				
 				//페이지-이전/다음
 				if(result.pagination.first){
-					$("#prepage").prop('disabled',true);
+					$("#prepage").addClass('disabled');
 				}
 				else{
-					$("#prepage").prop('disabled',false);
+					$("#prepage").removeClass('disabled');
 				}
 				
 				if(result.pagination.last){
-					$("#nextpage").prop('disabled',true);
+					$("#nextpage").addClass('disabled');
 				}
 				else{
-					$("#nextpage").prop('disabled',false);
+					$("#nextpage").removeClass('disabled');
 				}
 	
 				//페이지-숫자
@@ -311,6 +316,8 @@
 				    $("#nextpage").before(content);
 						
 				}
+	            $("#storeLoadingSpinner").css("display", "none");
+
 				drawMarker(points);
 			})
 		}

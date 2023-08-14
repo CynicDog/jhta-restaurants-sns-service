@@ -2,12 +2,14 @@ package kr.co.jhta.restaurants_service.dto;
 
 import org.apache.ibatis.type.Alias;
 
+import kr.co.jhta.restaurants_service.util.FormatUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+
 @Setter
+@Getter
 @NoArgsConstructor
 @Alias("SearchedStore")
 public class SearchedStore {
@@ -21,4 +23,5 @@ public class SearchedStore {
     private double latitude;
     private double longitude;
 
+	
 }
