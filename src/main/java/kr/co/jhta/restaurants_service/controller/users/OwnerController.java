@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,6 +28,7 @@ public class OwnerController {
 
     private final Logger logger = Logger.getLogger(UserController.class);
     private final UserService userService;
+
 
     public OwnerController(UserService userService) {
         this.userService = userService;
@@ -65,9 +65,6 @@ public class OwnerController {
                             return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime());
                         })
                         .collect(Collectors.toList());
-
-        logger.info("[ registered store open times after registration - Command Object ]");
-        registeredStoreOpenTimes.forEach(i -> logger.info(i.getDay()));
 
         return new ResponseEntity<>(toBeRegisteredStoreOpenTimeCommands, HttpStatus.OK);
     }
@@ -156,14 +153,13 @@ public class OwnerController {
         foods.add(foodCommand);
         httpSession.setAttribute("foods", foods);
 
-        logger.info("[ Foods after registration - Command Object ]");
-        foods.forEach(food -> logger.info(food.getFoodName()));
-
         return new ResponseEntity<>(foodCommand, HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity registerStore(@RequestBody StoreCommand storeCommand, HttpSession httpSession) {
+
+
 
         return null;
     }
@@ -182,15 +178,12 @@ public class OwnerController {
         return "/user/owner/my-page";
     }
 
-
     @ResponseBody
     @PostMapping(value = "/signup", consumes = "application/json")
     public ResponseEntity signup(@RequestBody UserCommand userCommand) {
 
         userService.insertOwner(userCommand);
         return ResponseEntity.ok("Successfully signed up!");
-
-        // TODO: Session clear
     }
 
     @GetMapping("/signup")
@@ -198,4 +191,8 @@ public class OwnerController {
         model.addAttribute("userCommand", new UserCommand());
         return "user/owner/signup-form";
     }
+
+    public static String[] PUBLIC_URLS = {
+            "/owner/signup"
+    };
 }

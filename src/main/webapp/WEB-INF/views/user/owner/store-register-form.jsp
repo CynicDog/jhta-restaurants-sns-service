@@ -668,15 +668,15 @@
         storeSubmitButton.addEventListener('click', function() {
 
             const commandData = {
-                name: nameInput.value,
-                phone: phoneInput.value,
-                businessLicense: businessLicenseInput.value,
-                description: descriptionInput.value,
-                address: addressInput.value,
-                zipCode: zipCodeInput.value,
-                addressDetail: addressDetailInput.value,
-                longitude: longitude.value,
-                latitude: latitude.value
+                name: nameInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                businessLicense: businessLicenseInput.value.trim(),
+                description: descriptionInput.value.trim(),
+                address: addressInput.value.trim(),
+                zipCode: zipCodeInput.value.trim(),
+                addressDetail: addressDetailInput.value.trim(),
+                longitude: longitude.value.trim(),
+                latitude: latitude.value.trim()
             };
 
             fetch('/owner/register', {
