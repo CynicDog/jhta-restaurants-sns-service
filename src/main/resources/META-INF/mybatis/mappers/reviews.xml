@@ -3,13 +3,29 @@
 
 	<insert id="insertReview" parameterType="Review">
 	  insert into REVIEWS
-	  (rating, content, liked_count, report_count, customer_id, store_id)
+	  (rating, content, customer_id, store_id)
 	  values
-	  (#{rating}, #{content}, #{likedCount}, #{reportCount}, #{customer.id}, #{store.id})
+	  (#{rating}, #{content}, #{customer.id}, #{store.id})
 	</insert>
 
+	<select id="getAllReviews" resultType="Review">
+		select 
+			id,			
+			rating,
+			content,
+			create_date		as 	createDate,
+			update_date		as	updateDate,
+			liked_count		as	likedCount,
+			report_count	as  reportCount,
+			disabled,
+			blocked,
+			customer_id		as "customer.id",		
+			store_id		as "store.id"
+		from 
+			REVIEWS
+	</select>
 	
-	<select id = "getReviewById" parameterType="int" resultType="Review">
+	<select id="getReviewById" parameterType="int" resultType="Review">
 		select 
 			id,			
 			rating,
@@ -28,7 +44,7 @@
 			id = #{value};
 	</select>
 
-	<select id = "getReviewByCustomerId" parameterType="int" resultType="Review">
+	<select id="getReviewByCustomerId" parameterType="int" resultType="Review">
 		select 
 			id,			
 			rating,
@@ -45,6 +61,25 @@
 			REVIEWS
 		where 
 			customer_id = #{value};
+	</select>
+	
+	<select id="getReviewByStoreId" parameterType="int" resultType="Review">
+		select 
+			id,			
+			rating,
+			content,
+			create_date		as 	createDate,
+			update_date		as	updateDate,
+			liked_count		as	likedCount,
+			report_count	as  reportCount,
+			disabled,
+			blocked,
+			customer_id		as "customer.id",		
+			store_id		as "store.id"
+		from 
+			REVIEWS
+		where 
+			store_id = #{value};
 	</select>
 	
 </mapper>
