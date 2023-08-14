@@ -65,10 +65,11 @@ public class PostController {
 
 	@ResponseBody
 	@PostMapping("/register-post")
-	public ResponseEntity insertPost(@RequestBody PostCommand postCommand,
+	public ResponseEntity<String> insertPost(@RequestBody PostCommand postCommand,
 									 @AuthenticationPrincipal SecurityUser securityUser,
 									 HttpSession httpSession) throws IOException {
 
+		@SuppressWarnings("unchecked")
 		List<PostDataCommand> postDataCommand = (List<PostDataCommand>) httpSession.getAttribute("postData");
 		postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), securityUser.getUser()), postDataCommand);
 

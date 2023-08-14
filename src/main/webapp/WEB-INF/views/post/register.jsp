@@ -260,7 +260,10 @@
 		                window.location.href = "/";
 		            } else {
 		                // TODO: Handle error response
-		                console.error("Form submission failed.");
+		            	console.error("Form submission failed. Status:", response.status);
+		                response.text().then(errorMessage => {
+		                    console.error("Error message:", errorMessage);
+		                });
 		            }
 		        })
 		        .catch(error => {
