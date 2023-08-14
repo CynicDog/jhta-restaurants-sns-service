@@ -438,6 +438,9 @@
   	 		map.setBounds(bounds);
 		}
 		
+		let swLatLng; 
+		let neLatLng;
+		
 		function setButton(){
 			  if (customOverlay) {
 			        customOverlay.setMap(null);
@@ -447,9 +450,9 @@
 		   		let center = map.getCenter();
 		   		let mapBounds = map.getBounds();
 			    // 영역의 남서쪽 좌표를 얻어옵니다 
-			    let swLatLng = mapBounds.getSouthWest(); 
+			    swLatLng = mapBounds.getSouthWest(); 
 			    // 영역의 북동쪽 좌표를 얻어옵니다 
-			    let neLatLng = mapBounds.getNorthEast(); 
+			    neLatLng = mapBounds.getNorthEast(); 
 			    let distance =  neLatLng.getLat() - swLatLng.getLat();
 			    
 				// 커스텀 오버레이가 표시될 위치입니다 
