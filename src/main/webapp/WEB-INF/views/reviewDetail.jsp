@@ -79,7 +79,7 @@ html, body {
              			</div>
               		</div>
 				</div>
-				<div class="row m-3">
+				<div class="row col-3 m-3">
 					<a href="/store/detail"class="mx-3">@가게명-서울시 종로구</a>
 				</div>	
 				<div class="row m-3">
@@ -88,18 +88,26 @@ html, body {
 							<a>3</a>
 							<a class="float-end pt-1 mt-1 text-secondary">2023-08-11</a>
 						</span>
-					<p style="font-size:20px;">리뷰 내용</p>
+					<p class="border border-secondary border-opacity-50 rounded p-3" style="font-size:20px;">리뷰 내용</p>
 				</div>
 				<div class="row" id="image-row">
 				
-					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..."  style="width: 100%; height: 100%; ">
+					<div class="col-4 " >
+						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..."  style="width: 100%; height: 100%; cursor: pointer;">
 					</div>
 					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="width: 100%; height: 100%;">
+						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="width: 100%; height: 100%; cursor: pointer;">
 					</div>
 					<div class="col-4" >
-						<img class="img-thumbnail " data-image-index="2" src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/12e66f74-ca37-4a97-b19e-8e9231541a4a.jpeg" alt="..." style="width: 100%; height: 100%;">
+						<div class="card bg-dark text-center text-white fs-1">
+							<img class="img-thumbnail card-img opacity-50" data-image-index="2" src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/12e66f74-ca37-4a97-b19e-8e9231541a4a.jpeg" alt="..." style="width: 100%; height: 100%; cursor: pointer;">
+							<div class="col-1 card-img-overlay position-absolute top-50 start-50 translate-middle" >
+							<p class="position-absolute top-50 start-50 translate-middle">+1</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-4 visually-hidden" >
+						<img class="img-thumbnail card-img" data-image-index="3" src="https://d20aeo683mqd6t.cloudfront.net/images/imgs/000/015/214/original/image006.jpeg?1561342506&d=750x750" alt="..." style="width: 100%; height: 100%;">
 					</div>
 					
 					<!-- Modal -->
@@ -147,7 +155,7 @@ html, body {
   					 <label for="floatingTextarea2">가게명</label>
 					</div>
     				<span class="float-end">
-						<button id="text-button" type="button" class="btn btn-sm" style="color: blue;">
+						<button id="text-button" type="button" class="btn btn-lg" style="color: blue;">
 							<i class="bi bi-pencil-square"></i>
 						</button>
 					</span>

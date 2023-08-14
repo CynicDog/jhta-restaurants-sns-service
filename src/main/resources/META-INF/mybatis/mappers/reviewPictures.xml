@@ -8,7 +8,7 @@
 	  (#{pictureName}, #{review.id})
 	</insert>
 	
-	<select id = "getReviewPicturesByReviewId" parameterType="int" resultType="ReviewPicture">
+	<select id="getReviewPicturesByReviewId" parameterType="int" resultType="ReviewPicture">
 		select 
 			id,			
 			picture_name	as pictureName,	
@@ -18,5 +18,6 @@
 		where 
 			review_id = #{value};
 	</select>
+	
 
 </mapper>

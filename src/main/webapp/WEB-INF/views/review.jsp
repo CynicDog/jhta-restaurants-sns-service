@@ -32,6 +32,8 @@
 	    <div class="restaurant-name">
 	        <strong style="color: #ff792a;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
 	    </div>
+	<form method="post" enctype="multipart/form-data" action="">
+   		<input type="hidden" name="storeId" value="${param.storeId }"/>
 	<div class="review-section mt-3" >
 		<div class="row">
 			<div class="col-12">
@@ -39,13 +41,13 @@
 	          		<div class="emoji-buttons" >
 	              		<ul style="list-style-type: none; padding: 0;">
 	                  		<li style="display: inline-block;">
-	                      		<button class="emoji-btn active" data-recommend-type="3" style="background: none; border: none;">
+	                      		<button class="emoji-btn active" data-recommend-type="5" style="background: none; border: none;">
 	                          		<i class="bi bi-emoji-heart-eyes" style="font-size: 25px;"></i>
 	                          		맛있어요!
 	                      		</button>
 	                  		</li>
 			                <li style="display: inline-block;">
-			                	<button class="emoji-btn" data-recommend-type="2" style="background: none; border: none;">
+			                	<button class="emoji-btn" data-recommend-type="3" style="background: none; border: none;">
 			                    	<i class="bi bi-emoji-smile" style="font-size: 25px;"></i>
 			                    	괜찮아요!
 			              		</button>
@@ -58,6 +60,7 @@
 			             	</li>
 	              		</ul>
 	          		</div>
+	          		<input type="hidden" name="rating" />
 	        		<textarea id="textLength" name="content" rows=20 class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
 		        	<p style="text-align: right;"><span id="text-count">0</span>/2000</p>
 				</div>
@@ -67,26 +70,26 @@
 	<div class="row">
 		<div class="btn-group m-2">
 			<span>
-				<button type="button" class="btn btn-1 border-secondary rounded-pill text-secondary">#음식이 맛있어요</button>
-				<button type="button" class="btn btn-2 border-secondary rounded-pill text-secondary">#주차가 편해요</button>
-				<button type="button" class="btn btn-3 border-secondary rounded-pill text-secondary">#매장이 청결해요</button>
-				<button type="button" class="btn btn-4 border-secondary rounded-pill text-secondary">#매장이 넓어요</button>
-				<button type="button" class="btn btn-5 border-secondary rounded-pill text-secondary">#분위기가 좋아요</button>
-				<button type="button" class="btn btn-6 border-secondary rounded-pill text-secondary">#친절해요</button>
+				<button type="button" class="btn btn-1 border-secondary rounded-pill text-secondary" data-keyword-type="음식이 맛있어요">#음식이 맛있어요</button>
+				<button type="button" class="btn btn-2 border-secondary rounded-pill text-secondary" data-keyword-type="주차가 편해요">#주차가 편해요</button>
+				<button type="button" class="btn btn-3 border-secondary rounded-pill text-secondary" data-keyword-type="매장이 청결해요">#매장이 청결해요</button>
+				<button type="button" class="btn btn-4 border-secondary rounded-pill text-secondary" data-keyword-type="매장이 넓어요">#매장이 넓어요</button>
+				<button type="button" class="btn btn-5 border-secondary rounded-pill text-secondary" data-keyword-type="분위기가 좋아요">#분위기가 좋아요</button>
+				<button type="button" class="btn btn-6 border-secondary rounded-pill text-secondary" data-keyword-type="친절해요">#친절해요</button>
 			</span>
+	        <input type="hidden" name="keyword" />
 		</div>
 	</div>
 	<div class="row">
 	    <div class="photo-section">
-	    	<form method="post" enctype="multipart/form-data" id="form-image">
-			    <div>
+			    <div id="form-image">
 			        <label for="imageFile">
-	       				<a class="btn" style="position: relative; display: inline-block;"><i class="bi bi-plus-square-dotted" style="font-size: 65px; color: #000;"></i></a> 
+	       				<a class="btn
+	       				" style="position: relative; display: inline-block;"><i class="bi bi-plus-square-dotted" style="font-size: 65px; color: #000;"></i></a> 
 						<span></span>	
 			        </label>
 			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
 			    </div>
-			</form>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
 		            <div class="modal-body" style="background-color: transparent; display: flex; justify-content: center; align-items: center; height: 90vh;">
@@ -97,10 +100,11 @@
 		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
 		    <div class="buttons">
 		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">취소</button>
-		        <button type="button" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">리뷰 올리기</button>
+		        <button type="submit" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
 		    </div>
 		</div>
 	</div>
+	</form>
 	</div>
 <%@ include file="common/footer.jsp"%>
 </div>
@@ -110,15 +114,17 @@ $(function() {
 	
 	let previewModal = new bootstrap.Modal("#previewModal");
 	
-	$('.emoji-btn').click(function() {
-		// 페이지 로드 시 초기 선택값을 설정합니다.
-        $('.emoji-btn').first().addClass('active');
-		
+	// 페이지 로드 시 초기 선택값을 설정합니다.
+    $('.emoji-btn').first().addClass('active');
+	
+    $('.emoji-btn').click(function() {		
 		 // 모든 버튼에 있는 'active' 클래스를 제거합니다.
 		$('.emoji-btn').removeClass('active');
 		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
 		$(this).addClass('active');
-	});
+		$("input[name=rating]").val(parseInt($(this).attr("data-recommend-type")));
+		
+	}); 
 	
 	$("#form-image span").on('click', 'button', function(event) {
 		// !$(event.target): 이벤트가 발생한 HTML 엘리먼트를 jQuery 객체로 감싼 것, .hasClass: text-danger를 갖고 있는지 물어보는코드
@@ -228,6 +234,7 @@ $(function() {
 	$(".btn-1").click(function() {
 		if ($(this).hasClass("btn-1")) {
 			$(this).removeClass("btn-1").addClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white")
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-1 border-secondary rounded-pill text-secondary")
 		}
@@ -235,6 +242,7 @@ $(function() {
 	$(".btn-2").click(function() {
 		if ($(this).hasClass("btn-2")) {
 			$(this).removeClass("btn-2").addClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-2 border-secondary rounded-pill text-secondary")
 		}
@@ -242,6 +250,7 @@ $(function() {
 	$(".btn-3").click(function() {
 		if ($(this).hasClass("btn-3")) {
 			$(this).removeClass("btn-3").addClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white")
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white").addClass("btn btn-3 border-secondary rounded-pill text-secondary")
 		}
@@ -249,6 +258,7 @@ $(function() {
 	$(".btn-4").click(function() {
 		if ($(this).hasClass("btn-4")) {
 			$(this).removeClass("btn-4").addClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ").addClass("btn btn-4 border-secondary rounded-pill text-secondary")
 		}
@@ -256,6 +266,7 @@ $(function() {
 	$(".btn-5").click(function() {
 		if ($(this).hasClass("btn-5")) {
 			$(this).removeClass("btn-5").addClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6").addClass("btn btn-5 border-secondary rounded-pill text-secondary")
 		}
@@ -263,6 +274,7 @@ $(function() {
 	$(".btn-6").click(function() {
 		if ($(this).hasClass("btn-6")) {
 			$(this).removeClass("btn-6").addClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-6 border-secondary rounded-pill text-secondary")
 		}
