@@ -10,14 +10,6 @@
 <head>
 <title>검색 결과</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-   
-<style type="text/css">
-
-
-
-</style>
-
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -69,6 +61,7 @@
 					</div>
 					
 					<div id="div-stores" class="row mb-3">
+					
 					</div>
 				</div>
 
@@ -157,7 +150,7 @@
 		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
-			let categoryValue ;
+			let categoryValue;
 			let keywordValue;
 			if($("input[name=keyword]").val()!=null){
 				keywordValue = $("input[name=keyword]").val();
@@ -166,7 +159,7 @@
 			let xEndValue;
 			let yStartValue;
 			let yEndValue;
-			
+						
 			getResult();
 			
 			function changePage(event,page){
@@ -187,7 +180,6 @@
 				
 				categoryValue = $(this).attr("id");
 				pageValue = 1;
-				
 			
 				getResult();
 			})
@@ -197,7 +189,6 @@
 			$(".page-move").click(function(event) {
 				console.log("page-move clicked");
 				event.preventDefault();
-				console.log("this : {} ", $(this));
 
 				let id = $(this).attr("id");
 				console.log("id : {} ", id);
@@ -220,8 +211,26 @@
 				sortValue = $(this).val();
 				
 				getResult();
-			})		
+			})
+			
+			//가게 카드에 mouseenter 이벤트 리스너 등록
+			$("#div-stores").on('mouseenter', ".store", function(){
+				let index = $(this).find(".card").attr("index-id");
+				console.log("index-id : ",$(this).find(".card").attr("index-id"));
+				
+				infowindows[index].open(map, markers[index]);
+			})
+			
+			//가게 카드에 mouseleave 이벤트 리스너 등록
+			$("#div-stores").on('mouseleave', ".store", function(){
+				let index = $(this).find(".card").attr("index-id");
+				console.log("index-id : ",$(this).find(".card").attr("index-id"));
+				
+			    infowindows[index].close();
+			})
 		
+			
+			
 
 		
 		function getResult() {
@@ -237,33 +246,35 @@
 				console.log("yEndValue : " + yEndValue);
 				
 				let points = [];
+				let storeNames = [];
 				
-				result.stores.forEach(function(store){
+				let i = 0;
+				result.stores.forEach(function(store){ 
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
-						<div class="card shadow" onclick="" style="cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
-						</div>
-						<div class="row">
-							<div class="col text-start mt-1">							
-								<div class="d-flex justify-content-between">
-									<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
-									<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
-								</div>
-								<div class="d-flex justify-content-between">
-									<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
-									<div>
-										<i id="store-reviewCnt-\${store.id}" class="bi bi-pencil-square text-secondary">\${store.reviewCnt}</i> 
-										<i id="store-bookmarkCnt-\${store.id}" class="bi bi-star text-secondary">\${store.bookmarkCnt}</i>
+							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="" style="cursor: pointer;">
+								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
+							</div>
+							<div class="row">
+								<div class="col text-start mt-1">							
+									<div class="d-flex justify-content-between">
+										<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
+										<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
+									</div>
+									<div class="d-flex justify-content-between">
+										<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
+										<div>
+											<i id="store-reviewCnt-\${store.id}" class="bi bi-pencil-square text-secondary">\${store.reviewCnt}</i> 
+											<i id="store-bookmarkCnt-\${store.id}" class="bi bi-star text-secondary">\${store.bookmarkCnt}</i>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
 					`;
-					// store 카드 추가 및 내용 입력
+					// store 카드 추가 및 텍스트 내용 입력
 					$("#div-stores").append(content);
 					
 					$("#store-name-store.id").text(store.name);
@@ -273,8 +284,12 @@
 					$("#store-bookmarkCnt-store.id").text(store.bookmarkCnt);
 					
 					
+					storeNames.push(store.name);
+
+					i = i+1;
 				});
-				console.log("points : ",points);
+				console.log("storeNames : ",storeNames);
+
 				//페이지네이션
 				
 				//페이지-이전/다음
@@ -297,7 +312,6 @@
 				let endPageNum = result.pagination.endPage;
 			    let currentPage = result.pagination.page; 
 			    
-				console.log("log");
 
 				console.log("beginPageNum : "+beginPageNum);
 				console.log("endPageNum : "+endPageNum);
@@ -330,17 +344,17 @@
 	            $("#storeLoadingSpinner").css("display", "none");
 
 				drawMarker(points);
+				createInfowindow(storeNames);
+
 			})
 		}
-	
-
-		
-	
 		
 		var container = document.getElementById('map');
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 		
 		var markers = [];
+		// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+		var infowindows =  [];
 		var bounds = new kakao.maps.LatLngBounds();    
 		var options = {
 			//latitude,longitude 순으로 입력
@@ -361,30 +375,62 @@
 				markers.length = 0;
 			}
 			
-			
 			for (let i = 0; i < points.length; i++) {
 			    // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 			    markers.push (new kakao.maps.Marker({ position : points[i] }));
 			    
 			    // LatLngBounds 객체에 좌표를 추가합니다
 			    bounds.extend(points[i]);
+			    
+			    markers[i].setMap(map);
+			    
+				// 마커에 마우스오버 이벤트를 등록합니다
+				kakao.maps.event.addListener(markers[i], 'mouseover', function() {
+				  // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+				    infowindows[i].open(map, markers[i]);
+				});
+				
+				// 마커에 마우스아웃 이벤트를 등록합니다
+				kakao.maps.event.addListener(markers[i], 'mouseout', function() {
+				    // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+				    infowindows[i].close();
+				});	
 			}		
 			    
-			markers.forEach(function(marker) {
-				marker.setMap(map);
-			});
-			
 			setBounds();
-			
 			
 	 		// 마우스 드래그로 지도 이동/ 지도 확대,축소가 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 			kakao.maps.event.addListener(map, 'bounds_changed', function() {      
-				
 				setButton();
-	
 			});
+	 		
+
+	 		
 		}
 		
+		function createInfowindow(storeNames){
+			
+			//info 윈도우 지우기 - 새 페이지를 위해 
+			if(infowindows.length!==0){
+				infowindows.forEach(function(infowindow) {
+					infowindow.setMap(null);
+				});
+				infowindows.length = 0;
+			}
+			
+			// info 윈도우를 생성합니다
+			for(let i=0; i<storeNames.length; i++){
+				let storeName = storeNames[i];
+				var infowindow = new kakao.maps.InfoWindow({
+				    content : `<div>\${storeName}</div>`
+				});
+			    
+				infowindows.push(infowindow);	
+				console.log("infowindows : ", infowindows);
+
+			}
+					
+		}
 	
 		function setBounds() {
     	// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
@@ -420,24 +466,26 @@
 				
 		        // 커스텀 오버레이의 버튼에 이벤트를 추가
 		        var button = document.getElementById('search-button');
-		        button.addEventListener('click', showOverlayMessage);
+		        button.addEventListener('click', searchByPosition);
 			
-		        // 오버레이를 클릭하면 메시지를 띄우도록 이벤트 처리
-		        function showOverlayMessage() {  
-			      customOverlay.setMap(null);
-			      
-				  xStartValue = swLatLng.getLng();
-				  xEndValue = neLatLng.getLng();
-				  yStartValue = swLatLng.getLat();
-				  yEndValue = neLatLng.getLat();
-				  
-				  pageValue = 1; 
 
-			      getResult();
-		          
-		        }
 		}
 		
+        function searchByPosition() {  
+	      customOverlay.setMap(null);
+	      
+		  xStartValue = swLatLng.getLng();
+		  xEndValue = neLatLng.getLng();
+		  yStartValue = swLatLng.getLat();
+		  yEndValue = neLatLng.getLat();
+		  
+		  pageValue = 1; 
+
+	      getResult();
+          
+        }
+		
+
 		
 	</script>
 

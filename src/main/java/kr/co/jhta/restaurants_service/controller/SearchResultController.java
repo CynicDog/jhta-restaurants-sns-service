@@ -72,6 +72,7 @@ public class SearchResultController {
 
 		return "search";
 	}
+	
 
 
 
