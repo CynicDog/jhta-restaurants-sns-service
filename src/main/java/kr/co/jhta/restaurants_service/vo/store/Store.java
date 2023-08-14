@@ -29,6 +29,7 @@ public class Store {
     private Date updateDate;
     private DISABLED disabled;
     private User owner;
+    private String addressDetail;
 
     public Store() {
 
