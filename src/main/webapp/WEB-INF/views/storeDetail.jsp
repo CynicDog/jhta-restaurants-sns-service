@@ -197,11 +197,11 @@ html, body {
 																	 컨디먼츠는 소금, 페페로치노, 홀그레인, 와사비로 역시 딱 깔끔한 구성이였다. 가장 궁금했던 요소 중 하나였던 칠링박스는 술을 주문하면 맥주 4병, 소주 2병 기본으로 나오는데 마신 만큼만 계산하는 시스템이였다. 칠링박스에 넣어두어서 그런지 계속해서 시원한 맥주를 마실 수 있었다.ㅎㅎㅎ</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter">맛있어요!</span>
+											<span class="badge text-bg-success fw-lighter" style="color: #ff792a;">맛있어요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
-									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px; cursor: pointer;" alt="..." onclick="openModal(this)">
 									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 									</div>
@@ -232,12 +232,6 @@ html, body {
 								        </div>
 								    </div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-12">
-							<div class="input-group mb-3">
 							</div>
 						</div>
 					</div>
