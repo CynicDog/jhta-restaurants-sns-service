@@ -13,6 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 </head>
 <style>
     .nav-link.my-3.active {
@@ -28,7 +30,7 @@
             <div class="card shadow my-5 menu-input-group">
                 <div class="row p-3">
                     <div class="col-4">
-                        <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-4 border-end">
+                        <nav id="register-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
                             <nav class="nav nav-pills flex-column fw-lighter">
                                 <a class="nav-link my-3 text-secondary" href="#item-1">Store</a>
                                 <a class="nav-link my-3 text-secondary" href="#item-2">Address</a>
@@ -38,8 +40,8 @@
                         </nav>
                     </div>
                     <div class="col-8">
-                        <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="false"
-                             class="shadow-sm rounded p-3 " tabindex="0" style="height: 550px; overflow-y: scroll;">
+                        <div data-bs-spy="scroll" data-bs-target="#register-navbar" data-bs-smooth-scroll="false"
+                             class="shadow-sm rounded p-3 " tabindex="0" style="height: 650px; overflow-y: scroll;">
                             <div>
                                 <div id="store-info-input-area" class="mb-5">
                                     <div class="row my-4 p-2" id="item-1">
@@ -51,8 +53,8 @@
                                                    placeholder=""/>
                                             <label class="fw-lighter d-flex" for="name">Name
                                                 <div class="ms-auto">
-                                                    <div id="nameValidation" style="display: none;">
-                                                        <i class="bi bi-check-lg mx-2 text-success"></i>
+                                                    <div class="validation name mx-2 text-danger"
+                                                         style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
@@ -64,7 +66,21 @@
                                                    placeholder=""/>
                                             <label class="fw-lighter d-flex" for="name">Phone
                                                 <div class="ms-auto">
-                                                    <div id="phoneValidation" style="display: none;">
+                                                    <div class="validation phone mx-3 text-danger"
+                                                         style="display: none;">
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-floating my-3">
+                                            <input type="text" class="form-control-plaintext" name="businessLicense"
+                                                   id="businessLicense" placeholder=""/>
+                                            <label class="fw-lighter d-flex" for="businessLicense">Business License
+                                                <div class="ms-auto">
+                                                    <div class="validation businessLicense mx-3 text-danger"
+                                                         style="display: none;">
                                                         <i class="bi bi-check-lg mx-2 text-success"></i>
                                                     </div>
                                                 </div>
@@ -73,12 +89,12 @@
                                     </div>
                                     <div>
                                         <div class="form-floating my-3">
-                                            <input type="text" class="form-control-plaintext" name="buizLicense"
-                                                   id="buizLicense" placeholder=""/>
-                                            <label class="fw-lighter d-flex" for="name">Business License
+                                            <input type="text" class="form-control-plaintext" name="description"
+                                                   id="description" placeholder=""/>
+                                            <label class="fw-lighter d-flex" for="description">Description
                                                 <div class="ms-auto">
-                                                    <div id="buizLicenseValidation" style="display: none;">
-                                                        <i class="bi bi-check-lg mx-2 text-success"></i>
+                                                    <div class="validation description mx-3 text-danger"
+                                                         style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
@@ -96,12 +112,11 @@
                                     <div>
                                         <div class="form-floating my-3">
                                             <input type="text" class="form-control-plaintext" name="zipCode"
-                                                   id="zipCode"
-                                                   placeholder=" " disabled/>
-                                            <label class="fw-lighter d-flex" for="name">Postal Code
+                                                   id="zipCode" placeholder=" " disabled/>
+                                            <label class="fw-lighter d-flex" for="zipCode">Postal Code
                                                 <div class="ms-auto">
-                                                    <div id="zipCodeValidation" style="display: none;">
-                                                        <i class="bi bi-check-lg mx-2 text-success"></i>
+                                                    <div class="validation zipCode mx-3 text-danger"
+                                                         style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
@@ -112,10 +127,10 @@
                                             <input type="text" class="form-control-plaintext" name="address"
                                                    id="address"
                                                    placeholder=" " disabled/>
-                                            <label class="fw-lighter d-flex" for="name">Address
+                                            <label class="fw-lighter d-flex" for="address">Address
                                                 <div class="ms-auto">
-                                                    <div id="addressValidation" style="display: none;">
-                                                        <i class="bi bi-check-lg mx-2 text-success"></i>
+                                                    <div class="validation address mx-3 text-danger"
+                                                         style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
@@ -125,15 +140,17 @@
                                         <div class="form-floating my-3">
                                             <input type="text" class="form-control-plaintext" name="addressDetail"
                                                    id="addressDetail" placeholder=""/>
-                                            <label class="fw-lighter d-flex" for="name">Additional address
+                                            <label class="fw-lighter d-flex" for="addressDetail">Additional address
                                                 <div class="ms-auto">
-                                                    <div id="addressDetailValidation" style="display: none;">
-                                                        <i class="bi bi-check-lg mx-2 text-success"></i>
+                                                    <div class="validation addressDetail mx-3 text-danger"
+                                                         style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
                                         </div>
                                     </div>
+                                    <input id="longitude" type="hidden" name="longitude">
+                                    <input id="latitude" type="hidden" name="latitude">
                                 </div>
                                 <hr class="my-5">
                                 <div id="menu-input-area" class="mb-5" style="height: 200px">
@@ -151,8 +168,8 @@
                                     <div class="row my-4 p-2" id="item-4">
                                         <div class="col-8 fw-lighter fs-3 d-flex my-1">Opening Hours</div>
                                         <div class="col-4 d-flex justify-content-end my-1">
-                                            <i type="button" id="hourAddIcon" class="bi bi-plus-circle my-2" style="display: block"></i>
-                                            <i id="hourDoneIcon" class="bi bi-check-circle my-2" style="display: none"></i>
+                                            <i type="button" id="hourAddIcon" class="bi bi-plus-circle my-2"
+                                               style="display: block"></i>
                                         </div>
                                     </div>
                                     <div id="hourOutputArea">
@@ -160,8 +177,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center">
+                            <div id="storeSubmitButton" class="btn btn-light btn-sm mt-5 mb-3 mx-2 disabled">
+                            <span class="fw-lighter">
+                                submit
+                            </span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
@@ -170,7 +196,6 @@
     <div id="successfulToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">
-
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
@@ -212,6 +237,7 @@
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="fw-lighter fs-4">Opening hours</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div>
                         <div class="fw-lighter d-flex" for="day">Day
@@ -234,11 +260,13 @@
                             <div class="my-3">
                                 <div class="my-1">
                                     <label for="openingTime" class="fw-lighter fs-6">opening</label>
-                                    <input id="openingTime" class="form-control-plaintext fw-light" type="time" name="openingTime">
+                                    <input id="openingTime" class="form-control-plaintext fw-light" type="time"
+                                           name="openingTime">
                                 </div>
                                 <div class="my-1">
                                     <label for="closingTime" class="fw-lighter fs-6">closing</label>
-                                    <input id="closingTime" class="form-control-plaintext fw-light" type="time" name="closingTime">
+                                    <input id="closingTime" class="form-control-plaintext fw-light" type="time"
+                                           name="closingTime">
                                 </div>
                             </div>
                         </div>
@@ -257,9 +285,28 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
+        // TODO: when reload, clear all the inputs and data in session of resource server
+
         const scrollSpy = new bootstrap.ScrollSpy(document.body, {
-            target: '#navbar-example3'
+            target: '#register-navbar'
         })
+
+        const phonePattern = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
+
+        const nameInput = document.querySelector('input[name="name"]')
+        const phoneInput = document.querySelector('input[name="phone"]')
+        const businessLicenseInput = document.querySelector('input[name="businessLicense"]')
+        const descriptionInput = document.querySelector('input[name="description"]')
+        const addressInput = document.querySelector('input[name="address"]')
+        const zipCodeInput = document.querySelector('input[name="zipCode"]')
+        const addressDetailInput = document.querySelector('input[name="addressDetail"]')
+
+        let longitude = document.getElementById('longitude')
+        let latitude = document.getElementById('latitude')
+
+        const requiredStoreInputs = [
+            nameInput, phoneInput, businessLicenseInput, descriptionInput, addressInput, zipCodeInput, addressDetailInput
+        ]
 
         const addressLookupIcon = document.getElementById('addressLookupIcon')
         const foodAddIcon = document.getElementById('foodAddIcon')
@@ -276,7 +323,6 @@
         }
 
         const hourAddIcon = document.getElementById('hourAddIcon')
-        const hourDoneIcon = document.getElementById('hourDoneIcon')
         const hourAddRequestIcon = document.getElementById('hourAddRequestIcon')
 
         const daysDiv = document.getElementById('days')
@@ -286,6 +332,8 @@
         const closingTime = document.getElementById('closingTime')
 
         const hourOutputArea = document.getElementById('hourOutputArea')
+
+        const storeSubmitButton = document.getElementById('storeSubmitButton')
 
         let hourValidationStatus = {
             days: false,
@@ -302,6 +350,38 @@
             openingTime: null,
             closingTime: null
         };
+
+        const storeInputsValidationStatus = {
+            name: false,
+            phone: false,
+            businessLicense: false,
+            description: false,
+            zipCode: false,
+            address: false,
+            addressDetail: false
+        }
+
+        requiredStoreInputs.forEach(input => {
+            input.addEventListener('blur', function () {
+
+                removeErrorMessage(this);
+                removeSuccessMessage(this);
+
+                let currentInputName = this.name;
+
+                if (this.value.trim() === '') {
+                    displayErrorMessage(this, "Required.");
+                    storeInputsValidationStatus[currentInputName] = false;
+                } else if (this.name === 'phone' && !phonePattern.test(this.value.trim())) {
+                    displayErrorMessage(this, "Not a valid form of phone number.");
+                    storeInputsValidationStatus[currentInputName] = false;
+                } else {
+                    displaySuccessMessage(this);
+                    storeInputsValidationStatus[currentInputName] = true;
+                }
+                flushSubmitButton()
+            });
+        });
 
         addressLookupIcon.addEventListener("click", function () {
             new daum.Postcode({
@@ -332,6 +412,23 @@
                     } else {
                         document.getElementById("addressDetail").value = '';
                     }
+
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    geocoder.addressSearch(address, function (result, status) {
+
+                        if (status === kakao.maps.services.Status.OK) {
+
+                            var x = result[0].road_address.x
+                            var y = result[0].road_address.y
+
+                            document.getElementById('longitude').value = x;
+                            document.getElementById('latitude').value = y;
+                        }
+                    });
+
+                    storeInputsValidationStatus.address = true;
+                    storeInputsValidationStatus.zipCode = true;
+                    flushSubmitButton()
 
                     document.getElementById('zipCode').value = data.zonecode;
                     document.getElementById("address").value = address;
@@ -389,32 +486,11 @@
         foodAddRequestIcon.addEventListener("click", function () {
             this.style.display = 'none';
             foodAddRequest(foodNameInput.value.trim(), foodPriceInput.value.trim());
-
             this.style.display = 'block'
         });
 
-        foodOutputArea.addEventListener('click', function (event) {
-            if (event.target.classList.contains('remove-food-btn')) {
-
-                const foodName = event.target.getAttribute('data-food-name');
-                const foodSpan = document.getElementById(foodName);
-                if (foodSpan) {
-                    foodSpan.remove();
-                }
-
-                fetch(`/owner/remove-food?foodName=\${foodName}`, {
-                    method: "POST"
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // do nothing
-                        }
-                    });
-            }
-        });
-
         function foodAddRequest(foodName, foodPrice) {
-            const formData = {
+            const commandData = {
                 foodName: foodName,
                 foodPrice: foodPrice
             }
@@ -424,7 +500,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(commandData)
             }).then(response => {
                 if (response.ok) {
                     clearFoodInputs()
@@ -438,23 +514,40 @@
                 foodOutputArea.innerHTML += `
                     <span id="\${food.foodName}" class="position-relative badge rounded-pill text-bg-light mx-1">
                         \${food.foodName}
-                        <span data-food-name="\${food.foodName}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-food-btn">
+                        <span type="button" data-food-name="\${food.foodName}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-food-btn">
                             x
                         </span>
                     </span>
 
                 `;
             });
+
+            storeInputsValidationStatus.menu = true
         }
+
+        foodOutputArea.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-food-btn')) {
+
+                const foodName = event.target.getAttribute('data-food-name')
+                const foodSpan = document.getElementById(foodName)
+                foodSpan?.remove()
+
+                fetch(`/owner/remove-food?foodName=\${foodName}`, {
+                    method: "POST"
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // do nothing
+                        }
+                    });
+            }
+        });
 
         hourAddIcon.addEventListener('click', function () {
             let hourAddToast = document.getElementById('hourAddToast')
             const hourAddToastBootstrap = bootstrap.Toast.getOrCreateInstance(hourAddToast)
             hourAddToastBootstrap.show()
         })
-
-        // To avoid adding days that are already registered when the page is reloaded, instead of finalizing the operation hours registration in a complete way.
-        dayButtons.forEach(disableNonUniqueDays);
 
         daysDiv.addEventListener('click', function (event) {
             if (event.target.classList.contains('day-button')) {
@@ -513,14 +606,14 @@
             updateHourAddRequestIcon()
         })
 
-        closingTime.addEventListener('input', function() {
+        closingTime.addEventListener('input', function () {
             selectedHours['closingTime'] = this.value
             hourValidationStatus.hours = Object.values(selectedHours).every(selected => !!selected);
 
             updateHourAddRequestIcon()
         })
 
-        hourAddRequestIcon.addEventListener('click', function() {
+        hourAddRequestIcon.addEventListener('click', function () {
             fetch(`/owner/register-hour`, {
                 method: "POST",
                 headers: {
@@ -535,14 +628,13 @@
                     return response.json();
                 }
             }).then(data => {
-
-                data.forEach( datum => {
+                data.forEach(datum => {
                     hourOutputArea.innerHTML += `
                         <span id="\${datum.day}" class="position-relative badge rounded-pill text-bg-light m-4">
                             \${datum.day}
                             <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-secondary my-1">
                                 \${datum.openingTime} ~ \${datum.closingTime}
-                                <span data-day-name="\${datum.day}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-hour-btn" style="font-size: 0.6rem">
+                                <span type="button" data-day-name="\${datum.day}" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-danger remove-hour-btn" style="font-size: 0.6rem">
                                     x
                                 </span>
                             </span>
@@ -551,24 +643,72 @@
                 })
             })
 
-            // if all days are added, disable the icon for adding days.
-            // logic would be in reverse for deletion operation
-            if (Object.values(selectedDays).every(selected => !!selected)) {
-                hourAddIcon.style.display = 'none'
-                hourDoneIcon.style.display = 'block'
-            }
+            storeInputsValidationStatus.hours = true
         })
 
-        function disableNonUniqueDays(dayButton) {
+        hourOutputArea.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-hour-btn')) {
+
+                const dayName = event.target.getAttribute('data-day-name')
+                const daySpan = document.getElementById(dayName)
+                daySpan?.remove()
+
+                fetch(`/owner/remove-day?dayName=\${dayName}`, {
+                    method: "POST"
+                }).then(response => {
+                    if (response.ok) {
+                        // do nothing
+                    }
+                })
+            }
+
+            dayButtons.forEach(dayButton => flushDayButtons(dayButton))
+        })
+
+        storeSubmitButton.addEventListener('click', function() {
+
+            const commandData = {
+                name: nameInput.value,
+                phone: phoneInput.value,
+                businessLicense: businessLicenseInput.value,
+                description: descriptionInput.value,
+                address: addressInput.value,
+                zipCode: zipCodeInput.value,
+                addressDetail: addressDetailInput.value,
+                longitude: longitude.value,
+                latitude: latitude.value
+            };
+
+            fetch('/owner/register', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(commandData)
+            }).then(response => {
+                if (response.ok) {
+                   window.location.href = "/owner/my-page"
+                }
+            })
+        })
+
+        function flushDayButtons(dayButton) {
+
             const dayName = dayButton.textContent.trim();
 
             fetch(`/owner/unique-day?dayName=\${dayName}`, {
                 method: "GET"
             }).then(response => {
                 if (!response.ok) {
+                    // disable non-unique day buttons
                     dayButton.style.pointerEvents = "none";
                     dayButton.classList.add('text-bg-disabled', 'text-secondary');
                     dayButton.classList.remove('text-bg-primary');
+                } else {
+                    // enable unique day buttons
+                    dayButton.removeAttribute('style')
+                    dayButton.classList.remove('text-bg-disabled', 'text-secondary')
+                    dayButton.classList.add('text-bg-light')
                 }
             });
         }
@@ -597,7 +737,7 @@
 
         function clearHourInputs() {
 
-            dayButtons.forEach(dayButton => disableNonUniqueDays(dayButton))
+            dayButtons.forEach(dayButton => flushDayButtons(dayButton))
 
             openingTime.value = ''
             closingTime.value = ''
@@ -620,9 +760,58 @@
             const isValid = Object.values(hourValidationStatus).every(status => status === true);
             hourAddRequestIcon.style.display = isValid ? 'block' : 'none';
         }
-    });
 
-    // TODO: when reloading, `foodOutputArea` and `hourOutputArea` get disappeared
+        function displayErrorMessage(input, message) {
+
+            const parentLabel = input.parentElement;
+            const nameValidationDiv = parentLabel.querySelector(`.validation.\${input.name}`);
+
+            if (nameValidationDiv) {
+                nameValidationDiv.style.display = 'block'
+                nameValidationDiv.innerHTML = message;
+            }
+        }
+
+        function removeErrorMessage(input) {
+
+            const parentLabel = input.parentElement;
+            const nameValidationDiv = parentLabel.querySelector(`.validation.\${input.name}`);
+
+            if (nameValidationDiv) {
+                nameValidationDiv.innerHTML = '';
+            }
+        }
+
+        function displaySuccessMessage(input) {
+            const parentLabel = input.parentElement;
+            const nameValidationDiv = parentLabel.querySelector(`.validation.\${input.name}`);
+
+            if (nameValidationDiv) {
+                nameValidationDiv.style.display = 'block'
+                nameValidationDiv.innerHTML = '<i class="bi bi-check-lg text-success"></i>'
+            }
+        }
+
+        function removeSuccessMessage(input) {
+            const parentLabel = input.parentElement;
+            const nameValidationDiv = parentLabel.querySelector(`.validation.\${input.name}`);
+
+            if (nameValidationDiv) {
+                nameValidationDiv.innerHTML = '';
+            }
+        }
+
+        function flushSubmitButton() {
+
+            const allValid = Object.values(storeInputsValidationStatus).every(status => status === true)
+
+            if (allValid) {
+                storeSubmitButton.classList.remove('disabled');
+            } else {
+                storeSubmitButton.classList.add('disabled');
+            }
+        }
+    });
 </script>
 </body>
 </html>

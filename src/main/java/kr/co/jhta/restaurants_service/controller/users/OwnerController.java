@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
+import kr.co.jhta.restaurants_service.controller.command.StoreCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreOpenTimeCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -47,21 +48,26 @@ public class OwnerController {
         registeredDays.addAll(toBeRegistered);
 
         // for flushing resource server
-        List<StoreOpenTimeCommand> storeOpenTimeCommands =
+        List<StoreOpenTimeCommand> registeredStoreOpenTimes =
                 registeredDays.stream()
                         .map(day -> {
                             return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime());
                         })
                         .collect(Collectors.toList());
 
-        httpSession.setAttribute("storeOpenTimeCommands", storeOpenTimeCommands);
+        httpSession.setAttribute("registeredStoreOpenTimes", registeredStoreOpenTimes);
         httpSession.setAttribute("registeredDays", registeredDays);
 
         // for flushing client representation
         List<StoreOpenTimeCommand> toBeRegisteredStoreOpenTimeCommands =
                 toBeRegistered.stream()
-                        .map(day -> { return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime()); }
-                        ).collect(Collectors.toList());
+                        .map(day -> {
+                            return new StoreOpenTimeCommand(day, storeOpenTimeCommand.getOpeningTime(), storeOpenTimeCommand.getClosingTime());
+                        })
+                        .collect(Collectors.toList());
+
+        logger.info("[ registered store open times after registration - Command Object ]");
+        registeredStoreOpenTimes.forEach(i -> logger.info(i.getDay()));
 
         return new ResponseEntity<>(toBeRegisteredStoreOpenTimeCommands, HttpStatus.OK);
     }
@@ -82,15 +88,28 @@ public class OwnerController {
     public ResponseEntity removeDay(@RequestParam("dayName") String toBeRemoved, HttpSession httpSession) {
 
         List<String> clickedDays = Optional.ofNullable((List<String>) httpSession.getAttribute("clickedDays")).orElse(new ArrayList<>());
+        List<String> registeredDays = Optional.ofNullable((List<String>) httpSession.getAttribute("registeredDays")).orElse(new ArrayList<>());
+        List<StoreOpenTimeCommand> registeredStoreOpenTimes = Optional.ofNullable((List<StoreOpenTimeCommand>) httpSession.getAttribute("registeredStoreOpenTimes")).orElse(new ArrayList<>());
 
         clickedDays = clickedDays.stream()
                 .filter(day -> !toBeRemoved.equals(day))
                 .collect(Collectors.toList());
-
         httpSession.setAttribute("clickedDays", clickedDays);
+
+        registeredDays = registeredDays.stream()
+                .filter(day -> !toBeRemoved.equals(day))
+                .collect(Collectors.toList());;
+        httpSession.setAttribute("registeredDays", registeredDays);
+
+        registeredStoreOpenTimes = registeredStoreOpenTimes.stream()
+                .filter(openTime -> !toBeRemoved.equals(openTime.getDay()))
+                .collect(Collectors.toList());
+
+        httpSession.setAttribute("registeredStoreOpenTimes", registeredStoreOpenTimes);
 
         return ResponseEntity.ok().body("Successfully removed.");
     }
+
     @PostMapping("/register-day")
     public ResponseEntity registerDay(@RequestParam("dayName") String dayName, HttpSession httpSession) {
 
@@ -137,7 +156,16 @@ public class OwnerController {
         foods.add(foodCommand);
         httpSession.setAttribute("foods", foods);
 
+        logger.info("[ Foods after registration - Command Object ]");
+        foods.forEach(food -> logger.info(food.getFoodName()));
+
         return new ResponseEntity<>(foodCommand, HttpStatus.OK);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity registerStore(@RequestBody StoreCommand storeCommand, HttpSession httpSession) {
+
+        return null;
     }
 
     @GetMapping("/register")
