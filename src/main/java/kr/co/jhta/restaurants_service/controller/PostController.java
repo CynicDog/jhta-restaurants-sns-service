@@ -2,8 +2,9 @@ package kr.co.jhta.restaurants_service.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import kr.co.jhta.restaurants_service.service.PostService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,12 +24,15 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/post")
-@RequiredArgsConstructor
 @Slf4j
 public class PostController {
 
 	public final Logger logger = Logger.getLogger(PostController.class);
 	public final PostService postService;
+	
+	public PostController(PostService postService) {
+		this.postService = postService;
+	}
 
 	@GetMapping("")
 	public String Post() {
@@ -41,6 +44,7 @@ public class PostController {
 		return "post/register";
 	}
 
+	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@PostMapping("/register-post-data")
 	public ResponseEntity<String> insertPostData(
@@ -56,11 +60,36 @@ public class PostController {
 		postDataCommands.add(new PostDataCommand(chooseFile, storeId, content));
 
 		httpSession.setAttribute("postData", postDataCommands);
-
+		
+		System.out.println("저장 후 ----------------" + postDataCommands);
 		return ResponseEntity.ok().body("Success!");
 
 		// if failed
 		// `ResponseEntity.badRequest()
+	}
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@PostMapping("/delete-post-data")
+	public ResponseEntity<String> deletePostData(
+			@RequestParam(name = "data-id") int toBeDeleted, 
+			HttpSession httpSession) throws IOException{
+
+		// TODO: Delete the data based on storeId and content
+	    // 예를 들어, 세션에서 해당 데이터를 찾아 삭제
+		
+		 List<PostDataCommand> postDataList = (List<PostDataCommand>) httpSession.getAttribute("postData");
+		 System.out.println("삭제전 -------------" + postDataList);
+		 postDataList.stream()
+		 				.filter(postData -> postData.getDataId() != toBeDeleted)
+		 				.collect(Collectors.toList()); 
+	    
+	    System.out.println("삭제후 ---------------------" + postDataList);
+		
+		
+	    // 성공적으로 삭제한 경우
+	    return ResponseEntity.ok("Data deleted success");
+
 	}
 
 	@ResponseBody
