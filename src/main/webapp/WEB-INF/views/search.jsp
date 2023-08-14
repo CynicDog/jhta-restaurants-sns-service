@@ -157,8 +157,15 @@
 		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
-			let categoryValue = "";
-			let keywordValue = "";
+			let categoryValue ;
+			let keywordValue;
+			if($("input[name=keyword]").val()!=null){
+				keywordValue = $("input[name=keyword]").val();
+			}
+			let xStartValue;
+			let xEndValue;
+			let yStartValue;
+			let yEndValue;
 			
 			getResult();
 			
@@ -218,22 +225,21 @@
 
 		
 		function getResult() {
-			console.log("getResult")
 			$("#div-stores").find(".store").remove();
             $("#storeLoadingSpinner").css("display", "block");
             $("html, body").scrollTop(0);
             
-			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue}, function(result) {
-				
+			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
+										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
+				console.log("xStartValue : " + xStartValue);
+				console.log("xEndValue : " + xEndValue);
+				console.log("yStartValue : " + yStartValue);
+				console.log("yEndValue : " + yEndValue);
 				
 				let points = [];
 				
 				result.stores.forEach(function(store){
-					
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
-					
-					
-						
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
 						<div class="card shadow" onclick="" style="cursor: pointer;">
@@ -417,9 +423,17 @@
 		        button.addEventListener('click', showOverlayMessage);
 			
 		        // 오버레이를 클릭하면 메시지를 띄우도록 이벤트 처리
-		        function showOverlayMessage() {
+		        function showOverlayMessage() {  
 			      customOverlay.setMap(null);
-		          alert("이 지역 검색");
+			      
+				  xStartValue = swLatLng.getLng();
+				  xEndValue = neLatLng.getLng();
+				  yStartValue = swLatLng.getLat();
+				  yEndValue = neLatLng.getLat();
+				  
+				  pageValue = 1; 
+
+			      getResult();
 		          
 		        }
 		}

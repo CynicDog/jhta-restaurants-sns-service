@@ -34,8 +34,8 @@
                     <a class="nav-link" href="/stores/list">Stores</a>
                 </li>
             </ul>
-            <form class="w-25 me-3">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="w-25 me-3" id="form-navbar-search" action="/search/list">
+                <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
             </form>
             <ul class="navbar-nav">
                 <sec:authorize access="isAnonymous()">
@@ -82,6 +82,7 @@
         </ul>
     </div>
     <script>
+    
         function toggleDarkMode() {
             const htmlElement = document.querySelector('html');
             if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
