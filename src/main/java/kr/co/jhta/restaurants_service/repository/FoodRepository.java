@@ -1,10 +1,9 @@
 package kr.co.jhta.restaurants_service.repository;
 
-import kr.co.jhta.restaurants_service.vo.store.Store;
+import kr.co.jhta.restaurants_service.vo.store.Food;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store, Integer> {
-
+public interface FoodRepository extends JpaRepository<Food, Integer> {
 }

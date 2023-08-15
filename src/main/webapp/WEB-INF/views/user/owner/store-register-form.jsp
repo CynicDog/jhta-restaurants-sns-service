@@ -27,7 +27,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 col-sm-6">
-            <div class="card shadow my-5 menu-input-group">
+            <div class="card shadow my-4 menu-input-group">
                 <div class="row p-3">
                     <div class="col-4">
                         <nav id="register-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-8">
                         <div data-bs-spy="scroll" data-bs-target="#register-navbar" data-bs-smooth-scroll="false"
-                             class="shadow-sm rounded p-3 " tabindex="0" style="height: 650px; overflow-y: scroll;">
+                             class="shadow-sm rounded p-3 " tabindex="0" style="height: 550px; overflow-y: scroll;">
                             <div>
                                 <div id="store-info-input-area" class="mb-5">
                                     <div class="row my-4 p-2" id="item-1">
@@ -100,13 +100,29 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <div>
+                                        <div class="form-floating my-2">
+                                            <input type="text" class="form-control-plaintext" name="category"
+                                                   id="category" placeholder="" disabled/>
+                                            <label class="fw-lighter d-flex" for="description">Category
+                                                <div class="ms-auto">
+                                                    <div class="validation description mx-3 text-success"
+                                                         style="display: block;">
+                                                        (choose one)
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <div id="categories" class="fs-6 mx-3 my-1">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <hr class="my-5">
                                 <div id="address-input-area" class="mb-5">
                                     <div class="row my-4 p-2" id="item-2">
                                         <div class="col-8 fw-lighter fs-3 d-flex my-1">Address</div>
                                         <div class="col-4 d-flex justify-content-end my-1">
-                                            <i id="addressLookupIcon" class="bi bi-search my-2"></i>
+                                            <i type="button" id="addressLookupIcon" class="bi bi-search my-2"></i>
                                         </div>
                                     </div>
                                     <div>
@@ -178,10 +194,13 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <div id="storeSubmitButton" class="btn btn-light btn-sm mt-5 mb-3 mx-2 disabled">
-                            <span class="fw-lighter">
-                                submit
-                            </span>
+                            <div id="storeSubmitButton" class="btn btn-outline-secondary btn-sm mt-5 mb-3 mx-2 disabled">
+                                <span id="submitButtonMessage" class="fw-lighter">
+                                    submit
+                                </span>
+                                <div id="submitLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -287,6 +306,8 @@
 
         // TODO: when reload, clear all the inputs and data in session of resource server
 
+        const categoriesDiv = document.getElementById('categories')
+
         const scrollSpy = new bootstrap.ScrollSpy(document.body, {
             target: '#register-navbar'
         })
@@ -303,6 +324,7 @@
 
         let longitude = document.getElementById('longitude')
         let latitude = document.getElementById('latitude')
+        let categoryInput = null
 
         const requiredStoreInputs = [
             nameInput, phoneInput, businessLicenseInput, descriptionInput, addressInput, zipCodeInput, addressDetailInput
@@ -334,6 +356,7 @@
         const hourOutputArea = document.getElementById('hourOutputArea')
 
         const storeSubmitButton = document.getElementById('storeSubmitButton')
+        const submitLoadingSpinner = document.getElementById('submitLoadingSpinner')
 
         let hourValidationStatus = {
             days: false,
@@ -356,10 +379,64 @@
             phone: false,
             businessLicense: false,
             description: false,
+            category: false,
             zipCode: false,
             address: false,
             addressDetail: false
         }
+
+        fetch('/owner/store-categories', {
+            method: "GET"
+        }).then(response => {
+            if (response.ok) {
+                console.log(response)
+                return response.json()
+            }
+        }).then(data => {
+            data.forEach(datum => {
+                categoriesDiv.innerHTML += `
+                    <div type="button" class="badge rounded-pill text-bg-light category-button">\${datum.toLowerCase()}</div>
+                `
+            })
+
+            const categoryButtons = document.querySelectorAll('.category-button')
+            categoriesDiv.addEventListener('click', function (event) {
+
+                // clearance previous inputs
+                if (categoryInput != null) {
+                    categoryInput = null;
+                    storeInputsValidationStatus.category = false;
+                }
+
+                if (event.target.classList.contains('category-button')) {
+
+                    // clearance previous inputs
+                    categoryButtons.forEach(button => {
+                        if (button.classList.contains('text-bg-light')) {
+                            enableButton(button);
+                        }
+                    });
+
+                    const selectedCategoryButton = event.target;
+                    const selectedCategoryName = selectedCategoryButton.textContent.trim();
+
+                    selectedCategoryButton.classList.toggle('text-bg-primary');
+                    selectedCategoryButton.classList.toggle('text-bg-light');
+
+                    if (selectedCategoryButton.classList.contains('text-bg-primary')) {
+                        categoryInput = selectedCategoryName;
+                        storeInputsValidationStatus.category = true;
+
+                        categoryButtons.forEach(button => {
+                            if (button.classList.contains('text-bg-light')) {
+                                disableButton(button);
+                            }
+                        });
+                    }
+                }
+                flushSubmitButton()
+            });
+        })
 
         requiredStoreInputs.forEach(input => {
             input.addEventListener('blur', function () {
@@ -504,7 +581,7 @@
             }).then(response => {
                 if (response.ok) {
                     clearFoodInputs()
-                    showSuccessfulToast("successfully added menu :)")
+                    showMessagingToast("successfully added menu :)")
 
                     return response.json();
                 }
@@ -518,7 +595,6 @@
                             x
                         </span>
                     </span>
-
                 `;
             });
 
@@ -623,7 +699,7 @@
             }).then(response => {
                 if (response.ok) {
                     clearHourInputs()
-                    showSuccessfulToast("successfully added hours :)")
+                    showMessagingToast("successfully added hours :)")
 
                     return response.json();
                 }
@@ -665,13 +741,17 @@
             dayButtons.forEach(dayButton => flushDayButtons(dayButton))
         })
 
-        storeSubmitButton.addEventListener('click', function() {
+        storeSubmitButton.addEventListener('click', function () {
+
+            storeSubmitButton.querySelector('#submitButtonMessage').textContent = "";
+            submitLoadingSpinner.style.display = "block"
 
             const commandData = {
                 name: nameInput.value.trim(),
                 phone: phoneInput.value.trim(),
                 businessLicense: businessLicenseInput.value.trim(),
                 description: descriptionInput.value.trim(),
+                category: categoryInput,
                 address: addressInput.value.trim(),
                 zipCode: zipCodeInput.value.trim(),
                 addressDetail: addressDetailInput.value.trim(),
@@ -687,7 +767,10 @@
                 body: JSON.stringify(commandData)
             }).then(response => {
                 if (response.ok) {
-                   window.location.href = "/owner/my-page"
+                    window.location.href = "/owner/my-page?registration=success"
+                } else {
+                    storeSubmitButton.querySelector('#submitButtonMessage').textContent = "submit";
+                    submitLoadingSpinner.style.display = "none"
                 }
             })
         })
@@ -700,20 +783,14 @@
                 method: "GET"
             }).then(response => {
                 if (!response.ok) {
-                    // disable non-unique day buttons
-                    dayButton.style.pointerEvents = "none";
-                    dayButton.classList.add('text-bg-disabled', 'text-secondary');
-                    dayButton.classList.remove('text-bg-primary');
+                    disableButton(dayButton)
                 } else {
-                    // enable unique day buttons
-                    dayButton.removeAttribute('style')
-                    dayButton.classList.remove('text-bg-disabled', 'text-secondary')
-                    dayButton.classList.add('text-bg-light')
+                    enableButton(dayButton)
                 }
             });
         }
 
-        function showSuccessfulToast(message) {
+        function showMessagingToast(message) {
             const successfulToast = document.getElementById('successfulToast');
             const toastBody = successfulToast.querySelector('.toast-body');
 
@@ -810,6 +887,18 @@
             } else {
                 storeSubmitButton.classList.add('disabled');
             }
+        }
+
+        function disableButton(button) {
+            button.style.pointerEvents = "none";
+            button.classList.add('text-bg-disabled', 'text-secondary');
+            button.classList.remove('text-bg-primary');
+        }
+
+        function enableButton(button) {
+            button.removeAttribute('style')
+            button.classList.remove('text-bg-disabled', 'text-secondary')
+            button.classList.add('text-bg-light')
         }
     });
 </script>
