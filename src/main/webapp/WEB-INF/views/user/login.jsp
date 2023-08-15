@@ -89,15 +89,25 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const params = new URLSearchParams(window.location.search);
+
         const usernameInput = document.querySelector('input[name="username"]');
         const passwordInput = document.querySelector('input[name="password"]');
         const loginButton = document.getElementById('login-btn');
         const buttonMessage = document.getElementById("loginRequest");
-        const loginSpinner = document.querySelector('.spinner-border')
+        const loginSpinner = document.getElementById('loginLoadingSpinner')
 
         let validationStatus = {
             usernameInput: false,
             passwordInput: false
+        }
+
+        if (params.get("error") === "fail") {
+            badCredentialsToast();
+        } else if (params.get("error") === "anonymous") {
+            authenticationEntryToast();
+        } else if (params.get("error") === "denied") {
+            deniedToast();
         }
 
         usernameInput.addEventListener("blur", function () {
@@ -146,7 +156,6 @@
                     if (response.ok) {
                         window.location.href = "/"
                     } else {
-
                         loginSpinner.style.display = "none";
                         buttonMessage.textContent = "login";
 
@@ -166,16 +175,6 @@
             } else {
                 loginButton.setAttribute("disabled", "disabled");
             }
-        }
-
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.get("error") === "fail") {
-            badCredentialsToast();
-        } else if (params.get("error") === "anonymous") {
-            authenticationEntryToast();
-        } else if (params.get("error") === "denied") {
-            deniedToast();
         }
 
         function badCredentialsToast() {

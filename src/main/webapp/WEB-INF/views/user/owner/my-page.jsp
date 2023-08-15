@@ -180,6 +180,16 @@
             </div>
         </div>
     </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-4">
+        <div id="successfulToast" class="toast text-bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
@@ -222,18 +232,22 @@
 
     document.addEventListener("DOMContentLoaded", function () {
 
-        const registerStoreIcon = new bootstrap.Popover(document.querySelector('#registerStorePopover'))
+        const params = new URLSearchParams(window.location.search);
 
+        const registerStoreIcon = new bootstrap.Popover(document.querySelector('#registerStorePopover'))
         const followersPopover = new bootstrap.Popover(document.querySelector('#followersPopover'), {
             trigger: 'manual',
             content: "init",
         });
-
         const followingsPopover = new bootstrap.Popover(document.querySelector('#followingsPopover'), {
             trigger: 'manual',
             content: "init",
         });
 
+        // window.location.href = "/owner/my-page?registration=success"
+        if (params.get("registration") === "success") {
+            showMessagingToast("Successfully registered :)");
+        }
 
         let followersPopoverVisible = false;
         document.body.addEventListener('click', function (event) {
@@ -306,6 +320,16 @@
                 followingsPopoverVisible = !followingsPopoverVisible;
             }
         });
+
+        function showMessagingToast(message) {
+            const successfulToast = document.getElementById('successfulToast');
+            const toastBody = successfulToast.querySelector('.toast-body');
+
+            toastBody.textContent = message;
+
+            const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
+            successfulToastBootstrap.show();
+        }
     });
 </script>
 </html>
