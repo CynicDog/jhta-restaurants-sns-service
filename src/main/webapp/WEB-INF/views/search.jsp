@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>검색 결과</title>
+<title>맛집 검색결과</title>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,18 +26,34 @@
 		<div class="container-fluid text-center" style="padding-left: 100px;">
 			<div class="row my-3">
 				<div class="col-8 d-flex justify-content-between">
-					<h4 class="title" >검색 결과</h4>
+					<a class="title btn fs-4" href="list">맛집 검색결과</a>
 					<select class="form-select me-3" style="width: 150px;" name="sort">
 						<option value="rating">평점 순</option>
 						<option value="bookmark">즐겨찾기 순</option>
-						<option value="review">리뷰수 순</option>
-
+						<option value="review">리뷰 많은 순</option>
 					</select>
+				</div>
+				
+				<div class="col-4">
+					<!-- 지도 -->
+					<div>
+						<div id="map" class="mb-4"
+							style="width: 400px; height: 450px; position:fixed;">
+						</div>
+					</div>
+
+					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style="cursor: pointer; position:fixed;  top: 530px;">
+						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+							 style="width: 400px; height: 150px; object-fit:cover; filter: brightness(70%);">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+						</div>
+					</div>
 				</div>
 				
 			</div>
 			<div class="row mb-3">
-				<div class="col-12 mb-2" style="text-align: left;">
+				<div class="col-8 mb-2" style="text-align: left;">
 					<a id= "" class="cat btn active" role="button" href="list" >전체</a> 
 					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
 					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
@@ -55,8 +71,8 @@
 			</div>
 
 			<div class="row mb-3">
-				<div class="col-8">
-					<div id="storeLoadingSpinner" class="spinner-border text-primary mt-5" role="status" style="margin: 0 auto;">
+				<div class="col-8 ">
+					<div id="storeLoadingSpinner" class="spinner-border text-primary" role="status" style="margin: 0 auto; margin-top: 150px;">
 						<span class="visually-hidden" style="display: none;">Loading...</span>
 					</div>
 					
@@ -66,56 +82,7 @@
 				</div>
 
 
-				<div class="col-3">
-					<!-- 지도 -->
-					<div>
-					
-						<div id="map" class="mb-4"
-							style="width: 100%; height: 400px;">
-						</div>
 
-					
-					</div>
-
-					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-						</div>
-					</div>
-					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-						</div>
-					</div>
-					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-						</div>
-					</div>
-					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style=" cursor: pointer;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="width: 100%; height: 150px; object-fit:cover; filter: brightness(70%);">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-						</div>
-					</div>
-
-<!-- 					<div class="card m-2 sm-14 shadow bg-body rounded "> -->
-<!-- 						<div class="card-header" style="text-align: left;">관련 콘텐츠</div> -->
-<!-- 						<div class="card m-2 sm-14 shadow bg-body rounded "> -->
-<!-- 							<div class="embed-responsive embed-responsive-4by3"> -->
-<!-- 								<img src="../resources/image/example.jpg" -->
-<!-- 									class="card-img-top embed-responsive-item"> -->
-<!-- 							</div> -->
-<!-- 							<div class="card-body" -->
-<!-- 								style="cursor: pointer; font-weight: bold;"> -->
-<!-- 								<p class="card-text">콘텐츠 설명</p> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-				</div>
 			</div>
 			<div class="row mb-3">
 				<div id = "div-pagination" class="col-12">
@@ -124,29 +91,28 @@
 								<li id = "prepage" class="page-item page-move">
 									<a id = "prepage-link" href="" class="page-link" >이전</a>
 								</li>
-<%-- 								<c:forEach var="num" begin="${beginPage }" end="${endPage }"> --%>
-<%-- 									<li class="page-item ${currentPage eq num ? 'active' : '' }"> --%>
-<%-- 										<a href="" class="page-link" onclick="changePage(event, ${num})">${num }</a> --%>
-<!-- 									</li> -->
-<%-- 								</c:forEach> --%>
 								<li id = "nextpage" class="page-item page-move">
 									<a id = "nextpage-link" href="" class="page-link" >다음</a>
 								</li>
 							</ul>
 						</nav>
 					<div class="d-flex justify-content-center">
-<!-- 						<form id="form-pagination" class="" method="get" action="list"> -->
-<%-- 							<input type="hidden" name="sort" value="${param.sort }"> --%>
-<%-- 							<input type="hidden" name="page" value="${param.page }"> --%>
-<%-- 							<input type="hidden" name="category" value="${param.category }"> --%>
-<%-- 							<input type="hidden" name="keyword" value="${param.keyword }"> --%>
-<!-- 						</form> -->
+						<form id="form-pagination" class="" method="get" action="list">
+							<input type="hidden" name="sort" value="${param.sort }">
+							<input type="hidden" name="page" value="${param.page }">
+							<input type="hidden" name="category" value="${param.category }">
+							<input type="hidden" name="keyword" value="${param.keyword }">
+						</form>
 					</div>
 					
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
+		
+
+		<%@ include file="common/footer.jsp"%>
+	</div>
+<script type="text/javascript">
 		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
@@ -236,6 +202,7 @@
 		function getResult() {
 			$("#div-stores").find(".store").remove();
             $("#storeLoadingSpinner").css("display", "block");
+            $("#div-pagination").css("display", "none");
             $("html, body").scrollTop(0);
             
 			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
@@ -342,6 +309,7 @@
 						
 				}
 	            $("#storeLoadingSpinner").css("display", "none");
+	            $("#div-pagination").css("display", "block");
 
 				drawMarker(points);
 				createInfowindow(storeNames);
@@ -491,10 +459,6 @@
 
 		
 	</script>
-
-		<%@ include file="common/footer.jsp"%>
-	</div>
-
 
 </body>
 </html>
