@@ -42,13 +42,13 @@
 						</div>
 					</div>
 
-					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style="cursor: pointer; position:fixed;  top: 530px;">
-						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
-							 style="width: 400px; height: 150px; object-fit:cover; filter: brightness(70%);">
-						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-						</div>
-					</div>
+<!-- 					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style="cursor: pointer; position:fixed;  top: 530px;"> -->
+<!-- 						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..."  -->
+<!-- 							 style="width: 400px; height: 150px; object-fit:cover; filter: brightness(70%);"> -->
+<!-- 						<div class="card-img-overlay d-flex justify-content-center align-items-center"> -->
+<!-- 							<p class="fs-3"><strong>관련 콘텐츠</strong></p> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 				
 			</div>
