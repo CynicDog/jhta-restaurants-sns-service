@@ -55,7 +55,6 @@ public class Store {
 
     @ManyToOne
     private User owner;
-    private String addressDetail;
 
     public Store() {
 
