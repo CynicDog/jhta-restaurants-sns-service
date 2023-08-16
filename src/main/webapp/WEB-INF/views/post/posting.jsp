@@ -50,7 +50,7 @@
 					<button class="btn ms-3 position-absolute" id="box">
 						<i class="bi bi-star" style="color:gold; font-size:28px;" ></i>
 					</button>
-					<button class="btn btn-lg ms-3 position-absolute" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+					<button class="btn btn-lg ms-3 position-absolute" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
 						<i class="bi bi-chat-text"></i>
 						<span class="visually-hidden">댓글</span>
 					</button>
@@ -76,7 +76,20 @@
 												<p class="col card-text text-muted" style="font-size: small; ">리뷰 작성일</p>
 												<p class="col card-text">리뷰 내용</p>
 												<p class="col card-text"> 정말 맛있어요</p>
+												
 											</div>
+											<table class="table">
+											    <thead>
+											        <tr>
+											            <th>리뷰 제목</th>
+											            <th>작성자</th>
+											            <th>내용</th>
+											        </tr>
+											    </thead>
+											    <tbody class="reviews-table-body">
+											        <!-- 리뷰 데이터가 여기에 동적으로 추가될 예정 -->
+											    </tbody>
+											</table>
 											<div class="col-3 d-flex justify-content-end align-items-center">
 										    </div>
 										</div>
@@ -142,15 +155,21 @@
 	
 
 	document.addEventListener("DOMContentLoaded", function() {
-	    var showReviewsButton = document.querySelector('button[name="showReviewsButton"]');
-	    var reviewsTable = document.getElementById("reviewsTable").getElementsByTagName("tbody")[0];
+	    var showReviewsButtons = document.querySelectorAll('.show-reviews-button');
+	    var reviewsTableBody = document.querySelector('.reviews-table-body');
 	    
-	    showReviewsButton.addEventListener("click", function() {
-	        // XMLHttpRequest 객체 생성
+	    showReviewsButtons.forEach(function(button) {
+	        button.addEventListener("click", function() {
+	            var storeId = button.getAttribute("data-store-id");
+	            fetchReviews(storeId);
+	        });
+	    });
+	    
+	    function fetchReviews(storeId) {
 	        var xhr = new XMLHttpRequest();
 	        xhr.onreadystatechange = function() {
-	            if (xhr.readyState === 4) { // 요청 완료
-	                if (xhr.status === 200) { // 응답 성공
+	            if (xhr.readyState === 4) {
+	                if (xhr.status === 200) {
 	                    var data = JSON.parse(xhr.responseText);
 	                    renderReviews(data);
 	                } else {
@@ -159,13 +178,13 @@
 	            }
 	        };
 	        
-	        xhr.open("GET", "/path/to/review/data", true);
+	        xhr.open("GET", "/path/to/review/data?store_id=" + encodeURIComponent(storeId), true);
 	        xhr.setRequestHeader("Content-Type", "application/json");
 	        xhr.send();
-	    });
+	    }
 	    
 	    function renderReviews(data) {
-	        reviewsTable.innerHTML = ""; // 기존 데이터 삭제
+	        reviewsTableBody.innerHTML = ""; // 기존 데이터 삭제
 	        
 	        data.forEach(function(review) {
 	            var row = document.createElement("tr");
@@ -181,7 +200,7 @@
 	            row.appendChild(authorCell);
 	            row.appendChild(contentCell);
 	            
-	            reviewsTable.appendChild(row);
+	            reviewsTableBody.appendChild(row);
 	        });
 	    }
 	});
