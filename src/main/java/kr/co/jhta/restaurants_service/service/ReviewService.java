@@ -40,8 +40,6 @@ public class ReviewService {
 	  public void createReview(ReviewDataCommand form) {
 		  
 		  Review review = new Review();
-		  ReviewPicture reviewPciture = new ReviewPicture();
-		  ReviewKeyword reviewKeyword = new ReviewKeyword();
 		  
 		  review.setRating(form.getRating());
 		  review.setContent(form.getContent());
@@ -51,24 +49,28 @@ public class ReviewService {
 		  user.setId(76);
 		  review.setCustomer(user);
 		  
-		  if (form.getKeyword() != null) {
-			  reviewKeyword.setKeyword(form.getKeyword());			  
+		  reviewMapper.insertReview(review);
+		  
+		  if (form.getReviewKeyword() != null) {
+			  ReviewKeyword reviewKeyword = new ReviewKeyword();
+			  reviewKeyword.setKeyword(form.getReviewKeyword());	
+			  reviewKeyword.setReview(reviewMapper.getReviewById(review.getId()));
+			  reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
 		  }
 		  
-		  if (form.getChooseFile() != null) {
-			  MultipartFile chooseFile = form.getChooseFile();
-			  reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-		  }
+//		  if (!form.getChooseFile().isEmpty()) {
+//			  ReviewPicture reviewPciture = new ReviewPicture();
+//			  MultipartFile chooseFile = form.getChooseFile();
+//			  reviewPciture.setPictureName(chooseFile.getOriginalFilename());
+//			  reviewPciture.setReview(reviewMapper.getReviewById(review.getId()));
+//			  reviewPictureMapper.insertReveiwPicture(reviewPciture);
+//		  }
 		  
 //		  review.setRating(3);
 //		  review.setContent("bbbbb");
 //		  reviewPciture.setPictureName(null);
 //		  reviewKeyword.setKeyword("청결해요");
 //		  review.setStore(storeMapper.getStoreById(21));
-		  
-		  reviewMapper.insertReview(review);
-		  reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
-		  reviewPictureMapper.insertReveiwPicture(reviewPciture);
 		  
 		  
 	  }

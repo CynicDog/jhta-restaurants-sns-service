@@ -6,6 +6,9 @@
 	  (rating, content, customer_id, store_id)
 	  values
 	  (#{rating}, #{content}, #{customer.id}, #{store.id})
+	  <selectKey keyProperty="id" resultType="int" order="AFTER">
+           SELECT LAST_INSERT_ID()
+      </selectKey>
 	</insert>
 
 	<select id="getAllReviews" resultType="Review">

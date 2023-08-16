@@ -60,7 +60,7 @@
 			             	</li>
 	              		</ul>
 	          		</div>
-	          		<input type="hidden" name="rating" />
+	          		<input type="hidden" name="rating" value="5"/>
 	        		<textarea id="textLength" name="content" rows=20 class="form-control border-0" style="height: 250px; position: relative;" placeholder="리뷰를 작성해주세요"></textarea>
 		        	<p style="text-align: right;"><span id="text-count">0</span>/2000</p>
 				</div>
@@ -70,14 +70,14 @@
 	<div class="row">
 		<div class="btn-group m-2">
 			<span>
-				<button type="button" class="btn btn-1 border-secondary rounded-pill text-secondary" data-keyword-type="음식이 맛있어요">#음식이 맛있어요</button>
-				<button type="button" class="btn btn-2 border-secondary rounded-pill text-secondary" data-keyword-type="주차가 편해요">#주차가 편해요</button>
-				<button type="button" class="btn btn-3 border-secondary rounded-pill text-secondary" data-keyword-type="매장이 청결해요">#매장이 청결해요</button>
-				<button type="button" class="btn btn-4 border-secondary rounded-pill text-secondary" data-keyword-type="매장이 넓어요">#매장이 넓어요</button>
-				<button type="button" class="btn btn-5 border-secondary rounded-pill text-secondary" data-keyword-type="분위기가 좋아요">#분위기가 좋아요</button>
-				<button type="button" class="btn btn-6 border-secondary rounded-pill text-secondary" data-keyword-type="친절해요">#친절해요</button>
+				<button id="keyword1" type="button" class="btn btn-food border-secondary rounded-pill text-secondary" data-keyword-type="음식이 맛있어요">#음식이 맛있어요</button>
+				<button id="keyword2" type="button" class="btn btn-parking border-secondary rounded-pill text-secondary" data-keyword-type="주차가 편해요">#주차가 편해요</button>
+				<button id="keyword3" type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="매장이 청결해요">#매장이 청결해요</button>
+				<button id="keyword4" type="button" class="btn btn-large border-secondary rounded-pill text-secondary" data-keyword-type="매장이 넓어요">#매장이 넓어요</button>
+				<button id="keyword5" type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="분위기가 좋아요">#분위기가 좋아요</button>
+				<button id="keyword6" type="button" class="btn btn-kind border-secondary rounded-pill text-secondary" data-keyword-type="친절해요">#친절해요</button>
 			</span>
-	        <input type="hidden" name="keyword" />
+	        <input type="hidden" name="reviewKeyword" id="review-keywords" />
 		</div>
 	</div>
 	<div class="row">
@@ -231,54 +231,55 @@ $(function() {
     $("#textLength").trigger("input");
  
     // 키워드 버튼 상태 설정 
-	$(".btn-1").click(function() {
-		if ($(this).hasClass("btn-1")) {
-			$(this).removeClass("btn-1").addClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white")
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-food").click(function() {
+		if ($(this).hasClass("btn-food")) {
+			$(this).removeClass("btn-food").addClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white")
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-1 border-secondary rounded-pill text-secondary")
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-food border-secondary rounded-pill text-secondary")
 		}
 	})
-	$(".btn-2").click(function() {
-		if ($(this).hasClass("btn-2")) {
-			$(this).removeClass("btn-2").addClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-parking").click(function() {
+		if ($(this).hasClass("btn-parking")) {
+			$(this).removeClass("btn-parking").addClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-2 border-secondary rounded-pill text-secondary")
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-parking border-secondary rounded-pill text-secondary")
 		}
 	})
-	$(".btn-3").click(function() {
-		if ($(this).hasClass("btn-3")) {
-			$(this).removeClass("btn-3").addClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white")
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-clean").click(function() {
+		if ($(this).hasClass("btn-clean")) {
+			$(this).removeClass("btn-clean").addClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white")
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white").addClass("btn btn-3 border-secondary rounded-pill text-secondary")
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white").addClass("btn btn-clean border-secondary rounded-pill text-secondary")
 		}
 	})
-	$(".btn-4").click(function() {
-		if ($(this).hasClass("btn-4")) {
-			$(this).removeClass("btn-4").addClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-large").click(function() {
+		if ($(this).hasClass("btn-large")) {
+			$(this).removeClass("btn-large").addClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
 			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ").addClass("btn btn-4 border-secondary rounded-pill text-secondary")
 		}
 	})
-	$(".btn-5").click(function() {
-		if ($(this).hasClass("btn-5")) {
-			$(this).removeClass("btn-5").addClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-mood").click(function() {
+		if ($(this).hasClass("btn-mood")) {
+			$(this).removeClass("btn-mood").addClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6").addClass("btn btn-5 border-secondary rounded-pill text-secondary")
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6").addClass("btn btn-mood border-secondary rounded-pill text-secondary")
 		}
 	})
-	$(".btn-6").click(function() {
-		if ($(this).hasClass("btn-6")) {
-			$(this).removeClass("btn-6").addClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
-			$("input[name=keyword]").val($(this).attr("data-keyword-type"));
+	$(".btn-kind").click(function() {
+		if ($(this).hasClass("btn-kind")) {
+			$(this).removeClass("btn-kind").addClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-6 border-secondary rounded-pill text-secondary")
+			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-kind border-secondary rounded-pill text-secondary")
 		}
 	})
+	
 });
 
 </script>
