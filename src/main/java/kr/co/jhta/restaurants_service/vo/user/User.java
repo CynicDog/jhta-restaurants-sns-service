@@ -44,6 +44,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private DISABLED disabled;
+
     private String nickname;
 
     @Column(name = "profile_picture_name")

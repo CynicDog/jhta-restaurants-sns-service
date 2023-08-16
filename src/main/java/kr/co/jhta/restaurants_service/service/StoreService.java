@@ -89,4 +89,13 @@ public class StoreService {
 					storeOpenTimeRepository.save(storeOpenTime);
 				});
 	}
+
+	public List<Store> getStoresByUserId(int userId) {
+		List<Store> stores = storeRepository.getStoresByOwnerId(userId);
+		stores.forEach(store -> {
+			log.info(store.getName());
+		});
+		return storeRepository.getStoresByOwnerId(userId);
+	}
+
 }
