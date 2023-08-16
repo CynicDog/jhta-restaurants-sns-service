@@ -15,7 +15,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+///user/check-nickname?nickname=\${nickname}
     @ResponseBody
     @GetMapping("/check-username")
     public ResponseEntity isUsernameUnique(@RequestParam("username") String username) {
@@ -23,7 +23,18 @@ public class UserController {
         if (userService.existsDuplicateUsersByUsername(username)) {
             return ResponseEntity.badRequest().body("User already exists with the given username.");
         } else {
-            return ResponseEntity.ok().body("Unique email!");
+            return ResponseEntity.ok().body("Unique username!");
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/check-nickname")
+    public ResponseEntity isNicknameUnique(@RequestParam("nickname") String nickname) {
+
+        if (userService.existsDuplicateUsersByNickname(nickname)) {
+            return ResponseEntity.badRequest().body("User already exists with the given nickname.");
+        } else {
+            return ResponseEntity.ok().body("Unique nickname!");
         }
     }
 

@@ -47,6 +47,11 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
+    public boolean existsDuplicateUsersByNickname(String nickname) {
+
+        return userRepository.existsUserByNickname(nickname) ? true : false;
+    }
+
     public boolean existsDuplicateUsersByUsername(String username) {
 
         return userRepository.existsUserByUsername(username) ? true : false;

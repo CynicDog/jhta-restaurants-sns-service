@@ -49,9 +49,9 @@ public class CustomerController {
 
         if (isValid) {
             userService.insertCustomer(userCommand);
-            return ResponseEntity.ok("Valid otp!");
+            session.setAttribute("userCommand", null);
 
-            // TODO: Session clear
+            return ResponseEntity.ok("Valid otp!");
         } else {
             return ResponseEntity.badRequest().body("Invalid otp!");
         }
