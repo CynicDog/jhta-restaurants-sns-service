@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.PagedStores;
+import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -78,4 +79,15 @@ public class StoreController {
 		
 		return "storeDetail";
 	}
+	
+	@GetMapping("/storeDetail")
+    public String detail(@RequestParam int storeId, Model model) {
+        StoreDetailDto dto = storeService.getStoreDetail(storeId);
+        // 모델에 가게 정보를 추가합니다.
+        model.addAttribute("store", dto.getStore());
+        model.addAttribute("foods", dto.getFoods());
+        model.addAttribute("storeOpenTimes", dto.getOpenTimes());
+        
+        return "storeDetail";
+    }
 }
