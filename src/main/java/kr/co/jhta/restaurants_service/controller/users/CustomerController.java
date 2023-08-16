@@ -29,16 +29,6 @@ public class CustomerController {
         this.otpService = otpService;
     }
 
-    @GetMapping("/my-page")
-    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
-
-
-        model.addAttribute("customerEmail", securityUser.getUser().getEmail());
-
-
-        return "/user/customer/my-page";
-    }
-
     @ResponseBody
     @PostMapping(value = "/otp-check", consumes = "application/json")
     public ResponseEntity otpCheck(@RequestBody OtpCommand otpCommand, HttpSession session) {
@@ -79,5 +69,15 @@ public class CustomerController {
     @GetMapping("/signup")
     public String signupForm() {
         return "user/customer/signup-form";
+    }
+
+    @GetMapping("/details")
+    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
+
+
+        model.addAttribute("customerEmail", securityUser.getUser().getEmail());
+
+
+        return "/user/customer/details";
     }
 }

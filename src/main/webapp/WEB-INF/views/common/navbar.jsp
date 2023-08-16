@@ -62,12 +62,12 @@
                 <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="hasRole('ROLE_CUSTOMER')">
                         <li class="nav-item">
-                            <a id="customerMyPage" class="nav-link" href="/customer/my-page">My Page</a>
+                            <a id="customerMyPage" class="nav-link" href="/customer/details">My Page</a>
                         </li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_OWNER')">
                         <li class="nav-item">
-                            <a id="ownerMyPage" class="nav-link" href="/owner/my-page">My Page</a>
+                            <a id="ownerMyPage" class="nav-link" href="/owner/details">My Page</a>
                         </li>
                     </sec:authorize>
                     <li class="nav-item">

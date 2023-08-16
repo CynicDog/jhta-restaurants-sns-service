@@ -15,7 +15,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-///user/check-nickname?nickname=\${nickname}
+
     @ResponseBody
     @GetMapping("/check-username")
     public ResponseEntity isUsernameUnique(@RequestParam("username") String username) {
