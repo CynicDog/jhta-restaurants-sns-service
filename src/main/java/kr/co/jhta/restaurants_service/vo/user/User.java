@@ -44,6 +44,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private DISABLED disabled;
+
     private String nickname;
 
     @Column(name = "profile_picture_name")
@@ -74,12 +75,13 @@ public class User {
         this.disabled = DISABLED.NO; // default to `NO`
     }
 
-    public User(String username, String password, String fullName, String email, String phone, Date birthday, String gender, TYPE type) {
+    public User(String username, String password, String fullName, String email, String phone, String nickname, Date birthday, String gender, TYPE type) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.phone = phone;
+        this.nickname = nickname;
         this.birthday = birthday;
         this.gender = gender;
         this.type = type;

@@ -115,4 +115,13 @@ public class StoreService {
 		
 		return dto;
 	}
+  
+	public List<Store> getStoresByUserId(int userId) {
+		List<Store> stores = storeRepository.findStoresByOwnerId(userId);
+		stores.forEach(store -> {
+			log.info(store.getName());
+		});
+		return storeRepository.findStoresByOwnerId(userId);
+	}
+
 }

@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 
 @Getter @Setter
 @Alias("FollowRequests")
-public class FollowRequests {
+public class FollowRequest {
 
     @Id
     private int id;
@@ -15,10 +15,10 @@ public class FollowRequests {
     private int recipientId;
     private RequestStatus status;
 
-    public FollowRequests() {
+    public FollowRequest() {
     }
 
-    public FollowRequests(int senderId, int recipientId) {
+    public FollowRequest(int senderId, int recipientId) {
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.status = RequestStatus.PENDING;

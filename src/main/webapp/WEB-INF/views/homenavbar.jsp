@@ -32,7 +32,7 @@
     }
 </style>
 <nav class="navbar navbar-expand-lg">
-    <div class="container">
+    <div class="container-fluid">
 				<a class="navbar-brand" href="/">🧑🏻‍💻</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,7 @@
 		});
     </script>
 </nav>
-<div class="container">
+<div class="container-fluid">
     <div class="row border-bottom">
     	<div class="col-12">
     		<form action="/search/list" method="GET">

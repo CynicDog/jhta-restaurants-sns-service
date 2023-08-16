@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/owner")
 public class OwnerController {
 
-    public static String[] PUBLIC_URLS = { "/owner/signup" };
-
     @Value("${data.go.kr.service-key}")
     private String serviceKey;
     private final Logger logger = Logger.getLogger(UserController.class);
@@ -179,13 +177,6 @@ public class OwnerController {
         return "/user/owner/store-register-form";
     }
 
-    @GetMapping("/my-page")
-    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
-
-        model.addAttribute("ownerEmail", securityUser.getUser().getEmail());
-
-        return "/user/owner/my-page";
-    }
 
     @GetMapping("/business-validation-service-key")
     public ResponseEntity businessValidationServiceKey() {
@@ -206,4 +197,17 @@ public class OwnerController {
         model.addAttribute("userCommand", new UserCommand());
         return "user/owner/signup-form";
     }
+
+    @GetMapping("/my-page")
+    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
+
+        List<Store> stores = storeService.getStoresByUserId(securityUser.getUser().getId());
+
+        model.addAttribute("owner", securityUser.getUser());
+        model.addAttribute("stores", stores);
+
+        return "user/owner/my-page";
+    }
+
+    public static String[] PUBLIC_URLS = { "/owner/signup" };
 }

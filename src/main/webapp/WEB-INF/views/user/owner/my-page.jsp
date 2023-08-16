@@ -38,33 +38,32 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <c:if test="${not empty posts}">
+                    <c:if test="${not empty stores}">
                         <ol class="list-group list-group-numbered">
-                            <c:forEach items="${posts}" var="article">
+                            <c:forEach items="${stores}" var="store">
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${posts.title}</div>
+                                        <div class="fw-bold">${store.name}</div>
                                         <c:choose>
-                                            <c:when test="${posts.content.length() gt 50}">
-                                                ${posts.content.substring(0, 50)} ...
+                                            <c:when test="${store.description.length() gt 50}">
+                                                ${store.description.substring(0, 50)} ...
                                             </c:when>
                                             <c:otherwise>
-                                                ${posts.content}
+                                                ${store.description}
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                                    <i type="button" class="bi bi-pencil-square"></i>
                                 </li>
                             </c:forEach>
                         </ol>
                     </c:if>
-                    <c:if test="${empty posts}">
+                    <c:if test="${empty stores}">
                         <p class="my-1">No stores registered yet.</p>
                     </c:if>
                 </div>
             </div>
         </div>
-
         <div class="col-md-7 my-2">
             <div class="card shadow mb-3">
                 <div class="fw-lighter m-3 p-1">
@@ -75,11 +74,20 @@
                 <div class="card-body">
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
+                            <label for="nickname" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Nickname</span></label>
+                        </div>
+                        <div class="col-sm-9 my-1">
+                            <p class="form-control-plaintext" id="nickname"> ${owner.nickname} </p>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-3 my-1 fw-lighter">
                             <label for="email" class="col-sm-2 col-form-label"><span
                                     style="white-space: nowrap">Email</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="email"> test@test.com </p>
+                            <p class="form-control-plaintext" id="email"> ${owner.email} </p>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -88,19 +96,17 @@
                         </div>
                         <div class="col-sm-9 my-1">
                             <p class="form-control-plaintext" id="create-date">
-                                <fmt:formatDate value="${user.user.createDate}" pattern="yyyy-MM-dd"/>
+                                <fmt:formatDate value="${ owner.createDate }" pattern="yyyy-MM-dd"/>
                             </p>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="roles" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Roles</span></label>
+                            <label for="type" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">User Type</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <c:forEach items="${user.user.roles}" var="role">
-                                <span class="form-control-plaintext" id="roles">${role} </span>
-                            </c:forEach>
+                            <p class="form-control-plaintext" id="type"> ${ owner.type } </p>
                         </div>
                     </div>
                 </div>
@@ -115,6 +121,7 @@
                         <div class="col text-end">
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followersPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"
@@ -129,6 +136,7 @@
                             </div>
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followingsPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"

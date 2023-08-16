@@ -1,13 +1,13 @@
 package kr.co.jhta.restaurants_service.repository;
 
-import kr.co.jhta.restaurants_service.vo.store.Store;
+import kr.co.jhta.restaurants_service.vo.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store, Integer> {
+public interface PostRepository extends JpaRepository<Post, Integer> {
 
-    List<Store> findStoresByOwnerId(int ownerId);
+    List<Post> findPostsByCustomerId(int customerId);
 }

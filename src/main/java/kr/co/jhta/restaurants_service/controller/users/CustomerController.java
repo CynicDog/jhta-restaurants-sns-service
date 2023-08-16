@@ -5,7 +5,11 @@ import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.service.PostService;
+import kr.co.jhta.restaurants_service.service.SocialService;
+import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
+import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
@@ -23,20 +29,21 @@ public class CustomerController {
     Logger logger = Logger.getLogger(UserController.class);
     private final UserService userService;
     private final OtpService otpService;
+    private final PostService postService;
+    private final SocialService socialService;
 
-    public CustomerController(UserService userService, OtpService otpService) {
+    public CustomerController(UserService userService, OtpService otpService, PostService postService, SocialService socialService) {
         this.userService = userService;
         this.otpService = otpService;
+        this.postService = postService;
+        this.socialService = socialService;
     }
 
-    @GetMapping("/my-page")
-    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
+    @ResponseBody
+    @GetMapping("/followers")
+    public ResponseEntity<List<User>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
 
-
-        model.addAttribute("customerEmail", securityUser.getUser().getEmail());
-
-
-        return "/user/customer/my-page";
+        return ResponseEntity.of(Optional.ofNullable(socialService.getFollowersByCustomerId(securityUser.getUser().getId())));
     }
 
     @ResponseBody
@@ -49,9 +56,9 @@ public class CustomerController {
 
         if (isValid) {
             userService.insertCustomer(userCommand);
-            return ResponseEntity.ok("Valid otp!");
+            session.setAttribute("userCommand", null);
 
-            // TODO: Session clear
+            return ResponseEntity.ok("Valid otp!");
         } else {
             return ResponseEntity.badRequest().body("Invalid otp!");
         }
@@ -80,4 +87,20 @@ public class CustomerController {
     public String signupForm() {
         return "user/customer/signup-form";
     }
+
+    @GetMapping("/my-page")
+    public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
+
+        List<Post> posts = postService.getPostsByCustomerId(securityUser.getUser().getId());
+
+        model.addAttribute("posts", posts);
+        model.addAttribute("customer", securityUser.getUser());
+
+        return "/user/customer/my-page";
+    }
+
+    public static String[] PUBLIC_URLS = {
+            "/customer/signup",
+            "/customer/details"
+    };
 }

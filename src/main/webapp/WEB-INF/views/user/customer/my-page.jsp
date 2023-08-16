@@ -22,18 +22,18 @@
             <div class="card shadow overflow-auto" style="max-height: 900px;">
                 <div class="fw-lighter fs-4 m-3 p-1">My Articles</div>
                 <div class="card-body">
-                    <c:if test="${not empty posts}">
+                    <c:if test="${ not empty posts }">
                         <ol class="list-group list-group-numbered">
-                            <c:forEach items="${posts}" var="article">
+                            <c:forEach items="${ posts }" var="post">
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${posts.title}</div>
+                                        <div class="fw-bold">${ post.title }</div>
                                         <c:choose>
-                                            <c:when test="${posts.content.length() gt 50}">
-                                                ${posts.content.substring(0, 50)} ...
+                                            <c:when test="${ post.content.length() gt 50 }">
+                                                ${ post.content.substring(0, 50) } ...
                                             </c:when>
                                             <c:otherwise>
-                                                ${posts.content}
+                                                ${ post.content }
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -43,7 +43,7 @@
                         </ol>
                     </c:if>
                     <c:if test="${empty posts}">
-                        <p class="my-1">No articles published yet.</p>
+                        <p class="my-1">No posts published yet.</p>
                     </c:if>
                 </div>
             </div>
@@ -66,11 +66,29 @@
                 <div class="card-body">
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
+                            <label for="fullName" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Full Name</span></label>
+                        </div>
+                        <div class="col-sm-9 my-1">
+                            <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-3 my-1 fw-lighter">
+                            <label for="nickName" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Nickname</span></label>
+                        </div>
+                        <div class="col-sm-9 my-1">
+                            <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-3 my-1 fw-lighter">
                             <label for="email" class="col-sm-2 col-form-label"><span
                                     style="white-space: nowrap">Email</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="email"> test@test.com </p>
+                            <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -79,19 +97,17 @@
                         </div>
                         <div class="col-sm-9 my-1">
                             <p class="form-control-plaintext" id="create-date">
-                                <fmt:formatDate value="${user.user.createDate}" pattern="yyyy-MM-dd"/>
+                                <fmt:formatDate value="${ customer.createDate }" pattern="yyyy-MM-dd"/>
                             </p>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="roles" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Roles</span></label>
+                            <label for="type" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">User Type</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <c:forEach items="${user.user.roles}" var="role">
-                                <span class="form-control-plaintext" id="roles">${role} </span>
-                            </c:forEach>
+                            <span class="form-control-plaintext" id="type"> ${ customer.type } </span>
                         </div>
                     </div>
                 </div>
@@ -106,6 +122,7 @@
                         <div class="col text-end">
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followersPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"
@@ -120,6 +137,7 @@
                             </div>
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followingsPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"
@@ -223,8 +241,17 @@
                 if (followersPopoverVisible) {
                     followersPopover.hide();
                 } else {
-                    // TODO: Fetch followers and replace the below dummy users
-                    // Load the content
+                    console.log("hi")
+
+                    fetch(`/customer/followers`, {
+                        method: "GET"
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json()
+                        }
+                    }).then(data => {
+                        console.log(data)
+                    })
 
                     followersPopover.setContent({
                         '.popover-body': `

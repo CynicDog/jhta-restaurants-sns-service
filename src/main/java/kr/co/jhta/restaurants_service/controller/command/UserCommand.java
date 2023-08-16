@@ -14,6 +14,7 @@ public class UserCommand {
     private String fullName;
     private String email;
     private String phone;
+    private String nickname;
     private Date birthday;
     private String gender;
 
@@ -24,6 +25,7 @@ public class UserCommand {
                 userCommand.getFullName(),
                 userCommand.getEmail(),
                 userCommand.getPhone(),
+                userCommand.getNickname(),
                 userCommand.getBirthday(),
                 userCommand.getGender(),
                 User.TYPE.CUSTOMER
@@ -37,6 +39,7 @@ public class UserCommand {
                 userCommand.getFullName(),
                 userCommand.getEmail(),
                 userCommand.getPhone(),
+                userCommand.getNickname(),
                 userCommand.getBirthday(),
                 userCommand.getGender(),
                 User.TYPE.OWNER
@@ -50,6 +53,7 @@ public class UserCommand {
                 userCommand.getFullName(),
                 userCommand.getEmail(),
                 userCommand.getPhone(),
+                userCommand.getNickname(),
                 userCommand.getBirthday(),
                 userCommand.getGender(),
                 User.TYPE.ADMIN
