@@ -63,6 +63,18 @@
                                     </div>
                                 </label>
                             </div>
+                            <div class="form-floating my-3">
+                                <input type="text" class="form-control" name="nickname" id="nickname" placeholder=""/>
+                                <label class="fw-lighter d-flex" for="username">닉네임
+                                    <div class="ms-auto">
+                                        <div id="nicknameLoadingSpinner"
+                                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                             style="display: none;">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
                             <div class="form-group my-3">
                                 <div class="row">
                                     <div class="col">
@@ -104,10 +116,12 @@
         const fullNameInput = document.querySelector('input[name="fullName"]');
         const emailInput = document.querySelector('input[name="email"]');
         const phoneInput = document.querySelector('input[name="phone"]');
+        const nicknameInput = document.querySelector('input[name="nickname"]')
         const birthdayInput = document.querySelector('input[name="birthday"]');
         const genderInput = document.querySelector('select[name="gender"]');
 
         const usernameSpinner = usernameInput.parentElement.querySelector('.spinner-border')
+        const nicknameSpinner = nicknameInput.parentElement.querySelector('.spinner-border')
         const emailSpinner = emailInput.parentElement.querySelector('.spinner-border');
         const phoneSpinner = phoneInput.parentElement.querySelector('.spinner-border');
 
@@ -117,6 +131,7 @@
             fullNameInput: false,
             emailInput: false,
             phoneInput: false,
+            nicknameInput: false,
             birthdayInput: false,
             genderInput: false
         }
@@ -258,6 +273,39 @@
             updateSubmitButton();
         });
 
+        nicknameInput.addEventListener("blur", function () {
+            removeErrorMessage(this);
+            if (this.value.trim() === '') {
+                displayErrorMessage(this, "필수 입력 사항입니다.");
+                validationStatus.nicknameInput = false;
+            } else if (this.value.trim().includes(' ')) {
+                displayErrorMessage(this, "닉네임에 공백을 포함할 수 없습니다.");
+                validationStatus.nicknameInput = false;
+            } else {
+                const nickname = encodeURIComponent(this.value.trim())
+                nicknameSpinner.style.display = "block";
+
+                fetch(`/user/check-nickname?nickname=\${nickname}`, {
+                    method: "GET"
+                }).then(response => {
+                    nicknameSpinner.style.display = "none";
+                    if (response.ok) {
+                        removeSuccessMessage(this);
+                        displaySuccessMessage(this);
+
+                        validationStatus.nicknameInput = true;
+                        updateSubmitButton();
+                    } else {
+                        removeErrorMessage(this)
+                        displayErrorMessage(this, "이미 사용 중인 닉네임입니다.");
+                        validationStatus.nicknameInput = false;
+                        updateSubmitButton();
+                    }
+                })
+            }
+            updateSubmitButton();
+        });
+
         birthdayInput.addEventListener("blur", function () {
             removeErrorMessage(this);
             if (this.value.trim() === '') {
@@ -303,6 +351,7 @@
                     fullName: fullNameInput.value.trim(),
                     email: emailInput.value.trim(),
                     phone: phoneInput.value.trim(),
+                    nickname: nicknameInput.value.trim(),
                     birthday: birthdayInput.value,
                     gender: genderInput.value
                 };

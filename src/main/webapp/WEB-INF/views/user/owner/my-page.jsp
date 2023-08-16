@@ -74,11 +74,20 @@
                 <div class="card-body">
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
+                            <label for="nickname" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Nickname</span></label>
+                        </div>
+                        <div class="col-sm-9 my-1">
+                            <p class="form-control-plaintext" id="nickname"> ${owner.nickname} </p>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-sm-3 my-1 fw-lighter">
                             <label for="email" class="col-sm-2 col-form-label"><span
                                     style="white-space: nowrap">Email</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="email"> test@test.com </p>
+                            <p class="form-control-plaintext" id="email"> ${owner.email} </p>
                         </div>
                     </div>
                     <div class="row m-2">
@@ -87,19 +96,17 @@
                         </div>
                         <div class="col-sm-9 my-1">
                             <p class="form-control-plaintext" id="create-date">
-                                <fmt:formatDate value="${user.user.createDate}" pattern="yyyy-MM-dd"/>
+                                <fmt:formatDate value="${ owner.createDate }" pattern="yyyy-MM-dd"/>
                             </p>
                         </div>
                     </div>
                     <div class="row m-2">
                         <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="roles" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Roles</span></label>
+                            <label for="type" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">User Type</span></label>
                         </div>
                         <div class="col-sm-9 my-1">
-                            <c:forEach items="${user.user.roles}" var="role">
-                                <span class="form-control-plaintext" id="roles">${role} </span>
-                            </c:forEach>
+                            <p class="form-control-plaintext" id="type"> ${ owner.type } </p>
                         </div>
                     </div>
                 </div>
