@@ -121,6 +121,7 @@
                         <div class="col text-end">
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followersPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"
@@ -135,6 +136,7 @@
                             </div>
                             <div class="badge text-bg-secondary position-relative mx-2"
                                  id="followingsPopover"
+                                 type="button"
                                  data-bs-container="body"
                                  data-bs-toggle="popover"
                                  data-bs-placement="bottom"
