@@ -14,9 +14,14 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.dto.Pagination;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
+import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
+import kr.co.jhta.restaurants_service.mapper.FoodMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
+import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
+import kr.co.jhta.restaurants_service.vo.store.Food;
 import kr.co.jhta.restaurants_service.vo.store.Store;
+import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,15 +33,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class StoreService {
 
 	private final StoreMapper storeMapper;
+	private final FoodMapper foodMapper;
+	private final StoreOpenTimeMapper storeOpenTimeMapper;
 	private final StoreRepository storeRepository;
 	private final FoodRepository foodRepository;
 	private final StoreOpenTimeRepository storeOpenTimeRepository;
 
 	public StoreService(StoreMapper storeMapper,
+						FoodMapper foodMapper,
+						StoreOpenTimeMapper storeOpenTimeMapper,
 						StoreRepository storeRepository,
 						FoodRepository foodRepository,
 						StoreOpenTimeRepository storeOpenTimeRepository) {
 		this.storeMapper = storeMapper;
+		this.foodMapper = foodMapper;
+		this.storeOpenTimeMapper = storeOpenTimeMapper;
 		this.storeRepository = storeRepository;
 		this.foodRepository = foodRepository;
 		this.storeOpenTimeRepository = storeOpenTimeRepository;
@@ -88,5 +99,20 @@ public class StoreService {
 					storeOpenTime.setStore(store);
 					storeOpenTimeRepository.save(storeOpenTime);
 				});
+	}
+	
+	public StoreDetailDto getStoreDetail(int storeId) {
+		StoreDetailDto dto = new StoreDetailDto();
+		
+		Store store = storeMapper.getStoreById(storeId);
+		dto.setStore(store);
+		
+		List<Food> foods = foodMapper.getFoodsByStoreId(storeId);
+		dto.setFoods(foods);
+		
+		List<StoreOpenTime> openTimes = storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
+		dto.setOpenTimes(openTimes);
+		
+		return dto;
 	}
 }
