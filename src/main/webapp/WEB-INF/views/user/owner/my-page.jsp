@@ -38,33 +38,32 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <c:if test="${not empty posts}">
+                    <c:if test="${not empty stores}">
                         <ol class="list-group list-group-numbered">
-                            <c:forEach items="${posts}" var="article">
+                            <c:forEach items="${stores}" var="store">
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${posts.title}</div>
+                                        <div class="fw-bold">${store.name}</div>
                                         <c:choose>
-                                            <c:when test="${posts.content.length() gt 50}">
-                                                ${posts.content.substring(0, 50)} ...
+                                            <c:when test="${store.description.length() gt 50}">
+                                                ${store.description.substring(0, 50)} ...
                                             </c:when>
                                             <c:otherwise>
-                                                ${posts.content}
+                                                ${store.description}
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-                                    <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                                    <i type="button" class="bi bi-pencil-square"></i>
                                 </li>
                             </c:forEach>
                         </ol>
                     </c:if>
-                    <c:if test="${empty posts}">
+                    <c:if test="${empty stores}">
                         <p class="my-1">No stores registered yet.</p>
                     </c:if>
                 </div>
             </div>
         </div>
-
         <div class="col-md-7 my-2">
             <div class="card shadow mb-3">
                 <div class="fw-lighter m-3 p-1">

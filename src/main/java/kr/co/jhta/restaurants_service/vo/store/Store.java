@@ -51,6 +51,7 @@ public class Store {
     @Column(name = "update_date")
     private Date updateDate;
 
+    @Enumerated(EnumType.STRING)
     private DISABLED disabled;
 
     @ManyToOne

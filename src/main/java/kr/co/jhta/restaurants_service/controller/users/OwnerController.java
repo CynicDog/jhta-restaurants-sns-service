@@ -182,7 +182,10 @@ public class OwnerController {
     @GetMapping("/my-page")
     public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
 
-        model.addAttribute("ownerEmail", securityUser.getUser().getEmail());
+        List<Store> stores = storeService.getStoresByUserId(securityUser.getUser().getId());
+
+        model.addAttribute("owner", securityUser.getUser());
+        model.addAttribute("stores", stores);
 
         return "/user/owner/my-page";
     }
