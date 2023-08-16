@@ -10,7 +10,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+	<style type="text/css">
+	
+	.searchInput .resultBox {
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        max-height: 280px;
+        overflow-y: auto;
+        position: absolute; /* 위치 변경 */
+        top: 30px; /* 위치 변경 */
+        left: 0; /* 위치 변경 */
+        z-index: 10; /* 위치 변경 */
+    }
+	
+	.searchInput.active .resultBox{
+	  padding: 10px 8px;
+	  opacity: 1;
+	  pointer-events: auto;
+	}
+	
+	.resultBox li{
+	  list-style: none;
+	  padding: 8px 12px;
+	  display: none;
+	  width: 100%;
+	  cursor: default;
+	  border-radius: 3px;
+	}
+	
+	.searchInput.active .resultBox li{
+	  display: block;
+	}
+	.resultBox li:hover{
+	  background: #efefef;
+	}
+	</style>
     <title>Insert title here</title>
 </head>
 <body>
@@ -62,9 +97,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div class="form-floating">
-                                                    <input id="storeIdInput" class="form-control-plaintext mb-4"
+                                                <div class="form-floating searchInput">
+                                                    <input type="text" id="storeIdInput" class="form-control-plaintext mb-4"
                                                            placeholder="가게명을 작성해주세요." name="storeId">
+				                                    <div class="resultBox"><!-- here list are inserted from javascript --></div>
                                                     <label for="storeIdInput">가게명을 작성해주세요 :)</label>
                                                 </div>
                                                 <div class="form-floating">
@@ -182,11 +218,12 @@
                             </div>
                         </div>
                         <div class="col-8">
-                            <div class="form-floating">
-                                <input id="storeIdInput" class="form-control-plaintext mb-4"
-                                       placeholder="가게명을 작성해주세요." name="storeId">
-                                <label for="storeIdInput">가게명을 작성해주세요 :)</label>
-                            </div>
+			            	<div class="form-floating searchInput">
+			                	<input type="text" id="storeIdInput" class="form-control-plaintext mb-4"
+			                       placeholder="가게명을 작성해주세요." name="storeId">
+			                <div class="resultBox"><!-- here list are inserted from javascript --></div>
+			                	<label for="storeIdInput">가게명을 작성해주세요 :)</label>
+			            	</div>
                             <div class="form-floating">
                                 <textarea class="form-control-plaintext"
                                           placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
@@ -388,6 +425,83 @@
     	    
     	    toast.show();
     	  }
+    }
+    
+    let suggestions = [
+    	"25",
+        "Channel",
+        "CodingLab",
+        "CodingNepal",
+        "YouTube",
+        "YouTuber",
+        "YouTube Channel",
+        "Blogger",
+        "Bollywood",
+        "Vlogger",
+        "Vechiles",
+        "Facebook",
+        "Freelancer",
+        "Facebook Page",
+        "Designer",
+        "Developer",
+        "Web Designer",
+        "Web Developer",
+        "Login Form in HTML & CSS",
+        "How to learn HTML & CSS",
+        "How to learn JavaScript",
+        "How to became Freelancer",
+        "How to became Web Designer",
+        "How to start Gaming Channel",
+        "How to start YouTube Channel",
+        "What does HTML stands for?",
+        "What does CSS stands for?",
+    ];
+
+    // getting all required elements
+    const searchInput = document.querySelector(".searchInput");
+    const input = searchInput.querySelector("input");
+    const resultBox = searchInput.querySelector(".resultBox");
+    const icon = searchInput.querySelector(".icon");
+    let linkTag = searchInput.querySelector("a");
+    let webLink;
+
+    // if user press any key and release
+    function select(element) {
+	    let selectData = element.textContent;
+	    input.value = selectData;
+	    searchInput.classList.remove("active");
+	}
+
+	input.onkeyup = (e) => {
+	    let userData = e.target.value;
+	    let emptyArray = [];
+	    if (userData) {
+	        emptyArray = suggestions.filter((data) => {
+	            return data.toLowerCase().startsWith(userData.toLowerCase());
+	        });
+	        emptyArray = emptyArray.map((data) => {
+	            return '<li>' + data + '</li>';
+	        });
+	        searchInput.classList.add("active");
+	        showSuggestions(emptyArray);
+	        let allList = resultBox.querySelectorAll("li");
+	        for (let i = 0; i < allList.length; i++) {
+	            allList[i].setAttribute("onclick", "select(this)");
+	        }
+	    } else {
+	        searchInput.classList.remove("active");
+	    }
+	};
+
+    function showSuggestions(list){
+        let listData;
+        if(!list.length){
+            userValue = inputBox.value;
+            listData = '<li>'+ userValue +'</li>';
+        }else{
+            listData = list.join('');
+        }
+        resultBox.innerHTML = listData;
     }
 </script>
 

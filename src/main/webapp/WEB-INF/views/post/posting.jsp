@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<style type="text/css">
+		#offcanvasExample {
+		    width: 40%;
+		}
+	</style>
 </head>
 <body>
 <%@ include file="../common/navbar.jsp" %>
@@ -38,10 +43,64 @@
 				<p class="text-secondary">서울특별시 동대문구 망우로 30</p>
 				<p>여기에는 포스팅 글을 쓸게요</p>
 			</div>
-			<div class="col-2 my-5">
-				<button class="btn ms-3" id="box">
+			<div class="col-2 my-5 position-relative">
+				<button class="btn ms-3 position-absolute" id="box">
 					<i class="bi bi-star" style="color:gold; font-size:28px;" ></i>
 				</button>
+				<button class="btn btn-lg ms-3 position-absolute" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+					<i class="bi bi-chat-text"></i>
+					<span class="visually-hidden">댓글</span>
+				</button>
+				<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+				  <div class="offcanvas-header">
+				    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+				    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+				  </div>
+				  <div class="offcanvas-body">
+					<div class="col-11 border-top border-bottom my-3">
+						<div class="row my-3">
+							<div class="col-2">
+								<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+									<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+								</a>
+								<div class="text-center card-title my-1">
+									<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
+								</div>
+							</div>
+							<div class="col-10 position-relative ">
+								<div class="row mb-2">
+									<div class="col-9">
+										<p class="col card-text text-muted" style="font-size: small; ">리뷰 작성일</p>
+										<p class="col card-text">리뷰 내용</p>
+										<p class="col card-text"> 정말 맛있어요</p>
+									</div>
+									<div class="col-3 d-flex justify-content-end align-items-center">
+								    </div>
+								</div>
+								<div class="row position-absolute" style="bottom:0;right:0;">
+									<div class="col">
+										<span class="text-end">
+											<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+									        <button type="button" class="btn btn-outline-secondary btn-sm">
+									            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+									            <span class="visually-hidden">추천</span>
+									        </button>
+											<button type="button" class="btn btn-outline-danger btn-sm">
+												<i class="bi bi-trash3"></i>
+												<span class="visually-hidden">삭제</span>
+											</button>
+											<button type="button" class="btn btn-outline-danger btn-sm">
+									            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+									            <span class="visually-hidden">신고</span>
+									        </button>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				  </div>
+				</div>
 				
 			</div>
 		</div>
