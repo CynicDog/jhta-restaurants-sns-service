@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,13 +29,15 @@
 </head>
 <body>
 <%@ include file="common/navbar.jsp" %>
+<sec:authorize access="isAuthenticated()">
 <div class="wrap">
 	<div class="container">
 	    <div class="restaurant-name">
 	        <strong style="color: #ff792a;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
 	    </div>
-	<form method="post" enctype="multipart/form-data" action="">
+	<form id="reviewForm" method="post" enctype="multipart/form-data" action="">
    		<input type="hidden" name="storeId" value="${param.storeId }"/>
+   		<input type="hidden" name="customerId" value="${param.customerId }"/>
 	<div class="review-section mt-3" >
 		<div class="row">
 			<div class="col-12">
@@ -70,14 +74,14 @@
 	<div class="row">
 		<div class="btn-group m-2">
 			<span>
-				<button id="keyword1" type="button" class="btn btn-food border-secondary rounded-pill text-secondary" data-keyword-type="음식이 맛있어요">#음식이 맛있어요</button>
-				<button id="keyword2" type="button" class="btn btn-parking border-secondary rounded-pill text-secondary" data-keyword-type="주차가 편해요">#주차가 편해요</button>
-				<button id="keyword3" type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="매장이 청결해요">#매장이 청결해요</button>
-				<button id="keyword4" type="button" class="btn btn-large border-secondary rounded-pill text-secondary" data-keyword-type="매장이 넓어요">#매장이 넓어요</button>
-				<button id="keyword5" type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="분위기가 좋아요">#분위기가 좋아요</button>
-				<button id="keyword6" type="button" class="btn btn-kind border-secondary rounded-pill text-secondary" data-keyword-type="친절해요">#친절해요</button>
+				<button type="button" class="btn btn-food border-secondary rounded-pill text-secondary" data-keyword-type="음식이 맛있어요">#음식이 맛있어요</button>
+				<button type="button" class="btn btn-parking border-secondary rounded-pill text-secondary" data-keyword-type="주차가 편해요">#주차가 편해요</button>
+				<button type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="매장이 청결해요">#매장이 청결해요</button>
+				<button type="button" class="btn btn-large border-secondary rounded-pill text-secondary" data-keyword-type="매장이 넓어요">#매장이 넓어요</button>
+				<button type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="분위기가 좋아요">#분위기가 좋아요</button>
+				<button type="button" class="btn btn-kind border-secondary rounded-pill text-secondary" data-keyword-type="친절해요">#친절해요</button>
 			</span>
-	        <input type="hidden" name="reviewKeyword" id="review-keywords" />
+	        <input type="hidden" name="reviewKeyword" id="reviewKeywordInput"/>
 		</div>
 	</div>
 	<div class="row">
@@ -108,6 +112,7 @@
 	</div>
 <%@ include file="common/footer.jsp"%>
 </div>
+</sec:authorize>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -232,54 +237,57 @@ $(function() {
  
     // 키워드 버튼 상태 설정 
 	$(".btn-food").click(function() {
-		if ($(this).hasClass("btn-food")) {
-			$(this).removeClass("btn-food").addClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white")
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-food border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("border-opacity-10 bage-rounded-pill text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white");
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-parking").click(function() {
-		if ($(this).hasClass("btn-parking")) {
-			$(this).removeClass("btn-parking").addClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-parking border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-clean").click(function() {
-		if ($(this).hasClass("btn-clean")) {
-			$(this).removeClass("btn-clean").addClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white")
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-info bg-opacity-75 text-white fw-lighter fs-6 text-white").addClass("btn btn-clean border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-info bg-opacity-75 fw-lighter fs-6 text-white")
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-large").click(function() {
-		if ($(this).hasClass("btn-large")) {
-			$(this).removeClass("btn-large").addClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ").addClass("btn btn-4 border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-mood").click(function() {
-		if ($(this).hasClass("btn-mood")) {
-			$(this).removeClass("btn-mood").addClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6").addClass("btn btn-mood border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-kind").click(function() {
-		if ($(this).hasClass("btn-kind")) {
-			$(this).removeClass("btn-kind").addClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
-			$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
-		} else {
-			$(this).removeClass("btn rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white").addClass("btn btn-kind border-secondary rounded-pill text-secondary")
-		}
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+		$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	
+	
+	const reviewForm = document.getElementById('reviewForm');
+	const reviewKeywordInput = document.getElementById('reviewKeywordInput');
+
+	// 클릭된 버튼들의 data-keyword-type 값을 수집하여 hidden input에 설정하는 함수
+	function updateReviewKeywords() {
+	    const selectedButtons = document.querySelectorAll('.btn-group .btn.active');
+	    const selectedKeywords = Array.from(selectedButtons).map(button => button.getAttribute('data-keyword-type'));
+	    reviewKeywordInput.value = JSON.stringify(selectedKeywords); // 선택된 키워드 배열을 JSON 형태의 문자열로 설정
+	}
+
+	// 버튼 클릭 이벤트 핸들러 추가
+	const buttons = document.querySelectorAll('.btn-group .btn');
+	buttons.forEach(button => {
+	    button.addEventListener('click', () => {
+	        button.classList.toggle('active');
+	        updateReviewKeywords();
+	    });
+	});
+
+	// 폼 제출 이벤트 핸들러 추가
+	reviewForm.addEventListener('submit', event => {
+	    // 폼 제출 시 hidden input이 자동으로 전송됨
+	 
+	});
+
+
 });
 
 </script>

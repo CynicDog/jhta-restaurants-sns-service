@@ -87,7 +87,7 @@ html, body {
 							</div>
 							<div class="col-4">
 								<span class="my-2 float-end">
-									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review'">
+									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
 										리뷰<i class="bi bi-brush"></i>
 									</button>
 									<button class="btn" id="box">
