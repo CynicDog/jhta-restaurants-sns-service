@@ -31,10 +31,10 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/stores/list">Stores</a>
+                    <a class="nav-link" href="/store/search">Stores</a>
                 </li>
             </ul>
-            <form class="w-25 me-3" id="form-navbar-search" action="/search/list">
+            <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
                 <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
             </form>
             <ul class="navbar-nav">

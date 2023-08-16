@@ -85,14 +85,14 @@
 						<!-- 지도 -->
 						<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
 						
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
 							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
 								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
 							<div class="card-img-overlay d-flex justify-content-center align-items-center">
 								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 							</div>
 						</div>
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
 							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
 								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
 							<div class="card-img-overlay d-flex justify-content-center align-items-center">

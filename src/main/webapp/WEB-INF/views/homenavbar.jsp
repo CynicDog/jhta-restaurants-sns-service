@@ -127,7 +127,7 @@
 <div class="container-fluid">
     <div class="row border-bottom">
     	<div class="col-12">
-    		<form action="/search/list" method="GET">
+    		<form action="/store/search" method="GET">
 				<div class="mx-auto my-5 search-bar input-group">
   					<input name="keyword" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" 
   						   aria-label="Recipient's username" aria-describedby="button-addon2" >
