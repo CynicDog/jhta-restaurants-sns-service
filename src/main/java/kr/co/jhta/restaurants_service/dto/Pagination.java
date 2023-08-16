@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Pagination {
 
-	private int rows = 6;
+	private int rows = 8;
 	private int pages = 5;
 	private int page;
 	private int totalRows;
@@ -34,6 +34,7 @@ public class Pagination {
 		
 		init();
 	}
+	
 	public Pagination(int rows,int page, int totalRows) {
 		this.page = page;
 		this.rows = rows;
@@ -44,12 +45,16 @@ public class Pagination {
 	
 	private void init() {
 		totalPages = (int) Math.ceil((double) totalRows/rows);
+		if(totalRows==0) {
+			totalPages++;
+		}
 		totalBlocks = (int) Math.ceil((double) totalPages/pages);
 		currentBlock = (int) Math.ceil((double) page/pages);
 		beginPage = (currentBlock - 1)*pages + 1;
 		endPage = currentBlock*pages;
 		
-		log.info("currentBlock, totalBlocks,page : '{}', '{}','{}'",currentBlock,totalBlocks,page);
+		log.info("totalRows, rows: '{}', '{}'",totalRows,rows);
+
 		
 		if (currentBlock >= totalBlocks) {
 			endPage = totalPages;
@@ -60,5 +65,8 @@ public class Pagination {
 		nextPage = page + 1;
 		begin = (page - 1)*rows + 1;
 		end = page*rows;
+		
+		log.info("currentBlock, totalBlocks, page : '{}', '{}','{}'",currentBlock,totalBlocks,page);
+		log.info("beginPage, endPage, totalPages : '{}', '{}', '{}'",beginPage,endPage,totalPages);
 	}
 }

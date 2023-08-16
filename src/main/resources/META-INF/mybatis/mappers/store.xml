@@ -112,7 +112,7 @@
 
 	<!--키워드검색,  카테고리화 할때 전체 row 자체가 해당 되는 row만 잡혀야함 -->
 	<select id="getTotalRows" parameterType="map" resultType="int">
-	  select count(*)
+	  select count(distinct S.id)
 	  from STORES S left join
 	  	FOODS F on S.id = F.store_id
 	  <where>

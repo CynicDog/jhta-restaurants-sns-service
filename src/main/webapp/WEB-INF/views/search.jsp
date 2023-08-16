@@ -23,86 +23,104 @@
 <body>
 	<%@ include file="common/navbar.jsp"%>
 	<div class="wrap">
-		<div class="container-fluid text-center" style="padding-left: 100px;">
+		<div class="container-fluid text-center" >
 			<div class="row my-3">
-				<div class="col-8 d-flex justify-content-between">
-					<a class="title btn fs-4" href="list">맛집 검색결과</a>
-					<select class="form-select me-3" style="width: 150px;" name="sort">
-						<option value="rating">평점 순</option>
-						<option value="bookmark">즐겨찾기 순</option>
-						<option value="review">리뷰 많은 순</option>
-					</select>
-				</div>
-				
-				<div class="col-4">
-					<!-- 지도 -->
-					<div style="position:fixed;">
-						<div id="map" class="mb-4"
-							style="width: 450px; height: 450px; ">
+				<div class="col-8 ">
+					<div class="d-flex justify-content-between">
+						<a class="title btn fs-4" href="/store/search">맛집 검색결과</a>
+						<select class="form-select me-3" style="width: 150px;" name="sort">
+							<option value="rating">평점 순</option>
+							<option value="bookmark">즐겨찾기 순</option>
+							<option value="review">리뷰 많은 순</option>
+						</select>
+					</div>
+					<div class="row mb-3">
+						<div class="col-12 mb-2" style="text-align: left;">
+							<a id="" class="cat btn active" role="button" href="search">전체</a>
+							<a id="KOREAN" class="cat btn" role="button" href="search?category=KOREAN">한식</a>
+							<a id="CHINESE" class="cat btn" role="button" href="search?category=CHINESE">중식</a>
+							<a id="JAPANESE" class="cat btn" role="button" href="search?category=JAPANESE">일식</a>
+							<a id="CHICKEN" class="cat btn" role="button" href="search?category=CHICKEN">치킨</a>
+							<a id="PIZZA" class="cat btn" role="button" href="search?category=PIZZA">피자</a> 
+							<a id="FASTFOOD" class="cat btn" role="button" href="search?category=FASTFOOD">패스트푸드</a>
+							<a id="WESTERN" class="cat btn" role="button" href="search?category=WESTERN">양식</a> 
+							<a id="ITALIAN" class="cat btn" role="button" href="search?category=ITALIAN">이탈리안</a>
+							<a id="ASIAN" class="cat btn" role="button" href="search?category=ASIAN">아시안</a> 
+							<a id="SNACK" class="cat btn" role="button" href="search?category=SNACK">분식</a>
+							<a id="CAFE" class="cat btn" role="button" href="search?category=CAFE">카페</a> 
+								<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-12 ">
+							<div id="storeLoadingSpinner" class="spinner-border text-primary"
+								role="status" style="margin: 0 auto; margin-top: 150px;">
+								<span class="visually-hidden" style="display: none;">Loading...</span>
+							</div>
+
+							<div id="div-stores" class="row mb-3"></div>
+						</div>
+					</div>
+					
+					<div class="row mb-3">
+						<div id = "div-pagination" class="col-12">
+								<nav>
+									<ul class="pagination justify-content-center">
+										<li id = "prepage" class="page-item page-move">
+											<a id = "prepage-link" href="" class="page-link" >이전</a>
+										</li>
+										<li id = "nextpage" class="page-item page-move">
+											<a id = "nextpage-link" href="" class="page-link" >다음</a>
+										</li>
+									</ul>
+								</nav>
+							<div class="d-flex justify-content-center">
+								<form id="form-pagination" class="" method="get" action="search">
+									<input type="hidden" name="sort" value="${param.sort }">
+									<input type="hidden" name="page" value="${param.page }">
+									<input type="hidden" name="category" value="${param.category }">
+									<input type="hidden" name="keyword" value="${param.keyword }">
+								</form>
+							</div>
+							
 						</div>
 					</div>
 
-<!-- 					<div class="card text-center text-light font-weight-bold shadow my-3" onclick="location.href='post'" style="cursor: pointer; position:fixed;  top: 530px;"> -->
-<!-- 						<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..."  -->
-<!-- 							 style="width: 400px; height: 150px; object-fit:cover; filter: brightness(70%);"> -->
-<!-- 						<div class="card-img-overlay d-flex justify-content-center align-items-center"> -->
-<!-- 							<p class="fs-3"><strong>관련 콘텐츠</strong></p> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+				</div>
+				
+				
+				
+				<div class="col-4">
+				<!-- 지도 -->
+					<div class="my-3" style="position:sticky; top: 10px; overflow: hidden;">
+						<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
+						
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
+						</div>
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
+						</div>
+						
+
+						
+					</div>
+
+
+
 				</div>
 				
 			</div>
-			<div class="row mb-3">
-				<div class="col-8 mb-2" style="text-align: left;">
-					<a id= "" class="cat btn active" role="button" href="list" >전체</a> 
-					<a id="KOREAN" class="cat btn" role="button" href="list?category=KOREAN" >한식</a>
-					<a id="CHINESE" class="cat btn" role="button" href="list?category=CHINESE" >중식</a>
-					<a id="JAPANESE" class="cat btn" role="button" href="list?category=JAPANESE" >일식</a> 
-					<a id="CHICKEN" class="cat btn" role="button" href="list?category=CHICKEN" >치킨</a> 
-					<a id="PIZZA" class="cat btn" role="button" href="list?category=PIZZA" >피자</a> 
-					<a id="FASTFOOD" class="cat btn" role="button" href="list?category=FASTFOOD" >패스트푸드</a>
-					<a id="WESTERN" class="cat btn" role="button" href="list?category=WESTERN">양식</a>
-					<a id="ITALIAN" class="cat btn" role="button" href="list?category=ITALIAN" >이탈리안</a> 
-					<a id="ASIAN" class="cat btn" role="button" href="list?category=ASIAN" >아시안</a> 
-					<a id="SNACK" class="cat btn" role="button" href="list?category=SNACK" >분식</a> 
-					<a id="CAFE" class="cat btn" role="button" href="list?category=CAFE" >카페</a>
-					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<div class="col-8 ">
-					<div id="storeLoadingSpinner" class="spinner-border text-primary" role="status" style="margin: 0 auto; margin-top: 150px;">
-						<span class="visually-hidden" style="display: none;">Loading...</span>
-					</div>
-					
-					<div id="div-stores" class="row mb-3">
-					
-					</div>
-				</div>
-			</div>
-			<div class="row mb-3">
-				<div id = "div-pagination" class="col-12">
-						<nav>
-							<ul class="pagination justify-content-center">
-								<li id = "prepage" class="page-item page-move">
-									<a id = "prepage-link" href="" class="page-link" >이전</a>
-								</li>
-								<li id = "nextpage" class="page-item page-move">
-									<a id = "nextpage-link" href="" class="page-link" >다음</a>
-								</li>
-							</ul>
-						</nav>
-					<div class="d-flex justify-content-center">
-						<form id="form-pagination" class="" method="get" action="list">
-							<input type="hidden" name="sort" value="${param.sort }">
-							<input type="hidden" name="page" value="${param.page }">
-							<input type="hidden" name="category" value="${param.category }">
-							<input type="hidden" name="keyword" value="${param.keyword }">
-						</form>
-					</div>
-					
-				</div>
-			</div>
+			
+			
 		</div>
 		<%@ include file="common/footer.jsp"%>
 	</div>
@@ -195,7 +213,7 @@
             $("#div-pagination").css("display", "none");
             $("html, body").scrollTop(0);
             
-			$.getJSON('/search/stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
+			$.getJSON('stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
 										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
 				console.log("xStartValue : " + xStartValue);
 				console.log("xEndValue : " + xEndValue);
@@ -258,6 +276,7 @@
 				}
 				
 				if(result.pagination.last){
+					console.log("result.pagination.last : ", result.pagination.last);
 					$("#nextpage").addClass('disabled');
 				}
 				else{
@@ -288,7 +307,7 @@
 					
 				    let content = `
 				        <li class="page-item page-num ">
-				            <a href="list?page=\${num}" 
+				            <a href="search?page=\${num}" 
 				            		class="page-link num-link \${isActive}"
 				            		onclick="changePage(event, \${num})">\${num}
 				            </a>

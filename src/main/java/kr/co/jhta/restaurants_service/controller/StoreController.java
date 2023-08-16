@@ -1,7 +1,6 @@
 package kr.co.jhta.restaurants_service.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -14,18 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.service.StoreService;
-import kr.co.jhta.restaurants_service.util.FormatUtils;
-import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/search")
+@RequestMapping("/store")
 @Slf4j
-public class SearchResultController {
+public class StoreController {
 
-	public static final String SEARCH = "/search/list";
+	public static final String SEARCH = "/store/search";
 	private final StoreService storeService;
 
 	@GetMapping("/stores")
@@ -66,7 +63,7 @@ public class SearchResultController {
 
 	}
 
-	@GetMapping("/list")
+	@GetMapping("/search")
 	public String search(@RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
 						 Model model) {
 		model.addAttribute("keyword",keyword);
@@ -75,4 +72,10 @@ public class SearchResultController {
 	}
 
 
+	
+	@GetMapping("/detail")
+	public String storeDetail(Model model) {
+		
+		return "storeDetail";
+	}
 }
