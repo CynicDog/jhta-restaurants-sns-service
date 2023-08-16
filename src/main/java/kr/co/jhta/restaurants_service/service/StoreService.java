@@ -91,11 +91,11 @@ public class StoreService {
 	}
 
 	public List<Store> getStoresByUserId(int userId) {
-		List<Store> stores = storeRepository.getStoresByOwnerId(userId);
+		List<Store> stores = storeRepository.findStoresByOwnerId(userId);
 		stores.forEach(store -> {
 			log.info(store.getName());
 		});
-		return storeRepository.getStoresByOwnerId(userId);
+		return storeRepository.findStoresByOwnerId(userId);
 	}
 
 }

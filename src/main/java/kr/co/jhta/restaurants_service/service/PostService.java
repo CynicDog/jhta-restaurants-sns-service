@@ -7,9 +7,9 @@ import java.util.List;
 
 import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.repository.PostRepository;
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
-
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -32,13 +32,11 @@ public class PostService {
 	private final Logger logger = Logger.getLogger(PostService.class);
 
 	private final PostMapper postmapper;
-
 	private final StoreMapper storeMapper;
-
 	private final PostDataMapper postDataMapper;
-	
+	private final PostRepository postRepository;
 	private final ReviewMapper reviewMapper;
-	
+  
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
 		return posts;
@@ -101,4 +99,8 @@ public class PostService {
 		return filename;
 	}
 
+	public List<Post> getPostsByCustomerId(int customerId) {
+
+		return postRepository.findPostsByCustomerId(customerId);
+	}
 }

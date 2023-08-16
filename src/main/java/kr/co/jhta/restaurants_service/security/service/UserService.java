@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElse(null);
 
         // EAGER fetching on `user.roles`, so below 4 lines are done by Hibernate.
 //        List<Role> roles = roleRepository.findByUserId(user.getId());
@@ -46,6 +46,11 @@ public class UserService implements UserDetailsService {
 
         return userDetails;
     }
+
+    public User findUserById(int id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
 
     public boolean existsDuplicateUsersByNickname(String nickname) {
 
