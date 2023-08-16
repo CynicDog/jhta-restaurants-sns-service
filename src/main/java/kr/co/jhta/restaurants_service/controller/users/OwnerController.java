@@ -9,6 +9,7 @@ import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,13 +24,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// TODO: 1. Session clear after registration of a store
-// TODO: 2. Security specification on methods
 @Controller
 @RequestMapping("/owner")
 public class OwnerController {
 
-    public static String[] PUBLIC_URLS = {"/owner/signup"};
+    public static String[] PUBLIC_URLS = { "/owner/signup" };
+
+    @Value("${data.go.kr.service-key}")
+    private String serviceKey;
     private final Logger logger = Logger.getLogger(UserController.class);
     private final UserService userService;
     private final StoreService storeService;
@@ -183,6 +185,12 @@ public class OwnerController {
         model.addAttribute("ownerEmail", securityUser.getUser().getEmail());
 
         return "/user/owner/my-page";
+    }
+
+    @GetMapping("/business-validation-service-key")
+    public ResponseEntity businessValidationServiceKey() {
+
+        return ResponseEntity.ok().body(serviceKey);
     }
 
     @ResponseBody

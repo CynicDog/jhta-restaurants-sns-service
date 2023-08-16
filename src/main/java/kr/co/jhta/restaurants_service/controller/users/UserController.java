@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/check-phone")
+    @GetMapping("/unique-phone")
     public ResponseEntity isPhoneUnique(@RequestParam("phone") String phone) {
 
         if (userService.existsDuplicateUsersByPhone(phone)) {

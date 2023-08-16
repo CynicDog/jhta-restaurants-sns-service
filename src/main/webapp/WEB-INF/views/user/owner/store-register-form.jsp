@@ -27,7 +27,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 col-sm-6">
-            <div class="card shadow my-4 menu-input-group">
+            <div class="card shadow my-5 menu-input-group">
                 <div class="row p-3">
                     <div class="col-4">
                         <nav id="register-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -306,13 +306,13 @@
 
         // TODO: when reload, clear all the inputs and data in session of resource server
 
-        const categoriesDiv = document.getElementById('categories')
-
         const scrollSpy = new bootstrap.ScrollSpy(document.body, {
             target: '#register-navbar'
         })
 
-        const phonePattern = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
+        let businessValidationServiceKey = null;
+
+        const categoriesDiv = document.getElementById('categories')
 
         const nameInput = document.querySelector('input[name="name"]')
         const phoneInput = document.querySelector('input[name="phone"]')
@@ -325,6 +325,8 @@
         let longitude = document.getElementById('longitude')
         let latitude = document.getElementById('latitude')
         let categoryInput = null
+
+        const phonePattern = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
 
         const requiredStoreInputs = [
             nameInput, phoneInput, businessLicenseInput, descriptionInput, addressInput, zipCodeInput, addressDetailInput
@@ -385,11 +387,21 @@
             addressDetail: false
         }
 
+        fetch('/owner/business-validation-service-key', {
+            method: "GET"
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            }
+        }).then(data => {
+            businessValidationServiceKey = data;
+        });
+
+
         fetch('/owner/store-categories', {
             method: "GET"
         }).then(response => {
             if (response.ok) {
-                console.log(response)
                 return response.json()
             }
         }).then(data => {
@@ -447,11 +459,49 @@
                 let currentInputName = this.name;
 
                 if (this.value.trim() === '') {
+
                     displayErrorMessage(this, "Required.");
                     storeInputsValidationStatus[currentInputName] = false;
+
                 } else if (this.name === 'phone' && !phonePattern.test(this.value.trim())) {
+
                     displayErrorMessage(this, "Not a valid form of phone number.");
                     storeInputsValidationStatus[currentInputName] = false;
+
+                } else if (this.name === 'businessLicense') {
+
+                    let businessLicense = this.value.trim();
+                    if (businessLicense.length !== 10) {
+                        displayErrorMessage(this, "Should be 10 only digits");
+                        storeInputsValidationStatus[currentInputName] = false;
+                    } else {
+                        const commandData = {
+                            "b_no": [
+                                businessLicense
+                            ]
+                        }
+
+                        fetch(`https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=\${businessValidationServiceKey}`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(commandData),
+                        }).then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                        }).then(data => {
+                            if(data.data[0].tax_type === '국세청에 등록되지 않은 사업자등록번호입니다.') {
+                                displayErrorMessage(this, "Not a valid license data.")
+                                storeInputsValidationStatus[currentInputName] = false;
+                            }
+                            else {
+                                displaySuccessMessage(this)
+                                storeInputsValidationStatus[currentInputName] = true;
+                            }
+                        })
+                    }
                 } else {
                     displaySuccessMessage(this);
                     storeInputsValidationStatus[currentInputName] = true;
