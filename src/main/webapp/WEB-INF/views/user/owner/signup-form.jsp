@@ -236,7 +236,7 @@
                 const phone = this.value.trim();
                 phoneSpinner.style.display = "block";
 
-                fetch(`/user/check-phone?phone=\${phone}`, {
+                fetch(`/user/unique-phone?phone=\${phone}`, {
                     method: "GET"
                 }).then(response => {
                     phoneSpinner.style.display = "none";
