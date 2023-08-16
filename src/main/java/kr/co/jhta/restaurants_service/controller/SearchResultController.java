@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchResultController {
 
+	public static final String SEARCH = "/search/list";
 	private final StoreService storeService;
 
 	@GetMapping("/stores")
@@ -72,8 +73,6 @@ public class SearchResultController {
 
 		return "search";
 	}
-	
-
 
 
 }
