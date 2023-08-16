@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.service.ReviewService;
@@ -28,6 +29,7 @@ public class ReviewController {
 	
 
 	// 리뷰 등록화면
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping
 	public String review(Model model) {
 		
@@ -36,10 +38,12 @@ public class ReviewController {
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewDataCommand form) {
-		
-		reviewService.createReview(form);
+	public String reviewRegister(ReviewDataCommand form, @RequestParam int storeId, @RequestParam int customerId) {
+	
+		reviewService.createReview(form, storeId, customerId);
 		log.info("리뷰 신규 등록 -> {}", form);
+//		log.info("가게 아이디-> {}", storeId);
+//		log.info("손님 아이디 -> {}", customerId);
 		
 		return "redirect:/store/detail";
 	}
