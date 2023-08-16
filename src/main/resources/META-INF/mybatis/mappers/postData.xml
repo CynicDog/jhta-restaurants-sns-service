@@ -6,4 +6,16 @@
 	    VALUES 
 	    	(#{post.id}, #{store.id}, #{content}, #{pictureFile})
 	</insert>
+	
+	<select id="getPostDataByPostId" parameterType="int" resultType="PostData">
+		select 
+			id as id,
+			post_id as "post.id",
+			store_id as "store.id",
+			content as content,
+			picture_file as pictureFile 
+		from POST_DATA
+		where post_id = #{value}
+	</select>
+	
 </mapper>

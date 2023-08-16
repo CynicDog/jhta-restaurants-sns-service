@@ -2,31 +2,27 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>맛집 검색결과</title>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
-
+	<title>맛집 검색결과</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 </head>
 <body>
 	<%@ include file="common/navbar.jsp"%>
 	<div class="wrap">
-		<div class="container-fluid text-center" >
-			<div class="row my-3">
+		<div class="container-fluid text-center" style = "padding-left:100px; padding-right:100px;" >
+			<div class="row my-3 d-flex justify-content-between">
 				<div class="col-8 ">
-					<div class="d-flex justify-content-between">
+					<div class="d-flex justify-content-between mb-3">
 						<a class="title btn fs-4" href="/store/search">맛집 검색결과</a>
 						<select class="form-select me-3" style="width: 150px;" name="sort">
 							<option value="rating">평점 순</option>
@@ -48,7 +44,7 @@
 							<a id="ASIAN" class="cat btn" role="button" href="search?category=ASIAN">아시안</a> 
 							<a id="SNACK" class="cat btn" role="button" href="search?category=SNACK">분식</a>
 							<a id="CAFE" class="cat btn" role="button" href="search?category=CAFE">카페</a> 
-								<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
+							<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -57,11 +53,9 @@
 								role="status" style="margin: 0 auto; margin-top: 150px;">
 								<span class="visually-hidden" style="display: none;">Loading...</span>
 							</div>
-
 							<div id="div-stores" class="row mb-3"></div>
 						</div>
 					</div>
-					
 					<div class="row mb-3">
 						<div id = "div-pagination" class="col-12">
 								<nav>
@@ -82,17 +76,13 @@
 									<input type="hidden" name="keyword" value="${param.keyword }">
 								</form>
 							</div>
-							
 						</div>
 					</div>
-
 				</div>
-				
-				
-				
-				<div class="col-4">
-				<!-- 지도 -->
+				<div class="col-3 right-sidebar bg-body-tertiary">
+					
 					<div class="my-3" style="position:sticky; top: 10px; overflow: hidden;">
+						<!-- 지도 -->
 						<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
 						
 						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
@@ -109,23 +99,13 @@
 								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 							</div>
 						</div>
-						
-
-						
 					</div>
-
-
-
 				</div>
-				
 			</div>
-			
-			
 		</div>
 		<%@ include file="common/footer.jsp"%>
 	</div>
 	<script type="text/javascript">
-		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
 			let categoryValue;
@@ -162,7 +142,6 @@
 				getResult();
 			})
 			
-			
 			// 이전/다음 페이지 버튼 눌렀을 때의 이벤트 등록
 			$(".page-move").click(function(event) {
 				console.log("page-move clicked");
@@ -196,7 +175,7 @@
 				let index = $(this).find(".card").attr("index-id");
 				console.log("index-id : ",$(this).find(".card").attr("index-id"));
 				
-				infowindows[index].open(map, markers[index]);
+				infoOverlay[index].setMap(map);
 			})
 			
 			//가게 카드에 mouseleave 이벤트 리스너 등록
@@ -204,7 +183,7 @@
 				let index = $(this).find(".card").attr("index-id");
 				console.log("index-id : ",$(this).find(".card").attr("index-id"));
 				
-			    infowindows[index].close();
+				infoOverlay[index].setMap(null);
 			})
 		
 		function getResult() {
@@ -222,7 +201,6 @@
 				
 				let points = [];
 				let storeNames = [];
-				
 				let i = 0;
 				result.stores.forEach(function(store){ 
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
@@ -247,7 +225,6 @@
 								</div>
 							</div>
 						</div>
-
 					`;
 					// store 카드 추가 및 텍스트 내용 입력
 					$("#div-stores").append(content);
@@ -257,7 +234,6 @@
 					$("#store-category-store.id").text(store.category);
 					$("#store-reviewCnt-store.id").text(store.reviewCnt);
 					$("#store-bookmarkCnt-store.id").text(store.bookmarkCnt);
-					
 					
 					storeNames.push(store.name);
 
@@ -287,7 +263,6 @@
 				let beginPageNum = result.pagination.beginPage;
 				let endPageNum = result.pagination.endPage;
 			    let currentPage = result.pagination.page; 
-			    
 
 				console.log("beginPageNum : "+beginPageNum);
 				console.log("endPageNum : "+endPageNum);
@@ -303,7 +278,6 @@
 					}else{
 						isActive = '';
 					}
-					
 					
 				    let content = `
 				        <li class="page-item page-num ">
@@ -321,11 +295,11 @@
 	            $("#div-pagination").css("display", "block");
 
 				drawMarker(points);
-				createInfowindow(storeNames);
+				setInfoOverlay(storeNames,points);
 
 			})
 		}
-		
+			
 		var container = document.getElementById('map');
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 		
@@ -340,12 +314,13 @@
 		};
 		// map 생성
 		var map = new kakao.maps.Map(container, options);
-		var customOverlay; 
+		var buttonOverlay; 
+		var infoOverlay = [];
 
 		function drawMarker(points) {
 			
 			//마커 지우기 - 새 페이지를 위해 
-			if(markers.length!==0){
+			if(markers.length!=0){
 				markers.forEach(function(marker) {
 					marker.setMap(null);
 				});
@@ -358,56 +333,45 @@
 			    
 			    // LatLngBounds 객체에 좌표를 추가합니다
 			    bounds.extend(points[i]);
-			    
 			    markers[i].setMap(map);
 			    
 				// 마커에 마우스오버 이벤트를 등록합니다
 				kakao.maps.event.addListener(markers[i], 'mouseover', function() {
 				  // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-				    infowindows[i].open(map, markers[i]);
+				  	infoOverlay[i].setMap(map);
 				});
-				
 				// 마커에 마우스아웃 이벤트를 등록합니다
 				kakao.maps.event.addListener(markers[i], 'mouseout', function() {
 				    // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-				    infowindows[i].close();
+					infoOverlay[i].setMap(null);
 				});	
 			}		
-			    
 			setBounds();
 			
 	 		// 마우스 드래그로 지도 이동/ 지도 확대,축소가 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 			kakao.maps.event.addListener(map, 'bounds_changed', function() {      
-				setButton();
+				setButtonOverlay();
 			});
-	 		
-
-	 		
 		}
 		
-		function createInfowindow(storeNames){
-			
-			//info 윈도우 지우기 - 새 페이지를 위해 
-			if(infowindows.length!==0){
-				infowindows.forEach(function(infowindow) {
-					infowindow.setMap(null);
-				});
-				infowindows.length = 0;
-			}
-			
-			// info 윈도우를 생성합니다
-			for(let i=0; i<storeNames.length; i++){
-				let storeName = storeNames[i];
-				var infowindow = new kakao.maps.InfoWindow({
-				    content : `<div>\${storeName}</div>`
-				});
-			    
-				infowindows.push(infowindow);	
-				console.log("infowindows : ", infowindows);
-
-			}
-					
-		}
+// 		function createInfowindow(storeNames){
+// 			//info 윈도우 지우기 - 새 페이지를 위해 
+// 			if(infowindows.length!==0){
+// 				infowindows.forEach(function(infowindow) {
+// 					infowindow.setMap(null);
+// 				});
+// 				infowindows.length = 0;
+// 			}
+// 			// info 윈도우를 생성합니다
+// 			for(let i=0; i<storeNames.length; i++){
+// 				let storeName = storeNames[i];
+// 				var infowindow = new kakao.maps.InfoWindow({
+// 				    content : `<div>\${storeName}</div>`
+// 				});
+// 				infowindows.push(infowindow);	
+// 				console.log("infowindows : ", infowindows);
+// 			}
+// 		}
 	
 		function setBounds() {
     	// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
@@ -418,11 +382,10 @@
 		let swLatLng; 
 		let neLatLng;
 		
-		function setButton(){
-			  if (customOverlay) {
-			        customOverlay.setMap(null);
+		function setButtonOverlay(){
+			  if (buttonOverlay) {
+			        buttonOverlay.setMap(null);
 			    }
-			
 		   		// 지도 중심좌표를 얻어옵니다 
 		   		let center = map.getCenter();
 		   		let mapBounds = map.getBounds();
@@ -432,27 +395,48 @@
 			    neLatLng = mapBounds.getNorthEast(); 
 			    let distance =  neLatLng.getLat() - swLatLng.getLat();
 			    
-				// 커스텀 오버레이가 표시될 위치입니다 
+				//오버레이가 표시될 위치입니다 
 		   		var position = new kakao.maps.LatLng(swLatLng.getLat() + (0.05)*distance, center.getLng());  
 
 				var content = '<button type="button" id="search-button" class="btn btn-primary">이 지역 검색</button>';
 				
-					customOverlay = new kakao.maps.CustomOverlay({
-				    position: position,
-				    content: content   
+				buttonOverlay = new kakao.maps.CustomOverlay({
+					   position: position,
+					   content: content   
 				});
 				
-				customOverlay.setMap(map);
+				buttonOverlay.setMap(map);
 				
-		        // 커스텀 오버레이의 버튼에 이벤트를 추가
+		        // 오버레이의 버튼에 이벤트를 추가
 		        var button = document.getElementById('search-button');
 		        button.addEventListener('click', searchByPosition);
 			
+		}
+		
+		function setInfoOverlay(storeNames, points){
+			  if (infoOverlay.length!=0) {
+				  infoOverlay.forEach(function(overlay) {
+					  overlay.setMap(null);
+					});
+				  infoOverlay.length = 0;
+				}
+			  
+				// info 오버레이 생성
+				for(let i=0; i<storeNames.length; i++){
+					let storeName = storeNames[i];
+					console.log("storeName : ", storeName);
+					var content = `<button type="button" id="info-\${i}" class="btn btn-info btn-sm">\${storeName}</button>`;
+					console.log("content : ", content);
 
+					infoOverlay.push(new kakao.maps.CustomOverlay({
+						position: points[i],
+						content: content   
+					}));
+				}
 		}
 		
         function searchByPosition() {  
-	      customOverlay.setMap(null);
+	      buttonOverlay.setMap(null);
 	      
 		  xStartValue = swLatLng.getLng();
 		  xEndValue = neLatLng.getLng();
@@ -464,9 +448,6 @@
 	      getResult();
           
         }
-		
-
-		
 	</script>
 
 </body>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>         
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,15 +26,17 @@
 			</div>
 		</div>
 		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
+			
+				<div class="col-4 mb-4">
+					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post/followerPost/detail?id=76'" style=" cursor: pointer;">
+						<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+	
+						<div class="card-img-overlay">
+							<p><strong>인생 카페 10선</strong></p>
+						</div>
 					</div>
 				</div>
-			</div>
+			
 			<div class="col-4">
 				<div class="card text-center text-light shadow" >
 					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
