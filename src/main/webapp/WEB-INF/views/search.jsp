@@ -36,9 +36,9 @@
 				
 				<div class="col-4">
 					<!-- 지도 -->
-					<div>
+					<div style="position:fixed;">
 						<div id="map" class="mb-4"
-							style="width: 400px; height: 450px; position:fixed;">
+							style="width: 450px; height: 450px; ">
 						</div>
 					</div>
 
@@ -69,7 +69,6 @@
 					<a id="BAR" class="cat btn" role="button" href="list?category=BAR" >바</a>
 				</div>
 			</div>
-
 			<div class="row mb-3">
 				<div class="col-8 ">
 					<div id="storeLoadingSpinner" class="spinner-border text-primary" role="status" style="margin: 0 auto; margin-top: 150px;">
@@ -80,9 +79,6 @@
 					
 					</div>
 				</div>
-
-
-
 			</div>
 			<div class="row mb-3">
 				<div id = "div-pagination" class="col-12">
@@ -108,11 +104,9 @@
 				</div>
 			</div>
 		</div>
-		
-
 		<%@ include file="common/footer.jsp"%>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 		
 			let sortValue = "rating"; 
 			let pageValue = 1; 
@@ -194,10 +188,6 @@
 				
 			    infowindows[index].close();
 			})
-		
-			
-			
-
 		
 		function getResult() {
 			$("#div-stores").find(".store").remove();
