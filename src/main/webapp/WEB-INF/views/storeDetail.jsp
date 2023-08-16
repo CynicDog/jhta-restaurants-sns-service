@@ -163,18 +163,18 @@ html, body {
 				<div class="btn-group p-1 float-end">
 					<button type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(3)</button>
 					<button type="button" class="btn border-opacity-10 " style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 맛있다(1)
+						<span class="visually-hidden">Button</span> 맛있어요(1)
 					</button>
 					<button type="button" class="btn border-opacity-10" style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 괜찮다(1)
+						<span class="visually-hidden">Button</span> 괜찮아요(1)
 					</button>
 					<button type="button" class="btn border-opacity-10" style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 별로(1)
+						<span class="visually-hidden">Button</span> 별로에요(1)
 					</button>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-8">
+				<div class="col-md-8">
 					<div class="card mb-3" style="border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
 						<div class="card-body">
 							<div class="row">
@@ -336,7 +336,7 @@ html, body {
 						</div>
 					</div>
 				</div>
-				<div class="col-4 p-4">
+				<div class="col-md-4 p-4">
 				    <div class="row">
 				    	<div class="mb-3">
 					        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
@@ -547,7 +547,6 @@ html, body {
 
     // '답글' 버튼에 클릭 이벤트 리스너 추가
     commentButton.addEventListener('click', () => {
-        // 카드와 텍스트 에어리아의 가시성(display) 토글
         cardAndTextarea.style.display = 'block';
     });
 </script>
