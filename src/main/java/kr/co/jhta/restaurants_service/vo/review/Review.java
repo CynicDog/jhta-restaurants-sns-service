@@ -16,7 +16,7 @@ public class Review {
 
 	@Id
 	private int id;
-	private double rating;
+	private int rating;
 	private String content;
 	private Date createDate;
 	private Date updateDate;

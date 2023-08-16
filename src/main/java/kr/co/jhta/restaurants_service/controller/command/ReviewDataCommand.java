@@ -13,18 +13,11 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ReviewDataCommand {
 	
-	private int rating;
+	private Integer rating;
 	private String content;
 	private MultipartFile chooseFile;
-	private String keyword;
+	private String reviewKeyword;
 	private Integer storeId;
-//	private Integer customerId;
-	
- //   public ReviewDataCommand(MultipartFile chooseFile, int rating, String content, String keyword) {
- //      this.chooseFile = chooseFile;
- //       this.rating = rating;
- //      this.content = content;
- //      this.keyword = keyword;
- //   }
+	private Integer customerId;
 	
 }
