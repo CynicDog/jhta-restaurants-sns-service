@@ -54,7 +54,7 @@
 			     			</li>
 			                <li style="display: inline-block;">
 			               		<button class="emoji-btn" data-recommend-type="1" style="background: none; border: none;">
-			                		<i class="bi bi-emoji-angry" style="font-size: 25px;"></i>
+			                		<i class="bi bi-emoji-expressionless" style="font-size: 25px;"></i>
 			                        별로에요!
 			                	</button>
 			             	</li>

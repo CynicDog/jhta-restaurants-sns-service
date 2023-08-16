@@ -51,7 +51,7 @@ html, body {
 				    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
 				        <div class="card-body d-flex flex-column align-items-start">
 				            <div class="d-flex align-items-center mb-2">
-				                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 60px; height: 60px;" alt="...">
+				                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
 				                <div class="ml-2">
 				                    <span style="font-size: medium; font-weight: bold;">정손님</span>
 				                    <p style="font-size: small; color: #adb5bd;">회원 등급</p>
@@ -180,7 +180,9 @@ html, body {
 							<div class="row">
 								<div class="col-2">
 									<div class="text-center card-title my-1">
-										<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										<div class="ratio ratio-1x1">
+											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " alt="..."> 
+										</div>
 										<span style="font-size: medium; font-weight: bold;">정손님</span>
 										<p style="font-size: small; color: #adb5bd;">회원 등급</p>
 									</div>
@@ -240,7 +242,9 @@ html, body {
 							<div class="row">
 								<div class="col-2">
 									<div class="text-center card-title my-1">
-										<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										<div class="ratio ratio-1x1">
+											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										</div>
 										<span style="font-size: medium; font-weight: bold;">정손님</span>
 										<p style="font-size: small; color: #adb5bd;">회원 등급</p>
 									</div>
@@ -287,7 +291,9 @@ html, body {
 							<div class="row">
 								<div class="col-2">
 									<div class="text-center card-title my-1">
-										<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										<div class="ratio ratio-1x1">
+											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										</div>
 										<span style="font-size: medium; font-weight: bold;">정손님</span>
 										<p style="font-size: small; color: #adb5bd;">회원 등급</p>
 									</div>
