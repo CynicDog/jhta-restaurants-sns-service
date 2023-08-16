@@ -13,7 +13,7 @@
 			disabled		as disabled,
 			blocked			as blocked
 		from
-			post
+			posts
 		order by id asc	
 	</select>
 	
@@ -22,15 +22,14 @@
 			id				as id,
 			title			as title,
 			sub_title		as subTitle,
-			content			as content,
 			create_date		as createDate,
 			update_date		as updateDate,
-			user_id			as "customer.id",
+			customer_id			as "customer.id",
 			report_count	as reportCount,
 			disabled		as disabled,
 			blocked			as blocked
 		from
-			post
+			POSTS
 		where	
 			id = #{id}
 	</select>
@@ -47,7 +46,7 @@
 
 	<update id="updatePost" parameterType="int">
 		update
-            post
+            posts
         set
             title = #{title},
             sub_title = #{subTitle},
@@ -61,7 +60,7 @@
 	
 	<delete id="deletePost" parameterType="int">
 		delete from 
-			post
+			posts
 		where 
 			id = #{id}
 	</delete>

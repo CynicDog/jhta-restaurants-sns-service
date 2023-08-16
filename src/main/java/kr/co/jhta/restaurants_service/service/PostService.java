@@ -5,17 +5,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
+import kr.co.jhta.restaurants_service.dto.PostDto;
+
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
+import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -30,15 +36,15 @@ public class PostService {
 	private final StoreMapper storeMapper;
 
 	private final PostDataMapper postDataMapper;
-
-
+	
+	private final ReviewMapper reviewMapper;
+	
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
 		return posts;
 	}
-
+	
 	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
-
 
 		postmapper.insertPost(post);
 
@@ -51,9 +57,21 @@ public class PostService {
 					postDataMapper.insertPostData(postData);
 				});
     }
+	
+	public PostDto selectPost(int postId) {
+		PostDto dto = new PostDto();
+		
+		Post post = postmapper.getPostById(postId);
+		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
+		
+		dto.setPost(post);
+		dto.setPostData(postDatas);
+		
+		return dto;
+	}
 
 	public void updatePost(String title, String content, String pictureName) {
-
+		
 	}
 
 	private String saveFile(MultipartFile multipartFile) throws IOException {
