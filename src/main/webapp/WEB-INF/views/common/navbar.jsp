@@ -18,7 +18,7 @@
         width: 1000px;
     }
 </style>
-<nav class="navbar navbar-expand-lg border-bottom">
+<nav class="navbar navbar-expand-lg border-bottom shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand ms-2" href="/">🧑🏻‍💻</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
