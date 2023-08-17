@@ -11,6 +11,7 @@
     .wrap {
         position: relative;
         min-height: 100%;
+        padding-top: 70px;
         padding-bottom: 100px;
     }
 
@@ -18,23 +19,38 @@
         width: 1000px;
     }
 </style>
-<nav class="navbar navbar-expand-lg border-bottom">
+<!-- 모달 -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog z-3" style="position: fixed; right: 10px; top: 25px; width: 250px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">북마크</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer"></div>
+				</div>
+			</div>
+		</div>
+<nav class="navbar navbar-expand-lg border-bottom bg-light fixed-top shadow-sm z-2">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">🧑🏻‍💻</a>
+
+		<a class="navbar-brand ms-2" href="/">🧑🏻‍💻</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <ul class="collapse navbar-collapse my-1" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/stores/list">Stores</a>
-                </li>
+<!--                 <li class="nav-item"> -->
+<!--                     <a class="nav-link" href="/">Home</a> -->
+<!--                 </li> -->
+<!--                 <li class="nav-item"> -->
+<!--                     <a class="nav-link" href="/store/search">Store</a> -->
+<!--                 </li> -->
             </ul>
-            <form class="w-25 me-3" id="form-navbar-search" action="/search/list">
+            <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
                 <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
             </form>
             <ul class="navbar-nav">
@@ -55,6 +71,10 @@
                            "
                         >Signup</a>
                     </li>
+                        <li class="nav-item">
+                            <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="">Bookmark</a>
+                        </li>
+                    
                     <script>
                         new bootstrap.Popover(document.querySelector('#signupPopover'))
                     </script>

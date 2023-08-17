@@ -81,18 +81,18 @@
 				</div>
 				<div class="col-3 right-sidebar bg-body-tertiary">
 					
-					<div class="my-3" style="position:sticky; top: 10px; overflow: hidden;">
+					<div class="my-3" style="position:sticky; top: 100px;">
 						<!-- 지도 -->
 						<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
 						
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
 							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
 								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
 							<div class="card-img-overlay d-flex justify-content-center align-items-center">
 								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
 							</div>
 						</div>
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='post'" style="cursor: pointer;">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
 							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
 								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
 							<div class="card-img-overlay d-flex justify-content-center align-items-center">
@@ -206,7 +206,7 @@
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
-							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="" style="cursor: pointer;">
+							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='detail'" style="cursor: pointer;">
 								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">

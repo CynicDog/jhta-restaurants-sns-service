@@ -31,9 +31,23 @@
       width: 800px;
     }
 </style>
-<nav class="navbar navbar-expand-lg">
+<!-- 모달 -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog z-3" style="position: fixed; right: 10px; top: 25px; width: 250px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">북마크</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer"></div>
+				</div>
+			</div>
+		</div>
+<nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-				<a class="navbar-brand" href="/">🧑🏻‍💻</a>
+		<a class="navbar-brand ms-2" href="/">🧑🏻‍💻</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				    <span class="navbar-toggler-icon"></span>
@@ -44,7 +58,7 @@
 				            <a class="nav-link" href="/">Home</a>
 				        </li>
 				        <li class="nav-item">
-				            <a class="nav-link" href="/stores/list">Stores</a>
+				            <a class="nav-link" href="/store/search">Stores</a>
 				        </li>
 				        <li class="nav-item">
 				        	<a class="nav-link" href="/post/register">RegPost</a>
@@ -65,8 +79,14 @@
 									   <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/customer/signup'>손님</a> /
 									   <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/owner/signup'>사장님</a>
 								   "
+								   style=" cursor: pointer;"
 								>Signup</a>
 							</li>
+							
+							<li class="nav-item">
+                           		<a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;">Bookmark</a>
+                       		</li>
+                       		
 				        </sec:authorize>
 						<sec:authorize access="isAuthenticated()">
 							<sec:authorize access="hasRole('ROLE_CUSTOMER')">
@@ -126,8 +146,8 @@
 </nav>
 <div class="container-fluid">
     <div class="row border-bottom">
-    	<div class="col-12">
-    		<form action="/search/list" method="GET">
+    	<div class="col-12 mt-4">
+    		<form action="/store/search" method="GET">
 				<div class="mx-auto my-5 search-bar input-group">
   					<input name="keyword" type="text" class="form-control rounded-pill" placeholder="지역 또는 가게명 입력" 
   						   aria-label="Recipient's username" aria-describedby="button-addon2" >
