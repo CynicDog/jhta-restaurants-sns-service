@@ -24,7 +24,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/customer")
-@SessionAttributes("userCommand")
 public class CustomerController {
 
     Logger logger = Logger.getLogger(UserController.class);
@@ -51,7 +50,8 @@ public class CustomerController {
     @PostMapping(value = "/otp-check", consumes = "application/json")
     public ResponseEntity otpCheck(@RequestBody OtpCommand otpCommand, HttpSession session) {
 
-        UserCommand userCommand = (UserCommand) session.getAttribute("userCommand");
+        UserCommand userCommand = Optional.ofNullable((UserCommand) session.getAttribute("userCommand")).orElse(null);
+        logger.info(userCommand.getFullName());
 
         boolean isValid = otpService.validateOtp(otpCommand);
 
@@ -61,6 +61,7 @@ public class CustomerController {
 
             return ResponseEntity.ok("Valid otp!");
         } else {
+            session.setAttribute("userCommand", null);
             return ResponseEntity.badRequest().body("Invalid otp!");
         }
     }
@@ -80,12 +81,12 @@ public class CustomerController {
 
         session.setAttribute("userCommand", userCommand);
 
-        // Perform database constraint validation and other operations
         return null;
     }
 
     @GetMapping("/signup")
-    public String signupForm() {
+    public String signupForm(HttpSession httpSession) {
+
         return "user/customer/signup-form";
     }
 
@@ -102,6 +103,8 @@ public class CustomerController {
 
     public static String[] PUBLIC_URLS = {
             "/customer/signup",
+            "/customer/otp",
+            "/customer/otp-check",
             "/customer/details"
     };
 }
