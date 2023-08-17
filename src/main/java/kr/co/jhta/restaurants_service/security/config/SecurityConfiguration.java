@@ -28,6 +28,8 @@ public class SecurityConfiguration {
                     urlRegistry.antMatchers("/customer/**").authenticated();
 
                     urlRegistry.antMatchers(OwnerController.PUBLIC_URLS).permitAll();
+
+                    // further authorization specification needed
                     urlRegistry.antMatchers("/owner/**").authenticated();
 
                     urlRegistry.anyRequest().permitAll();
