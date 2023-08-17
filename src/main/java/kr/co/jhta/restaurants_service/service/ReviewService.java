@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -18,6 +19,7 @@ import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.UserMapper;
+import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
@@ -42,7 +44,7 @@ public class ReviewService {
 	  private StoreMapper storeMapper;
 	  
 	  @Autowired
-	  private UserService userService;
+	  private UserRepository userRepository;
 	  
 	  // 새 리뷰 등록하기
 	  public void createReview(ReviewDataCommand form, @RequestParam int storeId, @RequestParam int customerId) {
@@ -52,7 +54,7 @@ public class ReviewService {
 		  review.setRating(form.getRating());
 		  review.setContent(form.getContent());
 		  review.setStore(storeMapper.getStoreById((storeId)));
-//		  review.setCustomer(userService.findUserById(customerId));
+		  review.setCustomer(userRepository.getReferenceById(customerId));
 		  
 		  reviewMapper.insertReview(review);
 		  

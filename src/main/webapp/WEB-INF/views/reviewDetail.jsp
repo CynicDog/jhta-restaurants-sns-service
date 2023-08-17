@@ -42,7 +42,7 @@ html, body {
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
-							<p class="badge rounded-pill text-center " style="text-color: #ff792a; font-size:20px; badge-color: #ff792a">별로에요!</p>
+							<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
 						</div>
 					</div>
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
