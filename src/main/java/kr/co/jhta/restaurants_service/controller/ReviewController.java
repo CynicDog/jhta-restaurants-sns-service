@@ -31,14 +31,14 @@ public class ReviewController {
 	// 리뷰 등록화면
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping
-	public String review(Model model) {
+	public String review(Model model, @RequestParam int storeId ) {
 		
 		return "review";
 	}
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewDataCommand form, @RequestParam int storeId, @RequestParam int customerId) {
+	public String reviewRegister(ReviewDataCommand form, @RequestParam int storeId, @RequestParam (required = false) int customerId) {
 	
 		reviewService.createReview(form, storeId, customerId);
 		log.info("리뷰 신규 등록 -> {}", form);

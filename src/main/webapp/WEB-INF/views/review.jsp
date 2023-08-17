@@ -29,7 +29,7 @@
 </head>
 <body>
 <%@ include file="common/navbar.jsp" %>
-<sec:authorize access="isAuthenticated()">
+<sec:authorize access="isAuthenticated()" >
 <div class="wrap">
 	<div class="container">
 	    <div class="restaurant-name">
@@ -37,7 +37,8 @@
 	    </div>
 	<form id="reviewForm" method="post" enctype="multipart/form-data" action="">
    		<input type="hidden" name="storeId" value="${param.storeId }"/>
-   		<input type="hidden" name="customerId" value="${param.customerId }"/>
+   		<sec:authentication property="principal.user.id" var="userId"/>
+   		<input type="hidden" name="userId" value="${userId }"/>
 	<div class="review-section mt-3" >
 		<div class="row">
 			<div class="col-12">
