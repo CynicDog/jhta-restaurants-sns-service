@@ -1,5 +1,7 @@
 package kr.co.jhta.restaurants_service.controller.command;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -16,8 +18,8 @@ public class ReviewDataCommand {
 	private Integer rating;
 	private String content;
 	private MultipartFile chooseFile;
-	private String reviewKeyword;
+	private List<String> reviewKeyword;
 	private Integer storeId;
-	private Integer customerId;
+	private Integer userId;
 	
 }

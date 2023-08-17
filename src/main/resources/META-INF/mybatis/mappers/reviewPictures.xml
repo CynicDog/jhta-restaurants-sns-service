@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.restaurants_service.vo.review.ReviewPicture">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper">
 	
 	<insert id="insertReviewPicture" parameterType="ReviewPicture">
 	  insert into REVIEW_PICTURES
