@@ -47,31 +47,33 @@ public class ReviewService {
 	  private UserRepository userRepository;
 	  
 	  // 새 리뷰 등록하기
-	  public void createReview(ReviewDataCommand form, @RequestParam int storeId, @RequestParam int customerId) {
+	  public void createReview(ReviewDataCommand form) {
 		  
 		  Review review = new Review();
 		  
 		  review.setRating(form.getRating());
 		  review.setContent(form.getContent());
-		  review.setStore(storeMapper.getStoreById((storeId)));
-		  review.setCustomer(userRepository.getReferenceById(customerId));
+		  review.setStore(storeMapper.getStoreById(form.getStoreId()));
+		  review.setCustomer(userRepository.getReferenceById(form.getUserId()));
 		  
 		  reviewMapper.insertReview(review);
 		  
-		  if (form.getReviewKeyword() != null) {
-			  ReviewKeyword reviewKeyword = new ReviewKeyword();
-			  reviewKeyword.setKeyword(form.getReviewKeyword());	
-			  reviewKeyword.setReview(reviewMapper.getReviewById(review.getId()));
-			  reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
+		  if(form.getReviewKeyword() != null) {
+			  for (String keyword : form.getReviewKeyword()) {
+				  ReviewKeyword reviewKeyword = new ReviewKeyword();
+				  reviewKeyword.setKeyword(keyword);	
+				  reviewKeyword.setReview(review);
+				  reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
+			  }
 		  }
 		  
-//		  if (!form.getChooseFile().isEmpty()) {
-//			  ReviewPicture reviewPciture = new ReviewPicture();
-//			  MultipartFile chooseFile = form.getChooseFile();
-//			  reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-//			  reviewPciture.setReview(reviewMapper.getReviewById(review.getId()));
-//			  reviewPictureMapper.insertReveiwPicture(reviewPciture);
-//		  }
+		  if (!form.getChooseFile().isEmpty()) {
+			  ReviewPicture reviewPciture = new ReviewPicture();
+			  MultipartFile chooseFile = form.getChooseFile();
+			  reviewPciture.setPictureName(chooseFile.getOriginalFilename());
+			  reviewPciture.setReview(review);
+			  reviewPictureMapper.insertReveiwPicture(reviewPciture);
+		  }
 		  
 //		  review.setRating(3);
 //		  review.setContent("bbbbb");

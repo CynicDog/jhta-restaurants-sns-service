@@ -3,6 +3,7 @@ package kr.co.jhta.restaurants_service.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +39,9 @@ public class ReviewController {
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewDataCommand form, @RequestParam int storeId, @RequestParam (required = false) int customerId) {
+	public String reviewRegister(ReviewDataCommand form) {
 	
-		reviewService.createReview(form, storeId, customerId);
+		reviewService.createReview(form);
 		log.info("리뷰 신규 등록 -> {}", form);
 //		log.info("가게 아이디-> {}", storeId);
 //		log.info("손님 아이디 -> {}", customerId);
