@@ -201,48 +201,65 @@ html, body {
 									</div>
 								</div>
 								<div class="col-10">
-									<div class="row mb-2">
-										<div class="col-9">
-											<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-											<p class="col card-text">왁자지껄한 분위기에 날씨가 그리 춥지 않아서 그런지 문을 다 열어 두어서 뭔가 반 야장 같은 느낌을 즐길 수 있었다. 7시가 되면 돌아가는 미러볼과 음악도 차밍 포인트 중에 하나였다 ㅎㅎ
-																	 기본찬은 깻잎, 쌈무,묵은지, 갓김치로 그냥 먹기도 고기랑 함께 싸서 먹기도 좋은 구성이였다. 나중에 콩나물 무침도 나왔는데 양념과 참기름이 적절히 섞여있어 별미였고 쫄면으로 해 먹으면 참 맛있을 것 같았다.
-																	 컨디먼츠는 소금, 페페로치노, 홀그레인, 와사비로 역시 딱 깔끔한 구성이였다. 가장 궁금했던 요소 중 하나였던 칠링박스는 술을 주문하면 맥주 4병, 소주 2병 기본으로 나오는데 마신 만큼만 계산하는 시스템이였다. 칠링박스에 넣어두어서 그런지 계속해서 시원한 맥주를 마실 수 있었다.ㅎㅎㅎ</p>
+									<c:forEach var="review" items="${reviews }">
+										<div class="row mb-2">
+											<div class="col-9">
+												<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
+												<p class="col card-text">왁자지껄한 분위기에 날씨가 그리 춥지 않아서 그런지 문을 다 열어 두어서 뭔가 반 야장 같은 느낌을 즐길 수 있었다. 7시가 되면 돌아가는 미러볼과 음악도 차밍 포인트 중에 하나였다 ㅎㅎ
+																		 기본찬은 깻잎, 쌈무,묵은지, 갓김치로 그냥 먹기도 고기랑 함께 싸서 먹기도 좋은 구성이였다. 나중에 콩나물 무침도 나왔는데 양념과 참기름이 적절히 섞여있어 별미였고 쫄면으로 해 먹으면 참 맛있을 것 같았다.
+																		 컨디먼츠는 소금, 페페로치노, 홀그레인, 와사비로 역시 딱 깔끔한 구성이였다. 가장 궁금했던 요소 중 하나였던 칠링박스는 술을 주문하면 맥주 4병, 소주 2병 기본으로 나오는데 마신 만큼만 계산하는 시스템이였다. 칠링박스에 넣어두어서 그런지 계속해서 시원한 맥주를 마실 수 있었다.ㅎㅎㅎ</p>
+											</div>
+											<div class="col-3 text-end">
+												<span class="badge text-bg-success fw-lighter" style="color: #ff792a;">맛있어요!</span>
+											</div>
 										</div>
-										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter" style="color: #ff792a;">맛있어요!</span>
+										<div class="d-flex">
+										    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px; cursor: pointer;" alt="..." onclick="openModal(this)">
+										    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+										    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
 										</div>
-									</div>
-									<div class="d-flex">
-									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px; cursor: pointer;" alt="..." onclick="openModal(this)">
-									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-									</div>
-									<div class="row">
-								        <div class="col">
-								            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-								                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-								            </button>
-								            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-								                <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-								            </button>
-								            <span class="float-end">
-								                <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
-								                <button type="button" class="btn btn-light btn-sm text-danger">
-								                    <i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-								                </button>
-								            </span>
-								        </div>
-								    </div>
-								    <div class="row" id="cardAndTextarea" style="display: none;">
-								        <div class="col-12">
-								            <div class="card">
-								                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-								                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
-								                    <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
-								                </div>
-								            </div>
-								        </div>
-								    </div>
+										<div class="row">
+									        <div class="col">
+									        <%--
+									        	<sec:authorize access="isAuthenticated()">
+									        		<!-- 스프링 시큐리티에서 로그인된 사용자의 아이디를 조회해서 userId라는 이름으로 속성에 저장한다.  -->
+	
+									        		<sec:authentication property="principal.user.id" var="userId"/>
+									        		<p>로그인한 사용자 아이디: ${userId }</p>
+									        		<!-- jstl의 if태그를 이용해서 리뷰의 작성아이디와 로그인한 사용자 아이디가 일치하면 수정 삭제버튼을 표시한다. -->
+									        		<c:if test="${review.user.id eq userId }">
+											            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+											                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+											            </button>
+											            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+											                <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+											            </button>
+									        		</c:if>
+										            <span class="float-end">
+										            	<!-- 스토어의 주인 아이디와 로그인한 사용자의 아이디가 일치하면 답글쓰기 버튼을 표현한다.  -->
+										            	<c:if test="${store.user.id eq userId }">
+											                <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
+										            	</c:if>
+										                
+										                <button type="button" class="btn btn-light btn-sm text-danger">
+										                    <i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+										                </button>
+										            </span>
+								        		</sec:authorize>
+								        	--%>
+									        </div>
+									    </div>
+									    <div class="row" id="cardAndTextarea" style="display: none;">
+									        <div class="col-12">
+									            <div class="card">
+									                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+									                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+									                    <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
+									                </div>
+									            </div>
+									        </div>
+									    </div>
+								   	</c:forEach>
 								</div>
 							</div>
 						</div>
