@@ -50,7 +50,14 @@
 					<button class="btn ms-3 position-absolute" id="box">
 						<i class="bi bi-star" style="color:gold; font-size:28px;" ></i>
 					</button>
-					<button class="btn btn-lg ms-3 position-absolute" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
+				</div>
+			</div>
+		</c:forEach>
+		
+		<div class="row my-3 justify-content-center">
+			<div class="col-11 text-end">
+				<div class="" style="bottom:0;right:0;">
+					<button class="btn btn-lg" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
 						<i class="bi bi-chat-text"></i>
 						<span class="visually-hidden">댓글</span>
 					</button>
@@ -61,76 +68,63 @@
 					  	</div>
 					  	<div class="offcanvas-body">
 							<div class="col-11 border-top border-bottom my-3">
+							
 								<div class="row my-3">
-									<div class="col-2">
-										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-										</a>
-										<div class="text-center card-title my-1">
-											<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
+										<div class="col-2">
+											<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+												<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+											</a>
+											<div class="text-center card-title my-1">
+												<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
+											</div>
 										</div>
-									</div>
-									<div class="col-10 position-relative ">
-										<div class="row mb-2">
-											<div class="col-9">
-												<p class="col card-text text-muted" style="font-size: small; ">리뷰 작성일</p>
-												<p class="col card-text">리뷰 내용</p>
-												<p class="col card-text"> 정말 맛있어요</p>
+										
+										<div class="col-10 position-relative ">
+											<div class="row mb-2">
+												<div class="col-9">
+													<div class="card-text text-muted" style="font-size: small; ">  
+														<span>리뷰 작성일</span>
+													</div>
+													<div class="card-text">리뷰어명</div>
+													<div class="card-text">리뷰내용</div>
+													
+												</div>
 												
+												<div class="col-3 d-flex justify-content-end align-items-center">
+											    </div>
 											</div>
-											<table class="table">
-											    <thead>
-											        <tr>
-											            <th>리뷰 제목</th>
-											            <th>작성자</th>
-											            <th>내용</th>
-											        </tr>
-											    </thead>
-											    <tbody class="reviews-table-body">
-											        <!-- 리뷰 데이터가 여기에 동적으로 추가될 예정 -->
-											    </tbody>
-											</table>
-											<div class="col-3 d-flex justify-content-end align-items-center">
-										    </div>
-										</div>
-										<div class="row position-absolute" style="bottom:0;right:0;">
-											<div class="col">
-												<span class="text-end">
-													<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-											        <button type="button" class="btn btn-outline-secondary btn-sm">
-											            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
-											            <span class="visually-hidden">추천</span>
-											        </button>
-													<button type="button" class="btn btn-outline-danger btn-sm">
-														<i class="bi bi-trash3"></i>
-														<span class="visually-hidden">삭제</span>
-													</button>
-													<button type="button" class="btn btn-outline-danger btn-sm">
-											            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
-											            <span class="visually-hidden">신고</span>
-											        </button>
-												</span>
+											<div class="row position-absolute" style="bottom:0;right:0;">
+												<div class="col">
+													<span class="text-end">
+														<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+												        <button type="button" class="btn btn-outline-secondary btn-sm">
+												            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+												            <span class="visually-hidden">추천</span>
+												        </button>
+														<button type="button" class="btn btn-outline-danger btn-sm">
+															<i class="bi bi-trash3"></i>
+															<span class="visually-hidden">삭제</span>
+														</button>
+														<button type="button" class="btn btn-outline-danger btn-sm">
+												            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+												            <span class="visually-hidden">신고</span>
+												        </button>
+													</span>
+												</div>
 											</div>
 										</div>
-									</div>
+									
 								</div>
+								
 							</div>
 					  	</div>
 					</div>
-					
-				</div>
-			</div>
-		</c:forEach>
-		
-		<div class="row my-3 justify-content-center">
-			<div class="col-11 text-end">
-				<div class="" style="bottom:0;right:0;">
-					<button type="button" class="btn btn-outline-secondary">
+					<button type="button" class="btn btn-lg">
 			            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
 			            <span class="visually-hidden">추천</span>
 			        </button>
-			        <button type="button" class="btn btn-outline-danger">
-			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+			        <button type="button" class="btn btn-lg">
+			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px; color:#EB0000"></i>
 			            <span class="visually-hidden">신고</span>
 			        </button>
 				</div>
@@ -152,9 +146,67 @@
 					.addClass('bi-star-fill')
 		}
 	})
-	
 
-	document.addEventListener("DOMContentLoaded", function() {
+	/* document.addEventListener("DOMContentLoaded", function() {
+        var showReviewsButtons = document.querySelectorAll('button[name="showReviewsButton"]');
+        
+        showReviewsButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                var storeId = button.getAttribute("data-store-id");
+                loadReviews(storeId);
+            });
+        });
+        
+        function loadReviews(storeId) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        console.log(data)
+                        renderReviews(data);
+                    } else {
+                        console.error("Error fetching review data:", xhr.status, xhr.statusText);
+                    }
+                }
+            };
+            
+            xhr.open("GET", "/path-to-review-data?store_id=" + storeId, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send();
+        }
+        
+        function renderReviews(data) {
+        	  var offcanvasBody = document.querySelector('.offcanvas-body');
+        	    offcanvasBody.innerHTML = ""; // Clear existing content
+        	    
+        	    data.forEach(function(review) {
+        	        var reviewContent = document.createElement('div');
+        	        reviewContent.className = 'col-9';
+        	        
+        	        var reviewDate = document.createElement('div');
+        	        reviewDate.className = 'card-text text-muted';
+        	        reviewDate.style.fontSize = 'small';
+        	        reviewDate.textContent = '리뷰 작성일: ' + review.createDate; // Assuming 'date' is a property in your review object
+        	        
+        	        var reviewerName = document.createElement('div');
+        	        reviewerName.className = 'card-text';
+        	        reviewerName.textContent = '리뷰어명: ' + review.customerName; // Assuming 'reviewer' is a property in your review object
+        	        
+        	        var reviewText = document.createElement('div');
+        	        reviewText.className = 'card-text';
+        	        reviewText.textContent = '리뷰내용: ' + review.content; // Assuming 'content' is a property in your review object
+        	        
+        	        reviewContent.appendChild(reviewDate);
+        	        reviewContent.appendChild(reviewerName);
+        	        reviewContent.appendChild(reviewText);
+        	        
+        	        offcanvasBody.appendChild(reviewContent);
+        	    });
+        }
+    }); */
+
+	/* document.addEventListener("DOMContentLoaded", function() {
 	    var showReviewsButtons = document.querySelectorAll('.show-reviews-button');
 	    var reviewsTableBody = document.querySelector('.reviews-table-body');
 	    
@@ -203,7 +255,7 @@
 	            reviewsTableBody.appendChild(row);
 	        });
 	    }
-	});
+	}); */
 </script>
 </body>
 </html>

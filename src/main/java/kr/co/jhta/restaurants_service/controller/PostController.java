@@ -125,5 +125,7 @@ public class PostController {
 		
 		return "post/followerPost";
 	}
+	
+	
 
 }

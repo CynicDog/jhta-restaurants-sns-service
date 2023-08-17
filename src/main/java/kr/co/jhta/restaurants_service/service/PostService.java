@@ -5,10 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
-import kr.co.jhta.restaurants_service.repository.PostRepository;
-import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
+
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
@@ -16,12 +14,12 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
-import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
+import kr.co.jhta.restaurants_service.mapper.PostCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
-import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -34,9 +32,8 @@ public class PostService {
 	private final PostMapper postmapper;
 	private final StoreMapper storeMapper;
 	private final PostDataMapper postDataMapper;
-	private final PostRepository postRepository;
-	private final ReviewMapper reviewMapper;
-  
+	private final PostCommentMapper postCommentMapper;
+
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
 		return posts;
@@ -61,9 +58,11 @@ public class PostService {
 		
 		Post post = postmapper.getPostById(postId);
 		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
+		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
 		
 		dto.setPost(post);
 		dto.setPostData(postDatas);
+		dto.setPostComments(postComments);
 		
 		return dto;
 	}
@@ -99,8 +98,4 @@ public class PostService {
 		return filename;
 	}
 
-	public List<Post> getPostsByCustomerId(int customerId) {
-
-		return postRepository.findPostsByCustomerId(customerId);
-	}
 }
