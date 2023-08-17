@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.UserService;
@@ -41,7 +42,7 @@ public class CustomerController {
 
     @ResponseBody
     @GetMapping("/followers")
-    public ResponseEntity<List<User>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
+    public ResponseEntity<List<Projection.UserProjection>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
 
         return ResponseEntity.of(Optional.ofNullable(socialService.getFollowersByCustomerId(securityUser.getUser().getId())));
     }

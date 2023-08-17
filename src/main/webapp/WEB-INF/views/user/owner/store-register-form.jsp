@@ -675,6 +675,7 @@
             hourAddToastBootstrap.show()
         })
 
+        // TODO: 선택, 취소 이후 다시 선택 시 reqest 아이콘 업데이트가 안됨 -> status 로직에 이상
         daysDiv.addEventListener('click', function (event) {
             if (event.target.classList.contains('day-button')) {
                 const dayButton = event.target;
