@@ -8,6 +8,7 @@ import java.util.List;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 
 import kr.co.jhta.restaurants_service.dto.PostDto;
+import kr.co.jhta.restaurants_service.repository.PostRepository;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
@@ -33,6 +34,7 @@ public class PostService {
 	private final StoreMapper storeMapper;
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
+	private final PostRepository postRepository;
 
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
@@ -98,4 +100,7 @@ public class PostService {
 		return filename;
 	}
 
+	public List<Post> getPostsByCustomerId(int id) {
+		return postRepository.findPostsByCustomerId(id);
+	}
 }
