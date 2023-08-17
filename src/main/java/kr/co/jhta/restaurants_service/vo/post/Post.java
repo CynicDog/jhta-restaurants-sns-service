@@ -2,29 +2,51 @@ package kr.co.jhta.restaurants_service.vo.post;
 
 import java.util.Date;
 
-import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
 @Alias("Post")
+@Entity
+@Table(name = "POSTS")
 public class Post {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
 	private String title;
+
+	@Column(name = "sub_title")
 	private String subTitle;
+
+	@CreatedDate
 	private Date createDate;
+
+	@LastModifiedDate
 	private Date updateDate;
+
+	@ManyToOne
+	@JoinColumn(name = "customer_id", nullable = false)
 	private User customer;
+
+	@Column(name = "report_count")
 	private int reportCount;
+
+	@Column(name = "liked_count")
 	private int likedCount;
+
+	@Enumerated(EnumType.STRING)
 	private DISABLED disabled;
+
+	@Enumerated(EnumType.STRING)
 	private BLOCKED blocked;
 
 	public Post() {

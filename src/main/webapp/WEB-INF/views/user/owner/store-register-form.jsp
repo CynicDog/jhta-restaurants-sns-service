@@ -683,11 +683,15 @@
                 dayButton.classList.toggle('text-bg-primary');
                 dayButton.classList.toggle('text-bg-light');
 
+                console.log(dayButton)
+
                 if (dayButton.classList.contains('text-bg-primary')) {
                     selectedDays[dayName] = true;
                 } else {
-                    delete selectedDays[dayName];
+                    selectedDays[dayName] = false;
                 }
+
+                console.log(selectedDays)
 
                 fetch(`/owner/unique-day?dayName=\${dayName}`, {
                     method: "GET"
@@ -700,28 +704,23 @@
                             method: "POST"
                         }).then(response => {
                             if (response.ok) {
-                                // do nothing
-                            } else {
-                                // do nothing
+                                updateHourAddRequestIcon()
                             }
                         })
                     }
                     // 2. if not unique, then remove the day in the session
                     else {
-                        hourValidationStatus.days = false;
+                        hourValidationStatus.days = Object.values(selectedDays).some(selected => selected === true);
 
                         fetch(`/owner/remove-day?dayName=\${dayName}`, {
                             method: "POST"
                         }).then(response => {
                             if (response.ok) {
-                                // do nothing
-                            } else {
-                                // do nothing
+                                updateHourAddRequestIcon()
                             }
                         })
                     }
                 })
-                updateHourAddRequestIcon()
             }
         });
 
@@ -885,6 +884,10 @@
 
         function updateHourAddRequestIcon() {
             const isValid = Object.values(hourValidationStatus).every(status => status === true);
+
+            console.log(isValid)
+            console.log(hourValidationStatus)
+
             hourAddRequestIcon.style.display = isValid ? 'block' : 'none';
         }
 

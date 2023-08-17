@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -7,13 +8,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
+import kr.co.jhta.restaurants_service.mapper.UserMapper;
+import kr.co.jhta.restaurants_service.repository.UserRepository;
+import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
@@ -36,18 +43,18 @@ public class ReviewService {
 	  @Autowired
 	  private StoreMapper storeMapper;
 	  
+	  @Autowired
+	  private UserRepository userRepository;
+	  
 	  // 새 리뷰 등록하기
-	  public void createReview(ReviewDataCommand form) {
+	  public void createReview(ReviewDataCommand form, @RequestParam int storeId, @RequestParam int customerId) {
 		  
 		  Review review = new Review();
 		  
 		  review.setRating(form.getRating());
 		  review.setContent(form.getContent());
-		  review.setStore(storeMapper.getStoreById(form.getStoreId()));
-
-		  User user = new User();
-		  user.setId(76);
-		  review.setCustomer(user);
+		  review.setStore(storeMapper.getStoreById((storeId)));
+		  review.setCustomer(userRepository.getReferenceById(customerId));
 		  
 		  reviewMapper.insertReview(review);
 		  

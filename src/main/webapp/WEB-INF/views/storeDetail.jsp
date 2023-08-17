@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -78,13 +81,13 @@ html, body {
 						<div class="row">
 							<div class="col-8">
 								<p class="restaurants_name my-3">
-									<span class="fs-4 fw-lighter">가게제목</span> 
+									<span class="fs-4 fw-lighter">${store.name}</span> 
 									<span class="rate-point mx-3 fs-3 fw-lighter">평점</span>
 								</p>
 							</div>
 							<div class="col-4">
 								<span class="my-2 float-end">
-									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review'">
+									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
 										리뷰<i class="bi bi-brush"></i>
 									</button>
 									<button class="btn" id="box">
@@ -96,25 +99,32 @@ html, body {
 						<div class="row">
 							<table class="table">
 								<tr>
-									<th><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
-									<td></td>
+									<th style="width: 120px;"><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
+									<td>${store.address}</td>
 								</tr>
 								<tr>
 									<th><i class="bi bi-telephone"></i><span class="fw-lighter mx-2">전화번호</span></th>
-									<td></td>
+									<td>${store.phone}</td>
 								</tr>
 								<tr>
 									<th><i class="bi bi-shop"></i><span class="fw-lighter mx-2">가게 소개</span></th>
-									<td></td>
+									<td>${store.description}</td>
 								</tr>
 								<tr>
 									<th><i class="bi bi-tag"></i><span class="fw-lighter mx-2">음식 종류</span></th>
-									<td></td>
+									<td>${store.category}</td>
 								</tr>
 								<tr>
-									<th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
-									<td></td>
+								    <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
+								    <td>
+					                    <c:forEach var="time" items="${storeOpenTimes}">
+					                    	<div>
+					                        	<span class="d-inline-block" style="width: 50px;"><c:out value="${time.day }"/></span> <span><c:out value="${time.openTime}"/> ~ <c:out value="${time.closeTime}"/></span>
+					                        </div>
+					                    </c:forEach>
+					                </td>
 								</tr>
+
 								<tr>
 									<th><i class="bi bi-calendar-week"></i><span class="fw-lighter mx-2">휴일</span></th>
 									<td></td>
@@ -123,11 +133,11 @@ html, body {
 								<tr>
 									<th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
 									<td>
-										<div>
-											<div class="col my-2">
-												<span class="food-name"></span> <span class="food-price"></span>
-											</div>
-										</div>
+										<c:forEach var="food" items="${foods}">
+					                        <div class="col my-2">
+					                            <span class="food-name"><c:out value="${food.name}"/></span> <span class="food-price"><c:out value="${food.price}"/></span>
+					                        </div>
+					                    </c:forEach>		
 									</td>
 								</tr>
 							</table>

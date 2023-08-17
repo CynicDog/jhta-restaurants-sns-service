@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.security.service;
 
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.RoleRepository;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -13,8 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -34,7 +33,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElse(null);
 
         // EAGER fetching on `user.roles`, so below 4 lines are done by Hibernate.
 //        List<Role> roles = roleRepository.findByUserId(user.getId());
@@ -46,6 +45,11 @@ public class UserService implements UserDetailsService {
 
         return userDetails;
     }
+
+    public Projection.UserProjection findUserProjectionById(int id) {
+        return userRepository.findUserProjectionById(id).orElse(null);
+    }
+
 
     public boolean existsDuplicateUsersByNickname(String nickname) {
 
