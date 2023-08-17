@@ -120,35 +120,17 @@
                             Socials
                         </div>
                         <div class="col text-end">
-                            <div class="badge text-bg-secondary position-relative mx-2"
-                                 id="followersPopover"
-                                 type="button"
-                                 data-bs-container="body"
-                                 data-bs-toggle="popover"
-                                 data-bs-placement="bottom"
-                                 data-bs-html="true"
-                                 data-bs-content="<p class='link-secondary m-1' id='follow-list'>Here's your followers</p>">
+                            <div id="followersOffCanvas" type="button" class="badge text-bg-secondary position-relative mx-2">
                                 followers
-                                <%--                                <c:if test="${not empty follwers}">--%>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     99+
                                 </span>
-                                <%--                                </c:if>--%>
                             </div>
-                            <div class="badge text-bg-secondary position-relative mx-2"
-                                 id="followingsPopover"
-                                 type="button"
-                                 data-bs-container="body"
-                                 data-bs-toggle="popover"
-                                 data-bs-placement="bottom"
-                                 data-bs-html="true"
-                                 data-bs-content="<p class='link-secondary m-1' id='follow-list'>Here's your followers</p>">
+                            <div id="followingsOffCanvas" type="button" class="badge text-bg-secondary position-relative mx-2">
                                 followings
-                                <%--                                <c:if test="${not empty followings}">--%>
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     99+
                                 </span>
-                                <%--                                </c:if>--%>
                             </div>
                         </div>
                     </div>
@@ -230,96 +212,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        const followersPopover = new bootstrap.Popover(document.querySelector('#followersPopover'), {
-            trigger: 'manual',
-            content: "init",
-        });
 
-        let followersPopoverVisible = false;
-        document.body.addEventListener('click', function (event) {
-            if (event.target.matches('#followersPopover')) {
-                if (followersPopoverVisible) {
-                    followersPopover.hide();
-                } else {
-                    console.log("hi")
-
-                    fetch(`/customer/followers`, {
-                        method: "GET"
-                    }).then(response => {
-                        if (response.ok) {
-                            return response.json()
-                        }
-                    }).then(data => {
-                        console.log(data)
-                    })
-
-                    followersPopover.setContent({
-                        '.popover-body': `
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">John Doe</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">Alice Smith</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                    });
-                    followersPopover.show();
-                }
-
-                followersPopoverVisible = !followersPopoverVisible;
-            }
-        });
-
-        const followingsPopover = new bootstrap.Popover(document.querySelector('#followingsPopover'), {
-            trigger: 'manual',
-            content: "init",
-        });
-
-        let followingsPopoverVisible = false;
-        document.body.addEventListener('click', function (event) {
-
-            if (event.target.matches('#followingsPopover')) {
-                if (followingsPopoverVisible) {
-                    followingsPopover.hide();
-                } else {
-                    // TODO: Fetch followers and replace the below dummy users
-                    // Load the content
-                    followingsPopover.setContent({
-                        '.popover-body': `
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">John Doe</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">Alice Smith</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                    });
-                    followingsPopover.show();
-                }
-
-                followingsPopoverVisible = !followingsPopoverVisible;
-            }
-        });
     });
 </script>
 </html>
