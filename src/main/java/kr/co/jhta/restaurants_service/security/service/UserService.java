@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.security.service;
 
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.RoleRepository;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -13,8 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -47,8 +46,8 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
-    public User findUserById(int id) {
-        return userRepository.findById(id).orElse(null);
+    public Projection.UserProjection findUserProjectionById(int id) {
+        return userRepository.findUserProjectionById(id).orElse(null);
     }
 
 

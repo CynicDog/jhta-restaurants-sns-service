@@ -1,8 +1,8 @@
 package kr.co.jhta.restaurants_service.service;
 
+import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.security.service.UserService;
-import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class SocialService {
         this.userService = userService;
     }
 
-    public List<User> getFollowersByCustomerId(int customerId) {
+    public List<Projection.UserProjection> getFollowersByCustomerId(int customerId) {
         return followsRepository
                 .findFollowsByCompositePrimaryKeys_FollowedId(customerId)
                 .stream()
@@ -30,7 +30,7 @@ public class SocialService {
                     return follow;
                 })
                 .map(follow -> follow.getCompositePrimaryKeys().getFollowerId())
-                .map(followerId -> userService.findUserById(followerId))
+                .map(followerId -> userService.findUserProjectionById(followerId))
                 .collect(Collectors.toList());
     }
 }
