@@ -54,9 +54,11 @@
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
                         <div class="col-8 fs-4">About Me</div>
-                        <div class="col-4 d-flex justify-content-end"> <!-- Use justify-content-end to align the content to the right -->
+                        <div class="col-4 d-flex justify-content-end">
+                            <!-- Use justify-content-end to align the content to the right -->
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                       id="flexSwitchCheckDefault">
                                 <%-- TODO: Behaviors on public / private account --%>
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
                             </div>
@@ -120,13 +122,15 @@
                             Socials
                         </div>
                         <div class="col text-end">
-                            <div id="followersOffCanvas" type="button" class="badge text-bg-secondary position-relative mx-2">
+                            <div id="followersToastButton" type="button"
+                                 class="badge text-bg-secondary position-relative mx-2">
                                 followers
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     99+
                                 </span>
                             </div>
-                            <div id="followingsOffCanvas" type="button" class="badge text-bg-secondary position-relative mx-2">
+                            <div id="followingsToastButton" type="button"
+                                 class="badge text-bg-secondary position-relative mx-2">
                                 followings
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     99+
@@ -172,6 +176,52 @@
         </div>
     </div>
 </div>
+<div class="toast-container position-fixed bottom-0 end-0 p-4">
+    <div id="successfulToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+        <div class="toast-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="fw-lighter fs-4">Followers</div>
+                        <button id="followersCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="btn">
+                    <div id="followersLoadingSpinner"
+                         class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div id="followersOutputArea" class="my-2 p-1" style="max-height: 200px; overflow-y: auto;">
+            </div>
+        </div>
+    </div>
+    <div id="followingsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-autohide="false">
+        <div class="toast-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="fw-lighter fs-4">Followings</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script>
 
@@ -212,6 +262,54 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
+
+        const followersToastButton = document.getElementById('followersToastButton')
+        const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
+        const followersCloseButton = document.getElementById('followersCloseButton');
+        let followersToast = document.getElementById('followersToast')
+        let followersOutputArea = document.getElementById('followersOutputArea');
+
+        followersToastButton.addEventListener("click", function () {
+
+            const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
+            followersLoadingSpinner.style.display = 'block';
+
+            fetch(`/customer/followers`, {
+                method: "GET"
+            }).then(response => {
+                if (response.ok) {
+                    followersLoadingSpinner.style.display = 'none';
+                    return response.json()
+                }
+            }).then(data => {
+                data.forEach(datum => {
+                    followersOutputArea.innerHTML += `
+                        <div class="row">
+                            <div class="col-12 my-1">
+                                <div class="d-flex align-items-start">
+                                    <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
+                                    <p class="mx-2 my-1">\${datum.email}</p>
+                                </div>
+                            </div>
+                        </div>
+                `;
+                });
+            })
+
+            followersToastBootstrap.show()
+        })
+
+        followersCloseButton.addEventListener("click", function () {
+            followersOutputArea.innerHTML = ''
+        })
+
+        const followingsToastButton = document.getElementById('followingsToastButton')
+        followingsToastButton.addEventListener("click", function () {
+            let followingsToast = document.getElementById('followingsToast')
+            const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
+            followingsToastBootstrap.show()
+        })
+
 
     });
 </script>

@@ -1,3 +1,6 @@
+<%--TODO: 1. Sorting and pagination over registered stores --%>
+<%--TODO: 2. Store detail modification page --%>
+<%--TODO: 3. Socials drop and replace with another content --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
