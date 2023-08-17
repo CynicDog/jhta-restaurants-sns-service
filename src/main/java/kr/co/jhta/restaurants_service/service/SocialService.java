@@ -25,10 +25,6 @@ public class SocialService {
         return followsRepository
                 .findFollowsByCompositePrimaryKeys_FollowedId(customerId)
                 .stream()
-                .map(follow -> {
-                    logger.info(follow.getCompositePrimaryKeys().getFollowerId());
-                    return follow;
-                })
                 .map(follow -> follow.getCompositePrimaryKeys().getFollowerId())
                 .map(followerId -> userService.findUserProjectionById(followerId))
                 .collect(Collectors.toList());
