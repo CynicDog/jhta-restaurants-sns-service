@@ -22,7 +22,7 @@
             <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
-                        <div class="col-8 fs-4">About Me</div>
+                        <div class="col-8 fs-4">Socials</div>
                         <div class="col-4 d-flex justify-content-end">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch"
@@ -32,44 +32,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
-                            <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
-                        </div>
-                        <div class="col-sm-7 my-1">
-                            <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
-                        </div>
-                    </div>
-                    <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
-                            <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
-                        </div>
-                        <div class="col-sm-7 my-1">
-                            <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
-                        </div>
-                    </div>
-                    <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
-                            <label for="email" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Email</span></label>
-                        </div>
-                        <div class="col-sm-7 my-1">
-                            <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <span class="fw-li"></span>
-            <div class="card shadow">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 fs-4">
-                            Socials
-                        </div>
-                        <div class="col-md-8 text-end">
+                    <div class="row my-2">
+                        <div class="col text-end">
                             <div id="followersToastButton" type="button"
                                  class="badge text-bg-secondary position-relative mx-2">
                                 followers
@@ -121,19 +85,66 @@
                     </c:if>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7 my-5">
-            <div class="card shadow overflow-auto my-3" style="max-height: 900px;">
-                <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Posts
-                        <div class="btn border border-0 disabled">
-                            <div id="postsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
-                                <span class="visually-hidden">Loading...</span>
+            <div class="card shadow my-3">
+                <div class="fw-lighter m-3 p-1">
+                    <div class="row">
+                        <div class="col fs-4">About Me</div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-end">
+                            <div id="postsToastButton" type="button"
+                                 class="badge text-bg-secondary position-relative mx-2">
+                                posts
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    99+
+                                </span>
+                            </div>
+                            <div id="reviewsToastButton" type="button"
+                                 class="badge text-bg-secondary position-relative mx-2">
+                                reviews
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    99+
+                                </span>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 300px; overflow: auto">
-                    </ol>
+                    <div class="row mx-2">
+                        <div class="col-sm-4 my-1 fw-lighter">
+                            <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
+                        </div>
+                        <div class="col-sm-8 my-1">
+                            <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-sm-4 my-1 fw-lighter">
+                            <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
+                        </div>
+                        <div class="col-sm-8 my-1">
+                            <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-sm-4 my-1 fw-lighter">
+                            <label for="email" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Email</span></label>
+                        </div>
+                        <div class="col-sm-8 my-1">
+                            <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-7 my-5">
+            <div class="card shadow overflow-auto my-3">
+                <div class="d-flex fs-4 m-3 p-1 fw-lighter ">Some Contents..
+                </div>
+                <div class="card-body">
+                    Some Contents..
                 </div>
             </div>
         </div>
@@ -146,6 +157,54 @@
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div id="postsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-autohide="false">
+        <div class="toast-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="fw-lighter fs-4">Posts
+                            <div class="btn border border-0 disabled">
+                                <div id="postsLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                     style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="postsCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="postsOutputArea" class="bg-light-subtle my-2 p-1" style="max-height: 400px; overflow-y: auto;">
+            </div>
+        </div>
+    </div>
+    <div id="reviewsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-autohide="false">
+        <div class="toast-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="fw-lighter fs-4">Reviews
+                            <div class="btn border border-0 disabled">
+                                <div id="reviewsLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                     style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="reviewsCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="reviewsOutputArea" class="bg-light-subtle my-2 p-1" style="max-height: 400px; overflow-y: auto;">
+            </div>
         </div>
     </div>
     <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
@@ -234,87 +293,142 @@
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
-        const postOutputArea = document.getElementById('postOutputArea');
-        const postsLoadingSpinner = document.getElementById('postsLoadingSpinner');
+        const postsToastButton = document.getElementById('postsToastButton')
+        const postsLoadingSpinner = document.getElementById('postsLoadingSpinner')
+        let postsToast = document.getElementById('postsToast')
+        let postOutputArea = document.getElementById('postsOutputArea');
 
-        const getPosts = page => {
-            const url = ``;
-            return fetch(`/customer/posts?page=\${page}&limit=5`).then(response => response.json());
+        const reviewsToastButton = document.getElementById('reviewsToastButton')
+        const reviewsLoadingSpinner = document.getElementById('reviewsLoadingSpinner')
+        let reviewsToast = document.getElementById('reviewsToast')
+        let reviewsOutputArea = document.getElementById('reviewsOutputArea');
+
+        let pageOnFollower = 0
+        let isFollowerFetching = false;
+        let isFollowerLast = false;
+
+        let pageOnPost = 0
+        let isPostFetching = false;
+        let isPostLast = false;
+
+        let pageOnReview = 0
+        let isReviewFetching = false;
+        let isReviewLast = false;
+
+        postsToastButton.addEventListener("click", function () {
+            const postsToastBootstrap = bootstrap.Toast.getOrCreateInstance(postsToast)
+
+            // initial loading
+            fetchAndRenderPosts(pageOnPost);
+
+            // infinite scrolling (scroll pagination)
+            postOutputArea.addEventListener('scroll', function () {
+                const scrollPos = this.scrollTop + this.clientHeight;
+                const scrollHeight = this.scrollHeight;
+
+                if (scrollPos === scrollHeight) {
+                    pageOnPost += 1;
+                    fetchAndRenderPosts(pageOnPost);
+                }
+            })
+
+            postsToastBootstrap.show()
+        })
+
+        reviewsToastButton.addEventListener("click", function () {
+            const reviewsToastBootstrap = bootstrap.Toast.getOrCreateInstance(reviewsToast)
+
+            // initial loading
+            fetchAndRenderReviews(pageOnReview);
+
+            // infinite scrolling (scroll pagination)
+            reviewsOutputArea.addEventListener('scroll', function () {
+                const scrollPos = this.scrollTop + this.clientHeight;
+                const scrollHeight = this.scrollHeight;
+
+                if (scrollPos === scrollHeight) {
+                    pageOnReview += 1;
+                    fetchAndRenderReviews(pageOnReview);
+                }
+            })
+
+            reviewsToastBootstrap.show()
+        })
+
+        const getFollowers = page => {
+            return fetch(`/customer/followers?page=\${page}&limit=7`).then(response => response.json());
         }
 
-        let page = 0
-        let isFetching = false;
-        let isLast = false;
-        function fetchAndRenderPosts(page) {
-            if (isFetching || isLast) {
+        function fetchAndRenderFollowers(page) {
+            if (isFollowerFetching || isFollowerLast) {
                 return;
             }
-            isFetching = true;
-            postsLoadingSpinner.style.display = 'block';
-            getPosts(page).then(data => {
+            isFollowerFetching = true;
+            followersLoadingSpinner.style.display = 'block';
+            getFollowers(page).then(data => {
 
                 if (data.totalElements === 0) {
-                    postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
-                    postsLoadingSpinner.style.display = 'none'
-                    isFetching = false;
+                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
+                    followersLoadingSpinner.style.display = 'none'
+                    isFollowerFetching = false;
                 }
 
-                isLast = data.last;
+                isFollowerLast = data.last;
                 data.content.forEach(datum => {
-                    postOutputArea.innerHTML += `
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-medium"> \${datum.title}</div>
-                                \${datum.subTitle}
+                    followersOutputArea.innerHTML += `
+                        <div class="shadow border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium"> \${datum}</div>
+                                \${datum}
                             </div>
-                            <i style="color: #cb444a" class="bi bi-trash m-2"></i>
-                        </li>
-                    `;
-                    postsLoadingSpinner.style.display = 'none'
-                    isFetching = false;
+                        </div>
+                    `
+                    followersLoadingSpinner.style.display = 'none'
+                    isFollowerFetching = false;
                 })
             })
         }
 
-        // initial loading
-        fetchAndRenderPosts(page);
-
-        // infinite scrolling (scroll pagination)
-        postOutputArea.addEventListener('scroll', function() {
-            const scrollPos = this.scrollTop + this.clientHeight;
-            const scrollHeight = this.scrollHeight;
-
-            if (scrollPos === scrollHeight) {
-                page += 1;
-                fetchAndRenderPosts(page);
-            }
-        })
-
         followersToastButton.addEventListener("click", function () {
             const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
-            followersLoadingSpinner.style.display = 'block';
 
-            fetch(`/customer/followers`, {
-                method: "GET"
-            }).then(response => {
-                if (response.ok) {
-                    followersLoadingSpinner.style.display = 'none';
-                    return response.json()
+            // initial loading
+            fetchAndRenderFollowers(pageOnFollower)
+
+            // infinite scrolling (scroll pagination)
+            followersOutputArea.addEventListener('scroll', function() {
+                const scrollPos = this.scrollTop + this.clientHeight;
+                const scrollHeight = this.scrollHeight
+
+                if (scrollPos === scrollHeight) {
+                    pageOnFollower += 1;
+                    fetchAndRenderFollowers(pageOnFollower)
                 }
-            }).then(data => {
-                data.forEach(datum => {
-                    followersOutputArea.innerHTML += `
-                        <div class="row">
-                            <div class="col-12 my-1">
-                                <div class="d-flex align-items-start">
-                                    <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                    <p class="mx-2 my-1">\${datum.email}</p>
-                                </div>
-                            </div>
-                        </div>
-                `;
-                });
             })
+
+            // followersLoadingSpinner.style.display = 'block';
+            //
+            // fetch(`/customer/followers`, {
+            //     method: "GET"
+            // }).then(response => {
+            //     if (response.ok) {
+            //         followersLoadingSpinner.style.display = 'none';
+            //         return response.json()
+            //     }
+            // }).then(data => {
+            //     data.forEach(datum => {
+            //         followersOutputArea.innerHTML += `
+            //             <div class="row">
+            //                 <div class="col-12 my-1">
+            //                     <div class="d-flex align-items-start">
+            //                         <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
+            //                         <p class="mx-2 my-1">\${datum.email}</p>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //     `;
+            //     });
+            // })
 
             followersToastBootstrap.show()
         })
@@ -330,7 +444,79 @@
             followingsToastBootstrap.show()
         })
 
+        const getPosts = page => {
+            return fetch(`/customer/posts?page=\${page}&limit=7`).then(response => response.json());
+        }
 
+        function fetchAndRenderPosts(page) {
+            if (isPostFetching || isPostLast) {
+                return;
+            }
+            isPostFetching = true;
+            postsLoadingSpinner.style.display = 'block';
+            getPosts(page).then(data => {
+
+                if (data.totalElements === 0) {
+                    postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
+                    postsLoadingSpinner.style.display = 'none'
+                    isPostFetching = false;
+                }
+
+                isPostLast = data.last;
+                data.content.forEach(datum => {
+                    postOutputArea.innerHTML += `
+                        <div class="shadow border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium"> \${datum.title}</div>
+                                \${datum.subTitle}
+                            </div>
+                            <div class="text-end m-2">
+                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                            </div>
+                        </div>
+                    `;
+                    postsLoadingSpinner.style.display = 'none'
+                    isPostFetching = false;
+                })
+            })
+        }
+
+        const getReviews = page => {
+            return fetch(`/customer/reviews?page=\${page}&limit=7`).then(response => response.json());
+        }
+
+        function fetchAndRenderReviews(page) {
+            if (isReviewFetching || isReviewLast) {
+                return;
+            }
+            isReviewFetching = true;
+            reviewsLoadingSpinner.style.display = 'block';
+            getReviews(page).then(data => {
+
+                if (data.totalElements === 0) {
+                    reviewsOutputArea.innerHTML += `<span class=fw-lighter m-3>No reviews published yet.</span>`
+                    reviewsLoadingSpinner.style.display = 'none'
+                    isReviewFetching = false;
+                }
+
+                isReviewLast = data.last;
+                data.content.forEach(datum => {
+                    reviewsOutputArea.innerHTML += `
+                        <div class="shadow border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium"> \${datum.store.name} (\${datum.rating}) </div>
+                                \${datum.content}
+                            </div>
+                            <div class="text-end m-2">
+                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                            </div>
+                        </div>
+                    `;
+                    reviewsLoadingSpinner.style.display = 'none'
+                    isReviewFetching = false;
+                })
+            })
+        }
     });
 </script>
 </html>

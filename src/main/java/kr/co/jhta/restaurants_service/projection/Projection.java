@@ -1,6 +1,64 @@
 package kr.co.jhta.restaurants_service.projection;
 
+import kr.co.jhta.restaurants_service.vo.store.Store;
+
 public class Projection {
+
+    public static class Review {
+        private int id;
+        private int rating;
+        private String content;
+        private int likedCount;
+        private Store store;
+
+        public Review(int id, int rating, String content, int likedCount, Store store) {
+            this.id = id;
+            this.rating = rating;
+            this.content = content;
+            this.likedCount = likedCount;
+            this.store = store;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getRating() {
+            return rating;
+        }
+
+        public void setRating(int rating) {
+            this.rating = rating;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public int getLikedCount() {
+            return likedCount;
+        }
+
+        public void setLikedCount(int likedCount) {
+            this.likedCount = likedCount;
+        }
+
+        public Store getStore() {
+            return store;
+        }
+
+        public void setStore(Store store) {
+            this.store = store;
+        }
+    }
 
     public static class Post {
         private int id;

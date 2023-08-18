@@ -3,7 +3,9 @@ package kr.co.jhta.restaurants_service.service;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +30,10 @@ public class SocialService {
                 .map(follow -> follow.getCompositePrimaryKeys().getFollowerId())
                 .map(followerId -> userService.findUserProjectionById(followerId))
                 .collect(Collectors.toList());
+    }
+
+    public Page<Projection.User> getNonDisabledFollowersByCustomerIdOrderByCreateDate(int id, User.DISABLED disabled, Integer integer, Integer integer1) {
+
+        return null;
     }
 }

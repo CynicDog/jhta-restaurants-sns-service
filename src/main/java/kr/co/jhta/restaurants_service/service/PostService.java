@@ -15,7 +15,6 @@ import kr.co.jhta.restaurants_service.repository.PostRepository;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -129,9 +128,9 @@ public class PostService {
 		return postRepository.findPostsByCustomerId(id);
 	}
 
-    public Page<Projection.Post> getPostsByCustomerIdPaginated(int id, Integer page, Integer size) {
+    public Page<Projection.Post> getNonBlockedPostsByCustomerIdOrderByCreateDate(int id, Post.BLOCKED no, Integer page, Integer limit) {
 
-		Page<Projection.Post> postsPaginated = postRepository.findPostsByCustomerId(id, PageRequest.of(page, size));
+		Page<Projection.Post> postsPaginated = postRepository.findPostsByCustomerIdAndBlockedOrderByCreateDate(id, no, PageRequest.of(page, limit));
 
 		return postsPaginated;
     }
