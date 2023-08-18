@@ -8,8 +8,11 @@ import java.util.List;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 
 import kr.co.jhta.restaurants_service.dto.PostDto;
+import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
 import org.jboss.logging.Logger;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +43,7 @@ public class PostService {
 		List<Post> posts = postmapper.getAllPosts();
 		return posts;
 	}
-	
+
 	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
 
 		postmapper.insertPost(post);
@@ -54,23 +57,23 @@ public class PostService {
 					postDataMapper.insertPostData(postData);
 				});
     }
-	
+
 	public PostDto selectPost(int postId) {
 		PostDto dto = new PostDto();
-		
+
 		Post post = postmapper.getPostById(postId);
 		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
-		
+
 		dto.setPost(post);
 		dto.setPostData(postDatas);
 		dto.setPostComments(postComments);
-		
+
 		return dto;
 	}
 
 	public void updatePost(String title, String content, String pictureName) {
-		
+
 	}
 
 	private String saveFile(MultipartFile multipartFile) throws IOException {
@@ -82,7 +85,7 @@ public class PostService {
 //			filename = multipartFile.getOriginalFilename();
 //			FileOutputStream out = new FileOutputStream(new File(directory, filename));
 //			FileCopyUtils.copy(multipartFile.getInputStream(), out);
-//			
+//
 //		}
 
 		if (!multipartFile.isEmpty()) {
@@ -103,4 +106,11 @@ public class PostService {
 	public List<Post> getPostsByCustomerId(int id) {
 		return postRepository.findPostsByCustomerId(id);
 	}
+
+    public Page<Projection.Post> getPostsByCustomerIdPaginated(int id, Integer page, Integer size) {
+
+		Page<Projection.Post> postsPaginated = postRepository.findPostsByCustomerId(id, PageRequest.of(page, size));
+
+		return postsPaginated;
+    }
 }

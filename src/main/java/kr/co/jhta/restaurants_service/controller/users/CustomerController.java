@@ -4,14 +4,14 @@ import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
-import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.service.OtpService;
 import kr.co.jhta.restaurants_service.service.PostService;
 import kr.co.jhta.restaurants_service.service.SocialService;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
-import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -26,11 +26,17 @@ import java.util.Optional;
 @RequestMapping("/customer")
 public class CustomerController {
 
-    Logger logger = Logger.getLogger(UserController.class);
+    public static String[] PUBLIC_URLS = {
+            "/customer/signup",
+            "/customer/otp",
+            "/customer/otp-check",
+            "/customer/details"
+    };
     private final UserService userService;
     private final OtpService otpService;
     private final PostService postService;
     private final SocialService socialService;
+    Logger logger = Logger.getLogger(UserController.class);
 
     public CustomerController(UserService userService, OtpService otpService, PostService postService, SocialService socialService) {
         this.userService = userService;
@@ -40,8 +46,23 @@ public class CustomerController {
     }
 
     @ResponseBody
+    @GetMapping("/posts")
+    public ResponseEntity<Page<Projection.Post>> posts(@AuthenticationPrincipal SecurityUser securityUser,
+                                                       @RequestParam("page") Optional<Integer> page,
+                                                       @RequestParam("limit") Optional<Integer> size) {
+        Page<Projection.Post> posts =
+                postService.getPostsByCustomerIdPaginated(
+                        securityUser.getUser().getId(),
+                        page.orElse(0),
+                        size.orElse(10)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(posts));
+    }
+
+    @ResponseBody
     @GetMapping("/followers")
-    public ResponseEntity<List<Projection.UserProjection>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
+    public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
 
         return ResponseEntity.of(Optional.ofNullable(socialService.getFollowersByCustomerId(securityUser.getUser().getId())));
     }
@@ -93,18 +114,8 @@ public class CustomerController {
     @GetMapping("/my-page")
     public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
 
-        List<Post> posts = postService.getPostsByCustomerId(securityUser.getUser().getId());
-
-        model.addAttribute("posts", posts);
         model.addAttribute("customer", securityUser.getUser());
 
         return "/user/customer/my-page";
     }
-
-    public static String[] PUBLIC_URLS = {
-            "/customer/signup",
-            "/customer/otp",
-            "/customer/otp-check",
-            "/customer/details"
-    };
 }

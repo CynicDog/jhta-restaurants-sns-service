@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
-    public Projection.UserProjection findUserProjectionById(int id) {
+    public Projection.User findUserProjectionById(int id) {
         return userRepository.findUserProjectionById(id).orElse(null);
     }
 

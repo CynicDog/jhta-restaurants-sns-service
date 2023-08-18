@@ -17,15 +17,12 @@
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
-    <div class="row my-4">
-        <div class="col-md-5 my-2">
-            <div class="card shadow mb-3">
+    <div class="row my-5">
+        <div class="col-md-5 my-5">
+            <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
-                        <div class="col-3 fs-4">About Me</div>
-                        <div class="col-5 justify-content-start align-items-start my-1">
-                            <img src="/resources/image/user.png" class="rounded-circle" height="30" width="30" alt="User Image">
-                        </div>
+                        <div class="col-8 fs-4">About Me</div>
                         <div class="col-4 d-flex justify-content-end">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch"
@@ -55,7 +52,8 @@
                     </div>
                     <div class="row mx-2">
                         <div class="col-sm-5 my-1 fw-lighter">
-                            <label for="email" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Email</span></label>
+                            <label for="email" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Email</span></label>
                         </div>
                         <div class="col-sm-7 my-1">
                             <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
@@ -68,10 +66,10 @@
             <div class="card shadow">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row align-items-center">
-                        <div class="col fs-4">
+                        <div class="col-md-4 fs-4">
                             Socials
                         </div>
-                        <div class="col text-end">
+                        <div class="col-md-8 text-end">
                             <div id="followersToastButton" type="button"
                                  class="badge text-bg-secondary position-relative mx-2">
                                 followers
@@ -124,33 +122,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7 my-2">
-            <div class="card shadow overflow-auto" style="max-height: 900px;">
-                <div class="fw-lighter fs-4 m-3 p-1">My Articles</div>
+        <div class="col-md-7 my-5">
+            <div class="card shadow overflow-auto my-3" style="max-height: 900px;">
+                <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Posts
+                        <div class="btn border border-0 disabled">
+                            <div id="postsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                </div>
                 <div class="card-body">
-                    <c:if test="${ not empty posts }">
-                        <ol class="list-group list-group-numbered">
-                            <c:forEach items="${ posts }" var="post">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${ post.title }</div>
-                                        <c:choose>
-                                            <c:when test="${ post.content.length() gt 50 }">
-                                                ${ post.content.substring(0, 50) } ...
-                                            </c:when>
-                                            <c:otherwise>
-                                                ${ post.content }
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <i style="color: #cb444a" class="bi bi-trash m-2"></i>
-                                </li>
-                            </c:forEach>
-                        </ol>
-                    </c:if>
-                    <c:if test="${empty posts}">
-                        <p class="my-1">No posts published yet.</p>
-                    </c:if>
+                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 300px; overflow: auto">
+                    </ol>
                 </div>
             </div>
         </div>
@@ -178,7 +161,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <div class="btn">
+                <div class="btn border border-0 disabled">
                     <div id="followersLoadingSpinner"
                          class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
                         <span class="visually-hidden">Loading...</span>
@@ -247,11 +230,67 @@
         const followersToastButton = document.getElementById('followersToastButton')
         const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
         const followersCloseButton = document.getElementById('followersCloseButton');
+
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
-        followersToastButton.addEventListener("click", function () {
+        const postOutputArea = document.getElementById('postOutputArea');
+        const postsLoadingSpinner = document.getElementById('postsLoadingSpinner');
 
+        const getPosts = page => {
+            const url = ``;
+            return fetch(`/customer/posts?page=\${page}&limit=5`).then(response => response.json());
+        }
+
+        let page = 0
+        let isFetching = false;
+        let isLast = false;
+        function fetchAndRenderPosts(page) {
+            if (isFetching || isLast) {
+                return;
+            }
+            isFetching = true;
+            postsLoadingSpinner.style.display = 'block';
+            getPosts(page).then(data => {
+
+                if (data.totalElements === 0) {
+                    postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
+                    postsLoadingSpinner.style.display = 'none'
+                    isFetching = false;
+                }
+
+                isLast = data.last;
+                data.content.forEach(datum => {
+                    postOutputArea.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-medium"> \${datum.title}</div>
+                                \${datum.subTitle}
+                            </div>
+                            <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                        </li>
+                    `;
+                    postsLoadingSpinner.style.display = 'none'
+                    isFetching = false;
+                })
+            })
+        }
+
+        // initial loading
+        fetchAndRenderPosts(page);
+
+        // infinite scrolling (scroll pagination)
+        postOutputArea.addEventListener('scroll', function() {
+            const scrollPos = this.scrollTop + this.clientHeight;
+            const scrollHeight = this.scrollHeight;
+
+            if (scrollPos === scrollHeight) {
+                page += 1;
+                fetchAndRenderPosts(page);
+            }
+        })
+
+        followersToastButton.addEventListener("click", function () {
             const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
             followersLoadingSpinner.style.display = 'block';
 
@@ -292,8 +331,6 @@
         })
 
 
-        var data = new Identicon('d3b07384d113edec49eaa6238ad5ff00', 420).toString();
-        document.write('<img width=420 height=420 src="data:image/png;base64,' + data + '">');
     });
 </script>
 </html>

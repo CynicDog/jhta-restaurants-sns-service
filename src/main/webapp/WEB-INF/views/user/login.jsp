@@ -16,8 +16,8 @@
 <body>
 <%@ include file="../common/navbar.jsp" %>
 <div class="container">
-    <div class="row my-4 justify-content-center align-items-center">
-        <div class="col-md-5 my-4">
+    <div class="row my-5 justify-content-center align-items-center">
+        <div class="col-md-5 my-5">
             <div class="card shadow my-5">
                 <div class="fw-lighter m-4 p-2">
                     <span class="fs-3">로그인</span>

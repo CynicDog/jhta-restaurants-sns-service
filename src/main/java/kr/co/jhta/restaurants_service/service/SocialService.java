@@ -21,7 +21,7 @@ public class SocialService {
         this.userService = userService;
     }
 
-    public List<Projection.UserProjection> getFollowersByCustomerId(int customerId) {
+    public List<Projection.User> getFollowersByCustomerId(int customerId) {
         return followsRepository
                 .findFollowsByCompositePrimaryKeys_FollowedId(customerId)
                 .stream()

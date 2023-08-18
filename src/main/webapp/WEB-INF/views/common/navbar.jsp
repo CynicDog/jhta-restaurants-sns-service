@@ -95,41 +95,8 @@
                     </li>
                 </sec:authorize>
             </ul>
-            <div class="form-check form-switch m-1">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked
-                       value="" onclick="toggleDarkMode()">
-            </div>
         </ul>
     </div>
     <script>
-    
-        function toggleDarkMode() {
-            const htmlElement = document.querySelector('html');
-            if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
-                htmlElement.removeAttribute('data-bs-theme');
-                setColorModePreference('light');
-            } else {
-                htmlElement.setAttribute('data-bs-theme', 'dark');
-                setColorModePreference('dark');
-            }
-        }
-
-        function setColorModePreference(mode) {
-            localStorage.setItem('colorMode', mode);
-        }
-
-        function applyColorModePreference() {
-            const colorMode = localStorage.getItem('colorMode');
-
-            if (colorMode === 'dark') {
-                document.getElementById("flexSwitchCheckChecked").checked = false;
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.getElementById("flexSwitchCheckChecked").checked = true;
-                document.documentElement.removeAttribute('data-bs-theme');
-            }
-        }
-
-        applyColorModePreference();
     </script>
 </nav>

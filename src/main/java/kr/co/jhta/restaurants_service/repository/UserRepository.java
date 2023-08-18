@@ -5,7 +5,6 @@ import kr.co.jhta.restaurants_service.vo.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,5 +20,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsUserByNickname(String nickname);
 
-    Optional<Projection.UserProjection> findUserProjectionById(int id);
+    Optional<Projection.User> findUserProjectionById(int id);
 }
