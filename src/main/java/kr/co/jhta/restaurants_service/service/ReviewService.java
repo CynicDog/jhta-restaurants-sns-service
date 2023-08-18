@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +37,9 @@ public class ReviewService {
 	  
 	  @Autowired
 	  private ReviewPictureMapper reviewPictureMapper;
+	  
+	  @Autowired
+	  private ReviewCommentMapper reviewCommentMapper;
 	  
 	  @Autowired
 	  private ReviewKeywordMapper reviewKeywordMapper;
@@ -79,6 +86,23 @@ public class ReviewService {
 //		  review.setStore(storeMapper.getStoreById(21));
 		  
 	  }
+	  
+	// 새 리뷰 답글 등록하기
+		public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
+			ReviewComment reviewComment = new ReviewComment();
+			reviewComment.setContent(form.getContent());
+
+			Review review = reviewMapper.getReviewById(form.getReviewId());
+			reviewComment.setReview(review);
+			reviewComment.setOwner(securityUser.getUser());
+
+			reviewCommentMapper.insertReviewComment(reviewComment);
+		}
+
+		public List<Review> getAllReviews() {
+			List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(0);
+			return reviews;
+		}
 	  
 	  public ReviewDetailDto selectReview(int ReviewId) {
 		  ReviewDetailDto dto = new ReviewDetailDto();
