@@ -1,9 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
-import java.security.Principal;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
 
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
@@ -140,7 +136,7 @@ public class ReviewService {
 //		  return reviewPicture;
 //	  }
 
-	public Page<Projection.Review> getReviewsByCustomerIdAndBlockedOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
+	public Page<Projection.Review> getNonBlockedReviewsByCustomerIdOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
 
 		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDate(customerId, no, PageRequest.of(page, limit));
 	}

@@ -128,7 +128,7 @@ public class PostService {
 		return postRepository.findPostsByCustomerId(id);
 	}
 
-    public Page<Projection.Post> getPostsByCustomerIdPaginated(int id, Post.BLOCKED no, Integer page, Integer limit) {
+    public Page<Projection.Post> getNonBlockedPostsByCustomerIdOrderByCreateDate(int id, Post.BLOCKED no, Integer page, Integer limit) {
 
 		Page<Projection.Post> postsPaginated = postRepository.findPostsByCustomerIdAndBlockedOrderByCreateDate(id, no, PageRequest.of(page, limit));
 

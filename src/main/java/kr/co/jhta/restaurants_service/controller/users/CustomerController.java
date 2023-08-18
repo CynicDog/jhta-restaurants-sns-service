@@ -12,6 +12,7 @@ import kr.co.jhta.restaurants_service.service.SocialService;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
+import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class CustomerController {
                                                          @RequestParam("page") Optional<Integer> page,
                                                          @RequestParam("limit") Optional<Integer> limit) {
         Page<Projection.Review> reviews =
-                reviewService.getReviewsByCustomerIdAndBlockedOrderByCreateDate(
+                reviewService.getNonBlockedReviewsByCustomerIdOrderByCreateDate(
                         securityUser.getUser().getId(),
                         Review.BLOCKED.NO,
                         page.orElse(0),
@@ -71,7 +72,7 @@ public class CustomerController {
                                                        @RequestParam("page") Optional<Integer> page,
                                                        @RequestParam("limit") Optional<Integer> limit) {
         Page<Projection.Post> posts =
-                postService.getPostsByCustomerIdPaginated(
+                postService.getNonBlockedPostsByCustomerIdOrderByCreateDate(
                         securityUser.getUser().getId(),
                         Post.BLOCKED.NO,
                         page.orElse(0),
@@ -83,7 +84,17 @@ public class CustomerController {
 
     @ResponseBody
     @GetMapping("/followers")
-    public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser) {
+    public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser,
+                                                           @RequestParam("page") Optional<Integer> page,
+                                                           @RequestParam("limit") Optional<Integer> limit) {
+
+        Page<Projection.User> users =
+                socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
+                        securityUser.getUser().getId(),
+                        User.DISABLED.NO,
+                        page.orElse(0),
+                        limit.orElse(10)
+                );
 
         return ResponseEntity.of(Optional.ofNullable(socialService.getFollowersByCustomerId(securityUser.getUser().getId())));
     }
