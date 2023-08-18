@@ -43,6 +43,11 @@ spring:
             enable: true
   main:
     allow-bean-definition-overriding: true
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: classpath:e-object-396210-29e7528877fc.json
 
 mybatis:
   mapper-locations:
@@ -52,23 +57,7 @@ mybatis:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
   type-aliases-package: kr.co.jhta.restaurants_service.vo.store, kr.co.jhta.restaurants_service.dto, kr.co.jhta.restaurants_service.vo.user, kr.co.jhta.restaurants_service.vo.store, kr.co.jhta.restaurants_service.vo.socials, kr.co.jhta.restaurants_service.vo.review, kr.co.jhta.restaurants_service.vo.post
 
-
 data:
   go:
     kr:
       service-key: LuOmWzPRFEp4asq7iwuM2e%2FgkyoRK5nw1dXv%2F3QdMo8kxm9oxvr0PCnRTQfxGgMMvyuIfyzzm%2BIM1WqdYBgpPg%3D%3D
-      
-cloud:
-  aws:
-    s3:
-      bucket: jhta-restaurants-sns-service
-    credentials:
-      access-key: 
-      secret-key: 
-    region:
-      static: ap-northeast-2
-      auto: false
-    stack:
-      auto: false      
-
-
