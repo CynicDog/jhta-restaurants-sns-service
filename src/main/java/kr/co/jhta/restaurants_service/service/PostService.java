@@ -10,9 +10,12 @@ import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.cloud.storage.Storage;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
@@ -30,6 +33,7 @@ public class PostService {
 
 	private final Logger logger = Logger.getLogger(PostService.class);
 
+    private final Storage storage;
 	private final PostMapper postmapper;
 	private final StoreMapper storeMapper;
 	private final PostDataMapper postDataMapper;
