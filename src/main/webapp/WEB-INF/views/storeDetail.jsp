@@ -135,7 +135,7 @@ html, body {
 									<td>
 										<c:forEach var="food" items="${foods}">
 					                        <div class="col my-2">
-					                            <span class="food-name"><c:out value="${food.name}"/></span> <span class="food-price"><c:out value="${food.price}"/></span>
+					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price"><c:out value="${food.price}"/>원</span>
 					                        </div>
 					                    </c:forEach>		
 									</td>
@@ -303,10 +303,35 @@ html, body {
 												<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
 											</button>
 											<span class="float-end">
+													<button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
 												<button type="button" class="btn btn-light btn-sm text-danger">
 													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
+										</div>
+									</div>
+									<form id="reviewComment" method="post" action="/review/register">
+										<input type="hidden" name="reviewId" value="103" />
+										<input type="hidden" name="storeId" value="32" />
+										<div class="row" id="cardAndTextarea" style="display: none;">
+									        <div class="col-12">
+									            <div class="card">
+									                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+									                    <textarea class="form-control" name="content" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+									                    <button class="btn btn-outline-secondary submit-reply-button" type="submit" id="button-addon2"><i class="bi bi-pencil"></i></button>
+									                </div>
+									            </div>
+									        </div>
+									    </div>
+									</form>
+									<div class="row">
+										<div class="col">
+											<div class="card">
+												<div class="card-body">
+													<p class="col card-text" style="font-size: small; color: #adb5bd;">${store.name }</p>
+													<p class="card-text">리뷰 답글</p>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

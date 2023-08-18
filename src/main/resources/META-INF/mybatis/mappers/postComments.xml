@@ -17,7 +17,7 @@
 			create_date as createDate,
 			update_date as updateDate,
 			post_id as "post.id",
-			customer_id as "user.id"
+			customer_id as "customer.id"
 		from POST_COMMENTS
 		where post_id = #{value}
 	</select>

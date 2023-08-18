@@ -11,7 +11,7 @@
       </selectKey>
 	</insert>
 
-	<select id="getAllReviews" resultType="Review">
+	<select id="getAllReviewsByCustomerId" parameterType="int" resultType="Review">
 		select 
 			id,			
 			rating,
@@ -26,6 +26,7 @@
 			store_id		as "store.id"
 		from 
 			REVIEWS
+		where customer_id = #{value};
 	</select>
 	
 	<select id="getReviewById" parameterType="int" resultType="Review">
