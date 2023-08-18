@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
+import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,12 +52,17 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/detail")
-	public String re(Model model) {
+	public String reviewDetail(Model model) {
 		 
-//		 List<ReviewPicture> reviewPictures = reviewService.getReviewPicturesByReviewId(ReviewId);
-//		 model.addAttribute("reviewPicture", reviewPictures);
-		List<Review> reviews = reviewService.getAllReviews();
-		 log.info("리뷰 -> {}", reviews);
+		int reviewId = 101;
+		ReviewDetailDto dto = reviewService.selectReview(reviewId);
+		model.addAttribute("review", dto);
+//		log.info("리뷰 -> {}", dto.getReview().getCustomer().getFullName());
+//		log.info("리뷰 -> {}", dto.getReviewKeywords().get(0).getKeyword());
+//		log.info("리뷰 -> {}", dto.getReviewKeywords().get(1).getKeyword());
+//		log.info("리뷰 -> {}", dto.getReview().getRating());
+//		log.info("리뷰 -> {}", dto.getReview().getContent());
+//		log.info("리뷰 -> {}", dto.getReview().getStore().getAddress());
 		
 		return "reviewDetail";
 	}

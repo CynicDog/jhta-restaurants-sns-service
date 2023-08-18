@@ -1,8 +1,9 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.security.Principal;
-import java.util.List;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
 
@@ -11,20 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param;
-
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
+import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
-import kr.co.jhta.restaurants_service.mapper.UserMapper;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
-import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
-import kr.co.jhta.restaurants_service.vo.user.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -58,7 +55,7 @@ public class ReviewService {
 		  
 		  reviewMapper.insertReview(review);
 		  
-		  if(form.getReviewKeyword() != null) {
+		  if (form.getReviewKeyword() != null) {
 			  for (String keyword : form.getReviewKeyword()) {
 				  ReviewKeyword reviewKeyword = new ReviewKeyword();
 				  reviewKeyword.setKeyword(keyword);	
@@ -81,13 +78,31 @@ public class ReviewService {
 //		  reviewKeyword.setKeyword("청결해요");
 //		  review.setStore(storeMapper.getStoreById(21));
 		  
-		  
 	  }
 	  
-	  public List<Review> getAllReviews() {
-		  List<Review> reviews= reviewMapper.getAllReviews();
-		  return reviews;
+	  public ReviewDetailDto selectReview(int ReviewId) {
+		  ReviewDetailDto dto = new ReviewDetailDto();
+	
+		  Review review = reviewMapper.getReviewById(ReviewId);
+		  review.setStore(storeMapper.getStoreById(review.getStore().getId()));
+		  review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
+		  
+		  List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(ReviewId);
+		  
+//		  List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
+//		  List<Review> ReviewByCustomerId = allReviewByCustomerId
+	
+		  dto.setReview(review);
+		  dto.setReviewKeywords(reviewKeyword);
+		  
+		  return dto;
 	  }
+	  
+	  
+//	  public List<Review> getAllReviews() {
+//		  List<Review> reviews= reviewMapper.getAllReviews();
+//		  return reviews;
+//	  }
 	 
 	  // 리뷰아이디로 여러개의 리뷰사진 가져오기 
 //	  public List<ReviewPicture> getReviewPicturesByReviewId(int ReviewId) {
@@ -100,10 +115,7 @@ public class ReviewService {
 		  
 //		  return reviewPicture;
 //	  }
-	  
-	
-	
-	
+
 	
 	
 }	
