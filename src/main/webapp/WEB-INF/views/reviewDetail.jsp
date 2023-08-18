@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -26,30 +28,37 @@ html, body {
 
 <body>
 <%@ include file="common/navbar.jsp"%>
-
 <div class="wrap">
 	<div class="container">
 		<div class="card border border-success p-2 border-opacity-10">
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급) 평균별점" data-bs-content="Follow">
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 						</a>
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5" style="font-size:30px;"><strong>정손님</strong></p>
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p>
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
-							<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
+							<c:if test="${review.review.rating eq 5}">
+								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
+							</c:if>
+							<c:if test="${review.review.rating eq 3}">
+								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">괜찮아요</span>
+							</c:if>
+							<c:if test="${review.review.rating eq 1}">
+								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
+							</c:if>
 						</div>
 					</div>
-					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
        					<div class="modal-dialog">
                     		<div class="modal-content">
                             	<div class="modal-header">
-                            		<h1 class="modal-title fs-5" id="exampleModalLabel">신고하기</h1>
+                            		<h1 class="modal-title fs-5" id="reportModalLabel">신고하기</h1>
                               			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                        			</div>
                           		<div class="modal-body">
@@ -79,18 +88,17 @@ html, body {
               		</div>
 				</div>
 				<div class="row col-3 m-3">
-					<a href="/store/detail"class="mx-3">@가게명-서울시 종로구</a>
+					<a href="/store/detail"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
 				</div>	
 				<div class="row m-3">
 						<span style="font-size: 15px;">
 							<i id="recomened" class="bi bi-heart-fill text-danger"></i>
-							<a>3</a>
-							<a class="float-end pt-1 mt-1 text-secondary">2023-08-11</a>
+							<a>${review.review.likedCount }</a>
+							<a class="float-end pt-1 mt-1 text-secondary"><fmt:formatDate value="${review.review.createDate }" pattern="yyyy-M-d" /></a>
 						</span>
-					<p class="border border-secondary border-opacity-50 rounded p-3" style="font-size:20px;">리뷰 내용</p>
+					<p class="border border-secondary border-opacity-50 rounded p-3" style="font-size:20px;">${review.review.content }</p>
 				</div>
 				<div class="row" id="image-row">
-				
 					<div class="col-4 " >
 						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..."  style="width: 100%; height: 100%; cursor: pointer;">
 					</div>
@@ -131,12 +139,24 @@ html, body {
 				</div>
   			</div>
 			<div class="m-2">
-				<span class="badge text-bg-danger bg-opacity-75 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</span>
-				<span class="badge text-bg-secondary bg-opacity-75 fw-lighter fs-6 m-2 p-1">#주차가 편해요</span>
-				<span class="badge text-bg-info bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 청결해요</span>
-				<span class="badge text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 넓어요</span>
-				<span class="badge text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</span>
-				<span class="badge text-bg-success bg-opacity-75 fw-lighter fs-6 m-2 p-1">#친절해요</span>
+				<c:if test="${review.taste }">
+					<span class="badge text-bg-danger bg-opacity-75 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</span>
+				</c:if>
+				<c:if test="${review.parking }">
+					<span class="badge text-bg-secondary bg-opacity-75 fw-lighter fs-6 m-2 p-1">#주차가 편해요</span>
+				</c:if>
+				<c:if test="${review.clean }">
+					<span class="badge text-bg-info bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 청결해요</span>
+				</c:if>
+				<c:if test="${review.wide }">
+					<span class="badge text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 넓어요</span>
+				</c:if>
+				<c:if test="${review.mood }">
+					<span class="badge text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</span>
+				</c:if>
+				<c:if test="${review.kind }">
+					<span class="badge text-bg-success bg-opacity-75 fw-lighter fs-6 m-2 p-1">#친절해요</span>
+				</c:if>
 				<span class="float-end">
 					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
 		          		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
@@ -151,7 +171,7 @@ html, body {
   				<div class="card-body">
 	  				<div class="form-floating mb-3">
 					 <textarea class="form-control" id="floatingTextarea" readOnly="readOnly" style="height: 200px">답글입니다.</textarea>
-  					 <label for="floatingTextarea2">가게명</label>
+  					 <label for="floatingTextarea2">${review.review.store.name }</label>
 					</div>
     				<span class="float-end">
 						<button id="text-button" type="button" class="btn btn-lg" style="color: blue;">
