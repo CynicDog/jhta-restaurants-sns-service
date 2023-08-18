@@ -72,13 +72,6 @@ public class StoreController {
 		return "search";
 	}
 
-
-	
-	@GetMapping("/detail")
-	public String storeDetail(Model model) {
-		
-		return "storeDetail";
-	}
 	
 	@GetMapping("/storeDetail")
     public String detail(@RequestParam int storeId, Model model) {
