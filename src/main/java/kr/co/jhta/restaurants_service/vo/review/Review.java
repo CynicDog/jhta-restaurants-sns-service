@@ -8,23 +8,43 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.*;
 
 @Getter @Setter
 @Alias("Review")
+@Entity @Table(name = "REVIEWS")
 public class Review {
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int rating;
 	private String content;
+
+	@CreatedDate
+	@Column(name = "create_date")
 	private Date createDate;
+
+	@Column(name = "update_date")
 	private Date updateDate;
+
+	@Column(name = "liked_count")
 	private int likedCount;
+
+	@ManyToOne
 	private User customer;
+
+	@OneToOne
 	private Store store;
+
+	@Column(name = "report_count")
 	private int reportCount;
+
+	@Enumerated(EnumType.STRING)
 	private DISABLED disabled;
+
+	@Enumerated(EnumType.STRING)
 	private BLOCKED blocked;
 
 	public Review() {

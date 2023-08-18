@@ -18,7 +18,7 @@
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
     <div class="row my-5">
-        <div class="col-md-5 my-5">
+        <div class="col-md-7 my-5">
             <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
@@ -35,30 +35,29 @@
                 </div>
                 <div class="card-body">
                     <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
+                        <div class="col-sm-4 my-1 fw-lighter">
                             <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
                         </div>
-                        <div class="col-sm-7 my-1">
+                        <div class="col-sm-8 my-1">
                             <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
                         </div>
                     </div>
                     <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
+                        <div class="col-sm-4 my-1 fw-lighter">
                             <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
                         </div>
-                        <div class="col-sm-7 my-1">
+                        <div class="col-sm-8 my-1">
                             <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
                         </div>
                     </div>
                     <div class="row mx-2">
-                        <div class="col-sm-5 my-1 fw-lighter">
+                        <div class="col-sm-4 my-1 fw-lighter">
                             <label for="email" class="col-sm-2 col-form-label"><span
                                     style="white-space: nowrap">Email</span></label>
                         </div>
-                        <div class="col-sm-7 my-1">
+                        <div class="col-sm-8 my-1">
                             <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -122,8 +121,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7 my-5">
-            <div class="card shadow overflow-auto my-3" style="max-height: 900px;">
+        <div class="col-md-5 my-5">
+            <div class="card shadow overflow-auto my-3" >
                 <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Posts
                         <div class="btn border border-0 disabled">
                             <div id="postsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
@@ -132,7 +131,20 @@
                         </div>
                 </div>
                 <div class="card-body">
-                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 300px; overflow: auto">
+                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 350px; overflow: auto">
+                    </ol>
+                </div>
+            </div>
+            <div class="card shadow overflow-auto my-3" >
+                <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Reviews
+                    <div class="btn border border-0 disabled">
+                        <div id="reviewsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ol id="reviewOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 350px; overflow: auto">
                     </ol>
                 </div>
             </div>
@@ -237,29 +249,32 @@
         const postOutputArea = document.getElementById('postOutputArea');
         const postsLoadingSpinner = document.getElementById('postsLoadingSpinner');
 
+        const reviewOutputArea = document.getElementById('reviewOutputArea');
+        const reviewsLoadingSpinner = document.getElementById('reviewsLoadingSpinner');
+
         const getPosts = page => {
             const url = ``;
-            return fetch(`/customer/posts?page=\${page}&limit=5`).then(response => response.json());
+            return fetch(`/customer/posts?page=\${page}&limit=7`).then(response => response.json());
         }
 
-        let page = 0
-        let isFetching = false;
-        let isLast = false;
+        let pageOnPost = 0
+        let isPostFetching = false;
+        let isPostLast = false;
         function fetchAndRenderPosts(page) {
-            if (isFetching || isLast) {
+            if (isPostFetching || isPostLast) {
                 return;
             }
-            isFetching = true;
+            isPostFetching = true;
             postsLoadingSpinner.style.display = 'block';
             getPosts(page).then(data => {
 
                 if (data.totalElements === 0) {
                     postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
                     postsLoadingSpinner.style.display = 'none'
-                    isFetching = false;
+                    isPostFetching = false;
                 }
 
-                isLast = data.last;
+                isPostLast = data.last;
                 data.content.forEach(datum => {
                     postOutputArea.innerHTML += `
                         <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -271,13 +286,12 @@
                         </li>
                     `;
                     postsLoadingSpinner.style.display = 'none'
-                    isFetching = false;
+                    isPostFetching = false;
                 })
             })
         }
-
         // initial loading
-        fetchAndRenderPosts(page);
+        fetchAndRenderPosts(pageOnPost);
 
         // infinite scrolling (scroll pagination)
         postOutputArea.addEventListener('scroll', function() {
@@ -285,8 +299,61 @@
             const scrollHeight = this.scrollHeight;
 
             if (scrollPos === scrollHeight) {
-                page += 1;
-                fetchAndRenderPosts(page);
+                pageOnPost += 1;
+                fetchAndRenderPosts(pageOnPost);
+            }
+        })
+
+        const getReviews = page => {
+            const url = ``;
+            return fetch(`/customer/reviews?page=\${page}&limit=7`).then(response => response.json());
+        }
+
+        let pageOnReview = 0
+        let isReviewFetching = false;
+        let isReviewLast = false;
+        function fetchAndRenderReviews(page) {
+            if (isReviewFetching || isReviewLast) {
+                return;
+            }
+            isReviewFetching = true;
+            reviewsLoadingSpinner.style.display = 'block';
+            getReviews(page).then(data => {
+
+                if (data.totalElements === 0) {
+                    reviewOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
+                    reviewsLoadingSpinner.style.display = 'none'
+                    isReviewFetching = false;
+                }
+
+                isReviewLast = data.last;
+                data.content.forEach(datum => {
+                    reviewOutputArea.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-medium"> \${datum.store.name} (\${datum.rating}) </div>
+                                \${datum.content}
+                            </div>
+                            <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                        </li>
+                    `;
+                    reviewsLoadingSpinner.style.display = 'none'
+                    isReviewFetching = false;
+                })
+            })
+        }
+
+        // initial loading
+        fetchAndRenderReviews(pageOnReview);
+
+        // infinite scrolling (scroll pagination)
+        reviewOutputArea.addEventListener('scroll', function() {
+            const scrollPos = this.scrollTop + this.clientHeight;
+            const scrollHeight = this.scrollHeight;
+
+            if (scrollPos === scrollHeight) {
+                pageOnReview += 1;
+                fetchAndRenderReviews(pageOnReview);
             }
         })
 

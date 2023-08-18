@@ -7,7 +7,11 @@ import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
 
+import kr.co.jhta.restaurants_service.projection.Projection;
+import kr.co.jhta.restaurants_service.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,103 +36,99 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
 
-	  @Autowired 
-	  private ReviewMapper reviewMapper;
-	  
-	  @Autowired
-	  private ReviewPictureMapper reviewPictureMapper;
-	  
-	  @Autowired
-	  private ReviewCommentMapper reviewCommentMapper;
-	  
-	  @Autowired
-	  private ReviewKeywordMapper reviewKeywordMapper;
-	  
-	  @Autowired
-	  private StoreMapper storeMapper;
-	  
-	  @Autowired
-	  private UserRepository userRepository;
-	  
-	  // 새 리뷰 등록하기
-	  public void createReview(ReviewDataCommand form) {
-		  
-		  Review review = new Review();
-		  
-		  review.setRating(form.getRating());
-		  review.setContent(form.getContent());
-		  review.setStore(storeMapper.getStoreById(form.getStoreId()));
-		  review.setCustomer(userRepository.getReferenceById(form.getUserId()));
-		  
-		  reviewMapper.insertReview(review);
-		  
-		  if (form.getReviewKeyword() != null) {
-			  for (String keyword : form.getReviewKeyword()) {
-				  ReviewKeyword reviewKeyword = new ReviewKeyword();
-				  reviewKeyword.setKeyword(keyword);	
-				  reviewKeyword.setReview(review);
-				  reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
-			  }
-		  }
-		  
-		  if (!form.getChooseFile().isEmpty()) {
-			  ReviewPicture reviewPciture = new ReviewPicture();
-			  MultipartFile chooseFile = form.getChooseFile();
-			  reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-			  reviewPciture.setReview(review);
-			  reviewPictureMapper.insertReveiwPicture(reviewPciture);
-		  }
-		  
+	@Autowired private ReviewMapper reviewMapper;
+
+	@Autowired private ReviewPictureMapper reviewPictureMapper;
+
+	@Autowired private ReviewCommentMapper reviewCommentMapper;
+
+	@Autowired private ReviewKeywordMapper reviewKeywordMapper;
+
+	@Autowired private StoreMapper storeMapper;
+
+	@Autowired private UserRepository userRepository;
+
+	@Autowired private ReviewRepository reviewRepository;
+
+	// 새 리뷰 등록하기
+	public void createReview(ReviewDataCommand form) {
+
+		Review review = new Review();
+
+		review.setRating(form.getRating());
+		review.setContent(form.getContent());
+		review.setStore(storeMapper.getStoreById(form.getStoreId()));
+		review.setCustomer(userRepository.getReferenceById(form.getUserId()));
+
+		reviewMapper.insertReview(review);
+
+		if (form.getReviewKeyword() != null) {
+			for (String keyword : form.getReviewKeyword()) {
+				ReviewKeyword reviewKeyword = new ReviewKeyword();
+				reviewKeyword.setKeyword(keyword);
+				reviewKeyword.setReview(review);
+				reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
+			}
+		}
+
+		if (!form.getChooseFile().isEmpty()) {
+			ReviewPicture reviewPciture = new ReviewPicture();
+			MultipartFile chooseFile = form.getChooseFile();
+			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
+			reviewPciture.setReview(review);
+			reviewPictureMapper.insertReveiwPicture(reviewPciture);
+		}
+
 //		  review.setRating(3);
 //		  review.setContent("bbbbb");
 //		  reviewPciture.setPictureName(null);
 //		  reviewKeyword.setKeyword("청결해요");
 //		  review.setStore(storeMapper.getStoreById(21));
-		  
-	  }
-	  
+
+	}
+
 	// 새 리뷰 답글 등록하기
-		public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
-			ReviewComment reviewComment = new ReviewComment();
-			reviewComment.setContent(form.getContent());
+	public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
+		ReviewComment reviewComment = new ReviewComment();
+		reviewComment.setContent(form.getContent());
 
-			Review review = reviewMapper.getReviewById(form.getReviewId());
-			reviewComment.setReview(review);
-			reviewComment.setOwner(securityUser.getUser());
+		Review review = reviewMapper.getReviewById(form.getReviewId());
+		reviewComment.setReview(review);
+		reviewComment.setOwner(securityUser.getUser());
 
-			reviewCommentMapper.insertReviewComment(reviewComment);
-		}
+		reviewCommentMapper.insertReviewComment(reviewComment);
+	}
 
-		public List<Review> getAllReviews() {
-			List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(0);
-			return reviews;
-		}
-	  
-	  public ReviewDetailDto selectReview(int ReviewId) {
-		  ReviewDetailDto dto = new ReviewDetailDto();
-	
-		  Review review = reviewMapper.getReviewById(ReviewId);
-		  review.setStore(storeMapper.getStoreById(review.getStore().getId()));
-		  review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
-		  
-		  List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(ReviewId);
-		  
+	public List<Review> getAllReviews() {
+		List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(0);
+		return reviews;
+	}
+
+	public ReviewDetailDto selectReview(int ReviewId) {
+		ReviewDetailDto dto = new ReviewDetailDto();
+
+		Review review = reviewMapper.getReviewById(ReviewId);
+		review.setStore(storeMapper.getStoreById(review.getStore().getId()));
+		review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
+
+		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(ReviewId);
+
 //		  List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
 //		  List<Review> ReviewByCustomerId = allReviewByCustomerId
-	
-		  dto.setReview(review);
-		  dto.setReviewKeywords(reviewKeyword);
-		  
-		  return dto;
-	  }
-	  
-	  
+
+		dto.setReview(review);
+		dto.setReviewKeywords(reviewKeyword);
+
+		return dto;
+	}
+
+
 //	  public List<Review> getAllReviews() {
 //		  List<Review> reviews= reviewMapper.getAllReviews();
 //		  return reviews;
 //	  }
-	 
-	  // 리뷰아이디로 여러개의 리뷰사진 가져오기 
+
+	// 리뷰아이디로 여러개의 리뷰사진 가져오기
 //	  public List<ReviewPicture> getReviewPicturesByReviewId(int ReviewId) {
 //		  List<ReviewPicture> reviewPictures = reviewPictureMapper.getReviewPicturesByReviewId(ReviewId);
 //		  List<ReviewPicture> reviewPicture = reviewPictures.stream()
@@ -136,10 +136,14 @@ public class ReviewService {
 //					 review.setReview(reviewMapper.getReviewById(review.getReview().getId()));
 //					 return review;
 //				  }).collect(Collectors.toList());
-		  
+
 //		  return reviewPicture;
 //	  }
 
-	
-	
-}	
+	public Page<Projection.Review> getReviewsByCustomerIdAndBlockedOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
+
+		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDate(customerId, no, PageRequest.of(page, limit));
+	}
+
+
+}
