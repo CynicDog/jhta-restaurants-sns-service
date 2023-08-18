@@ -19,43 +19,14 @@
 <div class="container">
     <div class="row my-4">
         <div class="col-md-5 my-2">
-            <div class="card shadow overflow-auto" style="max-height: 900px;">
-                <div class="fw-lighter fs-4 m-3 p-1">My Articles</div>
-                <div class="card-body">
-                    <c:if test="${ not empty posts }">
-                        <ol class="list-group list-group-numbered">
-                            <c:forEach items="${ posts }" var="post">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${ post.title }</div>
-                                        <c:choose>
-                                            <c:when test="${ post.content.length() gt 50 }">
-                                                ${ post.content.substring(0, 50) } ...
-                                            </c:when>
-                                            <c:otherwise>
-                                                ${ post.content }
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <i style="color: #cb444a" class="bi bi-trash m-2"></i>
-                                </li>
-                            </c:forEach>
-                        </ol>
-                    </c:if>
-                    <c:if test="${empty posts}">
-                        <p class="my-1">No posts published yet.</p>
-                    </c:if>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-7 my-2">
             <div class="card shadow mb-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
-                        <div class="col-8 fs-4">About Me</div>
+                        <div class="col-3 fs-4">About Me</div>
+                        <div class="col-5 justify-content-start align-items-start my-1">
+                            <img src="/resources/image/user.png" class="rounded-circle" height="30" width="30" alt="User Image">
+                        </div>
                         <div class="col-4 d-flex justify-content-end">
-                            <!-- Use justify-content-end to align the content to the right -->
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="switch"
                                        id="flexSwitchCheckDefault">
@@ -66,51 +37,30 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="fullName" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Full Name</span></label>
+                    <div class="row mx-2">
+                        <div class="col-sm-5 my-1 fw-lighter">
+                            <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
                         </div>
-                        <div class="col-sm-9 my-1">
+                        <div class="col-sm-7 my-1">
                             <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
                         </div>
                     </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="nickName" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Nickname</span></label>
+                    <div class="row mx-2">
+                        <div class="col-sm-5 my-1 fw-lighter">
+                            <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
                         </div>
-                        <div class="col-sm-9 my-1">
+                        <div class="col-sm-7 my-1">
                             <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
                         </div>
                     </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="email" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Email</span></label>
+                    <div class="row mx-2">
+                        <div class="col-sm-5 my-1 fw-lighter">
+                            <label for="email" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Email</span></label>
                         </div>
-                        <div class="col-sm-9 my-1">
+                        <div class="col-sm-7 my-1">
                             <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
                         </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="create-date" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Joined Date</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="create-date">
-                                <fmt:formatDate value="${ customer.createDate }" pattern="yyyy-MM-dd"/>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="type" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">User Type</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <span class="form-control-plaintext" id="type"> ${ customer.type } </span>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -174,6 +124,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-7 my-2">
+            <div class="card shadow overflow-auto" style="max-height: 900px;">
+                <div class="fw-lighter fs-4 m-3 p-1">My Articles</div>
+                <div class="card-body">
+                    <c:if test="${ not empty posts }">
+                        <ol class="list-group list-group-numbered">
+                            <c:forEach items="${ posts }" var="post">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">${ post.title }</div>
+                                        <c:choose>
+                                            <c:when test="${ post.content.length() gt 50 }">
+                                                ${ post.content.substring(0, 50) } ...
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${ post.content }
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                                </li>
+                            </c:forEach>
+                        </ol>
+                    </c:if>
+                    <c:if test="${empty posts}">
+                        <p class="my-1">No posts published yet.</p>
+                    </c:if>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="toast-container position-fixed bottom-0 end-0 p-4">
@@ -185,7 +165,8 @@
                     data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
     </div>
-    <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+    <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-autohide="false">
         <div class="toast-body">
             <div class="row">
                 <div class="col">
@@ -311,6 +292,8 @@
         })
 
 
+        var data = new Identicon('d3b07384d113edec49eaa6238ad5ff00', 420).toString();
+        document.write('<img width=420 height=420 src="data:image/png;base64,' + data + '">');
     });
 </script>
 </html>
