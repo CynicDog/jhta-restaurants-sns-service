@@ -22,15 +22,7 @@
             <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
-                        <div class="col-8 fs-4">About Me</div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                       id="flexSwitchCheckDefault">
-                                <%-- TODO: Behaviors on public / private account --%>
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
-                            </div>
-                        </div>
+                        <div class="col fs-4">About Me</div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -64,24 +56,48 @@
             <span class="fw-li"></span>
             <div class="card shadow">
                 <div class="fw-lighter m-3 p-1">
-                    <div class="row align-items-center">
-                        <div class="col-md-4 fs-4">
-                            Socials
-                        </div>
-                        <div class="col-md-8 text-end">
-                            <div id="followersToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
-                                followers
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
-                                </span>
+                    <div class="row align-items-center my-3">
+                        <div class="row">
+                            <div class="col-8 fs-4">Socials</div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                           id="flexSwitchCheckDefault">
+                                    <%-- TODO: Behaviors on public / private account --%>
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                                </div>
                             </div>
-                            <div id="followingsToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
-                                followings
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        </div>
+                        <div class="row my-2">
+                            <div class="col text-end">
+                                <div id="postsToastButton" type="button"
+                                     class="badge text-bg-secondary position-relative mx-3">
+                                    posts
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     99+
                                 </span>
+                                </div>
+                                <div id="reviewsToastButton" type="button"
+                                     class="badge text-bg-secondary position-relative mx-3">
+                                    reviews
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    99+
+                                </span>
+                                </div>
+                                <div id="followersToastButton" type="button"
+                                     class="badge text-bg-secondary position-relative mx-3">
+                                    followers
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    99+
+                                </span>
+                                </div>
+                                <div id="followingsToastButton" type="button"
+                                     class="badge text-bg-secondary position-relative mx-3">
+                                    followings
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    99+
+                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,29 +138,33 @@
             </div>
         </div>
         <div class="col-md-5 my-5">
-            <div class="card shadow overflow-auto my-3" >
+            <div class="card shadow overflow-auto my-3">
                 <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Posts
-                        <div class="btn border border-0 disabled">
-                            <div id="postsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
+<%--                    <div class="btn border border-0 disabled">--%>
+<%--                        <div id="postsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1"--%>
+<%--                             role="status" style="display: none;">--%>
+<%--                            <span class="visually-hidden">Loading...</span>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
                 </div>
                 <div class="card-body">
-                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 350px; overflow: auto">
+                    <ol id="postOutputArea" class="list-group list-group-numbered fw-light"
+                        style="max-height: 350px; overflow: auto">
                     </ol>
                 </div>
             </div>
-            <div class="card shadow overflow-auto my-3" >
+            <div class="card shadow overflow-auto my-3">
                 <div class="d-flex fs-4 m-3 p-1 fw-lighter ">My Reviews
                     <div class="btn border border-0 disabled">
-                        <div id="reviewsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                        <div id="reviewsLoadingSpinner" class="spinner-border spinner-border-sm text-primary m-1"
+                             role="status" style="display: none;">
                             <span class="visually-hidden">Loading...</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <ol id="reviewOutputArea" class="list-group list-group-numbered fw-light" style="max-height: 350px; overflow: auto">
+                    <ol id="reviewOutputArea" class="list-group list-group-numbered fw-light"
+                        style="max-height: 350px; overflow: auto">
                     </ol>
                 </div>
             </div>
@@ -158,6 +178,29 @@
             </div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    <div id="postsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+         data-bs-autohide="false">
+        <div class="toast-body">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="fw-lighter fs-4">Posts
+                            <div class="btn border border-0 disabled">
+                                <div id="postsLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="postsCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="postsOutputArea" class="bg-light-subtle my-2 p-1" style="max-height: 400px; overflow-y: auto;">
+            </div>
         </div>
     </div>
     <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
@@ -246,63 +289,18 @@
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
-        const postOutputArea = document.getElementById('postOutputArea');
-        const postsLoadingSpinner = document.getElementById('postsLoadingSpinner');
+        const postsToastButton = document.getElementById('postsToastButton')
+        const postsLoadingSpinner = document.getElementById('postsLoadingSpinner')
+        const postsCloseButton = document.getElementById('postsCloseButton');
+        let postsToast = document.getElementById('postsToast')
+        let postOutputArea = document.getElementById('postsOutputArea');
 
         const reviewOutputArea = document.getElementById('reviewOutputArea');
         const reviewsLoadingSpinner = document.getElementById('reviewsLoadingSpinner');
 
-        const getPosts = page => {
-            const url = ``;
-            return fetch(`/customer/posts?page=\${page}&limit=7`).then(response => response.json());
-        }
-
         let pageOnPost = 0
         let isPostFetching = false;
         let isPostLast = false;
-        function fetchAndRenderPosts(page) {
-            if (isPostFetching || isPostLast) {
-                return;
-            }
-            isPostFetching = true;
-            postsLoadingSpinner.style.display = 'block';
-            getPosts(page).then(data => {
-
-                if (data.totalElements === 0) {
-                    postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
-                    postsLoadingSpinner.style.display = 'none'
-                    isPostFetching = false;
-                }
-
-                isPostLast = data.last;
-                data.content.forEach(datum => {
-                    postOutputArea.innerHTML += `
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">
-                                <div class="fw-medium"> \${datum.title}</div>
-                                \${datum.subTitle}
-                            </div>
-                            <i style="color: #cb444a" class="bi bi-trash m-2"></i>
-                        </li>
-                    `;
-                    postsLoadingSpinner.style.display = 'none'
-                    isPostFetching = false;
-                })
-            })
-        }
-        // initial loading
-        fetchAndRenderPosts(pageOnPost);
-
-        // infinite scrolling (scroll pagination)
-        postOutputArea.addEventListener('scroll', function() {
-            const scrollPos = this.scrollTop + this.clientHeight;
-            const scrollHeight = this.scrollHeight;
-
-            if (scrollPos === scrollHeight) {
-                pageOnPost += 1;
-                fetchAndRenderPosts(pageOnPost);
-            }
-        })
 
         const getReviews = page => {
             const url = ``;
@@ -312,6 +310,7 @@
         let pageOnReview = 0
         let isReviewFetching = false;
         let isReviewLast = false;
+
         function fetchAndRenderReviews(page) {
             if (isReviewFetching || isReviewLast) {
                 return;
@@ -347,7 +346,7 @@
         fetchAndRenderReviews(pageOnReview);
 
         // infinite scrolling (scroll pagination)
-        reviewOutputArea.addEventListener('scroll', function() {
+        reviewOutputArea.addEventListener('scroll', function () {
             const scrollPos = this.scrollTop + this.clientHeight;
             const scrollHeight = this.scrollHeight;
 
@@ -355,6 +354,26 @@
                 pageOnReview += 1;
                 fetchAndRenderReviews(pageOnReview);
             }
+        })
+
+        postsToastButton.addEventListener("click", function() {
+            const postsToastBootstrap = bootstrap.Toast.getOrCreateInstance(postsToast)
+
+            // initial loading
+            fetchAndRenderPosts(pageOnPost);
+
+            // infinite scrolling (scroll pagination)
+            postOutputArea.addEventListener('scroll', function () {
+                const scrollPos = this.scrollTop + this.clientHeight;
+                const scrollHeight = this.scrollHeight;
+
+                if (scrollPos === scrollHeight) {
+                    pageOnPost += 1;
+                    fetchAndRenderPosts(pageOnPost);
+                }
+            })
+
+            postsToastBootstrap.show()
         })
 
         followersToastButton.addEventListener("click", function () {
@@ -397,7 +416,43 @@
             followingsToastBootstrap.show()
         })
 
+        const getPosts = page => {
+            const url = ``;
+            return fetch(`/customer/posts?page=\${page}&limit=7`).then(response => response.json());
+        }
 
+        function fetchAndRenderPosts(page) {
+            if (isPostFetching || isPostLast) {
+                return;
+            }
+            isPostFetching = true;
+            postsLoadingSpinner.style.display = 'block';
+            getPosts(page).then(data => {
+
+                if (data.totalElements === 0) {
+                    postOutputArea.innerHTML += `<span class=fw-lighter m-3>No posts published yet.</span>`
+                    postsLoadingSpinner.style.display = 'none'
+                    isPostFetching = false;
+                }
+
+                isPostLast = data.last;
+                data.content.forEach(datum => {
+                    postOutputArea.innerHTML += `
+                        <div class="shadow border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium"> \${datum.title}</div>
+                                \${datum.subTitle}
+                            </div>
+                            <div class="text-end m-2">
+                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
+                            </div>
+                        </div>
+                    `;
+                    postsLoadingSpinner.style.display = 'none'
+                    isPostFetching = false;
+                })
+            })
+        }
     });
 </script>
 </html>
