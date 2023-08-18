@@ -9,6 +9,8 @@ import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.store.Store;
+
 import org.jboss.logging.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import kr.co.jhta.restaurants_service.service.PostService;
+import kr.co.jhta.restaurants_service.service.StoreService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,14 +29,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/post")
 @Slf4j
+@RequiredArgsConstructor
 public class PostController {
 
 	public final Logger logger = Logger.getLogger(PostController.class);
 	public final PostService postService;
-	
-	public PostController(PostService postService) {
-		this.postService = postService;
-	}
+	public final StoreService storeService;
 
 	@GetMapping("")
 	public String Post(int id, Model model) {
@@ -44,9 +46,20 @@ public class PostController {
 	}
 
 	@GetMapping("/register")
-	public String RegFormFirst() {
+	public String RegFormFirst(Model model) {
+		List<Store> store = storeService.getAllStores();
+		model.addAttribute("store", store);
+		
 		return "post/register";
 	}
+	
+	@ResponseBody
+	@PostMapping("/getStores")
+	public ResponseEntity<List<Store>> getStores(@RequestParam("keyword") String keyword){
+		List<Store> stores = storeService.getAllStores();
+		return ResponseEntity.ok(stores);
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@ResponseBody

@@ -67,9 +67,11 @@
 					    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					  	</div>
 					  	<div class="offcanvas-body">
-							<div class="col-11 border-top border-bottom my-3">
+							<div class="col-11 border-top  my-3"></div>
+							<c:forEach var="comment" items="${post.postComments }">
+								<div class="col-11  border-bottom my-3">
 							
-								<div class="row my-3">
+									<div class="row my-3">
 										<div class="col-2">
 											<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
 												<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
@@ -79,7 +81,6 @@
 											</div>
 										</div>
 										
-										<c:forEach var="comment" items="${post.postComments }">
 											<div class="col-10 position-relative ">
 												<div class="row mb-2">
 													<div class="col-9 text-start">
@@ -118,11 +119,9 @@
 													</div>
 												</div>
 											</div>
-										</c:forEach>
-									
+									</div>	
 								</div>
-								
-							</div>
+							</c:forEach>
 					  	</div>
 					</div>
 					<button type="button" class="btn btn-lg">

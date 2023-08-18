@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	
 	<style type="text/css">
+	
 	
 	.searchInput .resultBox {
         padding: 0;
@@ -19,7 +21,7 @@
         max-height: 280px;
         overflow-y: auto;
         position: absolute; /* 위치 변경 */
-        top: 30px; /* 위치 변경 */
+        top: 50px; /* 위치 변경 */
         left: 0; /* 위치 변경 */
         z-index: 10; /* 위치 변경 */
     }
@@ -99,13 +101,13 @@
                                             <div class="col-8">
                                                 <div class="form-floating searchInput">
                                                     <input type="text" id="storeIdInput" class="form-control-plaintext mb-4"
-                                                           placeholder="가게명을 작성해주세요." name="storeId">
+                                                          name="storeId">
 				                                    <div class="resultBox"><!-- here list are inserted from javascript --></div>
                                                     <label for="storeIdInput">가게명을 작성해주세요 :)</label>
                                                 </div>
                                                 <div class="form-floating">
 				                                    <textarea class="form-control-plaintext"
-                                                              placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
+                                                              rows="10" cols="60"
                                                               name="content" style="min-height:10rem"></textarea>
                                                     <label for="storeIdInput">원하는 글을 작성해주세요</label>
                                                 </div>
@@ -457,7 +459,6 @@
         "What does CSS stands for?",
     ];
 
-    // getting all required elements
     const searchInput = document.querySelector(".searchInput");
     const input = searchInput.querySelector("input");
     const resultBox = searchInput.querySelector(".resultBox");
@@ -465,7 +466,6 @@
     let linkTag = searchInput.querySelector("a");
     let webLink;
 
-    // if user press any key and release
     function select(element) {
 	    let selectData = element.textContent;
 	    input.value = selectData;
@@ -474,24 +474,31 @@
 
 	input.onkeyup = (e) => {
 	    let userData = e.target.value;
-	    let emptyArray = [];
-	    if (userData) {
-	        emptyArray = suggestions.filter((data) => {
-	            return data.toLowerCase().startsWith(userData.toLowerCase());
-	        });
-	        emptyArray = emptyArray.map((data) => {
-	            return '<li>' + data + '</li>';
-	        });
-	        searchInput.classList.add("active");
-	        showSuggestions(emptyArray);
-	        let allList = resultBox.querySelectorAll("li");
-	        for (let i = 0; i < allList.length; i++) {
-	            allList[i].setAttribute("onclick", "select(this)");
-	        }
-	    } else {
-	        searchInput.classList.remove("active");
-	    }
+	    
+	    $.getJSON("/getStores", {keyword:userData}, function(stores) {
+	    	// stores - [{id:10, name:"소담짐"}, {id:11, name:"돈까스우찌"}]
+		    let emptyArray = [];
+		    if (userData) {
+		        emptyArray = suggestions.filter((data) => {
+		            return data.name.toLowerCase().startsWith(userData.toLowerCase());
+		        });
+		        emptyArray = emptyArray.map((data) => {
+		            return `<li data-store-id="\${store.id}">\${store.name}</li>`;
+		        });
+		        searchInput.classList.add("active");
+		        showSuggestions(emptyArray);
+		        let allList = resultBox.querySelectorAll("li");
+		        for (let i = 0; i < allList.length; i++) {
+		            allList[i].setAttribute("onclick", "select(this)");
+		        }
+		    } else {
+		        searchInput.classList.remove("active");
+		    }
+	    	
+	    })
+	    
 	};
+	
 
     function showSuggestions(list){
         let listData;
@@ -503,6 +510,41 @@
         }
         resultBox.innerHTML = listData;
     }
+    
+    
+	/* input.addEventListener("keydown", (e) => {
+	    const allList = resultBox.querySelectorAll("li");
+	    let activeElement = document.activeElement;
+
+	    // If the input is focused and arrow keys are pressed
+	    if (activeElement === input) {
+	        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+	            e.preventDefault();
+	            if (allList.length > 0) {
+	                if (!resultBox.classList.contains("active")) {
+	                    resultBox.classList.add("active");
+	                    allList[0].classList.add("active");
+	                } else {
+	                    const currentIndex = Array.from(allList).indexOf(document.querySelector(".active"));
+	                    allList[currentIndex].classList.remove("active");
+	                    let nextIndex;
+	                    if (e.key === "ArrowDown") {
+	                        nextIndex = (currentIndex + 1) % allList.length;
+	                    } else {
+	                        nextIndex = (currentIndex - 1 + allList.length) % allList.length;
+	                    }
+	                    allList[nextIndex].classList.add("active");
+	                }
+	                allList.forEach((item, index) => {
+	                    if (item.classList.contains("active")) {
+	                        item.focus();
+	                        input.value = item.textContent;
+	                    }
+	                });
+	            }
+	        }
+	    }
+	}); */
 </script>
 
 </body>
