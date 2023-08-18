@@ -20,55 +20,9 @@
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
-    <div class="row my-4">
-        <div class="col-md-5 my-2">
-            <div class="card shadow overflow-auto" style="max-height: 900px;">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
-                        <div class="col-8 fs-4">My Stores</div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <div class="my-2">
-                                <div id="registerStorePopover"
-                                     data-bs-container="body"
-                                     data-bs-toggle="popover"
-                                     data-bs-placement="bottom"
-                                     data-bs-html="true"
-                                     data-bs-content="<a class='link-secondary m-1 link-underline-opacity-0' href='/owner/register'>Let's go register your store!</a>">
-                                    <i type="button" class="bi bi-plus-circle" style="color: #838383"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <c:if test="${not empty stores}">
-                        <ol class="list-group list-group-numbered">
-                            <c:forEach items="${stores}" var="store">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${store.name}</div>
-                                        <c:choose>
-                                            <c:when test="${store.description.length() gt 50}">
-                                                ${store.description.substring(0, 50)} ...
-                                            </c:when>
-                                            <c:otherwise>
-                                                ${store.description}
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <i type="button" class="bi bi-pencil-square"></i>
-                                </li>
-                            </c:forEach>
-                        </ol>
-                    </c:if>
-                    <c:if test="${empty stores}">
-                        <p class="my-1">No stores registered yet.</p>
-                    </c:if>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7 my-2">
-            <div class="card shadow mb-3">
+    <div class="row my-5">
+        <div class="col-md-5 my-5">
+            <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
                         <div class="col-8 fs-4">About Me</div>
@@ -91,25 +45,6 @@
                         </div>
                         <div class="col-sm-9 my-1">
                             <p class="form-control-plaintext" id="email"> ${owner.email} </p>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="create-date" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Joined Date</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="create-date">
-                                <fmt:formatDate value="${ owner.createDate }" pattern="yyyy-MM-dd"/>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="type" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">User Type</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="type"> ${ owner.type } </p>
                         </div>
                     </div>
                 </div>
@@ -186,6 +121,52 @@
                                 </div>
                             </c:forEach>
                         </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 my-5">
+            <div class="card shadow overflow-auto my-3" style="max-height: 900px;">
+                <div class="fw-lighter m-3 p-1">
+                    <div class="row">
+                        <div class="col-8 fs-4">My Stores</div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <div class="my-2">
+                                <div id="registerStorePopover"
+                                     data-bs-container="body"
+                                     data-bs-toggle="popover"
+                                     data-bs-placement="bottom"
+                                     data-bs-html="true"
+                                     data-bs-content="<a class='link-secondary m-1 link-underline-opacity-0' href='/owner/register'>Let's go register your store!</a>">
+                                    <i type="button" class="bi bi-plus-circle" style="color: #838383"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <c:if test="${not empty stores}">
+                        <ol class="list-group list-group-numbered">
+                            <c:forEach items="${stores}" var="store">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">${store.name}</div>
+                                        <c:choose>
+                                            <c:when test="${store.description.length() gt 50}">
+                                                ${store.description.substring(0, 50)} ...
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${store.description}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <i type="button" class="bi bi-pencil-square"></i>
+                                </li>
+                            </c:forEach>
+                        </ol>
+                    </c:if>
+                    <c:if test="${empty stores}">
+                        <p class="my-1">No stores registered yet.</p>
                     </c:if>
                 </div>
             </div>

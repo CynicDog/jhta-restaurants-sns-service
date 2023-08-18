@@ -16,7 +16,7 @@
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
-    <div class="row my-2 justify-content-center align-items-center">
+    <div class="row my-5 justify-content-center align-items-center">
         <div class="col-md-6">
             <div class="card shadow my-5">
                 <div class="fw-light text-center my-3">손님 회원 가입</div>
