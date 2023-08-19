@@ -8,7 +8,6 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter @Setter
 @Embeddable
 public class FollowCompositePrimaryKeys implements Serializable {
 
@@ -43,5 +42,13 @@ public class FollowCompositePrimaryKeys implements Serializable {
     public int hashCode() {
 
         return Objects.hash(followerId, followedId);
+    }
+
+    public int getFollowerId() {
+        return followerId;
+    }
+
+    public int getFollowedId() {
+        return followedId;
     }
 }
