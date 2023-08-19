@@ -2,10 +2,11 @@ package kr.co.jhta.restaurants_service.service;
 
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
-import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,24 +17,20 @@ public class SocialService {
     private final Logger logger = Logger.getLogger(SocialService.class);
 
     private final FollowsRepository followsRepository;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
-    public SocialService(FollowsRepository followsRepository, UserService userService) {
+    public SocialService(FollowsRepository followsRepository, UserRepository userRepository) {
         this.followsRepository = followsRepository;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
-    public List<Projection.User> getFollowersByCustomerId(int customerId) {
+    public List<Projection.User> getNonDisabledFollowersByCustomerIdOrderByCreateDate(int customerId, User.DISABLED disabled, Integer page, Integer limit) {
+
         return followsRepository
-                .findFollowsByCompositePrimaryKeys_FollowedId(customerId)
+                .findFollowsByCompositePrimaryKeys_FollowedIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit))
                 .stream()
                 .map(follow -> follow.getCompositePrimaryKeys().getFollowerId())
-                .map(followerId -> userService.findUserProjectionById(followerId))
+                .map(followerId -> userRepository.findUserProjectionByIdAndDisabled(followerId, disabled))
                 .collect(Collectors.toList());
-    }
-
-    public Page<Projection.User> getNonDisabledFollowersByCustomerIdOrderByCreateDate(int id, User.DISABLED disabled, Integer integer, Integer integer1) {
-
-        return null;
     }
 }

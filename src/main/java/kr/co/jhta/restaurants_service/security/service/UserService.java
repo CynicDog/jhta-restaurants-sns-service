@@ -46,11 +46,6 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
-    public Projection.User findUserProjectionById(int id) {
-        return userRepository.findUserProjectionById(id).orElse(null);
-    }
-
-
     public boolean existsDuplicateUsersByNickname(String nickname) {
 
         return userRepository.existsUserByNickname(nickname) ? true : false;

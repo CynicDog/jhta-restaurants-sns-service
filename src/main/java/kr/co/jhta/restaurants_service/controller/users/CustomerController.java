@@ -88,7 +88,7 @@ public class CustomerController {
                                                            @RequestParam("page") Optional<Integer> page,
                                                            @RequestParam("limit") Optional<Integer> limit) {
 
-        Page<Projection.User> users =
+        List<Projection.User> followers =
                 socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
                         securityUser.getUser().getId(),
                         User.DISABLED.NO,
@@ -96,7 +96,7 @@ public class CustomerController {
                         limit.orElse(10)
                 );
 
-        return ResponseEntity.of(Optional.ofNullable(socialService.getFollowersByCustomerId(securityUser.getUser().getId())));
+        return ResponseEntity.of(Optional.ofNullable(followers));
     }
 
     @ResponseBody

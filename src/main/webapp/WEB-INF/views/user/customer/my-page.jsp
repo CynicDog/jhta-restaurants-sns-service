@@ -213,21 +213,22 @@
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="fw-lighter fs-4">Followers</div>
+                        <div class="fw-lighter fs-4">Followers
+
+                            <div class="btn border border-0 disabled">
+                                <div id="followersLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                     style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
                         <button id="followersCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
                                 aria-label="Close"></button>
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <div class="btn border border-0 disabled">
-                    <div id="followersLoadingSpinner"
-                         class="spinner-border spinner-border-sm text-primary m-1" role="status" style="display: none;">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
-            <div id="followersOutputArea" class="my-2 p-1" style="max-height: 200px; overflow-y: auto;">
+            <div id="followersOutputArea" class="my-2 p-1" style="max-height: 400px; overflow-y: auto;">
             </div>
         </div>
     </div>
@@ -366,20 +367,23 @@
             isFollowerFetching = true;
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
-
-                if (data.totalElements === 0) {
+                if (data.length === 0) {
                     followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
 
-                isFollowerLast = data.last;
-                data.content.forEach(datum => {
+                // where 7 is the limit of the number of response on each request
+                if (data.length < 7) {
+                    isFollowerLast = true;
+                }
+
+                data.forEach(datum => {
                     followersOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium"> \${datum}</div>
-                                \${datum}
+                                <div class="fw-medium"> \${datum.nickname}</div>
+                                \${datum.email}
                             </div>
                         </div>
                     `
@@ -406,35 +410,7 @@
                 }
             })
 
-            // followersLoadingSpinner.style.display = 'block';
-            //
-            // fetch(`/customer/followers`, {
-            //     method: "GET"
-            // }).then(response => {
-            //     if (response.ok) {
-            //         followersLoadingSpinner.style.display = 'none';
-            //         return response.json()
-            //     }
-            // }).then(data => {
-            //     data.forEach(datum => {
-            //         followersOutputArea.innerHTML += `
-            //             <div class="row">
-            //                 <div class="col-12 my-1">
-            //                     <div class="d-flex align-items-start">
-            //                         <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-            //                         <p class="mx-2 my-1">\${datum.email}</p>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //     `;
-            //     });
-            // })
-
             followersToastBootstrap.show()
-        })
-
-        followersCloseButton.addEventListener("click", function () {
-            followersOutputArea.innerHTML = ''
         })
 
         const followingsToastButton = document.getElementById('followingsToastButton')
