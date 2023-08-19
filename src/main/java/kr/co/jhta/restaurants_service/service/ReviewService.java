@@ -95,8 +95,8 @@ public class ReviewService {
 		reviewCommentMapper.insertReviewComment(reviewComment);
 	}
 
-	public List<Review> getAllReviews() {
-		List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(0);
+	public List<Review> getAllReviews(int customerId) {
+		List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(customerId);
 		return reviews;
 	}
 
