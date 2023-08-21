@@ -185,6 +185,7 @@ html, body {
 			</div>
 			<div class="row">
 				<div class="col-md-8">
+				<c:forEach var="review" items="${reviewDto }">
 					<div class="card mb-3" style="border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
 						<div class="card-body">
 							<div class="row">
@@ -193,7 +194,7 @@ html, body {
 										<div class="ratio ratio-1x1">
 											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " alt="..."> 
 										</div>
-										<span style="font-size: medium; font-weight: bold;">정손님</span>
+										<span style="font-size: medium; font-weight: bold;">${review.customer.fullName }</span>
 										<p style="font-size: small; color: #adb5bd;">회원 등급</p>
 									</div>
 									<div class="text-center card-title my-1">
@@ -201,11 +202,10 @@ html, body {
 									</div>
 								</div>
 								<div class="col-10">
-									<c:forEach var="review" items="${reviews }">
 										<div class="row mb-2">
 											<div class="col-9">
 												<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-												<p class="col card-text">왁자지껄한 분위기에 날씨가 그리 춥지 않아서 그런지 문을 다 열어 두어서 뭔가 반 야장 같은 느낌을 즐길 수 있었다. 7시가 되면 돌아가는 미러볼과 음악도 차밍 포인트 중에 하나였다 ㅎㅎ
+												<p class="col card-text" onclick="location.href='/review/detail?reviewId=${param.reviewId }'">왁자지껄한 분위기에 날씨가 그리 춥지 않아서 그런지 문을 다 열어 두어서 뭔가 반 야장 같은 느낌을 즐길 수 있었다. 7시가 되면 돌아가는 미러볼과 음악도 차밍 포인트 중에 하나였다 ㅎㅎ
 																		 기본찬은 깻잎, 쌈무,묵은지, 갓김치로 그냥 먹기도 고기랑 함께 싸서 먹기도 좋은 구성이였다. 나중에 콩나물 무침도 나왔는데 양념과 참기름이 적절히 섞여있어 별미였고 쫄면으로 해 먹으면 참 맛있을 것 같았다.
 																		 컨디먼츠는 소금, 페페로치노, 홀그레인, 와사비로 역시 딱 깔끔한 구성이였다. 가장 궁금했던 요소 중 하나였던 칠링박스는 술을 주문하면 맥주 4병, 소주 2병 기본으로 나오는데 마신 만큼만 계산하는 시스템이였다. 칠링박스에 넣어두어서 그런지 계속해서 시원한 맥주를 마실 수 있었다.ㅎㅎㅎ</p>
 											</div>
@@ -259,11 +259,11 @@ html, body {
 									            </div>
 									        </div>
 									    </div>
-								   	</c:forEach>
 								</div>
 							</div>
 						</div>
 					</div>
+				</c:forEach>
 					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
 						<div class="card-body">
 							<div class="row">

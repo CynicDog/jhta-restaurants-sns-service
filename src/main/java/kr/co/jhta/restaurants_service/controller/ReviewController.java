@@ -74,6 +74,7 @@ public class ReviewController {
 //		log.info("리뷰 -> {}", dto.getReview().getRating());
 //		log.info("리뷰 -> {}", dto.getReview().getContent());
 //		log.info("리뷰 -> {}", dto.getReview().getStore().getAddress());
+		log.info("리뷰 -> {}", dto.getReviewRatingByCustomerId());
 		
 		return "reviewDetail";
 	}

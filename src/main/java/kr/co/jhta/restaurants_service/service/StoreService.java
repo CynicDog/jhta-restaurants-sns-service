@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
@@ -17,6 +18,7 @@ import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.mapper.FoodMapper;
+import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
 import kr.co.jhta.restaurants_service.vo.store.Food;
@@ -115,6 +117,7 @@ public class StoreService {
 		
 		return dto;
 	}
+	
   
 	public List<Store> getStoresByUserId(int userId) {
 		List<Store> stores = storeRepository.findStoresByOwnerId(userId);
