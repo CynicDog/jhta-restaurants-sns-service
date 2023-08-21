@@ -17,4 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Projection.Post> findPostsByCustomerIdAndBlockedOrderByCreateDate(
             int customerId, Post.BLOCKED blocked, Pageable pageable
     );
+
+    long countByCustomerId(int customerId);
 }

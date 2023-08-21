@@ -5,7 +5,6 @@ import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,16 @@ public class SocialService {
         this.userRepository = userRepository;
     }
 
+    public List<Projection.User> getNonDisabledFollowingsByCustomerIdOrderByCreateDate(int customerId, User.DISABLED disabled, Integer page, Integer limit) {
+
+        return followsRepository
+                .findFollowsByCompositePrimaryKeys_FollowerIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit))
+                .stream()
+                .map(follow -> follow.getCompositePrimaryKeys().getFollowedId())
+                .map(followedId -> userRepository.findUserProjectionByIdAndDisabled(followedId, disabled))
+                .collect(Collectors.toList());
+    }
+
     public List<Projection.User> getNonDisabledFollowersByCustomerIdOrderByCreateDate(int customerId, User.DISABLED disabled, Integer page, Integer limit) {
 
         return followsRepository
@@ -32,5 +41,13 @@ public class SocialService {
                 .map(follow -> follow.getCompositePrimaryKeys().getFollowerId())
                 .map(followerId -> userRepository.findUserProjectionByIdAndDisabled(followerId, disabled))
                 .collect(Collectors.toList());
+    }
+
+    public long getFollowersCountByCustomerId(int customerId) {
+        return followsRepository.countByCompositePrimaryKeys_FollowedId(customerId);
+    }
+
+    public long getFollowingsCountByCustomerId(Integer customerId) {
+        return followsRepository.countByCompositePrimaryKeys_FollowerId(customerId);
     }
 }
