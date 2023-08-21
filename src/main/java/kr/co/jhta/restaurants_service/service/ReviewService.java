@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.ReviewRepository;
+
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -88,6 +90,7 @@ public class ReviewService {
 	// 새 리뷰 답글 등록하기
 	public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
 		ReviewComment reviewComment = new ReviewComment();
+		
 		reviewComment.setContent(form.getContent());
 
 		Review review = reviewMapper.getReviewById(form.getReviewId());
