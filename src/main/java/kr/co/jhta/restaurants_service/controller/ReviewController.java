@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,21 +38,22 @@ public class ReviewController {
 	// 리뷰 등록화면
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping
-	public String review(Model model, @RequestParam int storeId ) {
+	public String review(Model model, @RequestParam("storeId") int storeId ) {
 		
 		return "review";
 	}
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewDataCommand form) {
+	public String reviewRegister(ReviewDataCommand form) throws IOException {
 	
 		reviewService.createReview(form);
 		log.info("리뷰 신규 등록 -> {}", form);
+		log.info("리뷰 키워드 -> {}", form.getReviewKeyword());
 //		log.info("가게 아이디-> {}", storeId);
 //		log.info("손님 아이디 -> {}", customerId);
 		
-		return "redirect:/store/detail";
+		return "redirect:/store/storeDetail?storeId=" + form.getStoreId();
 	}
 	
 	// 리뷰 답글 등록 요청 처리
