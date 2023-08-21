@@ -50,6 +50,11 @@ public class PostService {
 		List<Post> posts = postmapper.getAllPosts();
 		return posts;
 	}
+	
+	public List<Store> getStoresByKeyword(String keyword) {
+
+		return storeMapper.getStoreByName(keyword);
+    }
 
 	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
 
@@ -62,7 +67,7 @@ public class PostService {
 				.map(postDataCommand -> {
 					Store store = storeMapper.getStoreById(postDataCommand.getStoreId());
 					
-					File file = new File("REPACE_WITH_FILE_LOCATION");
+					File file = new File("REPLACE_WITH_FILE_LOCATION");
 
 			        byte[] bytes;
 					try {
