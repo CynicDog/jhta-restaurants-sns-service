@@ -63,6 +63,7 @@ public class PostService {
 		postDataCommands.stream()
 				.map(postDataCommand -> {
 					Store store = storeMapper.getStoreById(postDataCommand.getStoreId());
+          
 					return new PostData(post, store, postDataCommand.getContent(), postDataCommand.getChooseFile().getOriginalFilename());
 				})
 				.forEach(postData -> {
