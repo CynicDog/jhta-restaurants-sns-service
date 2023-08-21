@@ -59,24 +59,11 @@ public class PostService {
 	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
 
 		postmapper.insertPost(post);
-		
+
 		postDataCommands.stream()
 				.map(postDataCommand -> {
 					Store store = storeMapper.getStoreById(postDataCommand.getStoreId());
-					
-//					BlobId id = BlobId.of("jhta-restaurant-service", "post/" + postDataCommand.getChooseFile().getOriginalFilename());
-//			        BlobInfo blobInfo = BlobInfo.newBuilder(id).build();
-//			        
-//					File file = new File("REPLACE_WITH_FILE_LOCATION");
-//
-//			        byte[] bytes;
-//					try {
-//						bytes = Files.readAllBytes(Paths.get(file.toURI()));
-//						storage.create(blobInfo, bytes);
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-
+          
 					return new PostData(post, store, postDataCommand.getContent(), postDataCommand.getChooseFile().getOriginalFilename());
 				})
 				.forEach(postData -> {
