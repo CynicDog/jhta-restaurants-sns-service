@@ -16,6 +16,9 @@ public class ReviewDetailDto {
 	private Review review;
 	private List<ReviewKeyword> reviewKeywords;
 	private List<Review> reviewByCustomerId;
+	private double reviewRatingByCustomerId;
+	private double storeReviewAvg;
+	private List<Review> allReviewsByStoreId;
 	
 	public boolean isTaste() {
 		return reviewKeywords

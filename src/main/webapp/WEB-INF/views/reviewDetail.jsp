@@ -34,12 +34,12 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급) 평균별점" data-bs-content="Follow">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 						</a>
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p>
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p><span>${review.reviewRatingByCustomerId}</span>
 					</div>
 					<div class="col-8">
 						<div class="row float-end">

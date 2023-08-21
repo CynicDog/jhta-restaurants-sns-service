@@ -13,6 +13,7 @@ public interface ReviewMapper {
 	Review getReviewById(int id);
 	Review getReviewByCustomerId(int customerId);
 	Review getReviewByStoreId(int storeId);
+	List<Review> getAllReviewByStoreId(int storeId);
 	List<Review> getAllReviewsByCustomerId(int customerId);
 	
 }

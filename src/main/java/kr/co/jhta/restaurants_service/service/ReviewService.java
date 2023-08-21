@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
 
@@ -26,6 +27,7 @@ import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -100,7 +102,7 @@ public class ReviewService {
 		return reviews;
 	}
 
-	public ReviewDetailDto selectReview(int ReviewId) {
+	public ReviewDetailDto selectReview(int ReviewId){
 		ReviewDetailDto dto = new ReviewDetailDto();
 
 		Review review = reviewMapper.getReviewById(ReviewId);
@@ -109,15 +111,33 @@ public class ReviewService {
 
 		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(ReviewId);
 
-//		  List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
-//		  List<Review> ReviewByCustomerId = allReviewByCustomerId
-
+		List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
+		Double reviewRatingByCustomerId = allReviewByCustomerId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
+		
 		dto.setReview(review);
 		dto.setReviewKeywords(reviewKeyword);
+		dto.setReviewRatingByCustomerId(reviewRatingByCustomerId);
 
 		return dto;
 	}
+	
+	public ReviewDetailDto getReivewsByStoreId(int storeId) {
+		ReviewDetailDto reviewDto = new ReviewDetailDto();
 
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);
+		List<Review> getAllReviewByStoreId = getAllReviewsByStoreId.stream().map(
+				review -> {
+					review.setStore(storeMapper.getStoreById(storeId));
+					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
+					return review;
+				}).collect(Collectors.toList());
+		double allRatingByStoreId = getAllReviewByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
+		
+		reviewDto.setStoreReviewAvg(allRatingByStoreId);
+		reviewDto.setAllReviewsByStoreId(getAllReviewByStoreId);
+		
+		return reviewDto;
+	}
 
 //	  public List<Review> getAllReviews() {
 //		  List<Review> reviews= reviewMapper.getAllReviews();
