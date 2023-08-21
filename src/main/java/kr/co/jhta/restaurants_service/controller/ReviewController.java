@@ -59,7 +59,7 @@ public class ReviewController {
 		public String reviewCommentRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
 			reviewService.createReviewComment(form, securityUser);
 			
-			return "redirect:/store/storeDetail?storeId=" + storeId;
+			return "redirect:/store/detail?id=" + storeId;
 		}
 	
 	@GetMapping("/detail")

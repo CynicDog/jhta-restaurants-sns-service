@@ -76,8 +76,8 @@ public class StoreController {
 	}
 
 	
-	@GetMapping("/storeDetail")
-    public String detail(@RequestParam int storeId, Model model) {
+	@GetMapping("/detail")
+    public String detail(@RequestParam("id") int storeId, Model model) {
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDto = reviewService.getReivewsByStoreId(storeId);
         // 모델에 가게 정보를 추가합니다.
