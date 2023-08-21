@@ -68,14 +68,6 @@
 										</li>
 									</ul>
 								</nav>
-							<div class="d-flex justify-content-center">
-								<form id="form-pagination" class="" method="get" action="search">
-									<input type="hidden" name="sort" value="${param.sort }">
-									<input type="hidden" name="page" value="${param.page }">
-									<input type="hidden" name="category" value="${param.category }">
-									<input type="hidden" name="keyword" value="${param.keyword }">
-								</form>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -185,6 +177,28 @@
 				
 				infoOverlay[index].setMap(null);
 			})
+			
+			//가게 카드에 click 이벤트 리스너 등록
+// 			$("#div-stores").on('click', ".store", function(){
+// 				let storeId = '';
+// 				localStorage.setItem("id",storeId);
+// 				let result = localStorage.getItem("id");
+// 			})
+			
+			
+// 			// localStorage
+// 		$("#div-stores").click(function(event) {
+// // 			let url = '/store/storeDetail?storeId=25';
+			
+// 			console.log(".store clicked ");
+
+// 			let storeId = 'storeid4';
+// 			console.log("storeId: ", storeId);
+// 			localStorage.setItem("id",storeId);
+// 			 let result = localStorage.getItem("id");
+// 			console.log("result : ",result);
+// // 			window.location.href = url;
+// 		});
 		
 		function getResult() {
 			$("#div-stores").find(".store").remove();
@@ -206,7 +220,7 @@
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
-							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='detail'" style="cursor: pointer;">
+							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/storeDetail?storeId=25'" style="cursor: pointer;">
 								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">
@@ -448,6 +462,8 @@
 	      getResult();
           
         }
+        
+
 	</script>
 
 </body>
