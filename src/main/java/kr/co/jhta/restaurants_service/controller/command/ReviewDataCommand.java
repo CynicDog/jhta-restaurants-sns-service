@@ -17,7 +17,7 @@ public class ReviewDataCommand {
 	
 	private Integer rating;
 	private String content;
-	private MultipartFile chooseFile;
+	private MultipartFile[] chooseFile = new MultipartFile[10];
 	private List<String> reviewKeyword;
 	private Integer storeId;
 	private Integer userId;
