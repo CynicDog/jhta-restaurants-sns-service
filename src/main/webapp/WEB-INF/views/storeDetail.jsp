@@ -90,7 +90,7 @@ html, body {
 		                           <sec:authentication property="principal.user.id" var="loginId"/>
 		                           <c:if test="${store.owner.id ne loginId }">
 		                              <span class="my-2 float-end">
-		                                 <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
+		                                 <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 		                                    리뷰<i class="bi bi-brush"></i>
 		                                 </button>
 		                                 <button class="btn" id="box">
@@ -130,7 +130,7 @@ html, body {
 									<td>
 										<c:forEach var="food" items="${foods}">
 					                        <div class="col my-2">
-					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price"><c:out value="${food.price}"/>원</span>
+					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
 					                        </div>
 					                    </c:forEach>		
 									</td>
@@ -609,33 +609,26 @@ html, body {
 	});
 	
 	// localStorage에 가게 id저장
-    let storeId = `${param.id}`
-      /* if (storeId) {
-         console.log("storeId : ", storeId)
+    let store_id = `${param.id}`
+       if (store_id) {
+         
          let value = localStorage.getItem("store_history");
-         console.log("value : ", value)
          let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
-         console.log("store_history : ", store_history)
          
          if(store_history!=null){
-            let exist = store_history.includes(storeId);
-            console.log("exist : ", exist);
+            let exist = store_history.includes(store_id);
             
             if (!exist) {
-               store_history.unshift(storeId);
-               console.log("store_history : ", store_history);
+               store_history.unshift(store_id);
             }
          } else {
             store_history = [];
-            store_history.unshift(storeId);
-            console.log("new store_history : ", store_history);
+            store_history.unshift(store_id);
          }
-         console.log("store_history : ",store_history)
          value = JSON.stringify(store_history);
-         console.log("value : ", value);
          localStorage.setItem("store_history",value);
          
-      } */
+      } 
     const daysArea = document.getElementById('daysArea')
     const daysMap = {
     	  Mon: false,
@@ -647,7 +640,7 @@ html, body {
     	  Sun: false 
     }
    
-      const days = fetch(`/store/open-times?id=\${storeId}`, {
+      const days = fetch(`/store/open-times?id=\${store_id}`, {
     	    method: "GET"
     	})
     	.then(response => {
