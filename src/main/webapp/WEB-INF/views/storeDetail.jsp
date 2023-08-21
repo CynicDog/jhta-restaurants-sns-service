@@ -86,14 +86,17 @@ html, body {
 								</p>
 							</div>
 							<div class="col-4">
-								<span class="my-2 float-end">
-									<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
-										리뷰<i class="bi bi-brush"></i>
-									</button>
-									<button class="btn" id="box">
-										<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
-									</button>
-								</span>
+								<sec:authentication property="principal.user.id" var="loginId"/>
+								<c:if test="${store.owner.id ne loginId }">
+									<span class="my-2 float-end">
+										<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
+											리뷰<i class="bi bi-brush"></i>
+										</button>
+										<button class="btn" id="box">
+											<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+										</button>
+									</span>
+								</c:if>
 							</div>
 						</div>
 						<div class="row">
@@ -124,7 +127,6 @@ html, body {
 					                    </c:forEach>
 					                </td>
 								</tr>
-
 								<tr>
 									<th><i class="bi bi-calendar-week"></i><span class="fw-lighter mx-2">휴일</span></th>
 									<td></td>
@@ -259,11 +261,11 @@ html, body {
 									            </div>
 									        </div>
 									    </div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
 					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
 						<div class="card-body">
 							<div class="row">
