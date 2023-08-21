@@ -127,4 +127,9 @@ public class StoreService {
 		return storeRepository.findStoresByOwnerId(userId);
 	}
 
+	public List<StoreOpenTime> getStoreOpenTimesById(int storeId) {
+		
+		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
+	}
+
 }

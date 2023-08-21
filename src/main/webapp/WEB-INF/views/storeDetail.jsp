@@ -60,7 +60,7 @@ html, body {
 				                    <p style="font-size: small; color: #adb5bd;">회원 등급</p>
 				                </div>
 				                <div class="p-2 ml-auto">
-				                    <span class="badge text-bg-success fw-lighter">맛있어요!</span>
+				                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
 				                </div>
 				            </div>
 				            <div>
@@ -86,17 +86,19 @@ html, body {
 								</p>
 							</div>
 							<div class="col-4">
-								<sec:authentication property="principal.user.id" var="loginId"/>
-								<c:if test="${store.owner.id ne loginId }">
-									<span class="my-2 float-end">
-										<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
-											리뷰<i class="bi bi-brush"></i>
-										</button>
-										<button class="btn" id="box">
-											<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
-										</button>
-									</span>
-								</c:if>
+								<sec:authorize access="isAuthenticated()">
+		                           <sec:authentication property="principal.user.id" var="loginId"/>
+		                           <c:if test="${store.owner.id ne loginId }">
+		                              <span class="my-2 float-end">
+		                                 <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
+		                                    리뷰<i class="bi bi-brush"></i>
+		                                 </button>
+		                                 <button class="btn" id="box">
+		                                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+		                                 </button>
+		                              </span>
+		                           </c:if>
+		                        </sec:authorize>
 							</div>
 						</div>
 						<div class="row">
@@ -119,19 +121,10 @@ html, body {
 								</tr>
 								<tr>
 								    <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
-								    <td>
-					                    <c:forEach var="time" items="${storeOpenTimes}">
-					                    	<div>
-					                        	<span class="d-inline-block" style="width: 50px;"><c:out value="${time.day }"/></span> <span><c:out value="${time.openTime}"/> ~ <c:out value="${time.closeTime}"/></span>
-					                        </div>
-					                    </c:forEach>
+								    <td id="daysArea">
+					                    				
 					                </td>
 								</tr>
-								<tr>
-									<th><i class="bi bi-calendar-week"></i><span class="fw-lighter mx-2">휴일</span></th>
-									<td></td>
-								</tr>
-
 								<tr>
 									<th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
 									<td>
@@ -288,7 +281,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter">괜찮아요!</span>
+											<span class="badge bg-success-subtle text-success-emphasis rounded-pill">괜찮아요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -326,7 +319,7 @@ html, body {
 									        </div>
 									    </div>
 									</form>
-									<div class="row">
+									<div class="row" id="ownerComment" style="display: none;">
 										<div class="col">
 											<div class="card">
 												<div class="card-body">
@@ -362,7 +355,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter">별로에요!</span>
+											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">별로에요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -453,6 +446,7 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
+	
 	var container = document.getElementById('map');
 	var options = {
 		// latitude,longitude 순으로 입력
@@ -597,12 +591,96 @@ html, body {
 	});
 	
 	const commentButton = document.getElementById('comment');
-    const cardAndTextarea = document.getElementById('cardAndTextarea');
+	const cardAndTextarea = document.getElementById('cardAndTextarea');
+	const ownerComment = document.getElementById('ownerComment');
 
-    // '답글' 버튼에 클릭 이벤트 리스너 추가
-    commentButton.addEventListener('click', () => {
-        cardAndTextarea.style.display = 'block';
-    });
+	// '답글' 버튼에 클릭 이벤트 리스너 추가
+	commentButton.addEventListener('click', () => {
+	    cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
+	    ownerComment.style.display = 'none';     // 리뷰 답글 영역 숨김
+	});
+
+	const submitButton = document.getElementById('button-addon2');
+
+	// '리뷰 작성' 버튼에 클릭 이벤트 리스너 추가
+	submitButton.addEventListener('click', () => {
+	    cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
+	    ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
+	});
+	
+	// localStorage에 가게 id저장
+    let storeId = `${param.id}`
+      /* if (storeId) {
+         console.log("storeId : ", storeId)
+         let value = localStorage.getItem("store_history");
+         console.log("value : ", value)
+         let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
+         console.log("store_history : ", store_history)
+         
+         if(store_history!=null){
+            let exist = store_history.includes(storeId);
+            console.log("exist : ", exist);
+            
+            if (!exist) {
+               store_history.unshift(storeId);
+               console.log("store_history : ", store_history);
+            }
+         } else {
+            store_history = [];
+            store_history.unshift(storeId);
+            console.log("new store_history : ", store_history);
+         }
+         console.log("store_history : ",store_history)
+         value = JSON.stringify(store_history);
+         console.log("value : ", value);
+         localStorage.setItem("store_history",value);
+         
+      } */
+    const daysArea = document.getElementById('daysArea')
+    const daysMap = {
+    	  Mon: false,
+    	  Tue: false, 
+    	  Wed: false, 
+    	  Thu: false, 
+    	  Fri: false, 
+    	  Sat: false, 
+    	  Sun: false 
+    }
+   
+      const days = fetch(`/store/open-times?id=\${storeId}`, {
+    	    method: "GET"
+    	})
+    	.then(response => {
+    	    if (response.ok) {
+    	        return response.json(); 
+    	    }
+    	})
+    	.then(data => {
+    	    data.map(datum => {
+    	        daysArea.innerHTML += `
+    	            <div>
+    	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
+    	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
+    	            </div>
+    	        `;
+    	        daysMap[datum.day] = true; 
+    	        return datum; 
+    	    });
+    	})
+    	.then(data => {
+    	    Object.keys(daysMap)
+    	        .filter(day => !daysMap[day])
+    	        .forEach(daysOff => {
+    	            console.log(daysOff);
+    	            daysArea.innerHTML += `
+    	                <div>
+    	                    <span class="d-inline-block" style="width: 50px;"> \${daysOff}</span>
+    	                    <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"> 쉬는날</span>
+    	                </div>
+    	            `;
+    	        });
+    	});
+	    
 </script>
 </body>
 </html>
