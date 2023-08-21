@@ -23,4 +23,6 @@ public interface StoreMapper {
 	
 	int getTotalRows(Map<String,Object> param);
 	
+	List<Store> getStoreByName(String keyword);
+	
 }

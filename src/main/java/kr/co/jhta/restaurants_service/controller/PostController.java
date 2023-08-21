@@ -53,12 +53,12 @@ public class PostController {
 		return "post/register";
 	}
 	
+	
 	@ResponseBody
-	@PostMapping("/getStores")
-	public ResponseEntity<List<Store>> getStores(@RequestParam("keyword") String keyword){
-		List<Store> stores = storeService.getAllStores();
-		return ResponseEntity.ok(stores);
-	}
+	@GetMapping("/getStores")
+    public List<Store> getStores(@RequestParam String keyword) {
+        return postService.getStoresByKeyword(keyword);
+    }
 	
 
 	@SuppressWarnings("unchecked")

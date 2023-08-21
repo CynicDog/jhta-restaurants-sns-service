@@ -100,9 +100,10 @@
                                             </div>
                                             <div class="col-8">
                                                 <div class="form-floating searchInput">
-                                                    <input type="text" id="storeIdInput" class="form-control-plaintext mb-4"
-                                                          name="storeId">
-				                                    <div class="resultBox"><!-- here list are inserted from javascript --></div>
+                                                    <input type="text" id="storeNameInput" class="form-control-plaintext mb-4"
+                                                          name="storeName">
+                                                    <input type="hidden" name="storeId" id="storeIdInput">
+				                                    <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
                                                     <label for="storeIdInput">가게명을 작성해주세요 :)</label>
                                                 </div>
                                                 <div class="form-floating">
@@ -429,7 +430,64 @@
     	  }
     }
     
-    let suggestions = [
+    const searchInput = document.querySelector(".searchInput");
+    const input = searchInput.querySelector("input");
+    const resultBox = searchInput.querySelector(".resultBox");
+    const icon = searchInput.querySelector(".icon");
+    let linkTag = searchInput.querySelector("a");
+    let webLink;
+
+    function select(element) {
+    	let selectedStoreId = element.getAttribute("data-store-id"); // 선택한 가게의 id를 가져옴
+        let selectedStoreName = element.textContent; // 선택한 가게의 이름을 가져옴
+        
+        // 해당 가게의 이름과 id를 input 엘리먼트에 설정
+        document.getElementById("storeNameInput").value = selectedStoreName;
+        document.getElementById("storeIdInput").value = selectedStoreId;
+        
+        searchInput.classList.remove("active");
+	    /* let selectData = element.textContent;
+	    input.value = selectData;
+	    storeIdInput.value = selectData;
+	    searchInput.classList.remove("active"); */
+	}
+
+	input.onkeyup = (e) => {
+	    let userData = e.target.value;
+	    
+	    $.getJSON("getStores", {keyword:userData}, function(stores) {
+		    let emptyArray = [];
+		    if (stores.length) {
+
+		        emptyArray = stores.map((store) => {
+		            return `<li class="list-group-item" data-store-id="\${store.id}">\${store.name}</li>`;
+		        });
+		        searchInput.classList.add("active");
+		        showSuggestions(emptyArray);
+		        let allList = resultBox.querySelectorAll("li");
+		        for (let i = 0; i < allList.length; i++) {
+		            allList[i].setAttribute("onclick", "select(this)");
+		        }
+		    } else {
+		        searchInput.classList.remove("active");
+		    }
+	    	
+	    })
+	    
+	};
+	
+
+    function showSuggestions(list){
+        let listData;
+        if(!list.length){
+        	 resultBox.innerHTML = '';
+        }else{
+            listData = list.join('');
+        }
+        resultBox.innerHTML = listData;
+    }
+    
+    /* let suggestions = [
     	"25",
         "Channel",
         "CodingLab",
@@ -457,61 +515,7 @@
         "How to start YouTube Channel",
         "What does HTML stands for?",
         "What does CSS stands for?",
-    ];
-
-    const searchInput = document.querySelector(".searchInput");
-    const input = searchInput.querySelector("input");
-    const resultBox = searchInput.querySelector(".resultBox");
-    const icon = searchInput.querySelector(".icon");
-    let linkTag = searchInput.querySelector("a");
-    let webLink;
-
-    function select(element) {
-	    let selectData = element.textContent;
-	    input.value = selectData;
-	    searchInput.classList.remove("active");
-	}
-
-	input.onkeyup = (e) => {
-	    let userData = e.target.value;
-	    
-	    $.getJSON("/getStores", {keyword:userData}, function(stores) {
-	    	// stores - [{id:10, name:"소담짐"}, {id:11, name:"돈까스우찌"}]
-		    let emptyArray = [];
-		    if (userData) {
-		        emptyArray = suggestions.filter((data) => {
-		            return data.name.toLowerCase().startsWith(userData.toLowerCase());
-		        });
-		        emptyArray = emptyArray.map((data) => {
-		            return `<li data-store-id="\${store.id}">\${store.name}</li>`;
-		        });
-		        searchInput.classList.add("active");
-		        showSuggestions(emptyArray);
-		        let allList = resultBox.querySelectorAll("li");
-		        for (let i = 0; i < allList.length; i++) {
-		            allList[i].setAttribute("onclick", "select(this)");
-		        }
-		    } else {
-		        searchInput.classList.remove("active");
-		    }
-	    	
-	    })
-	    
-	};
-	
-
-    function showSuggestions(list){
-        let listData;
-        if(!list.length){
-            userValue = inputBox.value;
-            listData = '<li>'+ userValue +'</li>';
-        }else{
-            listData = list.join('');
-        }
-        resultBox.innerHTML = listData;
-    }
-    
-    
+    ]; */
 	/* input.addEventListener("keydown", (e) => {
 	    const allList = resultBox.querySelectorAll("li");
 	    let activeElement = document.activeElement;
