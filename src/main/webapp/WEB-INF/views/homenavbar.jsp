@@ -34,14 +34,60 @@
 <!-- 모달 -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog z-3" style="position: fixed; right: 10px; top: 25px; width: 250px;">
+			<div class="modal-dialog z-3" style="position: fixed; right: 10px; top: 25px; width: 320px;">
 				<div class="modal-content">
-					<div class="modal-header">
-						<h1 class="modal-title fs-5" id="exampleModalLabel">북마크</h1>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<ul class="nav nav-pills" id="bookmarkTab" role="tablist">
+					<li class="nav-item">
+					<a class="nav-link active" id="history-tab"
+						data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">최근 본 맛집</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link" id="bookmark-tab"
+						data-toggle="tab" href="#bookmark" role="tab" aria-controls="bookmark" aria-selected="false">가고싶은 맛집</a>
+						</li>
+
+				</ul>
+				<div class="tab-content" id="bookmarkTabContent">
+					<div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
+						<div class="card mb-3">
+						  <div class="row g-0">
+						    <div class="col-md-4">
+						      <img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+						    </div>
+						    <div class="col-md-8">
+						      <div class="card-body">
+						        <h5 class="card-title">Card title</h5>
+						        <p class="card-text">This is a  card </p>
+						        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<div class="card mb-3">
+						  <div class="row g-0">
+						    <div class="col-md-4">
+						      <img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+						    </div>
+						    <div class="col-md-8">
+						      <div class="card-body">
+						        <h5 class="card-title">Card title</h5>
+						        <p class="card-text">This is a  card </p>
+						        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+						      </div>
+						    </div>
+						    
+						  </div>
+						</div>
 					</div>
-					<div class="modal-body"></div>
-					<div class="modal-footer"></div>
+					<div class="tab-pane fade" id="bookmark" role="tabpanel"
+						aria-labelledby="bookmark-tab">
+						<p>이곳에 두 번째 탭의 내용을 입력하세요.</p>
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer"></div>
 				</div>
 			</div>
 		</div>
@@ -109,7 +155,21 @@
 				    </div>
 				</div>
     		</div>
+    		
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  		
     <script>
+			
+    
+//     	Bookmark
+	    $(document).ready(function () {
+	        $('#bookmarkTab a').click(function (e) {
+	            e.preventDefault();
+	            $(this).tab('show');
+	        });
+	    });
+    
         function toggleDarkMode() {
             const htmlElement = document.querySelector('html');
             if (htmlElement.getAttribute('data-bs-theme') === 'dark') {
