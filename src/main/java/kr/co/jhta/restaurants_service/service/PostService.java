@@ -125,4 +125,8 @@ public class PostService {
 
 		return postsPaginated;
     }
+
+    public long getPostsCountByCustomerId(Integer customerId) {
+		return postRepository.countByCustomerId(customerId);
+    }
 }

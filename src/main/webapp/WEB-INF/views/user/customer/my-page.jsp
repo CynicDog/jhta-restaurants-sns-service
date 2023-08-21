@@ -35,17 +35,17 @@
                     <div class="row my-2">
                         <div class="col text-end">
                             <div id="followersToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 followers
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
+                                    ${followersCount}
                                 </span>
                             </div>
                             <div id="followingsToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 followings
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
+                                    ${followingsCount}
                                 </span>
                             </div>
                         </div>
@@ -93,17 +93,17 @@
                     <div class="row">
                         <div class="col text-end">
                             <div id="postsToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 posts
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
+                                    ${postsCount}
                                 </span>
                             </div>
                             <div id="reviewsToastButton" type="button"
-                                 class="badge text-bg-secondary position-relative mx-2">
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 reviews
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
+                                    ${reviewsCount}
                                 </span>
                             </div>
                         </div>
@@ -238,10 +238,21 @@
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="fw-lighter fs-4">Followings</div>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        <div class="fw-lighter fs-4">Followings
+                            <div class="btn border border-0 disabled">
+                                <div id="followingsLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                     style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="followingsCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
                     </div>
                 </div>
+            </div>
+            <div id="followingsOutputArea" class="my-2 p-1" style="max-height: 400px; overflow-y: auto;">
             </div>
         </div>
     </div>
@@ -294,6 +305,13 @@
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
+        const followingsToastButton = document.getElementById('followingsToastButton')
+        const followingsLoadingSpinner = document.getElementById('followingsLoadingSpinner')
+        const followingsCloseButton = document.getElementById('followingsCloseButton');
+
+        let followingsToast = document.getElementById('followingsToast')
+        let followingsOutputArea = document.getElementById('followingsOutputArea');
+
         const postsToastButton = document.getElementById('postsToastButton')
         const postsLoadingSpinner = document.getElementById('postsLoadingSpinner')
         let postsToast = document.getElementById('postsToast')
@@ -307,6 +325,10 @@
         let pageOnFollower = 0
         let isFollowerFetching = false;
         let isFollowerLast = false;
+
+        let pageOnFollowing = 0
+        let isFollowingFetching = false;
+        let isFollowingLast = false;
 
         let pageOnPost = 0
         let isPostFetching = false;
@@ -382,8 +404,8 @@
                     followersOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium"> \${datum.nickname}</div>
-                                \${datum.email}
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill"> \${datum.nickname}</div>
+                                <div>\${datum.email}</div>
                             </div>
                         </div>
                     `
@@ -413,7 +435,63 @@
             followersToastBootstrap.show()
         })
 
-        const followingsToastButton = document.getElementById('followingsToastButton')
+        const getFollowings = page => {
+            return fetch(`/customer/followings?page=\${page}&limit=7`).then(response => response.json());
+        }
+
+        function fetchAndRenderFollowings(page) {
+            if (isFollowingFetching || isFollowingLast) {
+                return;
+            }
+            isFollowingFetching = true;
+            followingsLoadingSpinner.style.display = 'block';
+            getFollowings(page).then(data => {
+                if (data.length === 0) {
+                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings yet.</span>`
+                    followingsLoadingSpinner.style.display = 'none'
+                    isFollowingFetching = false;
+                }
+
+                // where 7 is the limit of the number of response on each request
+                if (data.length < 7) {
+                    isFollowingLast = true;
+                }
+
+                data.forEach(datum => {
+                    followingsOutputArea.innerHTML += `
+                        <div class="shadow border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill"> \${datum.nickname}</div>
+                                <div>\${datum.email}</div>
+                            </div>
+                        </div>
+                    `
+                    followingsLoadingSpinner.style.display = 'none'
+                    isFollowingFetching = false;
+                })
+            })
+        }
+
+        followingsToastButton.addEventListener("click", function () {
+            const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
+
+            // initial loading
+            fetchAndRenderFollowings(pageOnFollowing)
+
+            // infinite scrolling (scroll pagination)
+            followingsOutputArea.addEventListener('scroll', function() {
+                const scrollPos = this.scrollTop + this.clientHeight;
+                const scrollHeight = this.scrollHeight
+
+                if (scrollPos === scrollHeight) {
+                    pageOnFollowing += 1;
+                    fetchAndRenderFollowings(pageOnFollowing)
+                }
+            })
+
+            followingsToastBootstrap.show()
+        })
+
         followingsToastButton.addEventListener("click", function () {
             let followingsToast = document.getElementById('followingsToast')
             const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)

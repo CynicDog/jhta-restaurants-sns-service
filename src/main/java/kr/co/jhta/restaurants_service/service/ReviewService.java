@@ -162,4 +162,8 @@ public class ReviewService {
 	}
 
 
+	public long getReviewsCountByCustomerId(Integer customerId) {
+
+		return reviewRepository.countByCustomerId(customerId);
+	}
 }
