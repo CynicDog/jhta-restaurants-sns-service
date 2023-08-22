@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
+import kr.co.jhta.restaurants_service.dto.VisitedStore;
+import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +78,26 @@ public class StoreController {
 
 		return "search";
 	}
+	
+	@GetMapping("/bookmark")
+	@ResponseBody
+	public List<BookmarkedStore> searchBookmark(Integer customerId) {
+		List<BookmarkedStore> stores = storeService.getBookmarkedStore(customerId);
+		return stores;
+	}
+	
+	@GetMapping("/history")
+	@ResponseBody
+	public List<VisitedStore> searchHistory(@RequestParam("id") List<Integer> storeIds){
+		log.info("-----------------------------storeId='{}'", storeIds);
 
+		List<VisitedStore> stores = storeService.getVisitedStore(storeIds);
+
+		log.info("-----------------------------컨트롤러 history stores='{}'", stores);
+
+		return stores;
+				
+	}
 	
 	@GetMapping("/detail")
     public String detail(@RequestParam("id") int storeId, Model model) {

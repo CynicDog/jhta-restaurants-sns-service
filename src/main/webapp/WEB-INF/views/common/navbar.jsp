@@ -37,148 +37,60 @@
 				<div class="tab-content" id="bookmarkTabContent">
 					<div class="tab-pane fade show active" id="history" role="tabpanel"
 						aria-labelledby="history-tab">
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+<!-- 						<div class="card mb-3"> -->
+<!-- 							<div class="row g-0"> -->
+<!-- 								<div class="col-md-4"> -->
+<!-- 									<img src="/resources/image/cafe1.jpg" -->
+<!-- 										class="img-fluid rounded-start" alt="..."> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-md-8"> -->
+<!-- 									<div class="card-body"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="col-9"> -->
+<!-- 												<p class="card-title">맛있는 식당</p> -->
+<!-- 												<p class="card-text"><small class="text-body-secondary">한식</small></p> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-3 d-flex justify-content-center "> -->
+<!-- 												<button class="btn" id="box"> -->
+<!-- 													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i> -->
+<!-- 												</button> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+
+
+					
 
 					</div>
 					<div class="tab-pane fade" id="bookmark" role="tabpanel"
 						aria-labelledby="bookmark-tab">
-						<div class="card mb-3">
-							<div class="row g-0">
-								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg"
-										class="img-fluid rounded-start" alt="...">
-								</div>
-								<div class="col-md-8">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-9">
-												<p class="card-title">맛있는 식당</p>
-												<p class="card-text"><small class="text-body-secondary">한식</small></p>
-											</div>
-											<div class="col-3 d-flex justify-content-center ">
-												<button class="btn" id="box">
-													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+<!-- 						<div class="card mb-3"> -->
+<!-- 							<div class="row g-0"> -->
+<!-- 								<div class="col-md-4"> -->
+<!-- 									<img src="/resources/image/cafe1.jpg" -->
+<!-- 										class="img-fluid rounded-start" alt="..."> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-md-8"> -->
+<!-- 									<div class="card-body"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="col-9"> -->
+<!-- 												<p class="card-title">맛있는 식당</p> -->
+<!-- 												<p class="card-text"><small class="text-body-secondary">한식</small></p> -->
+<!-- 											</div> -->
+<!-- 											<div class="col-3 d-flex justify-content-center "> -->
+<!-- 												<button class="btn" id="box"> -->
+<!-- 													<i id="star" class="bi bi-star" style="color: gold; font-size: 25px;"></i> -->
+<!-- 												</button> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>
@@ -224,9 +136,9 @@
 	                           "
 	                        >Signup</a>
 	                    </li>
-	                        <li class="nav-item">
-	                            <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="">Bookmark</a>
-	                        </li>
+                        <li class="nav-item">
+                            <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="">Bookmark</a>
+                        </li>
 	                    
 	                    <script>
 	                        new bootstrap.Popover(document.querySelector('#signupPopover'))
@@ -252,45 +164,113 @@
 	    </div>	
 	<script>
 	
-		$('.bi-star').click(function() {
+		//bookmark star click listener
+		$(".modal-body").on('click', '[id^="star-"]', function(){
 			if ($(this).hasClass('bi-star-fill')) {
 				$(this).removeClass('bi-star-fill').addClass('bi-star')
+				
 			} else {
+				let bookmarkId = $(this).attr('index-id');
+					console.log("star id : ", bookmarkId);
 				$(this).removeClass('bi-star').addClass('bi-star-fill')
+				$.getJSON('../bookmark', {customerId : 4, storeId : bookmarkId}, function() {
+				});
 			}
-		})
-		//Bookmark
-		$(document).ready(function () {
-		    $('#bookmarkTab a').click(function (e) {
-		        e.preventDefault();
-		        $(this).tab('show');
-		    });
 		});
 		
-		let storeId = `${param.storeId}`
-		console.log("storeId : ", storeId)
-		let value = localStorage.getItem("page_history");
-		console.log("value : ", value)
-		let page_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
-		console.log("page_history : ", page_history)
+		//Bookmark
+	    $('#bookmarkTab a').click(function(e) {
+	        e.preventDefault();
+	        $(this).tab('show');
+	    });
 		
-		if(page_history!=null){
-			let exist = page_history.includes(storeId);
-			console.log("exist : ", exist);
+		  $("#customerBookmark").click(function() {
+			  
+			//방문한 가게 불러오기
+			let histories = JSON.parse(localStorage.getItem("store_history"));
+			let data = histories.map(function(storeId) {
+				return "id=" + storeId;
+			}).join("&");
+			console.log("data : ",data);
+			  
+			$("#history").find(".history_card").remove();
+			$.getJSON('history',  data, function(stores) {
+				console.log("ajax succeed");
+	
+				// html 태그 생성
+				stores.forEach(function(store){
+				console.log("result stores : ", store.id);
+				let content = `
+					<div class="card history_card mb-3">
+						<div class="row g-0">
+							<div class="col-md-4">
+								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+							</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-9">
+										<p class="card-title">\${store.name}</p>
+										<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
+									</div>
+									<div class="col-3 star-container d-flex justify-content-center ">
+										<button class="btn" id="box-\${store.id}"> 
+											<i id="star-\${store.id}" index-id ="\${store.id}" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				`;
+				$("#history").append(content);
+					
+				})
+			})
 			
-			if (!exist) {
-				page_history.unshift(storeId);
-				console.log("page_history : ", page_history);
-			}
-		}else{
-			page_history = [];
-			page_history.unshift(storeId);
-			console.log("new page_history : ", page_history);
-		}
-		console.log("page_history : ",page_history)
-		value = JSON.stringify(page_history);
-		console.log("value : ", value);
-		localStorage.setItem("page_history",value);
+			//북마크 가게 불러오기
+			$("#bookmark").find(".bookmark_card").remove();
+			$.getJSON('bookmark',  {customerId : 4}, function(stores) {
+				console.log("ajax succeed");
+	
+				// html 태그 생성
+				stores.forEach(function(store){
+				console.log("result stores : ", store.id);
+				
+				let content = `
+						<div class="card bookmark_card mb-3">
+							<div class="row g-0">
+								<div class="col-md-4">
+									<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+								</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-9">
+											<p class="card-title">\${store.name}</p>
+											<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
+										</div>
+										<div class="col-3 star-container d-flex justify-content-center ">
+											<button class="btn" id="box-\${store.id}"> 
+												<i id="star-\${store.id}" index-id ="\${store.id}" class="bi bi-star" style="color: gold; font-size: 25px;"></i>
+											</button>
+										</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					`;
+					$("#bookmark").append(content);
+					})
+				})
+		  });
+		
+		
+
+		
+		
 		
 	</script>
 	</nav>

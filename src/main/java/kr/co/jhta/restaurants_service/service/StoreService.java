@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import kr.co.jhta.restaurants_service.dto.Pagination;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
+import kr.co.jhta.restaurants_service.dto.VisitedStore;
+import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.mapper.FoodMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
@@ -24,6 +26,7 @@ import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
 import kr.co.jhta.restaurants_service.vo.store.Food;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,6 +128,23 @@ public class StoreService {
 			log.info(store.getName());
 		});
 		return storeRepository.findStoresByOwnerId(userId);
+	}
+
+	public List<BookmarkedStore> getBookmarkedStore(Integer customerId) {
+		List<BookmarkedStore> stores = storeMapper.getBookmarkedStoresByUserId(customerId);
+
+		log.info("가게서비스 getBookmarkedStore : ", stores);
+		
+		return stores;
+	}
+
+	public List<VisitedStore> getVisitedStore(List<Integer> storeIds) {
+		log.info("가게서비스 getVisitedStore : '{}'",storeIds);
+
+		List<VisitedStore> stores = storeMapper.getVisitedStoresById(storeIds);
+		log.info("가게서비스 getVisitedStore 결과 : '{}'",stores);
+
+		return stores;
 	}
 
 }

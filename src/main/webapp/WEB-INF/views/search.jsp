@@ -220,7 +220,7 @@
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
 					let content = `
 						<div class="col-5 mb-3 me-3 store">
-							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/storeDetail?storeId=25'" style="cursor: pointer;">
+							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
 								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">

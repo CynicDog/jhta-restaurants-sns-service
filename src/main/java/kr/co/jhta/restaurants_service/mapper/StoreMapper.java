@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
+import kr.co.jhta.restaurants_service.dto.VisitedStore;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 
 @Mapper
@@ -16,6 +19,10 @@ public interface StoreMapper {
 	List<SearchedStore> getStores(Map<String,Object> param);
 	
 	Store getStoreById(int storeId);
+	
+	List<VisitedStore> getVisitedStoresById(@Param("storeIds") List<Integer> storeIds);
+	
+	List<BookmarkedStore> getBookmarkedStoresByUserId(int customerId);
 	
 	void updateStore(Store store);
 	
