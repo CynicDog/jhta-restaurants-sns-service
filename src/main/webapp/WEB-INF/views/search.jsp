@@ -9,6 +9,12 @@
 	<title>맛집 검색결과</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		   .card-zoom:hover {
+            transform: scale(1.05); /* 마우스를 올렸을 때 이미지를 확대 */
+            transition: transform 0.2s ease-in-out; /* 부드러운 확대 효과를 위한 트랜지션 */
+        }
+	</style>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -98,108 +104,86 @@
 		<%@ include file="common/footer.jsp"%>
 	</div>
 	<script type="text/javascript">
-			let sortValue = "rating"; 
-			let pageValue = 1; 
-			let categoryValue;
-			let keywordValue;
-			if($("input[name=keyword]").val()!=null){
-				keywordValue = $("input[name=keyword]").val();
-			}
-			let xStartValue;
-			let xEndValue;
-			let yStartValue;
-			let yEndValue;
-						
+		let sortValue = "rating"; 
+		let pageValue = 1; 
+		let categoryValue;
+		let keywordValue;
+		if($("input[name=keyword]").val()!=null){
+			keywordValue = $("input[name=keyword]").val();
+		}
+		let xStartValue;
+		let xEndValue;
+		let yStartValue;
+		let yEndValue;
+					
+		getResult();
+		
+		function changePage(event,page){
+			event.preventDefault();
+			
+			pageValue = page;
+			console.log("pageValue : " + pageValue);
+			
 			getResult();
 			
-			function changePage(event,page){
-				event.preventDefault();
-				
-				pageValue = page;
-				console.log("pageValue : " + pageValue);
-				
-				getResult();
-				
-			}
-			
-			//	카테고리 변경 이벤트 등록
-			$(".cat").click(function(event){
-				event.preventDefault();
-				$(this).siblings().removeClass('active');
-				$(this).addClass('active');
-				
-				categoryValue = $(this).attr("id");
-				pageValue = 1;
-			
-				getResult();
-			})
-			
-			// 이전/다음 페이지 버튼 눌렀을 때의 이벤트 등록
-			$(".page-move").click(function(event) {
-				console.log("page-move clicked");
-				event.preventDefault();
-
-				let id = $(this).attr("id");
-				console.log("id : {} ", id);
-
-				if(id ==='prepage'){
-					pageValue--;
-				}else{
-					pageValue++;
-				}
-				console.log("pageValue : ", pageValue);
-
-				getResult();
-			})
-			
-			//정렬 방식 바꿨을 때 이벤트 등록
-			$(".form-select").change(function(event){
-				event.preventDefault();
-			
-				pageValue = 1; 
-				sortValue = $(this).val();
-				
-				getResult();
-			})
-			
-			//가게 카드에 mouseenter 이벤트 리스너 등록
-			$("#div-stores").on('mouseenter', ".store", function(){
-				let index = $(this).find(".card").attr("index-id");
-				console.log("index-id : ",$(this).find(".card").attr("index-id"));
-				
-				infoOverlay[index].setMap(map);
-			})
-			
-			//가게 카드에 mouseleave 이벤트 리스너 등록
-			$("#div-stores").on('mouseleave', ".store", function(){
-				let index = $(this).find(".card").attr("index-id");
-				console.log("index-id : ",$(this).find(".card").attr("index-id"));
-				
-				infoOverlay[index].setMap(null);
-			})
-			
-			//가게 카드에 click 이벤트 리스너 등록
-// 			$("#div-stores").on('click', ".store", function(){
-// 				let storeId = '';
-// 				localStorage.setItem("id",storeId);
-// 				let result = localStorage.getItem("id");
-// 			})
-			
-			
-// 			// localStorage
-// 		$("#div-stores").click(function(event) {
-// // 			let url = '/store/storeDetail?storeId=25';
-			
-// 			console.log(".store clicked ");
-
-// 			let storeId = 'storeid4';
-// 			console.log("storeId: ", storeId);
-// 			localStorage.setItem("id",storeId);
-// 			 let result = localStorage.getItem("id");
-// 			console.log("result : ",result);
-// // 			window.location.href = url;
-// 		});
+		}
 		
+		//	카테고리 변경 이벤트 등록
+		$(".cat").click(function(event){
+			event.preventDefault();
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			
+			categoryValue = $(this).attr("id");
+			pageValue = 1;
+		
+			getResult();
+		})
+		
+		// 이전/다음 페이지 버튼 눌렀을 때의 이벤트 등록
+		$(".page-move").click(function(event) {
+			console.log("page-move clicked");
+			event.preventDefault();
+
+			let id = $(this).attr("id");
+			console.log("id : {} ", id);
+
+			if(id ==='prepage'){
+				pageValue--;
+			}else{
+				pageValue++;
+			}
+			console.log("pageValue : ", pageValue);
+
+			getResult();
+		})
+		
+		//정렬 방식 바꿨을 때 이벤트 등록
+		$(".form-select").change(function(event){
+			event.preventDefault();
+		
+			pageValue = 1; 
+			sortValue = $(this).val();
+			
+			getResult();
+		})
+		
+		//가게 카드에 mouseenter 이벤트 리스너 등록
+		$("#div-stores").on('mouseenter', ".store", function(){
+			let index = $(this).find(".card").attr("index-id");
+			console.log("index-id : ",$(this).find(".card").attr("index-id"));
+			
+			infoOverlay[index].setMap(map);
+		})
+		
+		//가게 카드에 mouseleave 이벤트 리스너 등록
+		$("#div-stores").on('mouseleave', ".store", function(){
+			let index = $(this).find(".card").attr("index-id");
+			console.log("index-id : ",$(this).find(".card").attr("index-id"));
+			
+			infoOverlay[index].setMap(null);
+		})
+
 		function getResult() {
 			$("#div-stores").find(".store").remove();
             $("#storeLoadingSpinner").css("display", "block");
@@ -219,9 +203,9 @@
 				result.stores.forEach(function(store){ 
 					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
 					let content = `
-						<div class="col-5 mb-3 me-3 store">
-							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/storeDetail?storeId=25'" style="cursor: pointer;">
-								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." style="object-fit: cover; height: 250px;">
+						<div class="col-5 mb-3 me-3 store card-zoom">
+							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
+								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">
 								<div class="col text-start mt-1">							
@@ -367,26 +351,7 @@
 				setButtonOverlay();
 			});
 		}
-		
-// 		function createInfowindow(storeNames){
-// 			//info 윈도우 지우기 - 새 페이지를 위해 
-// 			if(infowindows.length!==0){
-// 				infowindows.forEach(function(infowindow) {
-// 					infowindow.setMap(null);
-// 				});
-// 				infowindows.length = 0;
-// 			}
-// 			// info 윈도우를 생성합니다
-// 			for(let i=0; i<storeNames.length; i++){
-// 				let storeName = storeNames[i];
-// 				var infowindow = new kakao.maps.InfoWindow({
-// 				    content : `<div>\${storeName}</div>`
-// 				});
-// 				infowindows.push(infowindow);	
-// 				console.log("infowindows : ", infowindows);
-// 			}
-// 		}
-	
+
 		function setBounds() {
     	// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
   	 	 // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
@@ -439,7 +404,7 @@
 				for(let i=0; i<storeNames.length; i++){
 					let storeName = storeNames[i];
 					console.log("storeName : ", storeName);
-					var content = `<button type="button" id="info-\${i}" class="btn btn-info btn-sm">\${storeName}</button>`;
+					var content = `<button type="button" id="info-\${i}" class="btn btn-primary btn-sm">\${storeName}</button>`;
 					console.log("content : ", content);
 
 					infoOverlay.push(new kakao.maps.CustomOverlay({
@@ -462,9 +427,7 @@
 	      getResult();
           
         }
-        
 
 	</script>
-
 </body>
 </html>

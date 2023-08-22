@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import kr.co.jhta.restaurants_service.dto.Pagination;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
+import kr.co.jhta.restaurants_service.dto.VisitedStore;
+import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.mapper.FoodMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
@@ -24,6 +26,7 @@ import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
 import kr.co.jhta.restaurants_service.vo.store.Food;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,6 +130,23 @@ public class StoreService {
 		return storeRepository.findStoresByOwnerId(userId);
 	}
 
+	public List<BookmarkedStore> getBookmarkedStore(Integer customerId) {
+		log.info("가게서비스 getBookmarkedStore : ");
+		List<BookmarkedStore> stores = storeMapper.getBookmarkedStoresByUserId(customerId);
+		return stores;
+	}
+
+	public List<VisitedStore> getVisitedStore(Map<String,Object> param) {
+		List<VisitedStore> stores;
+		if(param.get("customerId")==null) {
+			log.info("param.get(\"customerId\") : " + param.get("customerId"));
+			stores = storeMapper.getVisitedStores(param);
+		}else {
+			stores = storeMapper.getVisitedStoresById(param);
+		}
+		
+		log.info("가게서비스 getVisitedStore 결과 stores : '{}'",stores);
+		return stores;
 	public List<StoreOpenTime> getStoreOpenTimesById(int storeId) {
 		
 		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
@@ -137,7 +157,7 @@ public class StoreService {
 		store.setReadCount(store.getReadCount() + 1);
 		
 		storeMapper.updateStore(store);
-		
+
 	}
 
 }

@@ -1,28 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
 
-<!-- 	<select id = "getAllStores" resultType="Store"> -->
-<!-- 		select -->
-<!-- 			business_license	as businessLicense, -->
-<!-- 			name				as name, -->
-<!-- 			address				as address, -->
-<!-- 			category			as category, -->
-<!-- 			zipcode				as zipcode, -->
-<!-- 			latitude			as latitude, -->
-<!-- 			longitude			as longitude, -->
-<!-- 			description			as description, -->
-<!-- 			phone				as phone, -->
-<!-- 			read_count			as readCount, -->
-<!-- 			create_date			as createDate, -->
-<!-- 			update_date			as updateDate, -->
-<!-- 			owner_id			as "owner.id", -->
-<!-- 			disabled			as disabled -->
-
-<!-- 		from -->
-<!-- 			STORES -->
-<!-- 	</select> -->
-
-
 	<select id = "getStores" parameterType="map" resultType="SearchedStore">
 		select *
 		from (
@@ -199,7 +177,75 @@
 		from
 			STORES
 	</select>
+
+	<select id = "getVisitedStoresById" parameterType="map" resultType="VisitedStore">
+		select 
+			S.id						as id,
+			S.name 						as name,
+			S.category					as category,
+			review_avg					as reviewAvg,
+			if(B.id, 'y', 'n')			as isBookmarked
+		from STORES S 
+			left join 
+	       	   (select 
+	        	 	store_id, 
+	        	 	AVG(rating) as review_avg 
+		        from REVIEWS
+		        group by store_id
+	           ) R on S.id = R.store_id
+	           		left join 
+	           			BOOKMARKS B on S.id = B.store_id and B.customer_id  = #{customerId}
+		where
+			S.id in 
+			<foreach index="index"  item="id" collection="storeIds" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>
 	
+	<select id = "getVisitedStores" parameterType="map" resultType="VisitedStore">
+		select 
+			S.id						as id,
+			S.name 						as name,
+			S.category					as category,
+			review_avg					as reviewAvg,
+			'n' 						as isBookmarked
+		from STORES S 
+			left join 
+	       	   (select 
+	        	 	store_id, 
+	        	 	AVG(rating) as review_avg 
+		        from REVIEWS
+		        group by store_id
+	           ) R on S.id = R.store_id
+		where
+			S.id in 
+			<foreach index="index"  item="id" collection="storeIds" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>
+	
+	<select id = "getBookmarkedStoresByUserId" parameterType="int" resultType="BookmarkedStore">
+		select 
+			S.id			as id,
+			S.name 			as name,
+			S.category		as category,
+			review_avg		as reviewAvg,
+			B.customer_id	as "user.id"
+			
+		from STORES S 
+			left join 
+	       	  BOOKMARKS B on S.id = B.store_id
+	       	   left join
+	       	   (select 
+	        	 	store_id, 
+	        	 	AVG(rating) as review_avg 
+		        from REVIEWS
+		        group by store_id
+	           ) R on S.id = R.store_id
+	    where 
+	    	B.customer_id = #{value}	
+	</select>
+  
 	<update id="updateStore" parameterType="Store">
 		update STORES
 		set
