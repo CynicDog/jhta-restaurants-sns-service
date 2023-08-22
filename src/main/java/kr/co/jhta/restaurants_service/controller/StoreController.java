@@ -91,8 +91,8 @@ public class StoreController {
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         
         // 모델에 리뷰 정보를 추가합니다.
-        model.addAttribute("review", reviewDto.getAllReviewsByStoreId());
-        model.addAttribute("storeAvg", reviewDto.getStoreReviewAvg());
+        model.addAttribute("reviews", reviewDto);
+//        model.addAttribute("storeAvg", reviewDto.getStoreReviewAvg());
 //        log.info("리뷰 -> [] ", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
 //        log.info("가게 평점 -> [] ", reviewDto.getStoreReviewAvg());
         log.info("스토어 -> {}", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
