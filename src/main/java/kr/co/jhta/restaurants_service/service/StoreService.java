@@ -132,4 +132,12 @@ public class StoreService {
 		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
 	}
 
+	public void updateReadCount(int storeId) {
+		Store store = storeMapper.getStoreById(storeId);
+		store.setReadCount(store.getReadCount() + 1);
+		
+		storeMapper.updateStore(store);
+		
+	}
+
 }

@@ -32,17 +32,5 @@
         </div>
     </div>
     <script>
-        function applyColorModePreference() {
-            const colorMode = localStorage.getItem('colorMode');
-
-            if (colorMode === 'dark') {
-                document.getElementById("flexSwitchCheckChecked").checked = false;
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.getElementById("flexSwitchCheckChecked").checked = true;
-                document.documentElement.removeAttribute('data-bs-theme');
-            }
-        }
-        applyColorModePreference();
     </script>
 </footer>
