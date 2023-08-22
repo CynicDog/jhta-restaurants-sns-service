@@ -158,7 +158,7 @@ html, body {
 					<span class="badge text-bg-success bg-opacity-75 fw-lighter fs-6 m-2 p-1">#친절해요</span>
 				</c:if>
 				<span class="float-end">
-					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#reportModal" data-bs-whatever="@mdo">
 		          		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
 		              	<span class="visually-hidden">신고</span>
 					</button>
