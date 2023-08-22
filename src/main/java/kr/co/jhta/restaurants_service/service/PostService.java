@@ -8,10 +8,12 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
-
+import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
+
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,8 @@ import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -44,7 +48,6 @@ public class PostService {
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final PostRepository postRepository;
-	private final Storage storage;
 
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
@@ -89,33 +92,6 @@ public class PostService {
 
 	}
 
-	private String saveFile(MultipartFile multipartFile) throws IOException {
-		String filename = null;
-		String projectHome = System.getenv("PROJECT_HOME");
-		String directory = projectHome + "/src/main/webapp/resources/image";
-//		String directory = "C:\\Users\\GOTAEHWA\\Desktop\\중앙HTA\\파이널\\picture";
-//		if (!multipartFile.isEmpty()) {
-//			filename = multipartFile.getOriginalFilename();
-//			FileOutputStream out = new FileOutputStream(new File(directory, filename));
-//			FileCopyUtils.copy(multipartFile.getInputStream(), out);
-//
-//		}
-
-		if (!multipartFile.isEmpty()) {
-			try {
-				filename = multipartFile.getOriginalFilename();
-				FileOutputStream out = new FileOutputStream(new File(directory, filename));
-				FileCopyUtils.copy(multipartFile.getInputStream(), out);
-				out.close();
-			} catch (IOException e) {
-				// 파일 생성 또는 복사 작업에서 예외 처리
-				throw new IOException("Failed to save file: " + filename, e);
-			}
-		}
-
-		return filename;
-	}
-
 	public List<Post> getPostsByCustomerId(int id) {
 		return postRepository.findPostsByCustomerId(id);
 	}
@@ -126,4 +102,16 @@ public class PostService {
 
 		return postsPaginated;
     }
+
+	public void insertPostComment(PostComment form, SecurityUser securityUser) {
+		PostComment postComment = new PostComment();
+		postComment.setContent(form.getContent());
+		
+		Post post = postmapper.getPostById(form.getPost().getId());
+		postComment.setPost(post);
+		postComment.setCustomer(securityUser.getUser());
+		
+		postCommentMapper.insertComment(postComment);
+		
+	}
 }

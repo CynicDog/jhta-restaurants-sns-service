@@ -16,7 +16,6 @@
 	
 	.searchInput .resultBox {
         padding: 0;
-        opacity: 0;
         pointer-events: none;
         max-height: 280px;
         overflow-y: auto;
@@ -44,14 +43,20 @@
 	.searchInput.active .resultBox li{
 	  display: block;
 	}
+	
+	.resultBox.active li{
+	  display: block;
+	}
+	
 	.resultBox li:hover{
 	  background: #efefef;
 	}
+	
 	</style>
     <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="../common/navbar.jsp" %>
+<%-- <%@ include file="../common/navbar.jsp" %> --%>
 <div class="wrap">
     <div class="container">
         <form method="post" action="register">
@@ -99,12 +104,12 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div class="form-floating searchInput">
-                                                    <input type="text" id="storeNameInput" class="form-control-plaintext mb-4"
+                                                <div class="form-floating searchInput active">
+                                                    <input type="text" id="storeNameInput" class="form-control-plaintext mb-4 storeNameInput"
                                                           name="storeName">
-                                                    <input type="hidden" name="storeId" id="storeIdInput">
+                                                    <input type="hidden" name="storeId" id="storeInput" class="storeIdInput">
 				                                    <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
-                                                    <label for="storeIdInput">가게명을 작성해주세요 :)</label>
+                                                    <label for="storeInput">가게명을 작성해주세요 :)</label>
                                                 </div>
                                                 <div class="form-floating">
 				                                    <textarea class="form-control-plaintext"
@@ -165,7 +170,7 @@
         </form>
         
     </div>
-    <%@ include file="../common/footer.jsp" %>
+    <%-- <%@ include file="../common/footer.jsp" %> --%>
 </div>
 <script type="text/javascript">
 
@@ -188,10 +193,32 @@
         }
         reader.readAsDataURL(file);
     })
+    
+    const searchInput = document.querySelector(".searchInput");
+    const input = searchInput.querySelector("input");
+    const resultBox = searchInput.querySelector(".resultBox");
+    const icon = searchInput.querySelector(".icon");
+    let linkTag = searchInput.querySelector("a");
+    let webLink;
+
+    function select(element) {
+    	let selectedStoreId = element.getAttribute("data-store-id");
+        let selectedStoreName = element.textContent;
+
+        let storeNameInput = element.closest('.searchInput').querySelector(".storeNameInput");
+        let storeIdInput = element.closest('.searchInput').querySelector(".storeIdInput");
+
+        storeNameInput.value = selectedStoreName;
+        storeIdInput.value = selectedStoreId;
+
+        searchInput.classList.remove("active");
+	    
+	}
+
 
     $(function () {
 
-        let formIndex = 0;
+        var formIndex = 0;
         // 1. id="btn-add-field" 버튼에 이벤트핸들러 등록하기
         $('#btn-add-field').click(function () {
 
@@ -221,15 +248,16 @@
                             </div>
                         </div>
                         <div class="col-8">
-			            	<div class="form-floating searchInput">
-			                	<input type="text" id="storeIdInput" class="form-control-plaintext mb-4"
-			                       placeholder="가게명을 작성해주세요." name="storeId">
-			                <div class="resultBox"><!-- here list are inserted from javascript --></div>
-			                	<label for="storeIdInput">가게명을 작성해주세요 :)</label>
+			            	<div class="form-floating searchInput-\${formIndex}">
+					                <input type="text" id="storeNameInput-\${formIndex}" class="form-control-plaintext mb-4 storeNameInput"
+					                name="storeName">
+					          <input type="hidden" name="storeId" id="storeInput-\${formIndex}" class="storeIdInput">
+					          <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
+					          <label for="storeInput-\${formIndex}">가게명을 작성해주세요 :)</label>
 			            	</div>
                             <div class="form-floating">
                                 <textarea class="form-control-plaintext"
-                                          placeholder="원하는 글을 작성해 보세요." rows="10" cols="60"
+                                          rows="10" cols="60"
                                           name="content" style="min-height:10rem"></textarea>
                                 <label for="storeIdInput">원하는 글을 작성해주세요</label>
                             </div>
@@ -249,6 +277,44 @@
             // html 컨텐츠가 추가될 부모엘리먼트를 검색한다.
             // 부모엘리먼트가 포함된 jQuery 집합객체를 획득하고, append(컨텐츠)메소드를 이용해서 지정된 컨텐츠를 자식 컨텐츠로 추가한다.
             $('#box').append(content);
+		
+			let searchInput = $('#box').find(`.searchInput-\${formIndex}`);
+			let storeInput = $('#box').find(`.storeNameInput-\${formIndex}`);
+		    let resultBox = storeInput.closest('.searchInput').find('.resultBox');
+
+
+		    storeInput.on('keyup', function (e) {
+    		    console.log(resultBox)
+                let userData = e.target.value;
+
+                $.getJSON("getStores", {keyword:userData}, function(stores) {
+                    let emptyArray = [];
+                    if (stores.length) {
+                        emptyArray = stores.map((store) => {
+                            return `<li class="list-group-item" data-store-id="\${store.id}">\${store.name}</li>`;
+                        });
+                        const content = emptyArray.join('')
+                        
+                        resultBox.html(content);
+                        resultBox.addClass('active');
+                        
+                        $(searchInput).addClass('active');
+                        
+                        let allList = resultBox.find("li")
+        		        for (let i = 0; i < allList.length; i++) {
+        		        	console.log(allList[i])
+        		            allList[i].setAttribute("onclick", "select(this)");
+        		        }
+                    } else {
+                        resultBox.removeClass('active');
+                        
+                        $(searchInput).removeClass('active');
+                    }
+                    console.log(content)
+                });
+            });
+
+       
         })
 
         // 2. 삭제버튼에 이벤트핸들러 등록하기
@@ -430,28 +496,7 @@
     	  }
     }
     
-    const searchInput = document.querySelector(".searchInput");
-    const input = searchInput.querySelector("input");
-    const resultBox = searchInput.querySelector(".resultBox");
-    const icon = searchInput.querySelector(".icon");
-    let linkTag = searchInput.querySelector("a");
-    let webLink;
-
-    function select(element) {
-    	let selectedStoreId = element.getAttribute("data-store-id"); // 선택한 가게의 id를 가져옴
-        let selectedStoreName = element.textContent; // 선택한 가게의 이름을 가져옴
-        
-        // 해당 가게의 이름과 id를 input 엘리먼트에 설정
-        document.getElementById("storeNameInput").value = selectedStoreName;
-        document.getElementById("storeIdInput").value = selectedStoreId;
-        
-        searchInput.classList.remove("active");
-	    /* let selectData = element.textContent;
-	    input.value = selectData;
-	    storeIdInput.value = selectData;
-	    searchInput.classList.remove("active"); */
-	}
-
+    
 	input.onkeyup = (e) => {
 	    let userData = e.target.value;
 	    
@@ -487,68 +532,7 @@
         resultBox.innerHTML = listData;
     }
     
-    /* let suggestions = [
-    	"25",
-        "Channel",
-        "CodingLab",
-        "CodingNepal",
-        "YouTube",
-        "YouTuber",
-        "YouTube Channel",
-        "Blogger",
-        "Bollywood",
-        "Vlogger",
-        "Vechiles",
-        "Facebook",
-        "Freelancer",
-        "Facebook Page",
-        "Designer",
-        "Developer",
-        "Web Designer",
-        "Web Developer",
-        "Login Form in HTML & CSS",
-        "How to learn HTML & CSS",
-        "How to learn JavaScript",
-        "How to became Freelancer",
-        "How to became Web Designer",
-        "How to start Gaming Channel",
-        "How to start YouTube Channel",
-        "What does HTML stands for?",
-        "What does CSS stands for?",
-    ]; */
-	/* input.addEventListener("keydown", (e) => {
-	    const allList = resultBox.querySelectorAll("li");
-	    let activeElement = document.activeElement;
-
-	    // If the input is focused and arrow keys are pressed
-	    if (activeElement === input) {
-	        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-	            e.preventDefault();
-	            if (allList.length > 0) {
-	                if (!resultBox.classList.contains("active")) {
-	                    resultBox.classList.add("active");
-	                    allList[0].classList.add("active");
-	                } else {
-	                    const currentIndex = Array.from(allList).indexOf(document.querySelector(".active"));
-	                    allList[currentIndex].classList.remove("active");
-	                    let nextIndex;
-	                    if (e.key === "ArrowDown") {
-	                        nextIndex = (currentIndex + 1) % allList.length;
-	                    } else {
-	                        nextIndex = (currentIndex - 1 + allList.length) % allList.length;
-	                    }
-	                    allList[nextIndex].classList.add("active");
-	                }
-	                allList.forEach((item, index) => {
-	                    if (item.classList.contains("active")) {
-	                        item.focus();
-	                        input.value = item.textContent;
-	                    }
-	                });
-	            }
-	        }
-	    }
-	}); */
+    
 </script>
 
 </body>
