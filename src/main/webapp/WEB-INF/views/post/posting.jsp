@@ -69,11 +69,12 @@
 					  	<div class="offcanvas-body">
 							<div class="col-12 border-top  my-3"></div>
 								<div class="col-12  border-bottom my-3">
-									<form action="">
-										<div class="form-floating">
-		                                    <textarea class="form-control-plaintext"
+									<form id="postComment" method="post" action="/post/CommentRegister">
+										<div class="form-floating text-start">
+											<p>댓글을 작성하세요</p>
+		                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
 		                                                          name="content" style="min-height:2rem"></textarea>
-	                                        <label for="storeIdInput">댓글을 작성하세요</label>
+	                                        
 	                                    </div> 
 	                                    <button class="btn btn-outline-secondary btn-sm my-2">작성</button>
 									</form>
@@ -146,10 +147,9 @@
 				</div>
 			</div>
 			
-			
 		</div>
 	</div>
-	<%@ include file="../common/footer.jsp" %>
+	<%-- <%@ include file="../common/footer.jsp" %> --%>
 </div>
 
 <script type="text/javascript">

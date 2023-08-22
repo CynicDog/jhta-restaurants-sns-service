@@ -14,9 +14,11 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 
 import org.jboss.logging.Logger;
@@ -151,6 +153,16 @@ public class PostController {
 
         return "post/followerPost";
     }
+    
+    @PostMapping("/CommentRegister")
+	public String reviewCommentRegister(PostComment form, @AuthenticationPrincipal SecurityUser securityUser) {
+    	log.info("댓글 신규 등록 -> {}", form.getPost().getId());
+    	log.info("댓글 신규 등록 -> {}", form.getContent());
+    	log.info("댓글 신규 등록 -> {}", form.getId());
+    	log.info("사람 -> {}", securityUser);
+		postService.insertPostComment(form, securityUser);
+		return "redirect:/post/followerPost/detail";
+	}
 
 
 }
