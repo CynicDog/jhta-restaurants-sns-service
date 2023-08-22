@@ -39,7 +39,7 @@ html, body {
 						</a>
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p><span>${review.reviewRatingByCustomerId}</span>
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
@@ -200,7 +200,13 @@ html, body {
 	
 	
 // 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
-let modal = new bootstrap.Modal("#Modal");
+let modal = new bootstrap.Mo
+
+
+
+
+
+dal("#Modal");
 // 전체 이미지 갯수를 조회해서 대입한다.
 let imgLength = $("#image-row .img-thumbnail").length;
 // 현재 모달차에 표시되고 있는 이미지의 인덱스가 대입되는 변수다.

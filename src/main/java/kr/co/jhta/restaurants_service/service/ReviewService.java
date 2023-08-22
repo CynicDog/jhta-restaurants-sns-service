@@ -70,14 +70,23 @@ public class ReviewService {
 				reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
 			}
 		}
+		
+//		if (form.getChooseFile() != null) {
+//		for (MultipartFile fileName : form.getChooseFile()) {
+//			ReviewPicture reviewPciture = new ReviewPicture();
+//			reviewPciture.setPictureName(fileName.getOriginalFilename());
+//			reviewPciture.setReview(review);
+//			reviewPictureMapper.insertReveiwPicture(reviewPciture);
+//		}
+//	}		
 
-		if (!form.getChooseFile().isEmpty()) {
-			ReviewPicture reviewPciture = new ReviewPicture();
-			MultipartFile chooseFile = form.getChooseFile();
-			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-			reviewPciture.setReview(review);
-			reviewPictureMapper.insertReveiwPicture(reviewPciture);
-		}
+//		if (!form.getChooseFile().isEmpty()) {
+//			ReviewPicture reviewPciture = new ReviewPicture();
+//			MultipartFile chooseFile = form.getChooseFile();
+//			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
+//			reviewPciture.setReview(review);
+//			reviewPictureMapper.insertReveiwPicture(reviewPciture);
+//		}
 
 //		  review.setRating(3);
 //		  review.setContent("bbbbb");
