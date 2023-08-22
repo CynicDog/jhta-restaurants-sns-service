@@ -10,6 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
@@ -48,7 +50,9 @@ html, body {
 					<button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10094;</button>
 				</div>
 				<div class=" text-center" style="background-color: black; width: 80%;">
-					<img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+					<div class="fotorama" data-nav="thumbs">
+						<img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+					</div>
 				</div>
 				<div style="width: 400px;" class="2">
 				    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
@@ -86,20 +90,33 @@ html, body {
 								</p>
 							</div>
 							<div class="col-4">
-								<sec:authorize access="isAuthenticated()">
-		                           <sec:authentication property="principal.user.id" var="loginId"/>
-		                           <c:if test="${store.owner.id ne loginId }">
-		                              <span class="my-2 float-end">
-		                                 <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
-		                                    리뷰<i class="bi bi-brush"></i>
-		                                 </button>
-		                                 <button class="btn" id="box">
-		                                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
-		                                 </button>
-		                              </span>
-		                           </c:if>
-		                        </sec:authorize>
+							    <span class="my-2 float-end">
+							        <sec:authorize access="isAuthenticated()">
+							            <sec:authentication property="principal.user.id" var="loginId"/>
+							            <c:if test="${store.owner.id ne loginId}">
+							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
+							                    리뷰<i class="bi bi-brush"></i>
+							                </button>
+							                <button class="btn" id="box">
+							                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							                </button>
+							            </c:if>
+							        </sec:authorize>
+							        <sec:authorize access="!isAuthenticated()">
+							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
+							                리뷰<i class="bi bi-brush"></i>
+							            </button>
+							            <button class="btn" id="box">
+							                <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							            </button>
+							        </sec:authorize>
+							    </span>
 							</div>
+						</div>
+						<div>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>123</span>
 						</div>
 						<div class="row">
 							<table class="table">
@@ -450,29 +467,29 @@ html, body {
 	var container = document.getElementById('map');
 	var options = {
 		// latitude,longitude 순으로 입력
-		center : new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+		center : new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
 		level : 4
 	};
 
 	var map = new kakao.maps.Map(container, options);
+	
+	// 마우스 드래그와 모바일 터치를 이용한 지도 이동을 막는다
+	map.setDraggable(false);		
+
+	// 마우스 휠과 모바일 터치를 이용한 지도 확대, 축소를 막는다
+	map.setZoomable(false);
 
 	// 마커가 표시될 위치입니다 
-	var markerPosition = new kakao.maps.LatLng(37.5729587735263,
-			126.992241734889);
-	var markerPosition2 = new kakao.maps.LatLng(37.5699451391001,
-			126.988087440713);
+	var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
+	
 
 	// 마커를 생성합니다
 	var marker = new kakao.maps.Marker({
 		position : markerPosition
 	});
-	var marker2 = new kakao.maps.Marker({
-		position : markerPosition2
-	});
 
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);
-	marker2.setMap(map);
 
 	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 	// marker.setMap(null);
@@ -485,12 +502,12 @@ html, body {
     $('#mapModal').on('shown.bs.modal', function () {
         var container = document.getElementById('largeMap');
         var options = {
-            center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889), // 지도 중심 좌표
+            center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}), // 지도 중심 좌표
             level: 3 // 지도 확대 레벨
         };
         var map = new kakao.maps.Map(container, options);        
         // 마커 추가 (예시)
-        var markerPosition = new kakao.maps.LatLng(37.5699451391001, 126.988087440713);
+        var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
         
         var marker = new kakao.maps.Marker({
             position: markerPosition
