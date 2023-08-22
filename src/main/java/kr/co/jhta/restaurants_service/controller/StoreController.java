@@ -23,6 +23,7 @@ import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
+import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -127,6 +128,9 @@ public class StoreController {
 	
 	@GetMapping("/detail")
     public String detail(@RequestParam("id") int storeId, Model model) {
+		
+		storeService.updateReadCount(storeId);
+		
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDto = reviewService.getReivewsByStoreId(storeId);
         // 모델에 가게 정보를 추가합니다.
@@ -142,4 +146,12 @@ public class StoreController {
         log.info("스토어 -> {}", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
         return "storeDetail";
     }
+	
+	@GetMapping("/open-times")
+	@ResponseBody
+	public List<StoreOpenTime> days(@RequestParam("id") int storeId) {
+		
+		return storeService.getStoreOpenTimesById(storeId);
+	}
+	
 }

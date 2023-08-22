@@ -63,14 +63,26 @@
 					</button>
 					<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 					  	<div class="offcanvas-header">
-					    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+					    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">댓글</h5>
 					    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					  	</div>
 					  	<div class="offcanvas-body">
-							<div class="col-11 border-top  my-3"></div>
-							<c:forEach var="comment" items="${post.postComments }">
-								<div class="col-11  border-bottom my-3">
+							<div class="col-12 border-top  my-3"></div>
+								<div class="col-12  border-bottom my-3">
+									<form id="postComment" method="post" action="/post/CommentRegister">
+										<div class="form-floating text-start">
+											<p>댓글을 작성하세요</p>
+		                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
+		                                                          name="content" style="min-height:2rem"></textarea>
+	                                        
+	                                    </div> 
+	                                    <button class="btn btn-outline-secondary btn-sm my-2">작성</button>
+									</form>
+								</div>
 							
+							<c:forEach var="comment" items="${post.postComments }">
+								<div class="col-12  border-bottom my-3">
+									
 									<div class="row my-3">
 										<div class="col-2">
 											<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
@@ -99,7 +111,7 @@
 													<div class="col-3 d-flex justify-content-end align-items-center">
 												    </div>
 												</div>
-												<div class="row position-absolute" style="bottom:0;right:0;">
+												<div class="row position-absolute" style="bottom:0;right:20px;">
 													<div class="col">
 														<span class="text-end">
 															<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
@@ -135,10 +147,9 @@
 				</div>
 			</div>
 			
-			
 		</div>
 	</div>
-	<%@ include file="../common/footer.jsp" %>
+	<%-- <%@ include file="../common/footer.jsp" %> --%>
 </div>
 
 <script type="text/javascript">

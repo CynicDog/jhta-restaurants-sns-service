@@ -83,6 +83,23 @@ public class CustomerController {
     }
 
     @ResponseBody
+    @GetMapping("/followings")
+    public ResponseEntity<List<Projection.User>> followings(@AuthenticationPrincipal SecurityUser securityUser,
+                                                           @RequestParam("page") Optional<Integer> page,
+                                                           @RequestParam("limit") Optional<Integer> limit) {
+
+        List<Projection.User> followers =
+                socialService.getNonDisabledFollowingsByCustomerIdOrderByCreateDate(
+                        securityUser.getUser().getId(),
+                        User.DISABLED.NO,
+                        page.orElse(0),
+                        limit.orElse(10)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(followers));
+    }
+
+    @ResponseBody
     @GetMapping("/followers")
     public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser,
                                                            @RequestParam("page") Optional<Integer> page,
@@ -146,7 +163,18 @@ public class CustomerController {
     @GetMapping("/my-page")
     public String myPage(@AuthenticationPrincipal SecurityUser securityUser, Model model) {
 
+        Integer customerId = securityUser.getUser().getId();
+
+        long followersCount = socialService.getFollowersCountByCustomerId(customerId);
+        long followingsCount = socialService.getFollowingsCountByCustomerId(customerId);
+        long postsCount = postService.getPostsCountByCustomerId(customerId);
+        long reviewsCount = reviewService.getReviewsCountByCustomerId(customerId);
+
         model.addAttribute("customer", securityUser.getUser());
+        model.addAttribute("followersCount", followersCount);
+        model.addAttribute("followingsCount", followingsCount);
+        model.addAttribute("postsCount", postsCount);
+        model.addAttribute("reviewsCount", reviewsCount);
 
         return "/user/customer/my-page";
     }

@@ -6,9 +6,9 @@
 		     SELECT LAST_INSERT_ID()
 		</selectKey>
 		insert into REVIEW_COMMENTS
-		(content, review_id, owner_id)
+		(content, review_id, owner_id, create_date, update_date)
 		values
-		(#{content}, #{review.id}, #{owner.id})
+		(#{content}, #{review.id}, #{owner.id}, #{createDate}, #{updateDate})
 	</insert>
 	
 	<select id="getReviewCommentByReviewId" parameterType="int" resultType="ReviewComment">
