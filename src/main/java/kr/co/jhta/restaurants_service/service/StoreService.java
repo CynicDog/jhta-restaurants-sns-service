@@ -147,6 +147,8 @@ public class StoreService {
 		
 		log.info("가게서비스 getVisitedStore 결과 stores : '{}'",stores);
 		return stores;
+	}
+	
 	public List<StoreOpenTime> getStoreOpenTimesById(int storeId) {
 		
 		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
