@@ -38,7 +38,6 @@
 	<form id="reviewForm" method="post" enctype="multipart/form-data" action="">
    		<input type="hidden" name="storeId" value="${param.storeId }"/>
    		<sec:authentication property="principal.user.id" var="userId"/>
-   		<input type="hidden" name="userId" value="${userId }"/>
 	<div class="review-section mt-3" >
 		<div class="row">
 			<div class="col-12">
@@ -46,19 +45,19 @@
 	          		<div class="emoji-buttons" >
 	              		<ul style="list-style-type: none; padding: 0;">
 	                  		<li style="display: inline-block;">
-	                      		<button class="emoji-btn active" data-recommend-type="5" style="background: none; border: none;">
+	                      		<button type="button" class="emoji-btn active" data-recommend-type="5" style="background: none; border: none;">
 	                          		<i class="bi bi-emoji-heart-eyes" style="font-size: 25px;"></i>
 	                          		맛있어요
 	                      		</button>
 	                  		</li>
 			                <li style="display: inline-block;">
-			                	<button class="emoji-btn" data-recommend-type="3" style="background: none; border: none;">
+			                	<button type="button" class="emoji-btn" data-recommend-type="3" style="background: none; border: none;">
 			                    	<i class="bi bi-emoji-smile" style="font-size: 25px;"></i>
 			                    	괜찮아요
 			              		</button>
 			     			</li>
 			                <li style="display: inline-block;">
-			               		<button class="emoji-btn" data-recommend-type="1" style="background: none; border: none;">
+			               		<button type="button" class="emoji-btn" data-recommend-type="1" style="background: none; border: none;">
 			                		<i class="bi bi-emoji-expressionless" style="font-size: 25px;"></i>
 			                        별로에요
 			                	</button>
@@ -98,7 +97,7 @@
 	       				" style="position: relative; display: inline-block;"><i class="bi bi-plus-square-dotted" style="font-size: 65px; color: #000;"></i></a> 
 						<span></span>	
 			        </label>
-			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" >
 			    </div>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -110,7 +109,7 @@
 		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
 		    <div class="buttons">
 		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">취소</button>
-		        <button type="submit" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
+		        <button id="btn-review-submit" type="submit" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
 		    </div>
 		</div>
 	</div>
@@ -125,7 +124,8 @@ $(function() {
 	let previewModal = new bootstrap.Modal("#previewModal");
 	
 	// 페이지 로드 시 초기 선택값을 설정합니다.
-    $('.emoji-btn').first().addClass('active');
+	//$('.emoji-btn').first().addClass('active');
+ 
 	
     $('.emoji-btn').click(function() {		
 		 // 모든 버튼에 있는 'active' 클래스를 제거합니다.
@@ -133,8 +133,7 @@ $(function() {
 		// 클릭한 버튼에만 'active' 클래스를 추가합니다.
 		$(this).addClass('active');
 		$("input[name=rating]").val(parseInt($(this).attr("data-recommend-type")));
-		
-	}); 
+	});
 	
 	$("#form-image span").on('click', 'button', function(event) {
 		// !$(event.target): 이벤트가 발생한 HTML 엘리먼트를 jQuery 객체로 감싼 것, .hasClass: text-danger를 갖고 있는지 물어보는코드
@@ -170,7 +169,7 @@ $(function() {
 	    // FileReader객체로 파일을 읽어온다.
 	    reader.readAsDataURL(file);
 	});
-	
+ 
 	$("textarea[name=content]").keyup(function() {
 		
 	    let maxLength = 2000; 
@@ -205,6 +204,7 @@ $(function() {
                 $("#imageFile").prop("disabled", true); 
             }
         } 
+    	
     });
     
     $("#form-image").on('click', 'i.text-danger', function(event) {
@@ -281,25 +281,22 @@ $(function() {
 	    	$("input[data-keyword-no="+no+"]").prop("disabled", false)
 	    })
 	    
-	    
 	}
 
 	// 버튼 클릭 이벤트 핸들러 추가
-//	const buttons = document.querySelectorAll('.btn-group .btn');
-//	buttons.forEach(button => {
-//	    button.addEventListener('click', () => {
-//	        button.classList.toggle('active');
-//	        updateReviewKeywords();
-//	    });
-//	});
-
-	// 폼 제출 이벤트 핸들러 추가
-//	reviewForm.addEventListener('submit', event => {
-	    // 폼 제출 시 hidden input이 자동으로 전송됨
-	 
-//	});
-
-
+	const buttons = document.querySelectorAll('.btn-group .btn');
+	buttons.forEach(button => {
+	    button.addEventListener('click', () => {
+	        button.classList.toggle('active');
+	        updateReviewKeywords();
+	    });
+	});
+	
+/* 	$("#reviewForm").submit(function() {
+		document.getElementById("imageFile").files = files;
+		console.log("FFFFFFFFFFFF files -> ", document.getElementById("imageFile").files)
+	}) */
+	
 });
 
 </script>

@@ -127,4 +127,17 @@ public class StoreService {
 		return storeRepository.findStoresByOwnerId(userId);
 	}
 
+	public List<StoreOpenTime> getStoreOpenTimesById(int storeId) {
+		
+		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
+	}
+
+	public void updateReadCount(int storeId) {
+		Store store = storeMapper.getStoreById(storeId);
+		store.setReadCount(store.getReadCount() + 1);
+		
+		storeMapper.updateStore(store);
+		
+	}
+
 }

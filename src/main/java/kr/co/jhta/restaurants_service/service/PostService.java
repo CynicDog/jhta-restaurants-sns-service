@@ -103,6 +103,7 @@ public class PostService {
 		return postsPaginated;
     }
 
+
 	public void insertPostComment(PostComment form, SecurityUser securityUser) {
 		PostComment postComment = new PostComment();
 		postComment.setContent(form.getContent());
@@ -114,4 +115,9 @@ public class PostService {
 		postCommentMapper.insertComment(postComment);
 		
 	}
+
+    public long getPostsCountByCustomerId(Integer customerId) {
+		return postRepository.countByCustomerId(customerId);
+    }
+
 }

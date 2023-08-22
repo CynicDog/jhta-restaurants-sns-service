@@ -10,6 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
@@ -48,7 +50,9 @@ html, body {
 					<button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">&#10094;</button>
 				</div>
 				<div class=" text-center" style="background-color: black; width: 80%;">
-					<img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+					<div class="fotorama" data-nav="thumbs">
+						<img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+					</div>
 				</div>
 				<div style="width: 400px;" class="2">
 				    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
@@ -60,7 +64,7 @@ html, body {
 				                    <p style="font-size: small; color: #adb5bd;">회원 등급</p>
 				                </div>
 				                <div class="p-2 ml-auto">
-				                    <span class="badge text-bg-success fw-lighter">맛있어요!</span>
+				                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
 				                </div>
 				            </div>
 				            <div>
@@ -86,18 +90,33 @@ html, body {
 								</p>
 							</div>
 							<div class="col-4">
-								<sec:authentication property="principal.user.id" var="loginId"/>
-								<c:if test="${store.owner.id ne loginId }">
-									<span class="my-2 float-end">
-										<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
-											리뷰<i class="bi bi-brush"></i>
-										</button>
-										<button class="btn" id="box">
-											<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
-										</button>
-									</span>
-								</c:if>
+							    <span class="my-2 float-end">
+							        <sec:authorize access="isAuthenticated()">
+							            <sec:authentication property="principal.user.id" var="loginId"/>
+							            <c:if test="${store.owner.id ne loginId}">
+							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
+							                    리뷰<i class="bi bi-brush"></i>
+							                </button>
+							                <button class="btn" id="box">
+							                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							                </button>
+							            </c:if>
+							        </sec:authorize>
+							        <sec:authorize access="!isAuthenticated()">
+							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
+							                리뷰<i class="bi bi-brush"></i>
+							            </button>
+							            <button class="btn" id="box">
+							                <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							            </button>
+							        </sec:authorize>
+							    </span>
 							</div>
+						</div>
+						<div>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
+							<span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>123</span>
 						</div>
 						<div class="row">
 							<table class="table">
@@ -119,25 +138,16 @@ html, body {
 								</tr>
 								<tr>
 								    <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
-								    <td>
-					                    <c:forEach var="time" items="${storeOpenTimes}">
-					                    	<div>
-					                        	<span class="d-inline-block" style="width: 50px;"><c:out value="${time.day }"/></span> <span><c:out value="${time.openTime}"/> ~ <c:out value="${time.closeTime}"/></span>
-					                        </div>
-					                    </c:forEach>
+								    <td id="daysArea">
+					                    				
 					                </td>
 								</tr>
-								<tr>
-									<th><i class="bi bi-calendar-week"></i><span class="fw-lighter mx-2">휴일</span></th>
-									<td></td>
-								</tr>
-
 								<tr>
 									<th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
 									<td>
 										<c:forEach var="food" items="${foods}">
 					                        <div class="col my-2">
-					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price"><c:out value="${food.price}"/>원</span>
+					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
 					                        </div>
 					                    </c:forEach>		
 									</td>
@@ -288,7 +298,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter">괜찮아요!</span>
+											<span class="badge bg-success-subtle text-success-emphasis rounded-pill">괜찮아요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -326,7 +336,7 @@ html, body {
 									        </div>
 									    </div>
 									</form>
-									<div class="row">
+									<div class="row" id="ownerComment" style="display: none;">
 										<div class="col">
 											<div class="card">
 												<div class="card-body">
@@ -362,7 +372,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge text-bg-success fw-lighter">별로에요!</span>
+											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">별로에요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -453,32 +463,33 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
+	
 	var container = document.getElementById('map');
 	var options = {
 		// latitude,longitude 순으로 입력
-		center : new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
+		center : new kakao.maps.LatLng(${store.latitude}, ${store.longitude}),
 		level : 4
 	};
 
 	var map = new kakao.maps.Map(container, options);
+	
+	// 마우스 드래그와 모바일 터치를 이용한 지도 이동을 막는다
+	map.setDraggable(false);		
+
+	// 마우스 휠과 모바일 터치를 이용한 지도 확대, 축소를 막는다
+	map.setZoomable(false);
 
 	// 마커가 표시될 위치입니다 
-	var markerPosition = new kakao.maps.LatLng(37.5729587735263,
-			126.992241734889);
-	var markerPosition2 = new kakao.maps.LatLng(37.5699451391001,
-			126.988087440713);
+	var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
+	
 
 	// 마커를 생성합니다
 	var marker = new kakao.maps.Marker({
 		position : markerPosition
 	});
-	var marker2 = new kakao.maps.Marker({
-		position : markerPosition2
-	});
 
 	// 마커가 지도 위에 표시되도록 설정합니다
 	marker.setMap(map);
-	marker2.setMap(map);
 
 	// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 	// marker.setMap(null);
@@ -491,12 +502,12 @@ html, body {
     $('#mapModal').on('shown.bs.modal', function () {
         var container = document.getElementById('largeMap');
         var options = {
-            center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889), // 지도 중심 좌표
+            center: new kakao.maps.LatLng(${store.latitude}, ${store.longitude}), // 지도 중심 좌표
             level: 3 // 지도 확대 레벨
         };
         var map = new kakao.maps.Map(container, options);        
         // 마커 추가 (예시)
-        var markerPosition = new kakao.maps.LatLng(37.5699451391001, 126.988087440713);
+        var markerPosition = new kakao.maps.LatLng(${store.latitude}, ${store.longitude});
         
         var marker = new kakao.maps.Marker({
             position: markerPosition
@@ -597,12 +608,89 @@ html, body {
 	});
 	
 	const commentButton = document.getElementById('comment');
-    const cardAndTextarea = document.getElementById('cardAndTextarea');
+	const cardAndTextarea = document.getElementById('cardAndTextarea');
+	const ownerComment = document.getElementById('ownerComment');
 
-    // '답글' 버튼에 클릭 이벤트 리스너 추가
-    commentButton.addEventListener('click', () => {
-        cardAndTextarea.style.display = 'block';
-    });
+	// '답글' 버튼에 클릭 이벤트 리스너 추가
+	commentButton.addEventListener('click', () => {
+	    cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
+	    ownerComment.style.display = 'none';     // 리뷰 답글 영역 숨김
+	});
+
+	const submitButton = document.getElementById('button-addon2');
+
+	// '리뷰 작성' 버튼에 클릭 이벤트 리스너 추가
+	submitButton.addEventListener('click', () => {
+	    cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
+	    ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
+	});
+	
+	// localStorage에 가게 id저장
+    let store_id = `${param.id}`
+       if (store_id) {
+         
+         let value = localStorage.getItem("store_history");
+         let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
+         
+         if(store_history!=null){
+            let exist = store_history.includes(store_id);
+            
+            if (!exist) {
+               store_history.unshift(store_id);
+            }
+         } else {
+            store_history = [];
+            store_history.unshift(store_id);
+         }
+         value = JSON.stringify(store_history);
+         localStorage.setItem("store_history",value);
+         
+      } 
+    const daysArea = document.getElementById('daysArea')
+    const daysMap = {
+    	  Mon: false,
+    	  Tue: false, 
+    	  Wed: false, 
+    	  Thu: false, 
+    	  Fri: false, 
+    	  Sat: false, 
+    	  Sun: false 
+    }
+   
+      const days = fetch(`/store/open-times?id=\${store_id}`, {
+    	    method: "GET"
+    	})
+    	.then(response => {
+    	    if (response.ok) {
+    	        return response.json(); 
+    	    }
+    	})
+    	.then(data => {
+    	    data.map(datum => {
+    	        daysArea.innerHTML += `
+    	            <div>
+    	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
+    	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
+    	            </div>
+    	        `;
+    	        daysMap[datum.day] = true; 
+    	        return datum; 
+    	    });
+    	})
+    	.then(data => {
+    	    Object.keys(daysMap)
+    	        .filter(day => !daysMap[day])
+    	        .forEach(daysOff => {
+    	            console.log(daysOff);
+    	            daysArea.innerHTML += `
+    	                <div>
+    	                    <span class="d-inline-block" style="width: 50px;"> \${daysOff}</span>
+    	                    <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"> 쉬는날</span>
+    	                </div>
+    	            `;
+    	        });
+    	});
+	    
 </script>
 </body>
 </html>

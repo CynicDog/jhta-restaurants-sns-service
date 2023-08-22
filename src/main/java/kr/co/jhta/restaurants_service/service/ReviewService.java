@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.ReviewRepository;
+
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,7 @@ import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -68,14 +71,23 @@ public class ReviewService {
 				reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
 			}
 		}
+		
+		if (form.getChooseFile() != null) {
+			for (MultipartFile fileName : form.getChooseFile()) {
+				ReviewPicture reviewPciture = new ReviewPicture();
+				reviewPciture.setPictureName(fileName.getOriginalFilename());
+				reviewPciture.setReview(review);
+				reviewPictureMapper.insertReveiwPicture(reviewPciture);
+			}
+		}		
 
-		if (!form.getChooseFile().isEmpty()) {
-			ReviewPicture reviewPciture = new ReviewPicture();
-			MultipartFile chooseFile = form.getChooseFile();
-			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-			reviewPciture.setReview(review);
-			reviewPictureMapper.insertReveiwPicture(reviewPciture);
-		}
+//		if (!form.getChooseFile().isEmpty()) {
+//			ReviewPicture reviewPciture = new ReviewPicture();
+//			MultipartFile chooseFile = form.getChooseFile();
+//			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
+//			reviewPciture.setReview(review);
+//			reviewPictureMapper.insertReveiwPicture(reviewPciture);
+//		}
 
 //		  review.setRating(3);
 //		  review.setContent("bbbbb");
@@ -88,6 +100,7 @@ public class ReviewService {
 	// 새 리뷰 답글 등록하기
 	public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
 		ReviewComment reviewComment = new ReviewComment();
+		
 		reviewComment.setContent(form.getContent());
 
 		Review review = reviewMapper.getReviewById(form.getReviewId());
@@ -127,14 +140,13 @@ public class ReviewService {
 		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);
 		List<Review> getAllReviewByStoreId = getAllReviewsByStoreId.stream().map(
 				review -> {
-					review.setStore(storeMapper.getStoreById(storeId));
 					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
 					return review;
 				}).collect(Collectors.toList());
 		double allRatingByStoreId = getAllReviewByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
 		
 		reviewDto.setStoreReviewAvg(allRatingByStoreId);
-		reviewDto.setAllReviewsByStoreId(getAllReviewByStoreId);
+		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
 		
 		return reviewDto;
 	}
@@ -162,4 +174,8 @@ public class ReviewService {
 	}
 
 
+	public long getReviewsCountByCustomerId(Integer customerId) {
+
+		return reviewRepository.countByCustomerId(customerId);
+	}
 }

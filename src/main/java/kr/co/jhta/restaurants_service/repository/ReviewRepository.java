@@ -12,4 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
             int customerId, Review.BLOCKED blocked, Pageable pageable
     );
 
+    long countByCustomerId(int customer);
+
 }
