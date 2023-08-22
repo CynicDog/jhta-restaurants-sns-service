@@ -199,4 +199,25 @@
 		from
 			STORES
 	</select>
+	
+	<update id="updateStore" parameterType="Store">
+		update STORES
+		set
+			business_license	= #{businessLicense},
+			name				= #{name},
+			address				= #{address},
+			category			= #{category},
+			zipcode				= #{zipcode},
+			latitude			= #{latitude},
+			longitude			= #{longitude},
+			description			= #{description},
+			phone				= #{phone},
+			read_count			= #{readCount},
+			update_date			= #{updateDate},
+			owner_id			= #{owner.id},
+			disabled			= #{disabled}
+		where
+			id = #{id}
+	</update>
+	
 </mapper>

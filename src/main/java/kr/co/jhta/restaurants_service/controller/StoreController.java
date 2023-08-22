@@ -80,6 +80,9 @@ public class StoreController {
 	
 	@GetMapping("/detail")
     public String detail(@RequestParam("id") int storeId, Model model) {
+		
+		storeService.updateReadCount(storeId);
+		
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDto = reviewService.getReivewsByStoreId(storeId);
         // 모델에 가게 정보를 추가합니다.
