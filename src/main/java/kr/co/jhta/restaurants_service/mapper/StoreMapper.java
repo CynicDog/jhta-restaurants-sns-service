@@ -20,7 +20,7 @@ public interface StoreMapper {
 	
 	Store getStoreById(int storeId);
 	
-	List<VisitedStore> getVisitedStoresById(@Param("storeIds") List<Integer> storeIds);
+	List<VisitedStore> getVisitedStoresById(Map<String,Object> param);
 	
 	List<BookmarkedStore> getBookmarkedStoresByUserId(int customerId);
 	
@@ -31,5 +31,8 @@ public interface StoreMapper {
 	int getTotalRows(Map<String,Object> param);
 	
 	List<Store> getStoreByName(String keyword);
+
+	List<VisitedStore> getVisitedStores(Map<String, Object> param);
+
 	
 }

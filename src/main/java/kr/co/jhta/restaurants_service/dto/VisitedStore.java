@@ -16,5 +16,6 @@ public class VisitedStore {
 	private String name;
 	private double reviewAvg;
 	private String category;
-	
+	private String isBookmarked;
+
 }

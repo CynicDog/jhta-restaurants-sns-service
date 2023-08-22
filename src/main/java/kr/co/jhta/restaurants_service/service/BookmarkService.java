@@ -18,6 +18,10 @@ public class BookmarkService {
 	public void insertBookmark(int customerId, int storeId) {
 		bookmarkMapper.insertBookmark(customerId, storeId);
 	}
+
+	public void deleteBookmark(int customerId, int storeId) {
+		bookmarkMapper.deleteBookmark(customerId, storeId);
+	}
 	
 	
 }

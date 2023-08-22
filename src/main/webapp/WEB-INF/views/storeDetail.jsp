@@ -86,17 +86,19 @@ html, body {
 								</p>
 							</div>
 							<div class="col-4">
-								<sec:authentication property="principal.user.id" var="loginId"/>
-								<c:if test="${store.owner.id ne loginId }">
-									<span class="my-2 float-end">
-										<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
-											리뷰<i class="bi bi-brush"></i>
-										</button>
-										<button class="btn" id="box">
-											<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
-										</button>
-									</span>
-								</c:if>
+								<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="principal.user.id" var="loginId"/>
+									<c:if test="${store.owner.id ne loginId }">
+										<span class="my-2 float-end">
+											<button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.storeId }'">
+												리뷰<i class="bi bi-brush"></i>
+											</button>
+											<button class="btn" id="box">
+												<i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+											</button>
+										</span>
+									</c:if>
+								</sec:authorize>
 							</div>
 						</div>
 						<div class="row">
@@ -603,6 +605,35 @@ html, body {
     commentButton.addEventListener('click', () => {
         cardAndTextarea.style.display = 'block';
     });
+    
+    //localStorage에 가게 id저장
+    let storeId = `${param.id}`
+		if (storeId) {
+			console.log("storeId : ", storeId)
+			let value = localStorage.getItem("store_history");
+			console.log("value : ", value)
+			let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
+			console.log("store_history : ", store_history)
+			
+			if(store_history!=null){
+				let exist = store_history.includes(storeId);
+				console.log("exist : ", exist);
+				
+				if (!exist) {
+					store_history.unshift(storeId);
+					console.log("store_history : ", store_history);
+				}
+			}else{
+				store_history = [];
+				store_history.unshift(storeId);
+				console.log("new store_history : ", store_history);
+			}
+			console.log("store_history : ",store_history)
+			value = JSON.stringify(store_history);
+			console.log("value : ", value);
+			localStorage.setItem("store_history",value);
+			
+		}
 </script>
 </body>
 </html>

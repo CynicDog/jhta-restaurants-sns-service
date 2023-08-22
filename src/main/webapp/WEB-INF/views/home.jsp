@@ -9,14 +9,57 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    	.wrap{
+    		position: relative;
+  			min-height: 100%;
+  			padding-bottom: 100px;
+    	}
+    	
+    	.card-img-overlay{
+    		position: absolute;
+  			top: 30%;
+  			font-size: 22px;
+    	}
+    	
+    	img{
+    		width: 100%;
+    		height: 200px;
+    		object-fit:cover;
+    		filter: brightness(70%);
+    	}
+    	
+    	.search-bar {
+      		width: 800px;
+    }
+</style>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     
 </head>
 <body>
-<%@ include file="homenavbar.jsp" %>
+<%@ include file="common/navbar.jsp"%>
 <div class="wrap">
 	<div class="container">
+		<div class= "row ">
+			<div class= "col-12">
+				<div class="row border-bottom">
+					<div class="col-12 mt-4">
+						<form action="/store/search" method="GET">
+							<div class="mx-auto my-5 search-bar input-group">
+								<input name="keyword" type="text"
+									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
+									aria-label="Recipient's username"
+									aria-describedby="button-addon2">
+								<div class="input-group-append"></div>
+								<!--  <button class="btn btn-search btn-dark rounded-pill ms-2">검색</button> -->
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row mt-3">
 			<div class="col">
 				<h4 class="my-3">팔로워의 포스트</h4>
@@ -218,7 +261,7 @@
 </div>
 
 <script type="text/javascript">
-	
+	document.getElementById("form-navbar-search").style.display = "none";
 </script>
 </body>
 </html>

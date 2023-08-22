@@ -178,13 +178,13 @@
 			STORES
 	</select>
 	
-	<select id = "getVisitedStoresById" resultType="VisitedStore">
+	<select id = "getVisitedStoresById" parameterType="map" resultType="VisitedStore">
 		select 
-			S.id			as id,
-			S.name 			as name,
-			S.category		as category,
-			review_avg		as reviewAvg
-			
+			S.id						as id,
+			S.name 						as name,
+			S.category					as category,
+			review_avg					as reviewAvg,
+			if(B.id, 'y', 'n')			as isBookmarked
 		from STORES S 
 			left join 
 	       	   (select 
@@ -193,8 +193,30 @@
 		        from REVIEWS
 		        group by store_id
 	           ) R on S.id = R.store_id
-	           
-	           
+	           		left join 
+	           			BOOKMARKS B on S.id = B.store_id and B.customer_id  = #{customerId}
+		where
+			S.id in 
+			<foreach index="index"  item="id" collection="storeIds" open="(" close=")" separator=",">
+				#{id}
+			</foreach>
+	</select>
+	
+	<select id = "getVisitedStores" parameterType="map" resultType="VisitedStore">
+		select 
+			S.id						as id,
+			S.name 						as name,
+			S.category					as category,
+			review_avg					as reviewAvg,
+			'n' 						as isBookmarked
+		from STORES S 
+			left join 
+	       	   (select 
+	        	 	store_id, 
+	        	 	AVG(rating) as review_avg 
+		        from REVIEWS
+		        group by store_id
+	           ) R on S.id = R.store_id
 		where
 			S.id in 
 			<foreach index="index"  item="id" collection="storeIds" open="(" close=")" separator=",">

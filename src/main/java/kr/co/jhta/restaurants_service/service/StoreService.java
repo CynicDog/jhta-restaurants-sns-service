@@ -131,19 +131,21 @@ public class StoreService {
 	}
 
 	public List<BookmarkedStore> getBookmarkedStore(Integer customerId) {
+		log.info("가게서비스 getBookmarkedStore : ");
 		List<BookmarkedStore> stores = storeMapper.getBookmarkedStoresByUserId(customerId);
-
-		log.info("가게서비스 getBookmarkedStore : ", stores);
-		
 		return stores;
 	}
 
-	public List<VisitedStore> getVisitedStore(List<Integer> storeIds) {
-		log.info("가게서비스 getVisitedStore : '{}'",storeIds);
-
-		List<VisitedStore> stores = storeMapper.getVisitedStoresById(storeIds);
-		log.info("가게서비스 getVisitedStore 결과 : '{}'",stores);
-
+	public List<VisitedStore> getVisitedStore(Map<String,Object> param) {
+		List<VisitedStore> stores;
+		if(param.get("customerId")==null) {
+			log.info("param.get(\"customerId\") : " + param.get("customerId"));
+			stores = storeMapper.getVisitedStores(param);
+		}else {
+			stores = storeMapper.getVisitedStoresById(param);
+		}
+		
+		log.info("가게서비스 getVisitedStore 결과 stores : '{}'",stores);
 		return stores;
 	}
 

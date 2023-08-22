@@ -1,9 +1,11 @@
 package kr.co.jhta.restaurants_service.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,6 +19,7 @@ import kr.co.jhta.restaurants_service.dto.PagedStores;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.dto.VisitedStore;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
@@ -81,21 +84,44 @@ public class StoreController {
 	
 	@GetMapping("/bookmark")
 	@ResponseBody
-	public List<BookmarkedStore> searchBookmark(Integer customerId) {
-		List<BookmarkedStore> stores = storeService.getBookmarkedStore(customerId);
+	public List<BookmarkedStore> searchBookmark(@AuthenticationPrincipal SecurityUser user) {
+		List<BookmarkedStore> stores = storeService.getBookmarkedStore(user.getUser().getId());
+		log.info("----------------searchBookmark");
+		log.info("----------------searchBookmark" + stores );
+		
 		return stores;
 	}
 	
 	@GetMapping("/history")
 	@ResponseBody
-	public List<VisitedStore> searchHistory(@RequestParam("id") List<Integer> storeIds){
-		log.info("-----------------------------storeId='{}'", storeIds);
+	public List<VisitedStore> searchHistory(@RequestParam("id") List<Integer> storeIds, @AuthenticationPrincipal SecurityUser user){
+		log.info("-----------------------------컨트롤러 history");
 
-		List<VisitedStore> stores = storeService.getVisitedStore(storeIds);
+		if (user != null) {
+			Map<String,Object> param = new HashMap<>();
+			
+			param.put("storeIds", storeIds);
+			log.info("param.put(\"storeIds\", storeIds)");
+			
+			param.put("customerId", user.getUser().getId());
+			log.info("customerId\", user.getUser().getId()");
+			
+			List<VisitedStore> stores = storeService.getVisitedStore(param);
 
-		log.info("-----------------------------컨트롤러 history stores='{}'", stores);
+			log.info("-----------------------------컨트롤러 history stores='{}'", stores);
+			return stores;
+			
+		} else {
+			Map<String,Object> param = new HashMap<>();
+			
+			param.put("storeIds", storeIds);
+			
+			List<VisitedStore> stores = storeService.getVisitedStore(param);
+			
+			return stores;
+		}
 
-		return stores;
+
 				
 	}
 	

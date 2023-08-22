@@ -7,4 +7,6 @@ public interface BookmarkMapper {
 	
 	void insertBookmark(int customerId, int storeId);
 
+	void deleteBookmark(int customerId, int storeId);
+
 }
