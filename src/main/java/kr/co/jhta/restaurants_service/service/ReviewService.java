@@ -137,7 +137,7 @@ public class ReviewService {
 	public ReviewDetailDto getReivewsByStoreId(int storeId) {
 		ReviewDetailDto reviewDto = new ReviewDetailDto();
 
-		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);		
 		List<Review> getAllReviewByStoreId = getAllReviewsByStoreId.stream().map(
 				review -> {
 					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
