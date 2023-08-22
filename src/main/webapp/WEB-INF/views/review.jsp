@@ -38,7 +38,6 @@
 	<form id="reviewForm" method="post" enctype="multipart/form-data" action="">
    		<input type="hidden" name="storeId" value="${param.storeId }"/>
    		<sec:authentication property="principal.user.id" var="userId"/>
-   		<input type="hidden" name="userId" value="${userId }"/>
 	<div class="review-section mt-3" >
 		<div class="row">
 			<div class="col-12">
@@ -98,7 +97,7 @@
 	       				" style="position: relative; display: inline-block;"><i class="bi bi-plus-square-dotted" style="font-size: 65px; color: #000;"></i></a> 
 						<span></span>	
 			        </label>
-			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+			    	<input style="visibility: hidden" type="file" id="imageFile" name="chooseFile" accept="image/*" >
 			    </div>
 			<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
 			    <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -170,7 +169,7 @@ $(function() {
 	    // FileReader객체로 파일을 읽어온다.
 	    reader.readAsDataURL(file);
 	});
-	
+ 
 	$("textarea[name=content]").keyup(function() {
 		
 	    let maxLength = 2000; 
@@ -205,6 +204,7 @@ $(function() {
                 $("#imageFile").prop("disabled", true); 
             }
         } 
+    	
     });
     
     $("#form-image").on('click', 'i.text-danger', function(event) {
@@ -291,6 +291,11 @@ $(function() {
 	        updateReviewKeywords();
 	    });
 	});
+	
+/* 	$("#reviewForm").submit(function() {
+		document.getElementById("imageFile").files = files;
+		console.log("FFFFFFFFFFFF files -> ", document.getElementById("imageFile").files)
+	}) */
 	
 });
 

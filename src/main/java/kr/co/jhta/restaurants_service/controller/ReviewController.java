@@ -53,7 +53,7 @@ public class ReviewController {
 //		log.info("가게 아이디-> {}", storeId);
 //		log.info("손님 아이디 -> {}", customerId);
 		
-		return "redirect:/store/storeDetail?storeId=" + form.getStoreId();
+		return "redirect:/store/detail?id=" + form.getStoreId();
 	}
 	
 	// 리뷰 답글 등록 요청 처리
@@ -65,12 +65,11 @@ public class ReviewController {
 		}
 	
 	@GetMapping("/detail")
-	public String reviewDetail(Model model) {
+	public String reviewDetail(Model model, @RequestParam("id") int reviewId) {
 		 
-		int reviewId = 101;
 		ReviewDetailDto dto = reviewService.selectReview(reviewId);
 		model.addAttribute("review", dto);
-//		log.info("리뷰 -> {}", dto.getReview().getCustomer().getFullName());
+		log.info("리뷰 -> {}", dto.getReview().getCustomer().getFullName());
 //		log.info("리뷰 -> {}", dto.getReviewKeywords().get(0).getKeyword());
 //		log.info("리뷰 -> {}", dto.getReviewKeywords().get(1).getKeyword());
 //		log.info("리뷰 -> {}", dto.getReview().getRating());
