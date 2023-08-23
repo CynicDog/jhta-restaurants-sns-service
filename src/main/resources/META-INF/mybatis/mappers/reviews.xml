@@ -107,4 +107,13 @@
 			store_id = #{value};
 	</select>
 	
+	<select id="getAllReviewRatingByStoreId" parameterType="int" resultType="ReviewSummaryDto">
+		select 
+			SUM(CASE WHEN RATING = 1 THEN 1 ELSE 0 END) as bad,
+			SUM(CASE WHEN RATING = 3 THEN 1 ELSE 0 END) as soso,
+			SUM(CASE WHEN RATING = 5 THEN 1 ELSE 0 END) as good
+		from REVIEWS
+		where store_id = #{value};	
+	</select>
+	
 </mapper>

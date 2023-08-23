@@ -130,6 +130,7 @@ public class StoreController {
     public String detail(@RequestParam("id") int storeId, Model model) {
 		
 		storeService.updateReadCount(storeId);
+		reviewService.getAllReviewRatingByStoreId(storeId);
 		
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDto = reviewService.getReivewsByStoreId(storeId);
@@ -140,10 +141,11 @@ public class StoreController {
         
         // 모델에 리뷰 정보를 추가합니다.
         model.addAttribute("reviews", reviewDto);
+        model.addAttribute("reviewSummary", reviewService.getAllReviewRatingByStoreId(storeId));
 //        model.addAttribute("storeAvg", reviewDto.getStoreReviewAvg());
 //        log.info("리뷰 -> [] ", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
 //        log.info("가게 평점 -> [] ", reviewDto.getStoreReviewAvg());
-        log.info("스토어 -> {}", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
+      
         return "storeDetail";
     }
 	
