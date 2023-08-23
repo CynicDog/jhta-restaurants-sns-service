@@ -107,13 +107,16 @@ public class PostService {
     }
 
 
-	public void insertPostComment(PostCommentCommand form) {
+	public void insertPostComment(PostCommentCommand form, SecurityUser securityUser) throws IOException{
 		PostComment postComment = new PostComment();
 		postComment.setContent(form.getContent());
 		
-		Post post = postmapper.getPostById(form.getPostingId());
+		logger.info(form);
+		
+		Post post = postmapper.getPostById(form.getPostId());
 		postComment.setPost(post);
-		postComment.setCustomer(userRepository.getReferenceById(form.getUserId()));
+		postComment.setCustomer(securityUser.getUser());
+//		postComment.setCustomer(userRepository.getReferenceById(form.getUserId()));
 		
 		postCommentMapper.insertComment(postComment);
 		
