@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class ReviewDataCommand {
+public class ReviewCommand {
 	
 	private Integer rating;
 	private String content;
