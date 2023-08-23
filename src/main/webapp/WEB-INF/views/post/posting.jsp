@@ -71,7 +71,7 @@
 							<div class="col-12 border-top  my-3"></div>
 								<div class="col-12  border-bottom my-3">
 									<form id="postComment" method="post" action="/post/CommentRegister">
-										<input type="hidden" name="postingId" value="${param.postingId }"/>
+										<input type="hidden" name="postId" value="${post.post.id }"/>
 										<sec:authentication property="principal.user.id" var="userId"/>
 										<div class="form-floating text-start">
 											<p>댓글을 작성하세요</p>

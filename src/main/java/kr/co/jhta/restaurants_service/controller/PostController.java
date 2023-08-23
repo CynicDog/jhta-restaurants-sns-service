@@ -156,12 +156,12 @@ public class PostController {
     }
     
     @PostMapping("/CommentRegister")
-	public String reviewCommentRegister(PostCommentCommand form) {
-    	log.info("댓글 신규 등록 -> {}", form.getPostingId());
+	public String PostCommentRegister(PostCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
+    	log.info("포스트 아이디 -> {}", form.getPostId());
     	log.info("댓글 신규 등록 -> {}", form.getContent());
-    	log.info("댓글 신규 등록 -> {}", form.getUserId());
-		postService.insertPostComment(form);
-		return "redirect:/post/followerPost/detail";
+    	log.info("유저 아이디 -> {}", form.getUserId());
+    	postService.insertPostComment(form, securityUser);
+		return "redirect:/post/followerPost/detail?id=" + form.getPostId();
 	}
 
 

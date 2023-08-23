@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>         
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
+  
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,6 +15,7 @@
     
 </head>
 <body>
+
 <%@ include file="common/navbar.jsp"%>
 <style type="text/css">
 	.wrap{
@@ -39,6 +41,7 @@
   		width: 800px;
 	}
 </style>
+
 <div class="wrap">
 	<div class="container">
 		<div class= "row ">
