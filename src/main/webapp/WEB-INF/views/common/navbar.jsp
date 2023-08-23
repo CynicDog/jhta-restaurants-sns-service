@@ -63,7 +63,7 @@
 
 <nav class="navbar navbar-expand-lg border-bottom bg-light fixed-top shadow-sm z-2">
     <div class="container-fluid">
-		<a class="navbar-brand ms-2" href="/">🧑🏻‍💻</a>
+		<a class="navbar-brand px-4" href="/">🧑🏻‍💻</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -74,7 +74,7 @@
             <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
                 <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav px-4">
                 <sec:authorize access="isAnonymous()">
 					<li class="nav-item">
                         <a type="button"
@@ -117,7 +117,7 @@
                                data-bs-placement="bottom"
                                data-bs-html="true"
                                data-bs-content="
-                               <div class='fw-light'>
+                               <div>
                                    <div class='row text-center mx-1'>
                                        <a id='ownerMyPage' class='link-secondary text-center link-underline-opacity-0 py-2' href='/customer/my-page'>My Page</a>
                                    </div>
@@ -136,7 +136,7 @@
                         </li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_OWNER')">
-                        <li class="nav-item">
+                        <li class="nav-item px-4">
                             <a type="button"
                                id="signupPopover"
                                class="nav-link"
@@ -145,7 +145,7 @@
                                data-bs-placement="bottom"
                                data-bs-html="true"
                                data-bs-content="
-                               <div class='fw-light'>
+                               <div>
                                    <div class='row text-center mx-1'>
                                        <a id='ownerMyPage' class='link-secondary text-center link-underline-opacity-0 py-2' href='/owner/my-page'>My Page</a>
                                    </div>
