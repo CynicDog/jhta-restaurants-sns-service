@@ -79,10 +79,12 @@
 					<li class="nav-item">
                         <a type="button"
                            id="signupPopover"
+                           tabindex="0" 
                            class="nav-link"
                            data-bs-container="body"
                            data-bs-toggle="popover"
                            data-bs-placement="bottom"
+                           data-bs-trigger="focus"
                            data-bs-html="true"
                            data-bs-content="
                            <div class='fw-light'>
@@ -111,10 +113,12 @@
                         <li class="nav-item">
                             <a type="button"
                                id="signupPopover"
+                               tabindex="0" 
                                class="nav-link"
                                data-bs-container="body"
                                data-bs-toggle="popover"
                                data-bs-placement="bottom"
+                               data-bs-trigger="focus"
                                data-bs-html="true"
                                data-bs-content="
                                <div>
@@ -139,10 +143,12 @@
                         <li class="nav-item px-4">
                             <a type="button"
                                id="signupPopover"
+                               tabindex="0" 
                                class="nav-link"
                                data-bs-container="body"
                                data-bs-toggle="popover"
                                data-bs-placement="bottom"
+                          	   data-bs-trigger="focus"
                                data-bs-html="true"
                                data-bs-content="
                                <div>
@@ -334,6 +340,17 @@
 						</div>
 					</div>
 				`;
+				$("#bookmark").append(content);
+			})
+	    	$("#bookmarkLoadingSpinner").css("display", "none");
+				
+		})
+		console.log("ajax getBookmarkedStores done");
+
+	}
+
+	
+</script>			`;
 				$("#bookmark").append(content);
 			})
 	    	$("#bookmarkLoadingSpinner").css("display", "none");
