@@ -706,9 +706,11 @@ html, body {
          if(store_history!=null){
             let exist = store_history.includes(store_id);
             
-            if (!exist) {
-               store_history.unshift(store_id);
+            if (exist) {
+           	   let findIndex = store_history.indexOf(store_id);
+           	   store_history.splice(findIndex, 1);
             }
+            store_history.unshift(store_id);
          } else {
             store_history == [];
             store_history.unshift(store_id);
