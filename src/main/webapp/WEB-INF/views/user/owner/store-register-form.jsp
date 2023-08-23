@@ -23,11 +23,10 @@
     }
 </style>
 <body>
-<%@ include file="../../common/navbar.jsp" %>
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6 col-sm-6">
-            <div class="card shadow my-5 menu-input-group">
+            <div class="card shadow my-4 menu-input-group py-3">
                 <div class="row p-3">
                     <div class="col-4">
                         <nav id="register-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -38,6 +37,9 @@
                                 <a class="nav-link my-3 text-secondary" href="#item-4">Hours</a>
                             </nav>
                         </nav>
+                        <div type="button" onclick="window.history.back()">
+                            <i class="bi bi-arrow-left-square fw-lighter fs-6" style="color: #838383"> Back</i>
+                        </div>
                     </div>
                     <div class="col-8">
                         <div data-bs-spy="scroll" data-bs-target="#register-navbar" data-bs-smooth-scroll="false"
