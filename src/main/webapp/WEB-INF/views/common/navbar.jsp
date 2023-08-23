@@ -195,12 +195,16 @@
 		$.getJSON('/store/history',  data, function(stores) {
 			console.log("ajax getVisitedStores start");
 
+			// histories = [23, 10]
+			// stores = [{no:10, name:aa}, {no:23, name:bbb}]
 			histories.forEach(function(id, index) {
 				store = stores.find(function(store) {
 					return store.id == id;
 				})
 				store['index'] = index;
 			})
+			// stores = [{no:10, name:aa, index:1}, {no:23, name:bbb, index:0}]
+			
 			stores.sort(function(store1, store2) {
 				return store1.index - store2.index;
 			})
