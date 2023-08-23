@@ -9,13 +9,16 @@
 	
 	<select id="getPostDataByPostId" parameterType="int" resultType="PostData">
 		select 
-			id as id,
-			post_id as "post.id",
-			store_id as "store.id",
-			content as content,
-			picture_file as pictureFile 
-		from POST_DATA
+			A.id as id,
+			A.post_id as "post.id",
+			A.store_id as "store.id",
+			A.content as content,
+			A.picture_file as pictureFile,
+			B.name as "store.name", 
+			B.address as "store.address"
+		from POST_DATA A, STORES B
 		where post_id = #{value}
+		and A.store_id = B.id
 	</select>
 	
 </mapper>

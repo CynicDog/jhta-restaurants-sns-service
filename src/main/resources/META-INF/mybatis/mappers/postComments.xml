@@ -13,15 +13,17 @@
 	
 	<select id="getCommentsByPostId" parameterType="int" resultType="PostComment">
 		select
-			id as id,
-			content as content,
-			disabled as disabled,
-			create_date as createDate,
-			update_date as updateDate,
-			post_id as "post.id",
-			customer_id as "customer.id"
-		from POST_COMMENTS
+			A.id as id,
+			A.content as content,
+			A.disabled as disabled,
+			A.create_date as createDate,
+			A.update_date as updateDate,
+			A.post_id as "post.id",
+			A.customer_id as "customer.id",
+			B.full_name as "customer.fullName"
+		from POST_COMMENTS A, USERS B
 		where post_id = #{value}
+		and A.customer_id = B.id
 	</select>
 	
 </mapper>

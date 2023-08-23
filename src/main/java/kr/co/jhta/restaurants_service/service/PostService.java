@@ -81,6 +81,7 @@ public class PostService {
 		PostDto dto = new PostDto();
 
 		Post post = postmapper.getPostById(postId);
+		
 		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
 
