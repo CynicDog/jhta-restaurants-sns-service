@@ -60,7 +60,7 @@
 		</div>
 	</div>
 </div>
-	
+
 <nav class="navbar navbar-expand-lg border-bottom bg-light fixed-top shadow-sm z-2">
     <div class="container-fluid">
 		<a class="navbar-brand ms-2" href="/">🧑🏻‍💻</a>
@@ -76,21 +76,28 @@
             </form>
             <ul class="navbar-nav">
                 <sec:authorize access="isAnonymous()">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/login">Login</a>
-                    </li>
 					<li class="nav-item">
-                        <a id="signupPopover"
+                        <a type="button"
+                           id="signupPopover"
                            class="nav-link"
                            data-bs-container="body"
                            data-bs-toggle="popover"
                            data-bs-placement="bottom"
                            data-bs-html="true"
                            data-bs-content="
-                               <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/customer/signup'>손님</a> /
-                               <a class='link-secondary m-1 text-center link-underline-opacity-0' href='/owner/signup'>사장님</a>
+                           <div class='fw-light'>
+                               <div class='row text-center mx-1'>
+                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/user/login'>로그인</a>
+                               </div>
+                               <div class='row text-center mx-1'>
+                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/customer/signup'>손님 회원가입</a>
+                               </div>
+                               <div class='row text-center mx-1'>
+                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/owner/signup'>사장님 회원가입</a>
+                               </div>
+                           </div>
                            "
-                        >Signup</a>
+                        >Socials</a>
                     </li>
                     <script>
                         new bootstrap.Popover(document.querySelector('#signupPopover'))
@@ -102,20 +109,57 @@
                 <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="hasRole('ROLE_CUSTOMER')">
                         <li class="nav-item">
-                            <a id="customerMyPage" class="nav-link" href="/customer/my-page">My Page</a>
+                            <a type="button"
+                               id="signupPopover"
+                               class="nav-link"
+                               data-bs-container="body"
+                               data-bs-toggle="popover"
+                               data-bs-placement="bottom"
+                               data-bs-html="true"
+                               data-bs-content="
+                               <div class='fw-light'>
+                                   <div class='row text-center mx-1'>
+                                       <a id='ownerMyPage' class='link-secondary text-center link-underline-opacity-0 py-2' href='/customer/my-page'>My Page</a>
+                                   </div>
+                                   <div class='row text-center mx-1'>
+                                       <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/user/logout'>Logout</a>
+                                   </div>
+                               </div>
+                               "
+                            >Socials</a>
                         </li>
+                        <script>
+                            new bootstrap.Popover(document.querySelector('#signupPopover'))
+                        </script>
 	                     <li class="nav-item">
                             <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href="">Bookmark</a>
                         </li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_OWNER')">
                         <li class="nav-item">
-                            <a id="ownerMyPage" class="nav-link" href="/owner/my-page">My Page</a>
+                            <a type="button"
+                               id="signupPopover"
+                               class="nav-link"
+                               data-bs-container="body"
+                               data-bs-toggle="popover"
+                               data-bs-placement="bottom"
+                               data-bs-html="true"
+                               data-bs-content="
+                               <div class='fw-light'>
+                                   <div class='row text-center mx-1'>
+                                       <a id='ownerMyPage' class='link-secondary text-center link-underline-opacity-0 py-2' href='/owner/my-page'>My Page</a>
+                                   </div>
+                                   <div class='row text-center mx-1'>
+                                       <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/user/logout'>Logout</a>
+                                   </div>
+                               </div>
+                               "
+                            >Socials</a>
                         </li>
+                        <script>
+                            new bootstrap.Popover(document.querySelector('#signupPopover'))
+                        </script>
                     </sec:authorize>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/logout">Logout</a>
-                    </li>
                 </sec:authorize>
             </ul>
         </ul>
