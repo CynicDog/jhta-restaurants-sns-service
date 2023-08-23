@@ -145,7 +145,7 @@ html, body {
 									<td>
 										<c:forEach var="food" items="${foods}">
 					                        <div class="col my-2">
-					                            <span class="food-name d-inline-block" style="width: 125px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+					                            <span class="food-name d-inline-block" style="width: 120px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
 					                        </div>
 					                    </c:forEach>		
 									</td>
@@ -296,7 +296,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge bg-success-subtle text-success-emphasis rounded-pill">괜찮아요!</span>
+											<span class="badge bg-success-subtle text-success-emphasis rounded-pill">맛있어요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -313,27 +313,33 @@ html, body {
 												<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
 											</button>
 											<span class="float-end">
-													<button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
+												<button id="btn-answer-${review.id}" type="button" class="btn btn-light">
+													<span>답글</span>
+												</button>
+												
 												<button type="button" class="btn btn-light btn-sm text-danger">
 													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
 										</div>
 									</div>
-									<form id="reviewComment" method="post" action="/review/register">
-										<input type="hidden" name="reviewId" value="103" />
-										<input type="hidden" name="storeId" value="32" />
-										<div class="row" id="cardAndTextarea" style="display: none;">
-									        <div class="col-12">
-									            <div class="card">
-									                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-									                    <textarea class="form-control" name="content" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
-									                    <button class="btn btn-outline-secondary submit-reply-button" type="submit" id="button-addon2"><i class="bi bi-pencil"></i></button>
-									                </div>
-									            </div>
-									        </div>
-									    </div>
-									</form>
+									<div style="display:hidden" data-review-form="10">
+										<form id="form-answer-10" method="post" action="/review/register">
+											<input type="hidden" name="reviewId" value="103" />
+											<input type="hidden" name="storeId" value="32" />
+											<div class="row" id="cardAndTextarea" style="display: none;">
+										        <div class="col-12">
+										            <div class="card">
+										                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+										                    <textarea class="form-control" name="content" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+										                    <button class="btn btn-outline-secondary submit-reply-button" type="submit" id="button-addon2"><i class="bi bi-pencil"></i></button>
+										                </div>
+										            </div>
+										        </div>
+										    </div>
+										</form>
+									</div>
+									
 									<div class="row" id="ownerComment" style="display: none;">
 										<div class="col">
 											<div class="card">
@@ -419,7 +425,7 @@ html, body {
 											<p class="col card-text">리뷰 내용</p>
 										</div>
 										<div class="col-3 text-end">
-											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찬하요!</span>
+											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -672,7 +678,7 @@ html, body {
 		}
 	});
 	
-	const commentButton = document.getElementById('comment');
+	/* const commentButton = document.getElementById('comment');
 	const cardAndTextarea = document.getElementById('cardAndTextarea');
 	const ownerComment = document.getElementById('ownerComment');
 
@@ -688,7 +694,7 @@ html, body {
 	submitButton.addEventListener('click', () => {
 	    cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
 	    ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
-	});
+	}); */
 	
 	// localStorage에 가게 id저장
     let store_id = `${param.id}`
