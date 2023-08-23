@@ -195,6 +195,16 @@
 		$.getJSON('/store/history',  data, function(stores) {
 			console.log("ajax getVisitedStores start");
 
+			histories.forEach(function(id, index) {
+				store = stores.find(function(store) {
+					return store.id == id;
+				})
+				store['index'] = index;
+			})
+			stores.sort(function(store1, store2) {
+				return store1.index - store2.index;
+			})
+			
 			// html 태그 생성
 			stores.forEach(function(store){
 			console.log("result stores : ", store.id);
