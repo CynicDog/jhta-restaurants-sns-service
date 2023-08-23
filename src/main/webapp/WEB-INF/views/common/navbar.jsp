@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style type="text/css">
     html, body {
         height: 100%;
@@ -22,10 +23,10 @@
     }
     
 </style>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 
 <!-- 모달 -->
 <div class="modal fade" id="bookmarkModal" tabindex="-1"
@@ -78,7 +79,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user/login">Login</a>
                     </li>
-                    <li class="nav-item">
+					<li class="nav-item">
                         <a id="signupPopover"
                            class="nav-link"
                            data-bs-container="body"
@@ -91,10 +92,12 @@
                            "
                         >Signup</a>
                     </li>
-                       <li class="nav-item">
-                           <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href="">Bookmark</a>
-                       </li>
-
+                    <script>
+                        new bootstrap.Popover(document.querySelector('#signupPopover'))
+                    </script>
+                     <li class="nav-item">
+                     	<a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href="">Bookmark</a>
+                     </li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="hasRole('ROLE_CUSTOMER')">
@@ -119,13 +122,6 @@
     </div>	
 </nav>
 <script>
-	$(document).ready(function() {
-		let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-		let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-			return new bootstrap.Popover(popoverTriggerEl)
-		});
-	});
-   	
 	//bookmark star click listener
 	$(".modal-body").on('click', '[id^="star-"]', function(){
 		
@@ -136,7 +132,7 @@
 			//fill -> blank
 			if ($(this).hasClass('bi-star-fill')) {
 					$(this).removeClass('bi-star-fill').addClass('bi-star')
-					$.getJSON('/bookmark/delete', {customerId : 4, storeId : bookmarkId},function(){
+					$.getJSON('/bookmark/delete', {storeId : bookmarkId},function(){
 						getBookmarkedStores();
 						
 					});
@@ -147,7 +143,6 @@
 
 			}
 	    } else {
-	    	alert("로그인이 필요합니다");
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
 	        window.location.href = "/user/login";
 	    }
