@@ -15,7 +15,7 @@ logging:
 spring:
   # 커넥션 풀 설정
   datasource:
-    url: jdbc:mysql://database-1.csebivwnfevt.us-east-2.rds.amazonaws.com:3306/database1
+    url: jdbc:mysql://jhtafinal.c8qipvzhd4ot.ap-northeast-2.rds.amazonaws.com:3306/database1
     username: admin
     password: zxcv1234
     driver-class-name: com.mysql.cj.jdbc.Driver
