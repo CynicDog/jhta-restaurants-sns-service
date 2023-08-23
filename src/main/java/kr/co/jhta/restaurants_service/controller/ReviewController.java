@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
-import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
+import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
@@ -45,7 +45,7 @@ public class ReviewController {
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewDataCommand form) throws IOException {
+	public String reviewRegister(ReviewCommand form) throws IOException {
 	
 		reviewService.createReview(form);
 		log.info("리뷰 신규 등록 -> {}", form);
