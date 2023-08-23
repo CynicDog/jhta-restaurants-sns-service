@@ -41,10 +41,10 @@
 				</div>
 				<div class="col-6 my-5 text-left">
 					<div class="d-flex">
-						<h3>${data.store.id }</h3>
+						<h3>${data.store.name }</h3>
 						<h3 class="text-warning ms-3">5.0</h3>
 					</div>
-					<p class="text-secondary">서울특별시 동대문구 망우로 30</p>
+					<p class="text-secondary">${data.store.address }</p>
 					<p>${data.content }</p>
 				</div>
 				<div class="col-2 my-5 position-relative">
@@ -102,7 +102,7 @@
 															<span>${comment.updateDate }</span>
 														</div>
 														<div class="card-text">
-															<span> ${comment.customer.id }</span>
+															<span> ${comment.customer.fullName }</span>
 														</div>
 														<div class="card-text">
 															<span>${comment.content }</span>
