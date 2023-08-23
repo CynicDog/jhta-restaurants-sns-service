@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
@@ -14,8 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
-import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
@@ -51,7 +52,7 @@ public class ReviewService {
 	@Autowired private ReviewRepository reviewRepository;
 
 	// 새 리뷰 등록하기
-	public void createReview(ReviewDataCommand form) {
+	public void createReview(ReviewCommand form) {
 
 		Review review = new Review();
 
@@ -163,7 +164,21 @@ public class ReviewService {
 	}
 
 	public ReviewDetailDto getReivewsByStoreId(int storeId) {
-		return null;
+		ReviewDetailDto reviewDto = new ReviewDetailDto();
+
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);	
+		
+		List<Review> allReviewsByStoreId = getAllReviewsByStoreId.stream().map(
+				review -> {
+					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
+					return review;
+				}).collect(Collectors.toList());
+		double allRatingByStoreId = allReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
+		
+		reviewDto.setStoreReviewAvg(allRatingByStoreId);
+		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
+		
+		return reviewDto;
 	}
 	
 	// 리뷰 rating가져오기

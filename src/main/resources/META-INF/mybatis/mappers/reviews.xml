@@ -70,22 +70,23 @@
 	
 	<select id="getAllReviewByStoreId" parameterType="int" resultType="Review">
 		select 
-			id,			
-			rating,
-			content,
-			create_date		as 	createDate,
-			update_date		as	updateDate,
-			liked_count		as	likedCount,
-			report_count	as  reportCount,
-			disabled,
-			blocked,
-			customer_id		as "customer.id",		
-			store_id		as "store.id"
+			R.id,			
+			R.rating,
+			R.content,
+			R.create_date		as 	createDate,
+			R.update_date		as	updateDate,
+			R.liked_count		as	likedCount,
+			R.report_count	as  reportCount,
+			R.disabled,
+			R.blocked,
+			R.customer_id		as "customer.id",		
+			U.username			as "customer.name"
 		from 
-			REVIEWS
+			REVIEWS R, USERS U
 		where 
-			store_id = #{value}
-		order by update_date desc;
+			R.store_id = #{value}
+			and R.customer_id = U.id
+		order by R.update_date desc
 	</select>
 	
 	<select id="getReviewByStoreId" parameterType="int" resultType="Review">
