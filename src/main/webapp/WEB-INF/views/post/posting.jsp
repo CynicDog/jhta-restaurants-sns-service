@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>            
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>         
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -70,12 +71,12 @@
 							<div class="col-12 border-top  my-3"></div>
 								<div class="col-12  border-bottom my-3">
 									<form id="postComment" method="post" action="/post/CommentRegister">
-										<input type="hidden" name="postId" value="${param.id }"/>
+										<input type="hidden" name="postingId" value="${param.postingId }"/>
+										<sec:authentication property="principal.user.id" var="userId"/>
 										<div class="form-floating text-start">
 											<p>댓글을 작성하세요</p>
 		                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
 		                                                          name="content" style="min-height:2rem"></textarea>
-	                                        
 	                                    </div> 
 	                                    <button class="btn btn-outline-secondary btn-sm my-2">작성</button>
 									</form>
