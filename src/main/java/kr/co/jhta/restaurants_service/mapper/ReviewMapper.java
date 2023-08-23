@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.jhta.restaurants_service.dto.ReviewDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 
@@ -17,5 +18,5 @@ public interface ReviewMapper {
 	List<Review> getAllReviewByStoreId(int storeId);
 	List<Review> getAllReviewsByCustomerId(int customerId);
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
-	
+//	List<ReviewDto> getAllReviewsByStoreId(int storeId);
 }

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+import kr.co.jhta.restaurants_service.dto.ReviewDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
@@ -163,23 +164,31 @@ public class ReviewService {
 		return reviewRepository.countByCustomerId(customerId);
 	}
 
-	public ReviewDetailDto getReivewsByStoreId(int storeId) {
-		ReviewDetailDto reviewDto = new ReviewDetailDto();
+//	public ReviewDetailDto getReivewsByStoreId(int storeId) {
+//		ReviewDetailDto reviewDto = new ReviewDetailDto();
 
-		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);	
+//		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);	
 		
-		List<Review> allReviewsByStoreId = getAllReviewsByStoreId.stream().map(
-				review -> {
-					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
-					return review;
-				}).collect(Collectors.toList());
-		double allRatingByStoreId = allReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
+//		List<Review> allReviewsByStoreId = getAllReviewsByStoreId.stream().map(
+//				review -> {
+//					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
+//					return review;
+//				}).collect(Collectors.toList());
+//		double allRatingByStoreId = allReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
 		
-		reviewDto.setStoreReviewAvg(allRatingByStoreId);
-		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
+//		reviewDto.setStoreReviewAvg(allRatingByStoreId);
+//		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
 		
-		return reviewDto;
-	}
+//		return reviewDto;
+//	}
+	
+	// 가게별 전체 리뷰 가져오기 
+//	public List<ReviewDto> getReivewsByStoreId(int storeId) {
+
+//		List<ReviewDto> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
+		
+//		return getAllReviewsByStoreId;
+//	}
 	
 	// 리뷰 rating가져오기
 	public ReviewSummaryDto getAllReviewRatingByStoreId(int storeId) {

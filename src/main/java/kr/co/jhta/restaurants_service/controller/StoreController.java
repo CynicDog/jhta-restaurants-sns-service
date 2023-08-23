@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.controller;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
-import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+//import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+//import kr.co.jhta.restaurants_service.dto.ReviewDto;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.dto.VisitedStore;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -132,15 +134,19 @@ public class StoreController {
 		storeService.updateReadCount(storeId);
 		reviewService.getAllReviewRatingByStoreId(storeId);
 		
+		
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
-        ReviewDetailDto reviewDto = reviewService.getReivewsByStoreId(storeId);
+//        List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
+        
         // 모델에 가게 정보를 추가합니다.
         model.addAttribute("store", dto.getStore());
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         
         // 모델에 리뷰 정보를 추가합니다.
-        model.addAttribute("reviews", reviewDto);
+//        model.addAttribute("reviews", reviewDto);
+//        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());
+//        log.info("리뷰 사진 ---> []", reviewDto.get(0).getReviewKeywords().get(0).getKeyword());
         model.addAttribute("reviewSummary", reviewService.getAllReviewRatingByStoreId(storeId));
 //        model.addAttribute("storeAvg", reviewDto.getStoreReviewAvg());
 //        log.info("리뷰 -> [] ", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());

@@ -1,6 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.ReviewMapper">
 
+
 	<insert id="insertReview" parameterType="Review">
 	  insert into REVIEWS
 	  (rating, content, customer_id, store_id)
@@ -67,26 +68,66 @@
 		where 
 			customer_id = #{value};
 	</select>
+<!--	
+	<resultMap id="ReviewResultMap" type="kr.co.jhta.restaurants_service.dto.ReviewDto">
+	    <id column="id" property="id" />
+	    <result column="rating" property="rating" />
+	    <result column="content" property="content" />
+	    <result column="create_date" property="createDate" />
+	    <result column="update_date" property="updateDate" />
+	    <result column="liked_count" property="likedCount" />
+	    <result column="report_count" property="reportCount" />
+	    <result column="disabled" property="disabled" />
+	    <result column="blocked" property="blocked" />
+	    <result column="review_avg" property="reviewAvg" />
+	    <association property="customer" javaType="kr.co.jhta.restaurants_service.vo.user.User">
+	        <id column="customer_id" property="id" />
+	        <result column="nickname" property="nickname" />
+	        <result column="username" property="username" />
+	    </association>
+	    <collection property="reviewPictures" javaType="kr.co.jhta.restaurants_service.vo.review.ReviewPicture">
+	        <id column="picture_id" property="id"/>
+	        <result column="picture_name" property="pictureName" />
+	    </collection>
+	    <collection property="reviewKeywords" javaType="kr.co.jhta.restaurants_service.vo.review.ReviewKeyword">
+	        <id column="review_keyword_id" property="id"/>
+	        <result column="keyword" property="keyword" />
+	    </collection>
+	</resultMap>
 	
-	<select id="getAllReviewByStoreId" parameterType="int" resultType="Review">
-		select 
-			R.id,			
-			R.rating,
-			R.content,
-			R.create_date		as 	createDate,
-			R.update_date		as	updateDate,
-			R.liked_count		as	likedCount,
-			R.report_count	as  reportCount,
-			R.disabled,
-			R.blocked,
-			R.customer_id		as "customer.id",		
-			U.username			as "customer.name"
-		from 
-			REVIEWS R, USERS U
-		where 
-			R.store_id = #{value}
-			and R.customer_id = U.id
-		order by R.update_date desc
+	<select id="getAllReviewsByStoreId" parameterType="int" resultMap="ReviewResultMap">
+			SELECT 
+	   		R.id,			
+		    R.rating,
+		    R.content,
+		    R.create_date,
+		    R.update_date,
+		    R.liked_count,
+		    R.report_count,
+		    R.disabled,
+		    R.blocked,
+		    R.store_id,
+		    R.customer_id,
+		    U.nickname,
+		    U.username,
+		    A.review_avg, 
+		    P.id AS picture_id,
+		    P.picture_name,
+		    K.id AS review_keyword_id,
+		    K.keyword
+		FROM USERS U
+		LEFT OUTER JOIN REVIEWS R ON U.id = R.customer_id
+		LEFT OUTER JOIN REVIEW_PICTURES P ON R.id = P.review_id
+		LEFT OUTER JOIN REVIEW_KEYWORDS K ON R.id = K.review_id
+		LEFT OUTER JOIN (
+		    SELECT 
+		        customer_id,
+		        AVG(rating) AS review_avg
+		    FROM REVIEWS
+		    GROUP BY customer_id
+		) A ON U.id = A.customer_id
+		WHERE R.store_id = #{value}
+		ORDER BY R.update_date DESC;
 	</select>
 	
 	<select id="getReviewByStoreId" parameterType="int" resultType="Review">
@@ -107,6 +148,7 @@
 		where 
 			store_id = #{value};
 	</select>
+-->	
 	
 	<select id="getAllReviewRatingByStoreId" parameterType="int" resultType="ReviewSummaryDto">
 		select 
@@ -116,5 +158,5 @@
 		from REVIEWS
 		where store_id = #{value};	
 	</select>
-	
+
 </mapper>
