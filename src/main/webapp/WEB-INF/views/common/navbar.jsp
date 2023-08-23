@@ -20,6 +20,7 @@
     .search-bar {
         width: 1000px;
     }
+    
 </style>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -161,7 +162,10 @@
 	//Bookmark nav - click event
 	$("#customerBookmark").click(function() {
 		  getVisitedStores();
-		  getBookmarkedStores();
+	   	  if (${pageContext.request.userPrincipal != null}) {
+	        // 로그인된 경우, 다른 창 열기 또는 특별한 동작 수행
+	    	getBookmarkedStores();
+	      }
 	});
 
 	//history-tab - click event
