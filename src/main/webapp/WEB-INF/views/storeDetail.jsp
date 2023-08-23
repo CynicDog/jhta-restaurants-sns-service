@@ -10,8 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
@@ -181,22 +179,22 @@ html, body {
 		<div class="row">
 			<div class="col-8">
 				<span class="fs-4 fw-lighter">리뷰</span> 
-				<span class="fs-4 fw-lighter" style="color: #adb5bd;">(3)</span>
+				<span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewSummary.total })</span>
 				<div class="btn-group p-1 float-end">
-					<button type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(3)</button>
-					<button type="button" class="btn border-opacity-10 " style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 맛있어요(1)
+					<button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })</button>
+					<button id="btn-review-good" type="button" class="btn border-opacity-10 " style="background: none; border: none;">
+						<span class="visually-hidden">Button</span> 맛있어요(${reviewSummary.good })
 					</button>
-					<button type="button" class="btn border-opacity-10" style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 괜찮아요(1)
+					<button id="btn-review-soso" type="button" class="btn border-opacity-10" style="background: none; border: none;">
+						<span class="visually-hidden">Button</span> 괜찮아요(${reviewSummary.soso })
 					</button>
-					<button type="button" class="btn border-opacity-10" style="background: none; border: none;">
-						<span class="visually-hidden">Button</span> 별로에요(1)
+					<button id="btn-review-bad" type="button" class="btn border-opacity-10" style="background: none; border: none;">
+						<span class="visually-hidden">Button</span> 별로에요(${reviewSummary.bad })
 					</button>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-8" id="review-list">
 <%-- 				<c:forEach var="review" items="${reviews.allReviewsByStoreId }">
 					<div class="card mb-3" style="border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
 						<div class="card-body">
@@ -276,7 +274,7 @@ html, body {
 							</div>
 						</div>
 					</c:forEach> --%>
-					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
+					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="5">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-2">
@@ -350,7 +348,7 @@ html, body {
 							</div>
 						</div>
 					</div>
-					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;">
+					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="1">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-2">
@@ -373,6 +371,55 @@ html, body {
 										</div>
 										<div class="col-3 text-end">
 											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">별로에요!</span>
+										</div>
+									</div>
+									<div class="d-flex">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+									</div>
+									<div class="row">
+										<div class="col">
+											<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+												<i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+											</button>
+											<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+												<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+											</button>
+											<span class="float-end">
+												<button type="button" class="btn btn-light btn-sm text-danger">
+													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-2">
+									<div class="text-center card-title my-1">
+										<div class="ratio ratio-1x1">
+											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="..."> 
+										</div>
+										<span style="font-size: medium; font-weight: bold;">정손님</span>
+										<p style="font-size: small; color: #adb5bd;">회원 등급</p>
+									</div>
+									<div class="text-center card-title my-1">
+										<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
+									</div>
+								</div>
+								<div class="col-10">
+									<div class="row mb-2">
+										<div class="col-9">
+											<p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
+											<p class="col card-text">리뷰 내용</p>
+										</div>
+										<div class="col-3 text-end">
+											<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찬하요!</span>
 										</div>
 									</div>
 									<div class="d-flex">
@@ -463,6 +510,24 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
+
+	$("#btn-review-all").click(function() {
+		$("#review-list .card").show();
+	});
+	$("#btn-review-good").click(function() {
+		$("#review-list .card").hide();
+		$("#review-list .card[data-review-rating=5]").show();
+	});
+	$("#btn-review-soso").click(function() {
+		$("#review-list .card").hide();
+		$("#review-list .card[data-review-rating=3]").show();
+	});
+	$("#btn-review-bad").click(function() {
+		$("#review-list .card").hide();
+		$("#review-list .card[data-review-rating=1]").show();
+	});
+	
+
 	
 	var container = document.getElementById('map');
 	var options = {
@@ -555,7 +620,7 @@ html, body {
 			$(this).addClass('active');
 		});
 
-		let previewModal = new bootstrap.Modal("#previewModal");
+		//let previewModal = new bootstrap.Modal("#previewModal");
 	});
 
 	var modal = document.getElementById("myModal");

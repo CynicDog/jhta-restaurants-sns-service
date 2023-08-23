@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.ReviewRepository;
 
-import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewDataCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
@@ -29,15 +29,14 @@ import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
 
 	@Autowired private ReviewMapper reviewMapper;
+	
 
 	@Autowired private ReviewPictureMapper reviewPictureMapper;
 
@@ -133,23 +132,6 @@ public class ReviewService {
 
 		return dto;
 	}
-	
-	public ReviewDetailDto getReivewsByStoreId(int storeId) {
-		ReviewDetailDto reviewDto = new ReviewDetailDto();
-
-		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);		
-		List<Review> getAllReviewByStoreId = getAllReviewsByStoreId.stream().map(
-				review -> {
-					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
-					return review;
-				}).collect(Collectors.toList());
-		double allRatingByStoreId = getAllReviewByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
-		
-		reviewDto.setStoreReviewAvg(allRatingByStoreId);
-		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
-		
-		return reviewDto;
-	}
 
 //	  public List<Review> getAllReviews() {
 //		  List<Review> reviews= reviewMapper.getAllReviews();
@@ -168,6 +150,7 @@ public class ReviewService {
 //		  return reviewPicture;
 //	  }
 
+
 	public Page<Projection.Review> getNonBlockedReviewsByCustomerIdOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
 
 		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDate(customerId, no, PageRequest.of(page, limit));
@@ -177,5 +160,15 @@ public class ReviewService {
 	public long getReviewsCountByCustomerId(Integer customerId) {
 
 		return reviewRepository.countByCustomerId(customerId);
+	}
+
+	public ReviewDetailDto getReivewsByStoreId(int storeId) {
+		return null;
+	}
+	
+	// 리뷰 rating가져오기
+	public ReviewSummaryDto getAllReviewRatingByStoreId(int storeId) {
+		ReviewSummaryDto reviewRating = reviewMapper.getAllReviewRatingByStoreId(storeId);
+		return reviewRating;
 	}
 }
