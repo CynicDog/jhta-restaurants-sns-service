@@ -7,11 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
+import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 
 import org.jboss.logging.Logger;
@@ -48,6 +50,7 @@ public class PostService {
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final PostRepository postRepository;
+	private final UserRepository userRepository;
 
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
@@ -104,13 +107,13 @@ public class PostService {
     }
 
 
-	public void insertPostComment(PostComment form, SecurityUser securityUser) {
+	public void insertPostComment(PostCommentCommand form) {
 		PostComment postComment = new PostComment();
 		postComment.setContent(form.getContent());
 		
-		Post post = postmapper.getPostById(form.getPost().getId());
+		Post post = postmapper.getPostById(form.getPostingId());
 		postComment.setPost(post);
-		postComment.setCustomer(securityUser.getUser());
+		postComment.setCustomer(userRepository.getReferenceById(form.getUserId()));
 		
 		postCommentMapper.insertComment(postComment);
 		
