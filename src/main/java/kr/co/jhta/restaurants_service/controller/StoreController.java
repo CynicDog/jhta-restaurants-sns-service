@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import kr.co.jhta.restaurants_service.dto.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
-import kr.co.jhta.restaurants_service.dto.PagedStores;
 //import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 //import kr.co.jhta.restaurants_service.dto.ReviewDto;
-import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
-import kr.co.jhta.restaurants_service.dto.VisitedStore;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
@@ -123,9 +121,6 @@ public class StoreController {
 			
 			return stores;
 		}
-
-
-				
 	}
 	
 	@GetMapping("/detail")
@@ -161,5 +156,12 @@ public class StoreController {
 		
 		return storeService.getStoreOpenTimesById(storeId);
 	}
-	
+
+//	store/detail/reviews?id=\${storeId}
+	@GetMapping("/detail/reviews")
+	@ResponseBody
+	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit) throws InterruptedException {
+
+		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId);
+	}
 }
