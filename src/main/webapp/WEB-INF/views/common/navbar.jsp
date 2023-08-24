@@ -61,7 +61,7 @@
 	</div>
 </div>
 
-<nav class="navbar navbar-expand-lg border-bottom bg-light fixed-top shadow-sm z-2">
+<nav class="navbar navbar-expand-lg border-bottom bg-light fixed-top shadow-sm py-0 z-2">
     <div class="container-fluid">
 		<a class="navbar-brand px-4" href="/">🧑🏻‍💻</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -76,7 +76,7 @@
             </form>
             <ul class="navbar-nav px-4">
                 <sec:authorize access="isAnonymous()">
-					<li class="nav-item">
+					<li class="nav-item py-0 px-2">
                         <a type="button"
                            id="signupPopover"
                            tabindex="0" 
@@ -99,18 +99,18 @@
                                </div>
                            </div>
                            "
-                        >Socials</a>
+                        ><i class="bi bi-person-circle fs-4" style="color:#838383;"></i></a>
                     </li>
                     <script>
                         new bootstrap.Popover(document.querySelector('#signupPopover'))
                     </script>
-                     <li class="nav-item">
-                     	<a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href="">Bookmark</a>
+                     <li class="nav-item py-0 px-2">
+                     	<a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href=""><i class="bi bi-bookmark-star-fill fs-4" style="color:#838383;"></i></a>
                      </li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="hasRole('ROLE_CUSTOMER')">
-                        <li class="nav-item">
+                        <li class="nav-item py-0 px-2">
                             <a type="button"
                                id="signupPopover"
                                tabindex="0" 
@@ -130,17 +130,17 @@
                                    </div>
                                </div>
                                "
-                            >Socials</a>
+                            ><i class="bi bi-person-circle fs-4" style="color:#838383;"></i></a>
                         </li>
                         <script>
                             new bootstrap.Popover(document.querySelector('#signupPopover'))
                         </script>
-	                     <li class="nav-item">
-                            <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href="">Bookmark</a>
+	                     <li class="nav-item py-0 px-2">
+                            <a id="customerBookmark" class="nav-link" data-bs-toggle="modal" data-bs-target="#bookmarkModal" href=""><i class="bi bi-bookmark-star-fill fs-4" style="color:#838383;"></i></a>
                         </li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ROLE_OWNER')">
-                        <li class="nav-item px-4">
+                        <li class="nav-item px-4 py-0">
                             <a type="button"
                                id="signupPopover"
                                tabindex="0" 
@@ -160,7 +160,7 @@
                                    </div>
                                </div>
                                "
-                            >Socials</a>
+                            ><i class="bi bi-person-circle fs-4" style="color:#838383;"></i></a>
                         </li>
                         <script>
                             new bootstrap.Popover(document.querySelector('#signupPopover'))
