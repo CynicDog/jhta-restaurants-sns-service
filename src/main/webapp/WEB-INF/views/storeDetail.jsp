@@ -712,7 +712,7 @@ html, body {
             }
             store_history.unshift(store_id);
          } else {
-            store_history == [];
+            store_history = [];
             store_history.unshift(store_id);
          }
          value = JSON.stringify(store_history);
