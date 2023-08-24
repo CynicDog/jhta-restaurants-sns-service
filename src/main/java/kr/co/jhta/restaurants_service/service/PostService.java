@@ -112,12 +112,9 @@ public class PostService {
 		PostComment postComment = new PostComment();
 		postComment.setContent(form.getContent());
 		
-		logger.info(form);
-		
 		Post post = postmapper.getPostById(form.getPostId());
 		postComment.setPost(post);
 		postComment.setCustomer(securityUser.getUser());
-//		postComment.setCustomer(userRepository.getReferenceById(form.getUserId()));
 		
 		postCommentMapper.insertComment(postComment);
 		

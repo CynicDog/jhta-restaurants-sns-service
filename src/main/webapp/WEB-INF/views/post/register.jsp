@@ -24,8 +24,23 @@
         left: 0; /* 위치 변경 */
         z-index: 10; /* 위치 변경 */
     }
+	.resultBox {
+        padding: 0;
+        pointer-events: none;
+        max-height: 280px;
+        overflow-y: auto;
+        position: absolute; /* 위치 변경 */
+        top: 50px; /* 위치 변경 */
+        left: 0; /* 위치 변경 */
+        z-index: 10; /* 위치 변경 */
+    }
 	
 	.searchInput.active .resultBox{
+	  padding: 10px 8px;
+	  opacity: 1;
+	  pointer-events: auto;
+	}
+	.resultBox{
 	  padding: 10px 8px;
 	  opacity: 1;
 	  pointer-events: auto;
@@ -43,7 +58,6 @@
 	.searchInput.active .resultBox li{
 	  display: block;
 	}
-	
 	.resultBox.active li{
 	  display: block;
 	}
@@ -56,7 +70,7 @@
     <title>Insert title here</title>
 </head>
 <body>
-<%-- <%@ include file="../common/navbar.jsp" %> --%>
+<%@ include file="../common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
         <form method="post" action="register">
@@ -104,7 +118,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div class="form-floating searchInput active">
+                                                <div class="form-floating searchInput active" id=search-input name="searchInputName">
                                                     <input type="text" id="storeNameInput" class="form-control-plaintext mb-4 storeNameInput"
                                                           name="storeName">
                                                     <input type="hidden" name="storeId" id="storeInput" class="storeIdInput">
@@ -170,7 +184,7 @@
         </form>
         
     </div>
-    <%-- <%@ include file="../common/footer.jsp" %> --%>
+    <%@ include file="../common/footer.jsp" %>
 </div>
 <script type="text/javascript">
 
@@ -194,27 +208,23 @@
         reader.readAsDataURL(file);
     })
     
-    const searchInput = document.querySelector(".searchInput");
+    const searchInput = document.querySelector("[id=search-input]");
     const input = searchInput.querySelector("input");
     const resultBox = searchInput.querySelector(".resultBox");
     const icon = searchInput.querySelector(".icon");
-    let linkTag = searchInput.querySelector("a");
-    let webLink;
 
     function select(element) {
     	let selectedStoreId = element.getAttribute("data-store-id");
         let selectedStoreName = element.textContent;
 
-        let storeNameInput = element.closest('.searchInput').querySelector(".storeNameInput");
-        let storeIdInput = element.closest('.searchInput').querySelector(".storeIdInput");
+        let storeNameInput = element.closest('[id^=search-input]').querySelector("input[name=storeName]");
+        let storeIdInput = element.closest('[id^=search-input]').querySelector("input[name=storeId]");
 
         storeNameInput.value = selectedStoreName;
         storeIdInput.value = selectedStoreId;
 
         searchInput.classList.remove("active");
-	    
 	}
-
 
     $(function () {
 
@@ -248,11 +258,11 @@
                             </div>
                         </div>
                         <div class="col-8">
-			            	<div class="form-floating searchInput-\${formIndex}">
-					                <input type="text" id="storeNameInput-\${formIndex}" class="form-control-plaintext mb-4 storeNameInput"
+			            	<div class="form-floating" id="search-input-\${formIndex}" name="searchInputName">
+					                <input type="text" id="storeNameInput-\${formIndex}" class="form-control-plaintext mb-4 storeNameInput-\${formIndex}"
 					                name="storeName">
-					          <input type="hidden" name="storeId" id="storeInput-\${formIndex}" class="storeIdInput">
 					          <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
+					          <input type="hidden" name="storeId" id="storeInput-\${formIndex}" class="storeIdInput">
 					          <label for="storeInput-\${formIndex}">가게명을 작성해주세요 :)</label>
 			            	</div>
                             <div class="form-floating">
@@ -278,10 +288,9 @@
             // 부모엘리먼트가 포함된 jQuery 집합객체를 획득하고, append(컨텐츠)메소드를 이용해서 지정된 컨텐츠를 자식 컨텐츠로 추가한다.
             $('#box').append(content);
 		
-			let searchInput = $('#box').find(`.searchInput-\${formIndex}`);
+			let searchInput = $('#box').find(`[id=search-input-\${formIndex}]`);
 			let storeInput = $('#box').find(`.storeNameInput-\${formIndex}`);
-		    let resultBox = storeInput.closest('.searchInput').find('.resultBox');
-
+		    let resultBox = searchInput.closest(`[id=search-input-\${formIndex}]`).find('.resultBox');
 
 		    storeInput.on('keyup', function (e) {
     		    console.log(resultBox)
@@ -303,14 +312,18 @@
                         let allList = resultBox.find("li")
         		        for (let i = 0; i < allList.length; i++) {
         		        	console.log(allList[i])
-        		            allList[i].setAttribute("onclick", "select(this)");
+        		        	allList[i].addEventListener("click", function() {
+        		        	    select(this);
+        		        	    resultBox.removeClass('active');
+        		        	});
+        		        	
         		        }
                     } else {
                         resultBox.removeClass('active');
                         
                         $(searchInput).removeClass('active');
                     }
-                    console.log(content)
+                    $(searchInput).removeClass('active');
                 });
             });
 
@@ -318,9 +331,6 @@
         })
 
         // 2. 삭제버튼에 이벤트핸들러 등록하기
-        /* $('#box').on('click', '.btn-delete', function () {
-            $(this).closest('.card').remove();
-        }) */
         
         $('#box').on('click', '.btn-delete', function () {
             const card = $(this).closest('.card');
@@ -353,20 +363,6 @@
                     showToast('삭제할 수 없습니다.');
                     console.error('Failed to send delete request:', error);
                 });
-	            /* fetch('/post/delete-post-data', {
-	            	method: 'POST',
-                    body: formDataToSend
-                    
-	            }).then(response => {
-	                if (response.ok) {
-	                    card.remove();
-	                } else {
-	                    showToast('삭제할 수 없습니다.');
-	                }
-	            }).catch(error => {
-	                
-	                console.error('Failed to send delete request:', error);
-	            }); */
         
             } else {
                 // 저장된 값이 없는 경우에는 바로 해당 카드를 제거
@@ -433,11 +429,14 @@
         const boxInput = document.getElementById('box');
         boxInput.addEventListener('click', function (event) {
             if (event.target.classList.contains('btn-save')) {
-                event.preventDefault();
+            	event.preventDefault();
                 event.stopPropagation();
+
+                
                 event.target.disabled = true;
 
                 const card = event.target.closest('.card');
+               	const deleteButton = card.querySelector('.btn-delete');
 
                 const inputsAndTextarea = card.querySelectorAll('input, textarea');
                 inputsAndTextarea.forEach(element => {
@@ -456,6 +455,8 @@
                         element.disabled = false;
                     });
                     return;
+                }else{
+                    deleteButton.disabled = true;
                 }
                 
                 const formDataToSend = new FormData();
@@ -478,6 +479,7 @@
                     .catch(error => {
                         // TODO: error handling
                     });
+               
             }
             
         });
