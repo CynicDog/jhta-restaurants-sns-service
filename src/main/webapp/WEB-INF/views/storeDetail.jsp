@@ -5,18 +5,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>애플리케이션</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
-    <style type="text/css">
+<title>애플리케이션</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
+<style type="text/css">
         html, body {
             height: 100%;
         }
@@ -37,45 +35,30 @@
 <div class="wrap">
     <div class="container">
         <div class="row row-cols-5" style="cursor: pointer;">
-            <img class="img-thumbnail"
-                 src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                 alt="Thumbnail 1" onclick="openModal(this)">
-            <img class="img-thumbnail"
-                 src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                 alt="Thumbnail 2" onclick="openModal(this)">
-            <img class="img-thumbnail"
-                 src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                 alt="Thumbnail 3" onclick="openModal(this)">
-            <img class="img-thumbnail"
-                 src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                 alt="Thumbnail 4" onclick="openModal(this)">
-            <img class="img-thumbnail"
-                 src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                 alt="Thumbnail 5" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 1" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 2" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 3" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 4" onclick="openModal(this)">
+            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 5" onclick="openModal(this)">
         </div>
-        <div id="myModal" class="modal"
-             style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
-            <span class="close" onclick="closeModal()"
-                  style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+        <div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
+            <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
             <div class=" d-flex justify-content-center align-items-center" style="height: 100%;">
                 <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-                    <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)"
-                            style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+                    <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
                         &#10094;
                     </button>
                 </div>
                 <div class=" text-center" style="background-color: black; width: 80%;">
                     <div class="fotorama" data-nav="thumbs">
-                        <img class="modal-content" id="modalImg"
-                             style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+                        <img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
                     </div>
                 </div>
                 <div style="width: 400px;" class="2">
                     <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
                         <div class="card-body d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
-                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                     class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
+                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
                                 <div class="ml-2">
                                     <span style="font-size: medium; font-weight: bold;">정손님</span>
                                     <p style="font-size: small; color: #adb5bd;">회원 등급</p>
@@ -92,8 +75,7 @@
                     </div>
                 </div>
                 <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-                    <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)"
-                            style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+                    <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
                         &#10095;
                     </button>
                 </div>
@@ -115,20 +97,17 @@
 							        <sec:authorize access="isAuthenticated()">
                                         <sec:authentication property="principal.user.id" var="loginId"/>
                                         <c:if test="${store.owner.id ne loginId}">
-							                <button type="button" class="btn" style="color: #ff792a;"
-                                                    onclick="location.href='/review?storeId=${param.id }'">
+							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							                    리뷰<i class="bi bi-brush"></i>
 							                </button>
                                             <button class="btn" id="box">
-							                    <i id="star" class="bi bi-star"
-                                                   style="color: gold; font-size: 28px;"></i>
+							                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
 							                </button>
                                         </c:if>
                                     </sec:authorize>
 							        <sec:authorize access="!isAuthenticated()">
-							            <button type="button" class="btn" style="color: #ff792a;"
-                                                onclick="location.href='/review?storeId=${param.id }'">
-							                리뷰<i class="bi bi-brush"></i>
+							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
+							            	리뷰<i class="bi bi-brush"></i>
 							            </button>
                                         <button class="btn" id="box">
 							                <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
@@ -138,18 +117,14 @@
                             </div>
                         </div>
                         <div>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i
-                                    class="bi bi-eye-fill"></i>${store.readCount }</span>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i
-                                    class="bi bi-pen-fill"></i>123</span>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i
-                                    class="bi bi-star-fill"></i>123</span>
+                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
+                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
+                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>123</span>
                         </div>
                         <div class="row">
                             <table class="table">
                                 <tr>
-                                    <th style="width: 120px;"><i class="bi bi-geo-alt"></i><span
-                                            class="fw-lighter mx-2">주소</span></th>
+                                    <th style="width: 120px;"><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
                                     <td>${store.address}</td>
                                 </tr>
                                 <tr>
@@ -167,7 +142,6 @@
                                 <tr>
                                     <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
                                     <td id="daysArea">
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -175,10 +149,7 @@
                                     <td>
                                         <c:forEach var="food" items="${foods}">
                                             <div class="col my-2">
-                                                <span class="food-name d-inline-block" style="width: 120px;"><c:out
-                                                        value="${food.name}"/></span> <span
-                                                    class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out
-                                                    value="${food.price}"/>원</span>
+                                                <span class="food-name d-inline-block" style="width: 120px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
                                             </div>
                                         </c:forEach>
                                     </td>
@@ -193,11 +164,9 @@
             </div>
             <!-- 지도 모달 -->
             <div class="row">
-                <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel"
-                     aria-hidden="true">
+                <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
                     <div class="col-12">
-                        <span class="close" onclick="closeMapModal()"
-                              style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+                        <span class="close" onclick="closeMapModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -216,19 +185,15 @@
                 <span class="fs-4 fw-lighter">리뷰</span>
                 <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewSummary.total })</span>
                 <div class="btn-group p-1 float-end">
-                    <button id="btn-review-all" type="button" class="btn border-opacity-10 active"
-                            style="background: none; border: none;">전체(${reviewSummary.total })
+                    <button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })
                     </button>
-                    <button id="btn-review-good" type="button" class="btn border-opacity-10 "
-                            style="background: none; border: none;">
+                    <button id="btn-review-good" type="button" class="btn border-opacity-10 " style="background: none; border: none;">
                         <span class="visually-hidden">Button</span> 맛있어요(${reviewSummary.good })
                     </button>
-                    <button id="btn-review-soso" type="button" class="btn border-opacity-10"
-                            style="background: none; border: none;">
+                    <button id="btn-review-soso" type="button" class="btn border-opacity-10" style="background: none; border: none;">
                         <span class="visually-hidden">Button</span> 괜찮아요(${reviewSummary.soso })
                     </button>
-                    <button id="btn-review-bad" type="button" class="btn border-opacity-10"
-                            style="background: none; border: none;">
+                    <button id="btn-review-bad" type="button" class="btn border-opacity-10" style="background: none; border: none;">
                         <span class="visually-hidden">Button</span> 별로에요(${reviewSummary.bad })
                     </button>
                 </div>
@@ -236,17 +201,13 @@
             <div class="row">
                 <div class="col-md-8" id="review-list">
                     <div id="reviewOutputArea" class="overflow-scroll" style="max-height: 600px">
-
-                        <div class="card mb-3"
-                             style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;"
-                             data-review-rating="3">
+                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="text-center card-title my-1">
                                             <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                     class="img-thumbnail rounded-circle" alt="...">
+                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
                                             </div>
                                             <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
                                         </div>
@@ -257,8 +218,7 @@
                                     <div class="col-10">
                                         <div class="row mb-2">
                                             <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰
-                                                    작성일</p>
+                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
                                                 <p class="col card-text">리뷰 내용</p>
                                             </div>
                                             <div class="col-3 text-end">
@@ -266,31 +226,21 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span
-                                                        class="visually-hidden">수정</span>
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
                                                 </button>
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
 												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span
-                                                        class="visually-hidden">추천</span>
+													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
                                             </div>
@@ -298,18 +248,14 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="card mb-3"
-                             style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;"
-                             data-review-rating="3">
+                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="text-center card-title my-1">
                                             <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                     class="img-thumbnail rounded-circle" alt="...">
+                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
                                             </div>
                                             <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
                                         </div>
@@ -320,8 +266,7 @@
                                     <div class="col-10">
                                         <div class="row mb-2">
                                             <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰
-                                                    작성일</p>
+                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
                                                 <p class="col card-text">리뷰 내용</p>
                                             </div>
                                             <div class="col-3 text-end">
@@ -329,31 +274,21 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span
-                                                        class="visually-hidden">수정</span>
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
                                                 </button>
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
 												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span
-                                                        class="visually-hidden">추천</span>
+													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
                                             </div>
@@ -361,18 +296,14 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="card mb-3"
-                             style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;"
-                             data-review-rating="3">
+                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="text-center card-title my-1">
                                             <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                     class="img-thumbnail rounded-circle" alt="...">
+                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
                                             </div>
                                             <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
                                         </div>
@@ -383,8 +314,7 @@
                                     <div class="col-10">
                                         <div class="row mb-2">
                                             <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰
-                                                    작성일</p>
+                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
                                                 <p class="col card-text">리뷰 내용</p>
                                             </div>
                                             <div class="col-3 text-end">
@@ -392,31 +322,21 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span
-                                                        class="visually-hidden">수정</span>
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
                                                 </button>
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
 												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span
-                                                        class="visually-hidden">추천</span>
+													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
                                             </div>
@@ -424,18 +344,14 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="card mb-3"
-                             style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;"
-                             data-review-rating="3">
+                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="text-center card-title my-1">
                                             <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                     class="img-thumbnail rounded-circle" alt="...">
+                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
                                             </div>
                                             <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
                                         </div>
@@ -446,8 +362,7 @@
                                     <div class="col-10">
                                         <div class="row mb-2">
                                             <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰
-                                                    작성일</p>
+                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
                                                 <p class="col card-text">리뷰 내용</p>
                                             </div>
                                             <div class="col-3 text-end">
@@ -455,31 +370,21 @@
                                             </div>
                                         </div>
                                         <div class="d-flex">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail"
-                                                 src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832"
-                                                 style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                         </div>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span
-                                                        class="visually-hidden">수정</span>
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
                                                 </button>
-                                                <button type="button" class="btn btn-light btn-sm"
-                                                        style="color: #838383">
+                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
 												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span
-                                                        class="visually-hidden">추천</span>
+													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
                                             </div>
@@ -487,21 +392,16 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
                 <div class="col-md-4 p-4">
                     <div class="row">
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId"
-                                 style="border-top: none; border-left: none; border-right: none; height: 140px;">
+                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
                                 <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80"
-                                         class="card-img" style="width: 120px; height: 120px;">
+                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
                                         <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
                                         <p class="card-text text-sm ml-1">
@@ -515,11 +415,9 @@
                         </div>
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId"
-                                 style="border-top: none; border-left: none; border-right: none; height: 140px;">
+                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
                                 <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/422968/2269093_1684374788537_1000001500?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                                         class="card-img" style="width: 120px; height: 120px;">
+                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/422968/2269093_1684374788537_1000001500?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
                                         <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
                                         <p class="card-text text-sm ml-1">
@@ -533,11 +431,9 @@
                         </div>
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId"
-                                 style="border-top: none; border-left: none; border-right: none; height: 140px;">
+                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
                                 <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/42185_1657640746441273.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80"
-                                         class="card-img" style="width: 120px; height: 120px;">
+                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/42185_1657640746441273.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
                                         <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
                                         <p class="card-text text-sm ml-1">
@@ -563,7 +459,7 @@
 </div>
 <script>
 
-    let pageOnReview = 0;
+    let pageOnReview = 1;
     const reviewOutputArea = document.getElementById('reviewOutputArea');
 
     reviewOutputArea.addEventListener('scroll', function () {
@@ -597,6 +493,7 @@
                 isReviewsLast = true;
             }
 
+
             data.forEach(datum => {
                     reviewOutputArea.innerHTML += `
                         <div>
@@ -606,11 +503,25 @@
                             \${datum.customerUsername}
                         </div>
                     `
+                    
+                   /*  datam.reviewPictures.forEach(picName => {
+                    	fetch(`/gcp/getPictures?pictureName=\${picName}`)
+                    	.then(response => {
+                    		if (response.ok) {
+                    			
+                    			return response.image()
+                    		}
+                    	})
+                    	.then(image => {
+                    	})
+                    })  */
                 }
             )
         })
         isReviewsFetching = false;
     }
+    
+    fetchAndRenderReviews(pageOnReview);
 
     $("#btn-review-all").click(function () {
         $("#review-list .card").show();
@@ -708,20 +619,22 @@
         }
     });
 
-    $(function () {
+    $(function() {
         // 페이지 로드 시 초기 선택값을 설정합니다.
-        $('.border-opacity-10').first().addClass('active');
+        $('.border-opacity-10').first().addClass('active').css('color', '#ff792a');
 
         // '.emoji-btn' 클래스를 가진 버튼을 클릭할 때 실행되는 함수를 정의합니다.
-        $('.border-opacity-10').click(function () {
-            // 모든 버튼에 있는 'active' 클래스를 제거합니다.
-            $('.border-opacity-10').removeClass('active');
-            // 클릭한 버튼에만 'active' 클래스를 추가합니다.
-            $(this).addClass('active');
+        $('.border-opacity-10').click(function() {
+            // 모든 버튼에 있는 'active' 클래스를 제거하고 색을 초기화합니다.
+            $('.border-opacity-10').removeClass('active').css('color', '#000');
+            
+            // 클릭한 버튼에만 'active' 클래스를 추가하고 텍스트 색을 설정합니다.
+            $(this).addClass('active').css('color', '#ff792a'); // 선택한 버튼의 텍스트 색 변경
         });
-
-        //let previewModal = new bootstrap.Modal("#previewModal");
     });
+
+
+
 
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("modalImg");
