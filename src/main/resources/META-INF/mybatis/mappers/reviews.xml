@@ -96,8 +96,8 @@
 	</resultMap>
 	
 	<select id="getAllReviewsByStoreId" parameterType="int" resultMap="ReviewResultMap">
-			SELECT 
-	   		R.id,			
+			SELECT
+	   		R.id,
 		    R.rating,
 		    R.content,
 		    R.create_date,
@@ -110,7 +110,7 @@
 		    R.customer_id,
 		    U.nickname,
 		    U.username,
-		    A.review_avg, 
+		    A.review_avg,
 		    P.id AS picture_id,
 		    P.picture_name,
 		    K.id AS review_keyword_id,
@@ -120,7 +120,7 @@
 		LEFT OUTER JOIN REVIEW_PICTURES P ON R.id = P.review_id
 		LEFT OUTER JOIN REVIEW_KEYWORDS K ON R.id = K.review_id
 		LEFT OUTER JOIN (
-		    SELECT 
+		    SELECT
 		        customer_id,
 		        AVG(rating) AS review_avg
 		    FROM REVIEWS
@@ -159,4 +159,20 @@
 		where store_id = #{value};	
 	</select>
 
+	<select id="getReviewsPaginatedByStoreId" resultType="ReviewDto">
+		SELECT
+		r.id AS id,
+		r.rating AS rating,
+		r.content AS content,
+		r.create_date AS createDate,
+		r.liked_count AS likedCount,
+		r.report_count AS reportCount,
+		r.customer_id AS customerId,
+		u.username AS customerUsername
+		FROM REVIEWS r
+		JOIN USERS u ON r.customer_id = u.id
+		WHERE r.store_id = #{storeId}
+		ORDER BY r.create_date DESC
+		LIMIT #{begin}, #{end}
+	</select>
 </mapper>

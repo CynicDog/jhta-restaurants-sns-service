@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.vo.review.Review;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ReviewMapper {
@@ -19,4 +20,5 @@ public interface ReviewMapper {
 	List<Review> getAllReviewsByCustomerId(int customerId);
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
 //	List<ReviewDto> getAllReviewsByStoreId(int storeId);
+	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId);
 }

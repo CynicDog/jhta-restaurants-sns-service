@@ -195,4 +195,12 @@ public class ReviewService {
 		ReviewSummaryDto reviewRating = reviewMapper.getAllReviewRatingByStoreId(storeId);
 		return reviewRating;
 	}
+
+    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId) {
+
+		int begin = (page - 1) * 5;
+		int end = begin + limit;
+
+		return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+    }
 }
