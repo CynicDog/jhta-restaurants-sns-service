@@ -198,7 +198,7 @@ public class ReviewService {
 
     public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId) {
 
-		int begin = (page - 1) * 5;
+		int begin = (page - 1) * limit;
 		int end = begin + limit;
 
 		return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
