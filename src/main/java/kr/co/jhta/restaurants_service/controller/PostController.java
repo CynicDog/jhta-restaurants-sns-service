@@ -5,13 +5,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+
 import kr.co.jhta.restaurants_service.controller.command.PostCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
@@ -20,6 +27,7 @@ import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
+import kr.co.jhta.restaurants_service.vo.post.PostData;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 
 import org.jboss.logging.Logger;
@@ -134,7 +142,7 @@ public class PostController {
 
         @SuppressWarnings("unchecked") List<PostDataCommand> postDataCommands = (List<PostDataCommand>) httpSession.getAttribute("postData");
 
-        postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), securityUser.getUser()), postDataCommands);
+        postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), postCommand.getCreateDate(),postCommand.getUpdateDate(), securityUser.getUser()), postDataCommands);
 
         httpSession.setAttribute("postData", null);
 
@@ -142,16 +150,39 @@ public class PostController {
     }
 
     @GetMapping("/followerPost/detail")
-    public String followerPost(@RequestParam("id") int id, Model model) {
-        PostDto dto = postService.selectPost(id);
+    public String followerPostDetail(@RequestParam("id") int id, Model model) {
+    	
+    	PostDto dto = postService.selectPost(id);
+    	
+        
         model.addAttribute("post", dto);
 
         return "post/posting";
     }
 
+//    storage = StorageOptions.getDefaultInstance().getService();
+//    
+//    for (PostData postData : dto.getPostData()) {
+//    	String bucketName = "jhta-restaurant-service"; // GCS 버킷 이름
+//    	String imageFilename = postData.getPictureFile(); // 이미지 파일명
+//    	BlobId blobId = BlobId.of(bucketName, imageFilename);
+//    	
+//    	String imageUrl = storage.signUrl(blobId, 1L, TimeUnit.DAYS).toString();
+//    	postData.setImageUrl(imageUrl);
+//    }
     @GetMapping("/followerPost")
-    public String followerPost() {
+    public String followerPost(Model model) {
 
+    	List<Post> posts = postService.getAllPosts();
+    	for(Post post : posts) {
+//    		post.getCreateDate();
+//    		
+//    		SimpleDateFormat sdf = new SimpleDateFormat( "yy-MM-dd HH:mm:ss" , Locale.KOREA );
+//    		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
+    		log.info(post.getCreateDate().toString());
+    	}
+    	
+        model.addAttribute("posts", posts);
         return "post/followerPost";
     }
     

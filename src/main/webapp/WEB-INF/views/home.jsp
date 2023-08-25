@@ -21,6 +21,7 @@
 	.wrap{
 		position: relative;
 		min-height: 100%;
+		padding-top:0;
 		padding-bottom: 100px;
 	}
 	
@@ -40,28 +41,32 @@
 	.search-bar {
   		width: 800px;
 	}
+	
+	.searchBackground{
+		background-image:linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.3)), url('../resources/image/unagidon.jpg'); 
+		background-size: cover;
+		background-color: black;
+		height:500px;
+		background-position: center;
+	}
 </style>
 
+<div class="row border-bottom mt-4 py-5 searchBackground align-content-around">
+	<div class="col-12 mt-4">
+		<form action="/store/search" method="GET">
+			<div class="mx-auto my-5 search-bar input-group">
+				<input name="keyword" type="text"
+					class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
+					aria-label="Recipient's username"
+					aria-describedby="button-addon2" style="height:45px;">
+				<div class="input-group-append" ></div>
+				<!--  <button class="btn btn-search btn-dark rounded-pill ms-2">검색</button> -->
+			</div>
+		</form>
+	</div>
+</div>
 <div class="wrap">
 	<div class="container">
-		<div class= "row ">
-			<div class= "col-12">
-				<div class="row border-bottom">
-					<div class="col-12 mt-4">
-						<form action="/store/search" method="GET">
-							<div class="mx-auto my-5 search-bar input-group">
-								<input name="keyword" type="text"
-									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
-									aria-label="Recipient's username"
-									aria-describedby="button-addon2">
-								<div class="input-group-append"></div>
-								<!--  <button class="btn btn-search btn-dark rounded-pill ms-2">검색</button> -->
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="row mt-3">
 			<div class="col">
 				<h4 class="my-3">팔로워의 포스트</h4>

@@ -34,8 +34,6 @@ import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
-import kr.co.jhta.restaurants_service.vo.review.Review;
-import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -50,7 +48,6 @@ public class PostService {
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final PostRepository postRepository;
-	private final UserRepository userRepository;
 
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();

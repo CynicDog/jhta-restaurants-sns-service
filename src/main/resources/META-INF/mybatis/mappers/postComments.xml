@@ -6,9 +6,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
 		insert into POST_COMMENTS
-		(id, content, post_id, customer_id)
+		(id, content, post_id, customer_id, create_date, update_date)
 		values
-		(#{id}, #{content}, #{post.id}, #{customer.id})
+		(#{id}, #{content}, #{post.id}, #{customer.id}, #{createDate}, #{updateDate})
 	</insert>
 	
 	<select id="getCommentsByPostId" parameterType="int" resultType="PostComment">

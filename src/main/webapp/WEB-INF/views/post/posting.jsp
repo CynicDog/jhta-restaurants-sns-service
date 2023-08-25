@@ -69,18 +69,20 @@
 					  	</div>
 					  	<div class="offcanvas-body">
 							<div class="col-12 border-top  my-3"></div>
-								<div class="col-12  border-bottom my-3">
-									<form id="postComment" method="post" action="/post/CommentRegister">
-										<input type="hidden" name="postId" value="${post.post.id }"/>
-										<sec:authentication property="principal.user.id" var="userId"/>
-										<div class="form-floating text-start">
-											<p>댓글을 작성하세요</p>
-		                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
-		                                                          name="content" style="min-height:2rem"></textarea>
-	                                    </div> 
-	                                    <button class="btn btn-outline-secondary btn-sm my-2">작성</button>
-									</form>
-								</div>
+								<sec:authorize access="isAuthenticated()">
+									<div class="col-12  border-bottom my-3">
+										<form id="postComment" method="post" action="/post/CommentRegister">
+											<input type="hidden" name="postId" value="${post.post.id }"/>
+											<sec:authentication property="principal.user.id" var="userId"/>
+											<div class="form-floating text-start">
+												<p>댓글을 작성하세요</p>
+			                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
+			                                                          name="content" style="min-height:2rem"></textarea>
+		                                    </div> 
+		                                    <button class="btn btn-outline-secondary btn-sm my-2">작성</button>
+										</form>
+									</div>
+								</sec:authorize>
 							
 							<c:forEach var="comment" items="${post.postComments }">
 								<div class="col-12  border-bottom my-3">
@@ -151,7 +153,7 @@
 			
 		</div>
 	</div>
-	<%-- <%@ include file="../common/footer.jsp" %> --%>
+	<%@ include file="../common/footer.jsp" %>
 </div>
 
 <script type="text/javascript">
@@ -164,6 +166,13 @@
 					.addClass('bi-star-fill')
 		}
 	})
+	
+	
+	const myOffcanvas = document.getElementById("offcanvasExample");
+	myOffcanvas.addEventListener("hide.bs.offcanvas", function() {
+		$(".offcanvas-backdrop").remove();
+	})
+	
 
 </script>
 </body>

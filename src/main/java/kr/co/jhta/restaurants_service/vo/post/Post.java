@@ -59,9 +59,11 @@ public class Post {
 		this.blocked = Post.BLOCKED.NO; // default to `NO`
 	}
 
-	public Post(String title, String subTitle, User customer) {
+	public Post(String title, String subTitle, Date createDate, Date updateDate, User customer) {
 		this.title = title;
 		this.subTitle = subTitle;
+		this.createDate = new Date(); // default to current time
+		this.updateDate = new Date(); // default to current time
 		this.customer = customer;
 	}
 

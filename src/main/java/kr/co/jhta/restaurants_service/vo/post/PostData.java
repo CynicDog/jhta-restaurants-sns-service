@@ -16,6 +16,7 @@ public class PostData {
 	private Store store;
 	private String content;
 	private String pictureFile;
+	private String imageUrl;
 
 	public PostData(Post post, Store store, String content, String pictureFile) {
 		this.post = post;

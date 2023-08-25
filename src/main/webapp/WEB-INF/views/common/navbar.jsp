@@ -350,15 +350,4 @@
 	}
 
 	
-</script>			`;
-				$("#bookmark").append(content);
-			})
-	    	$("#bookmarkLoadingSpinner").css("display", "none");
-				
-		})
-		console.log("ajax getBookmarkedStores done");
-
-	}
-
-	
-</script>
+</script>			
