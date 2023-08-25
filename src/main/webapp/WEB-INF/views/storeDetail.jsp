@@ -89,7 +89,7 @@
                             <div class="col-8">
                                 <p class="restaurants_name my-3">
                                     <span class="fs-4 fw-lighter">${store.name}</span>
-                                    <span class="rate-point mx-3 fs-3 fw-lighter">평점</span>
+                                           <span class="rate-point mx-3 fs-3 fw-lighter" style="color: #ff792a;"><fmt:formatNumber value="${storeAvg.storeReviewAvg }" pattern="#.#" /></span>
                                 </p>
                             </div>
                             <div class="col-4">
