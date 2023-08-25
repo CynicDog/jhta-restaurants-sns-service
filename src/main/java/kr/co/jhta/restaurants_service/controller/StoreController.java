@@ -131,13 +131,14 @@ public class StoreController {
 		
 		
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
-//        List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
+        ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
+//      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
         
         // 모델에 가게 정보를 추가합니다.
         model.addAttribute("store", dto.getStore());
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
-        
+        model.addAttribute("storeAvg", reviewDetailDto);
         // 모델에 리뷰 정보를 추가합니다.
 //        model.addAttribute("reviews", reviewDto);
 //        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());
