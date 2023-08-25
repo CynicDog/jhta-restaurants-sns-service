@@ -1,31 +1,20 @@
 package kr.co.jhta.restaurants_service.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
-import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
+import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
-import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
@@ -48,6 +37,7 @@ public class PostService {
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final PostRepository postRepository;
+	private final FollowsRepository followsRepository;
 
 	public List<Post> getAllPosts(){
 		List<Post> posts = postmapper.getAllPosts();
@@ -119,6 +109,14 @@ public class PostService {
 
     public long getPostsCountByCustomerId(Integer customerId) {
 		return postRepository.countByCustomerId(customerId);
+    }
+
+    public List<Post> getPostsPaginatedOfFollowersByFollowed(int page, int limit, SecurityUser securityUser) {
+
+		int start = (page - 1) * limit;
+		int end = start + limit;
+
+		return postmapper.getPostsPaginatedOfFollowersByFollowed(start, end, securityUser.getUser().getId());
     }
 //
 }

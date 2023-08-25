@@ -62,8 +62,34 @@
 	<delete id="deletePost" parameterType="int">
 		delete from 
 			posts
-		where 
+		where
 			id = #{id}
 	</delete>
-	
+	<select id="getPostsPaginatedOfFollowersByFollowed" resultType="Post">
+		select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked
+		from
+			POSTS p
+		inner join
+			USERS u on p.customer_id = u.id
+		where
+			p.customer_id in (
+				select follower_id
+				from FOLLOWS
+				where followed_id = #{followedId}
+			)
+		order by
+			p.create_date desc
+		limit
+			#{start}, #{end}
+	</select>
 </mapper>

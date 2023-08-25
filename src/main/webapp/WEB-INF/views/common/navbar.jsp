@@ -7,15 +7,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style type="text/css">
-    html, body {
-        height: 100%;
-    }
+    /*html, body {*/
+    /*    height: 100%;*/
+    /*}*/
 
     .wrap {
         position: relative;
-        min-height: 100%;
+        /*min-height: 100%;*/
         padding-top: 70px;
-        padding-bottom: 100px;
+        /*padding-bottom: 100px;*/
     }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

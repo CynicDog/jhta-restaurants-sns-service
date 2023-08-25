@@ -7,10 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import com.google.cloud.storage.Blob;
@@ -142,7 +139,7 @@ public class PostController {
 
         @SuppressWarnings("unchecked") List<PostDataCommand> postDataCommands = (List<PostDataCommand>) httpSession.getAttribute("postData");
 
-        postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), postCommand.getCreateDate(),postCommand.getUpdateDate(), securityUser.getUser()), postDataCommands);
+        postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), postCommand.getCreateDate(), postCommand.getUpdateDate(), securityUser.getUser()), postDataCommands);
 
         httpSession.setAttribute("postData", null);
 
@@ -151,10 +148,10 @@ public class PostController {
 
     @GetMapping("/followerPost/detail")
     public String followerPostDetail(@RequestParam("id") int id, Model model) {
-    	
-    	PostDto dto = postService.selectPost(id);
-    	
-        
+
+        PostDto dto = postService.selectPost(id);
+
+
         model.addAttribute("post", dto);
 
         return "post/posting";
@@ -170,30 +167,40 @@ public class PostController {
 //    	String imageUrl = storage.signUrl(blobId, 1L, TimeUnit.DAYS).toString();
 //    	postData.setImageUrl(imageUrl);
 //    }
+
     @GetMapping("/followerPost")
     public String followerPost(Model model) {
 
-    	List<Post> posts = postService.getAllPosts();
-    	for(Post post : posts) {
-//    		post.getCreateDate();
-//    		
-//    		SimpleDateFormat sdf = new SimpleDateFormat( "yy-MM-dd HH:mm:ss" , Locale.KOREA );
-// /   		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
-    		log.info(post.getCreateDate().toString());
-    	}
-    	
-        model.addAttribute("posts", posts);
+//    	List<Post> posts = postService.getAllPosts();
+//    	for(Post post : posts) {
+////    		post.getCreateDate();
+////
+////    		SimpleDateFormat sdf = new SimpleDateFormat( "yy-MM-dd HH:mm:ss" , Locale.KOREA );
+//// /   		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
+//    		log.info(post.getCreateDate().toString());
+//    	}
+//
+//        model.addAttribute("posts", posts);
         return "post/followerPost";
     }
-    
+
+    @ResponseBody
+    @GetMapping("/get/followerPost")
+    public List<Post> followerPost(@RequestParam("page") Integer page,
+                                   @RequestParam("limit") Integer limit,
+                                   @AuthenticationPrincipal SecurityUser securityUser) {
+
+        return postService.getPostsPaginatedOfFollowersByFollowed(page, limit, securityUser);
+    }
+
     @PostMapping("/CommentRegister")
-	public String PostCommentRegister(PostCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
-    	postService.insertPostComment(form, securityUser);
-    	log.info("포스트 아이디 -> {}", form.getPostId());
-    	log.info("댓글 신규 등록 -> {}", form.getContent());
-    	log.info("유저 아이디 -> {}", securityUser.getUser());
-		return "redirect:/post/followerPost/detail?id=" + form.getPostId();
-	}
+    public String PostCommentRegister(PostCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
+        postService.insertPostComment(form, securityUser);
+        log.info("포스트 아이디 -> {}", form.getPostId());
+        log.info("댓글 신규 등록 -> {}", form.getContent());
+        log.info("유저 아이디 -> {}", securityUser.getUser());
+        return "redirect:/post/followerPost/detail?id=" + form.getPostId();
+    }
 
 
 }
