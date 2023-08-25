@@ -17,39 +17,6 @@
 <body>
 
 <%@ include file="common/navbar.jsp"%>
-<style type="text/css">
-	.wrap{
-		position: relative;
-		min-height: 100%;
-		padding-top:0;
-		padding-bottom: 100px;
-	}
-	
-	.card-img-overlay{
-		position: absolute;
-		top: 30%;
-		font-size: 22px;
-	}
-	
-	img{
-		width: 100%;
-		height: 200px;
-		object-fit:cover;
-		filter: brightness(70%);
-	}
-	
-	.search-bar {
-  		width: 800px;
-	}
-	
-	.searchBackground{
-		background-image:linear-gradient(rgba(0, 0, 0, 0.527), rgba(0, 0, 0, 0.3)), url('../resources/image/unagidon.jpg'); 
-		background-size: cover;
-		background-color: black;
-		height:500px;
-		background-position: center;
-	}
-</style>
 
 <div class="row border-bottom mt-4 py-5 searchBackground align-content-around">
 	<div class="col-12 mt-4">
@@ -66,203 +33,125 @@
 	</div>
 </div>
 <div class="wrap">
-	<div class="container">
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">팔로워의 포스트</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3" onclick="location.href='/post/followerPost'"> more</button>
+
+	<div class="container-fluid">
+		<div class= "row ">
+			<div class= "col-12">
+				<div class="row border-bottom">
+					<div class="col-12">
+						<form action="/store/search" method="GET">
+							<div class="mx-auto my-5 search-bar input-group" style="width: 60%;" >
+								<input name="keyword" type="text"
+									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
+									aria-label="Recipient's username"
+									aria-describedby="button-addon2" ">
+								<div class="input-group-append"></div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row mb-3 border-bottom">
-			
-				<div class="col-4 mb-4">
-					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post/followerPost/detail?id=76'" style=" cursor: pointer;">
-						<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-	
-						<div class="card-img-overlay">
-							<p><strong>인생 카페 10선</strong></p>
+		<div class= "row d-flex justify-content-between mt-3">
+			<div class="col-2">
+				<div class="row">
+					<div class="col">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
+							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
+						</div>
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
+							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
 			
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
+			<div class="col-4 mb-3 me-3" id="home-content">
+				<div id=home-content-header class="d-flex justify-content-between" >
+					<div id="home-content-writer" class="">
+						<div class="d-flex justify-content-start">
+							<p class="me-2">작성자 </p>
+							<p class="text-secondary"><small> 3.5</small></p>
+						</div>					
+					</div>
+					<div id="home-content-follow" class="">
+						<button class="btn btn-secondary">팔로우</button>
+					</div>
+				</div>
+				<div id="store-card-\${store.id}" index-id ="\${i}" class="card "style="border: none;" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
+					<img src="resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					<div class="card-body pt-1" >
+						<i class="bi bi-heart fs-4"></i>
+						<p class="card-text ">Some quick example text to build on
+							the card title and make up the bulk of the card's content.</p>
+						<div class="border d-flex justify-content-between">
+							<p class="card-text p-2">가게이름</p>	
+							
+							<i class="bi bi-star fs-4"></i>
+							
+						</div>		
 					</div>
 				</div>
 			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
+			<div class="col-4 mb-3 me-3" id="home-content">
+				<div id=home-content-header class="d-flex justify-content-between" >
+					<div id="home-content-writer" class="">
+						<div class="d-flex justify-content-start">
+							<p class="me-2">작성자 </p>
+							<p class="text-secondary"><small> 3.5</small></p>
+						</div>					
+					</div>
+					<div id="home-content-follow" class="">
+						<button class="btn btn-secondary">팔로우</button>
+					</div>
+				</div>
+				<div id="store-card-\${store.id}" index-id ="\${i}" class="card "style="border: none;" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
+					<img src="resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					<div class="card-body pt-1" >
+						<i class="bi bi-heart fs-4"></i>
+						<p class="card-text ">Some quick example text to build on
+							the card title and make up the bulk of the card's content.</p>
+						<div class="border d-flex justify-content-between">
+							<p class="card-text p-2">가게이름</p>	
+							
+							<i class="bi bi-star fs-4"></i>
+							
+						</div>		
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-2">
+				<div class="row">
+					<div class="col">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
+							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
+						</div>
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
+							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">팔로워의 리뷰</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3" onclick="location.href='/review/follower'"> more</button>
-			</div>
-		</div>
-		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">인기 맛집</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
-			</div>
-		</div>
-		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">인기 리뷰</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
-			</div>
-		</div>
-		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">최근에 찾아본 맛집</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
-			</div>
-		</div>
-		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-3">
-			<div class="col">
-				<h4 class="my-3">최근에 찾아본 맛집</h4>
-			</div>
-			<div class="col text-end">
-				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
-			</div>
-		</div>
-		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card text-center text-light shadow" >
-					<a href=""><img src="../resources/image/unagidon.jpg" class="card-img-top rounded" alt="..."></a>
-					<div class="card-img-overlay">
-						<p>인생 카페 10선</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card shadow" >
-					<a href=""><img src="../resources/image/cafe2.jpg" class="card-img-top rounded" alt="..."></a>
-				</div>
-			</div>
-		</div>
-	
 	</div>
 	<%@ include file="common/footer.jsp" %>
 </div>

@@ -53,14 +53,14 @@ public class ReviewService {
 	@Autowired private ReviewRepository reviewRepository;
 
 	// 새 리뷰 등록하기
-	public void createReview(ReviewCommand form) {
+	public void createReview(ReviewCommand form, SecurityUser securityUser) {
 
 		Review review = new Review();
 
 		review.setRating(form.getRating());
 		review.setContent(form.getContent());
 		review.setStore(storeMapper.getStoreById(form.getStoreId()));
-		review.setCustomer(userRepository.getReferenceById(form.getUserId()));
+		review.setCustomer(userRepository.getReferenceById(securityUser.getUser().getId()));
 
 		reviewMapper.insertReview(review);
 
@@ -182,6 +182,19 @@ public class ReviewService {
 //		return reviewDto;
 //	}
 	
+	// 가게별 리뷰 평균 가져오기 
+	public ReviewDetailDto getRatingAvgByStoreId(int storeId) {
+		ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
+		
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
+		
+		double storeReviewAvg = getAllReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
+		
+		reviewDetailDto.setStoreReviewAvg(storeReviewAvg);
+		
+		return reviewDetailDto;
+	}
+	
 	// 가게별 전체 리뷰 가져오기 
 //	public List<ReviewDto> getReivewsByStoreId(int storeId) {
 
@@ -195,4 +208,12 @@ public class ReviewService {
 		ReviewSummaryDto reviewRating = reviewMapper.getAllReviewRatingByStoreId(storeId);
 		return reviewRating;
 	}
+
+    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId) {
+
+		int begin = (page - 1) * limit;
+		int end = begin + limit;
+
+		return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+    }
 }
