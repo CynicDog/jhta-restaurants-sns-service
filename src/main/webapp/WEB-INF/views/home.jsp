@@ -18,7 +18,22 @@
 
 <%@ include file="common/navbar.jsp"%>
 
+<div class="row border-bottom mt-4 py-5 searchBackground align-content-around">
+	<div class="col-12 mt-4">
+		<form action="/store/search" method="GET">
+			<div class="mx-auto my-5 search-bar input-group">
+				<input name="keyword" type="text"
+					class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
+					aria-label="Recipient's username"
+					aria-describedby="button-addon2" style="height:45px;">
+				<div class="input-group-append" ></div>
+				<!--  <button class="btn btn-search btn-dark rounded-pill ms-2">검색</button> -->
+			</div>
+		</form>
+	</div>
+</div>
 <div class="wrap">
+
 	<div class="container-fluid">
 		<div class= "row ">
 			<div class= "col-12">

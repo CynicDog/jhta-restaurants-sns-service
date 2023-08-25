@@ -16,11 +16,12 @@ public class PostData {
 	private Store store;
 	private String content;
 	private String pictureFile;
+	private String imageUrl;
 
 	public PostData(Post post, Store store, String content, String pictureFile) {
 		this.post = post;
 		this.store = store;
 		this.content = content;
-		this.pictureFile = pictureFile;
+		this.pictureFile = pictureFile;//
 	}
 }

@@ -6,9 +6,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
 		insert into POST_COMMENTS
-		(id, content, post_id, customer_id)
+		(id, content, post_id, customer_id, create_date, update_date)
 		values
-		(#{id}, #{content}, #{post.id}, #{customer.id})
+		(#{id}, #{content}, #{post.id}, #{customer.id}, #{createDate}, #{updateDate})
 	</insert>
 	
 	<select id="getCommentsByPostId" parameterType="int" resultType="PostComment">
@@ -20,10 +20,10 @@
 			A.update_date as updateDate,
 			A.post_id as "post.id",
 			A.customer_id as "customer.id",
-			B.full_name as "customer.fullName"
-		from POST_COMMENTS A, USERS B
+			U.full_name as "customer.fullName"
+		from POST_COMMENTS A, USERS U
 		where post_id = #{value}
-		and A.customer_id = B.id
+		and A.customer_id = U.id
 	</select>
 	
 </mapper>

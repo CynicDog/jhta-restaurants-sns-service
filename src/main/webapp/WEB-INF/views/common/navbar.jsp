@@ -181,7 +181,7 @@
 						getBookmarkedStores();
 						
 					});
-			//blank -> fill		
+			///blank -> fill		
 			} else {
 				$(this).removeClass('bi-star').addClass('bi-star-fill')
 				$.getJSON('/bookmark/insert', {storeId : bookmarkId});
@@ -345,15 +345,4 @@
 	}
 
 	
-</script>			`;
-				$("#bookmark").append(content);
-			})
-	    	$("#bookmarkLoadingSpinner").css("display", "none");
-				
-		})
-		console.log("ajax getBookmarkedStores done");
-
-	}
-
-	
-</script>
+</script>			

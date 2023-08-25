@@ -1,20 +1,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.PostMapper">
 
-	<select id="getAllPost" resultType="Post">
-		select 
-			id				as id,
-			title			as title,
-			sub_title		as subTitle,
-			create_date		as createDate,
-			update_date		as updateDate,
-			user_id			as "customer.id",
-			report_count	as reportCount,
-			disabled		as disabled,
-			blocked			as blocked
-		from
-			posts
-		order by id asc	
+	<select id="getAllPosts" resultType="Post">
+	    select 
+	        id             as id,
+	        title          as title,
+	        sub_title      as subTitle,
+	        create_date as createDate, 
+	        update_date as updateDate,
+	        customer_id    as "customer.id",
+	        report_count   as reportCount,
+	        disabled       as disabled,
+	        blocked        as blocked
+	    from
+	        POSTS
+	    order by id asc
 	</select>
 	
 	<select id="getPostById" parameterType="int" resultType="Post">
@@ -39,9 +39,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
 		insert into POSTS
-		(title, sub_title, customer_id)
+		(title, sub_title, customer_id, create_date, update_date)
 		values
-		(#{title}, #{subTitle}, #{customer.id})
+		(#{title}, #{subTitle}, #{customer.id}, #{createDate}, #{updateDate})
 	</insert>
 
 	<update id="updatePost" parameterType="int">
@@ -53,7 +53,8 @@
             update_date = #{updateDate},
             report_count = #{reportCount},
             disabled = #{disabled},
-            blocked = #{blocked}
+            blocked = #{blocked},
+            update_date = #{updateDate}
         where
             id = #{id}
 	</update>
