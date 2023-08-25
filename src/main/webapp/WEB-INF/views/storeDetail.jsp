@@ -89,7 +89,7 @@
                             <div class="col-8">
                                 <p class="restaurants_name my-3">
                                     <span class="fs-4 fw-lighter">${store.name}</span>
-                                           <span class="rate-point mx-3 fs-3 fw-lighter" style="color: #ff792a;"><fmt:formatNumber value="${storeAvg.storeReviewAvg }" pattern="#.#" /></span>
+                                    <span class="rate-point mx-3 fs-3 fw-lighter" style="color: #ff792a;"><fmt:formatNumber value="${storeAvg.storeReviewAvg }" pattern="#.#" /></span>
                                 </p>
                             </div>
                             <div class="col-4">
@@ -100,8 +100,8 @@
 							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							                    리뷰<i class="bi bi-brush"></i>
 							                </button>
-                                            <button class="btn" id="box">
-							                    <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+                                            <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                    <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
 							                </button>
                                         </c:if>
                                     </sec:authorize>
@@ -109,8 +109,8 @@
 							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							            	리뷰<i class="bi bi-brush"></i>
 							            </button>
-                                        <button class="btn" id="box">
-							                <i id="star" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+                                        <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
 							            </button>
                                     </sec:authorize>
 							    </span>
@@ -119,7 +119,7 @@
                         <div>
                             <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
                             <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>123</span>
+                            <span id="bookmark-count" style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>0</span>
                         </div>
                         <div class="row">
                             <table class="table">
@@ -554,6 +554,34 @@
     
     fetchAndRenderReviews(pageOnReview);
 
+    
+    $("#btn-bookmark").click(function() {
+    	let storeId = $(this).attr("data-store-id");
+    	let $icon = $(this).find('i');
+    	let $bookmark = $("#bookmark-count");
+    	let currentBookmarkCount = parseInt($bookmark.text());
+
+    	let add = "Y";
+    	if ($icon.hasClass("bi-star-fill")) {
+    		add = "N";
+    	} else {
+    		add ="Y";
+    	}
+
+    	// bookmark?storeId=21&job=Y
+    	$.post("bookmark", {storeId:storeId, job:add}, function(result) {
+    		if ($icon.hasClass("bi-star-fill")) {
+    			currentBookmarkCount--;
+    			$icon.removeClass("bi-star-fill").addClass("bi-star")
+    		} else {
+    			currentBookmarkCount++;
+    			$icon.removeClass("bi-star").addClass("bi-star-fill")
+    		}
+    		$bookmark.text(currentBookmarkCount);
+    	})
+    });
+    
+    
     $("#btn-review-all").click(function () {
         $("#review-list .card").show();
     });
