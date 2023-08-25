@@ -120,5 +120,5 @@ public class PostService {
     public long getPostsCountByCustomerId(Integer customerId) {
 		return postRepository.countByCustomerId(customerId);
     }
-
+//
 }

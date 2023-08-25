@@ -172,7 +172,7 @@
 	myOffcanvas.addEventListener("hide.bs.offcanvas", function() {
 		$(".offcanvas-backdrop").remove();
 	})
-	
+	//
 
 </script>
 </body>

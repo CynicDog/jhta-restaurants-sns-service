@@ -19,7 +19,7 @@ public class PostCommand {
 	public PostCommand(String postTitle, String postSubtitle) {
 		this.postTitle = postTitle;
 		this.postSubtitle = postSubtitle;
-		this.createDate = new Date(); // default to current time
+		this.createDate = new Date(); /// default to current time
 		this.updateDate = new Date(); // default to current time
 	}
 	

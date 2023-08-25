@@ -129,7 +129,7 @@
     //const createDate = dateInput.value;
     
     //const elapsed = timeForToday(createDate);
-    //dateValue.textContent = elapsed;
+    ///dateValue.textContent = elapsed;
 	
 </script>
 </body>

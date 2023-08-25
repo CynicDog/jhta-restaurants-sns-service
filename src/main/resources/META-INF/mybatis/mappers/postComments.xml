@@ -20,10 +20,10 @@
 			A.update_date as updateDate,
 			A.post_id as "post.id",
 			A.customer_id as "customer.id",
-			B.full_name as "customer.fullName"
-		from POST_COMMENTS A, USERS B
+			U.full_name as "customer.fullName"
+		from POST_COMMENTS A, USERS U
 		where post_id = #{value}
-		and A.customer_id = B.id
+		and A.customer_id = U.id
 	</select>
 	
 </mapper>

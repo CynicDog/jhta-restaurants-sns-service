@@ -53,7 +53,7 @@ public class Post {
 
 	public Post() {
 
-		this.createDate = new Date(); // default to current time
+		this.createDate = new Date(); /// default to current time
 		this.updateDate = new Date(); // default to current time
 		this.disabled = Post.DISABLED.NO; // default to `NO`
 		this.blocked = Post.BLOCKED.NO; // default to `NO`

@@ -178,7 +178,7 @@ public class PostController {
 //    		post.getCreateDate();
 //    		
 //    		SimpleDateFormat sdf = new SimpleDateFormat( "yy-MM-dd HH:mm:ss" , Locale.KOREA );
-//    		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
+// /   		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
     		log.info(post.getCreateDate().toString());
     	}
     	

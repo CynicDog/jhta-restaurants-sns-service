@@ -22,6 +22,6 @@ public class PostData {
 		this.post = post;
 		this.store = store;
 		this.content = content;
-		this.pictureFile = pictureFile;
+		this.pictureFile = pictureFile;//
 	}
 }

@@ -14,7 +14,7 @@
 	        blocked        as blocked
 	    from
 	        POSTS
-	    order by id desc
+	    order by id asc
 	</select>
 	
 	<select id="getPostById" parameterType="int" resultType="Post">
