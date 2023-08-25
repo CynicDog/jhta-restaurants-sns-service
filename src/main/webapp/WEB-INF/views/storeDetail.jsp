@@ -239,12 +239,42 @@
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
+                                                <button id="btn-answer-103" type="button" class="btn btn-light">
+					                                <span>답글</span>
+					                            </button>
 												<button type="button" class="btn btn-light btn-sm text-danger">
 													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
 											</span>
                                             </div>
                                         </div>
+                                        <!-- 답글 작성 폼 -->
+						                <div style="display:none" data-review-form="103">
+						                    <form id="form-answer-103" method="post" action="/review/addAnswer">
+						                        <input type="hidden" name="reviewId" value="103" />
+						                        <input type="hidden" name="storeId" value="32" />
+						                        <div class="row" id="cardAndTextarea" style="display: none;">
+						                            <div class="col-12">
+						                                <div class="card">
+						                                    <div class="card-body d-flex flex-row justify-content-between align-items-start">
+						                                        <textarea class="form-control" name="content" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+						                                        <button class="btn btn-outline-secondary submit-reply-button" type="submit" id="button-addon2"><i class="bi bi-pencil"></i></button>
+						                                    </div>
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </form>
+						                </div>
+						                <div class="row" id="ownerComment-103" style="display:none">
+						                    <div class="col">
+						                        <div class="card">
+						                            <div class="card-body">
+						                                <p class="col card-text" style="font-size: small; color: #adb5bd;">${store.name}</p>
+						                                <p class="card-text">리뷰 답글</p>
+						                            </div>
+						                        </div>
+						                    </div>
+						                </div>
                                     </div>
                                 </div>
                             </div>
@@ -335,6 +365,7 @@
                                                     <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                                 </button>
                                                 <span class="float-end">
+                                                
 												<button type="button" class="btn btn-light btn-sm text-danger">
 													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
 												</button>
