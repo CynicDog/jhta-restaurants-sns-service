@@ -1,6 +1,5 @@
 package kr.co.jhta.restaurants_service.dto;
 
-import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Pagination {
 
-	private int rows = 8;
+	private int rows = 10;
 	private int pages = 5;
 	private int page;
 	private int totalRows;
