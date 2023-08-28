@@ -96,7 +96,7 @@
 				</div>
 			</div>
 			
-			<div class="col-3">
+			<div class="col-3 pt-3" >
 				<div class="card mb-3" style="border: none;">
 					<div class="row d-flex justify-content-between">
 						<div class="col-7">

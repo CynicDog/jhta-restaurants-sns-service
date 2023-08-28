@@ -1,0 +1,44 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.HomeMapper">
+	
+	<select id="" resultType="HomeContent">
+		select 
+			*,
+			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
+		from
+			(select
+				R.id			as id,
+				R.id			as "review.id",
+				NULL			as "post.id",
+				U.username		as username, 
+				content			as content,
+				NULL			as title,
+				R.create_date	as createDate,
+				S.name			as storeName,
+				S.category		as category,
+				S.address		as address
+			from REVIEWS R
+			inner join USERS U on R.customer_id = U.id
+			inner join STORES S on R.store_id = S.id
+			
+			union
+				
+			select
+				P.id			as id,
+				NULL			as "review.id",
+				P.id			as "post.id",
+				U.username		as username, 
+				content			as content,
+				P.title			as title,
+				P.create_date	as createDate,
+				S.name			as storeName,
+				S.category		as category,
+				S.address		as address
+			from POSTS P
+			inner join USERS U on P.customer_id = U.id
+			inner join POST_DATA PD on P.id = PD.post_id
+			inner join STORES S on PD.store_id = S.id) as subquery
+		limit 1, 10	
+	</select>
+
+</mapper>
