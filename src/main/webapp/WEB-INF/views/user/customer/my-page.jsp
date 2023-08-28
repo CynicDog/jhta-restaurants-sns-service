@@ -22,72 +22,6 @@
             <div class="card shadow my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
-                        <div class="col-8 fs-4">Socials</div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                       id="flexSwitchCheckDefault">
-                                <%-- TODO: Behaviors on public / private account --%>
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row my-2">
-                        <div class="col text-end">
-                            <div id="followersToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                followers
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    ${followersCount}
-                                </span>
-                            </div>
-                            <div id="followingsToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                followings
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    ${followingsCount}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <c:if test="${not empty recipients}">
-                        <div class="p-2 m-3">
-                            <p class="my-1">Sent requests</p>
-                            <hr/>
-                            <c:forEach items="${recipients}" var="recipient">
-                                <div class="border rounded p-2 my-2 d-flex align-items-center">
-                                    <span class="fw-bold mx-1">${recipient.email}</span>
-                                    <div class="ms-auto">
-                                        <span class="badge bg-secondary my-1">Pending</span>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </div>
-                    </c:if>
-                    <c:if test="${not empty senders}">
-                        <div class="p-2 m-3">
-                            <p class="my-1">Arrived requests</p>
-                            <hr/>
-                            <c:forEach items="${senders}" var="sender">
-                                <div class="border rounded p-2 my-2 d-flex align-items-center">
-                                    <span class="fw-bold mx-1">${sender.email}</span>
-                                    <div class="ms-auto">
-                                        <a href="" class="btn btn-outline-secondary btn-sm"
-                                           onclick="accept(${sender.id})">accept</a>
-                                        <a href="" class="btn btn-outline-danger btn-sm"
-                                           onclick="decline()">decline</a>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </div>
-                    </c:if>
-                </div>
-            </div>
-            <div class="card shadow my-3">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
                         <div class="col fs-4">About Me</div>
                     </div>
                     <div class="row">
@@ -137,7 +71,61 @@
                     </div>
                 </div>
             </div>
-
+            <div class="card shadow my-3">
+                <div class="fw-lighter m-3 p-1">
+                    <div class="row">
+                        <div class="col-8 fs-4">Socials</div>
+                        <div class="col-4 d-flex justify-content-end">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                       id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col text-end">
+                            <div id="followersToastButton" type="button"
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                followers
+                                <span id="followersCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            </div>
+                            <div id="followingsToastButton" type="button"
+                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                followings
+                                <span id="followingsCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+<%--                    // TODO: Buttons categorization into 'PENDING' / 'ACCEPTED' / 'DENIED' / 'SENT'--%>
+                    <div class="p-2 m-3">
+                        <div id="arrivedRequests"
+                             type="button"
+                             class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
+                            Arrived requests
+                        </div>
+                        <div id="sentRequests"
+                             type="button"
+                             class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
+                            Sent requests
+                        </div>
+                        <hr/>
+                        <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
+                        </div>
+                        <div class="text-center">
+                            <div class="btn border border-0 disabled">
+                                <div id="requestLoadingSpinner"
+                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                     style="display: none;">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-7 my-5">
             <div class="card shadow overflow-auto my-3">
@@ -422,7 +410,7 @@
             fetchAndRenderFollowers(pageOnFollower)
 
             // infinite scrolling (scroll pagination)
-            followersOutputArea.addEventListener('scroll', function() {
+            followersOutputArea.addEventListener('scroll', function () {
                 const scrollPos = this.scrollTop + this.clientHeight;
                 const scrollHeight = this.scrollHeight
 
@@ -479,7 +467,7 @@
             fetchAndRenderFollowings(pageOnFollowing)
 
             // infinite scrolling (scroll pagination)
-            followingsOutputArea.addEventListener('scroll', function() {
+            followingsOutputArea.addEventListener('scroll', function () {
                 const scrollPos = this.scrollTop + this.clientHeight;
                 const scrollHeight = this.scrollHeight
 
@@ -571,6 +559,154 @@
                 })
             })
         }
+
+
     });
+
+    let isRequestLast = false;
+    let isRequestsFetching = false;
+    let pageOnRequests = 0
+    let requestFetchingOption = 'arrived'
+
+    const requestLoadingSpinner = document.getElementById('requestLoadingSpinner')
+    const requestsOutputArea = document.getElementById('requestsOutputArea')
+
+    const getRequests = (option, page) => {
+        return fetch(`/customer/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
+    }
+
+    function fetchAndRenderRequests(option, page) {
+        isRequestsFetching = true
+        requestLoadingSpinner.style.display = 'block';
+
+        getRequests(option, page).then(data => {
+
+            if (data.length < 5) {
+                isRequestLast = true;
+                isRequestsFetching = false;
+            }
+
+            data.forEach(datum => {
+
+                function getStatusClasses(status) {
+                    switch (status) {
+                        case 'PENDING':
+                            return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
+                        case 'ACCEPTED':
+                            return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                        case 'DECLINED':
+                            return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
+                        default:
+                            return 'badge bg-secondary rounded-pill my-1 requestStatusButton';
+                    }
+                }
+
+                const statusClasses = getStatusClasses(datum.followRequest.status);
+
+                requestsOutputArea.innerHTML += `
+                <div class="border rounded p-2 my-2 d-flex align-items-center">
+                    <div class="fw-light mx-1">\${datum.user.nickname}</div>
+                    <div class="ms-auto">
+                        <span type="button"
+                              data-request-id="\${datum.followRequest.id}"
+                              class="\${statusClasses}">\${datum.followRequest.status}</span>
+                    </div>
+                </div>
+
+                `
+                requestLoadingSpinner.style.display = 'none';
+                isRequestsFetching = false;
+            })
+        })
+    }
+
+    fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+
+    document.getElementById('sentRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'sent'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('arrivedRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'arrived'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    requestsOutputArea.addEventListener('scroll', function () {
+
+        const scrollPos = this.scrollTop + this.clientHeight;
+        const scrollHeight = this.scrollHeight;
+
+        if (scrollPos === scrollHeight) {
+
+            if (isRequestsFetching || isRequestLast) {
+                // do nothing
+            } else {
+                pageOnRequests += 1;
+                fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+            }
+
+        }
+    })
+
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('requestStatusButton')) {
+            const button = event.target;
+            const requestId = button.getAttribute('data-request-id')
+
+            fetch(`/customer/requests-modify?requestId=\${requestId}`, {
+                method: "POST"
+            })
+                .then(response => response.text())
+                .then(status => {
+
+                    function getStatusClasses(status) {
+                        switch (status) {
+                            case 'PENDING':
+                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'ACCEPTED':
+                                return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'DECLINED':
+                                return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
+                            default:
+                                return 'badge bg-secondary rounded-pill my-1 requestStatusButton';
+                        }
+                    }
+                    const newStatusClasses = getStatusClasses(status);
+
+                    button.textContent = status;
+                    button.className = newStatusClasses;
+
+                    updateFollowersCount();
+                })
+        }
+    })
+
+    const updateFollowersCount = () => {
+        fetch(`/customer/followers-count`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followersCount').textContent = data;
+            });
+    };
+    updateFollowersCount();
+
+    const updateFollowingsCount = () => {
+        fetch(`/customer/followings-count`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followingsCount').textContent = data;
+            });
+    };
+    updateFollowingsCount();
+
 </script>
 </html>

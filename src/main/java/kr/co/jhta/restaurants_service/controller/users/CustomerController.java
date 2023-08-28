@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.controller.users;
 
 import kr.co.jhta.restaurants_service.controller.command.OtpCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.dto.FollowRequestDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.security.service.UserService;
@@ -11,6 +12,7 @@ import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.SocialService;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/customer")
@@ -165,17 +168,52 @@ public class CustomerController {
 
         Integer customerId = securityUser.getUser().getId();
 
-        long followersCount = socialService.getFollowersCountByCustomerId(customerId);
-        long followingsCount = socialService.getFollowingsCountByCustomerId(customerId);
         long postsCount = postService.getPostsCountByCustomerId(customerId);
         long reviewsCount = reviewService.getReviewsCountByCustomerId(customerId);
 
         model.addAttribute("customer", securityUser.getUser());
-        model.addAttribute("followersCount", followersCount);
-        model.addAttribute("followingsCount", followingsCount);
         model.addAttribute("postsCount", postsCount);
         model.addAttribute("reviewsCount", reviewsCount);
 
         return "/user/customer/my-page";
+    }
+
+    @ResponseBody
+    @GetMapping("/requests")
+    public List<FollowRequestDto> followRequests(
+            @AuthenticationPrincipal SecurityUser securityUser,
+            @RequestParam("option") String option,
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit) {
+
+        Integer customerId = securityUser.getUser().getId();
+
+        if (option.equals("sent")) {
+            return socialService.getSentRequestsBySenderId(customerId, page, limit);
+        } else { // arrived
+            return socialService.getArrivedRequestsByRecipientId(customerId, page, limit);
+        }
+    }
+
+    // authenticated
+    @ResponseBody
+    @PostMapping("/requests-modify")
+    public String followRequestsModify(@RequestParam("requestId") int requestId, @AuthenticationPrincipal SecurityUser securityUser) {
+
+        return socialService.updateRequestStatus(requestId, securityUser.getUser().getId());
+    }
+
+    @ResponseBody
+    @GetMapping("/followers-count")
+    public long followersCount(@AuthenticationPrincipal SecurityUser securityUser) {
+
+        return socialService.getFollowersCountByCustomerId(securityUser.getUser().getId());
+    }
+
+    @ResponseBody
+    @GetMapping("/followings-count")
+    public long followingsCount(@AuthenticationPrincipal SecurityUser securityUser) {
+
+        return socialService.getFollowingsCountByCustomerId(securityUser.getUser().getId());
     }
 }
