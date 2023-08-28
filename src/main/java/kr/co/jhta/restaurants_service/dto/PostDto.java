@@ -5,6 +5,7 @@ import java.util.List;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +18,5 @@ public class PostDto {
 	private Post post;
 	private List<PostData> postData;
 	private List<PostComment> postComments;
+	private List<Bookmark> bookmark;
 }

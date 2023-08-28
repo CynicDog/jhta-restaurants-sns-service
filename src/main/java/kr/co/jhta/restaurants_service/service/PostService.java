@@ -18,11 +18,13 @@ import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
+import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
 import kr.co.jhta.restaurants_service.mapper.PostCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +38,7 @@ public class PostService {
 	private final StoreMapper storeMapper;
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
+	private final BookmarkMapper bookmarkMapper;
 	private final PostRepository postRepository;
 	private final FollowsRepository followsRepository;
 
@@ -64,17 +67,19 @@ public class PostService {
 				});
     }
 
-	public PostDto selectPost(int postId) {
+	public PostDto selectPost(int postId, SecurityUser securityUser) {
 		PostDto dto = new PostDto();
 
 		Post post = postmapper.getPostById(postId);
 		
 		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
+		List<Bookmark> bookmarks = bookmarkMapper.getBookmarksByCustomerId(securityUser.getUser().getId());
 
 		dto.setPost(post);
 		dto.setPostData(postDatas);
 		dto.setPostComments(postComments);
+		dto.setBookmark(bookmarks);
 
 		return dto;
 	}

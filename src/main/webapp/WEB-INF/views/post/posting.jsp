@@ -49,7 +49,7 @@
 				</div>
 				<div class="bookmark col-2 my-5 position-relative" id="box-${data.store.id}">
 					<button class="btn ms-3 position-absolute" id="box">
-						<i class="bi bi-star" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
+						<i class="bi ${post.bookmark.size() > 0 ? 'bi-star-fill' : 'bi-star'}" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
 					</button>
 				</div>
 			</div>
@@ -194,7 +194,6 @@
 	        window.location.href = "/user/login";
 	    }
 	});
-	
 	
 </script>
 </body>
