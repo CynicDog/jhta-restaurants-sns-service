@@ -11,6 +11,7 @@ import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 
+import org.apache.ibatis.annotations.Param;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,8 +43,15 @@ public class PostService {
 	private final PostRepository postRepository;
 	private final FollowsRepository followsRepository;
 
-	public List<Post> getAllPosts(){
-		List<Post> posts = postmapper.getAllPosts();
+	
+	public List<Post> getRecentPosts(){
+		List<Post> posts = postmapper.getRecentPostsThree();
+		return posts;
+	}
+	
+	public List<Post> getRecentPostsThreeOfFollowersByFollowed(SecurityUser securityUser){
+		logger.info(securityUser.getUser());
+		List<Post> posts = postmapper.getRecentPostsThreeOfFollowersByFollowed(securityUser.getUser().getId());
 		return posts;
 	}
 	
@@ -74,12 +82,15 @@ public class PostService {
 		
 		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
-		List<Bookmark> bookmarks = bookmarkMapper.getBookmarksByCustomerId(securityUser.getUser().getId());
+		
+		if(securityUser != null) {
+			List<Bookmark> bookmarks = bookmarkMapper.getBookmarksByCustomerId(securityUser.getUser().getId());
+			dto.setBookmark(bookmarks);
+		}
 
 		dto.setPost(post);
 		dto.setPostData(postDatas);
 		dto.setPostComments(postComments);
-		dto.setBookmark(bookmarks);
 
 		return dto;
 	}
@@ -114,6 +125,13 @@ public class PostService {
 
     public long getPostsCountByCustomerId(Integer customerId) {
 		return postRepository.countByCustomerId(customerId);
+    }
+    
+    public List<Post> getAllPosts(int page, int limit){
+    	int start = (page - 1) * limit;
+    	int end = start + limit;
+    	
+    	return postmapper.getAllPosts(start, end);
     }
 
     public List<Post> getPostsPaginatedOfFollowersByFollowed(int page, int limit, SecurityUser securityUser) {

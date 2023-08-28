@@ -151,10 +151,19 @@ public class PostController {
 
         PostDto dto = postService.selectPost(id, securityUser);
 
-
         model.addAttribute("post", dto);
 
         return "post/posting";
+    }
+    
+    @GetMapping("/allPost/detail")
+    public String PostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
+    	
+    	PostDto dto = postService.selectPost(id, securityUser);
+    	
+    	model.addAttribute("post", dto);
+    	
+    	return "post/posting";
     }
 
 //    storage = StorageOptions.getDefaultInstance().getService();
@@ -168,22 +177,26 @@ public class PostController {
 //    	postData.setImageUrl(imageUrl);
 //    }
 
-    @GetMapping("/followerPost")
-    public String followerPost(Model model) {
-
-//    	List<Post> posts = postService.getAllPosts();
-//    	for(Post post : posts) {
-////    		post.getCreateDate();
-////
-////    		SimpleDateFormat sdf = new SimpleDateFormat( "yy-MM-dd HH:mm:ss" , Locale.KOREA );
-//// /   		String str = sdf.format( new Date( Timestamp.post.getCreateDate() ) );
-//    		log.info(post.getCreateDate().toString());
-//    	}
-//
-//        model.addAttribute("posts", posts);
-        return "post/followerPost";
+    @GetMapping("/allPosts")
+    public String allPost() {
+    	
+    	return "post/allPost";
+    }
+    
+    @GetMapping("/followerPosts")
+    public String followerPost() {
+    	
+    	return "post/followerPost";
     }
 
+    @ResponseBody
+    @GetMapping("/get/allPost")
+    public List<Post> AllPost(@RequestParam("page") Integer page,
+                                   @RequestParam("limit") Integer limit) {
+
+        return postService.getAllPosts(page, limit);
+    }
+    
     @ResponseBody
     @GetMapping("/get/followerPost")
     public List<Post> followerPost(@RequestParam("page") Integer page,
