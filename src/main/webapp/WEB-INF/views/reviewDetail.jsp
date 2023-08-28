@@ -39,18 +39,23 @@ html, body {
 						</a>
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>
+						<c:choose>
+							<c:when test="${not empty review.review.customer.nickname }">${review.review.customer.nickname }</c:when>
+							<c:otherwise>${review.review.customer.username }</c:otherwise>
+						</c:choose>
+						</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
 							<c:if test="${review.review.rating eq 5}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
+								 <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-6">맛있어요</span>
 							</c:if>
 							<c:if test="${review.review.rating eq 3}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">괜찮아요</span>
+								 <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-6">괜찮아요</span>
 							</c:if>
 							<c:if test="${review.review.rating eq 1}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
+								 <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill fs-6">별로에요</span>
 							</c:if>
 						</div>
 					</div>

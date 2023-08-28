@@ -502,40 +502,39 @@
 </div>
 <script>
 
-    let pageOnReview = 1;
-    const reviewOutputArea = document.getElementById('reviewOutputArea');
-
-    reviewOutputArea.addEventListener('scroll', function () {
-
-        const scrollPos = this.scrollTop + this.clientHeight;
-        const scrollHeight = this.scrollHeight;
-
-        if (scrollPos === scrollHeight) {
-            pageOnReview += 1;
-            fetchAndRenderReviews(pageOnReview);
-        }
-    })
-
-    let isReviewsFetching = false;
-    let isReviewsLast = false;
-    const storeId = ${store.id};
-
-    const getReviews = (page) => {
-        return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5`).then(response => response.json());
-    }
-
-    function fetchAndRenderReviews(pageOnReview) {
-        if (isReviewsFetching || isReviewsLast) {
-            return;
-        }
-
-        isReviewsFetching = true;
-        getReviews(pageOnReview).then(data => {
-
-            if (data.length < 5) {
-                isReviewsLast = true;
-            }
-
+	let pageOnReview = 1;
+	const reviewOutputArea = document.getElementById('reviewOutputArea');
+	
+	reviewOutputArea.addEventListener('scroll', function () {
+	
+	    const scrollPos = this.scrollTop + this.clientHeight;
+	    const scrollHeight = this.scrollHeight;
+	
+	    if (scrollPos === scrollHeight) {
+	        pageOnReview += 1;
+	        fetchAndRenderReviews(pageOnReview);
+	    }
+	})
+	
+	let isReviewsFetching = false;
+	let isReviewsLast = false;
+	const storeId = ${store.id};
+	
+	const getReviews = (page) => {
+	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5`).then(response => response.json());
+	}
+	
+	function fetchAndRenderReviews(pageOnReview) {
+	    if (isReviewsFetching || isReviewsLast) {
+	        return;
+	    }
+	
+	    isReviewsFetching = true;
+	    getReviews(pageOnReview).then(data => {
+	
+	        if (data.length < 5) {
+	            isReviewsLast = true;
+	        }
 
             data.forEach(datum => {		
                 reviewOutputArea.innerHTML += `
