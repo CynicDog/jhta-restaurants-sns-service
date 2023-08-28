@@ -180,18 +180,21 @@ public class CustomerController {
 
     @ResponseBody
     @GetMapping("/requests")
-    public List<FollowRequestDto> followRequests(
-            @AuthenticationPrincipal SecurityUser securityUser,
-            @RequestParam("option") String option,
-            @RequestParam("page") int page,
-            @RequestParam("limit") int limit) {
+    public List<FollowRequestDto> followRequests(@AuthenticationPrincipal SecurityUser securityUser,
+                                                 @RequestParam("option") String option,
+                                                 @RequestParam("page") int page,
+                                                 @RequestParam("limit") int limit) {
 
         Integer customerId = securityUser.getUser().getId();
 
-        if (option.equals("sent")) {
+        if (option.equals("pending")) {
+            return socialService.getArrivedRequestsPendingByRecipientId(customerId, page, limit);
+        } else if (option.equals("accepted")) {
+            return socialService.getArrivedRequestsAcceptedByRecipientId(customerId, page, limit);
+        } else if (option.equals("declined")) {
+            return socialService.getArrivedRequestsDeniedByRecipientId(customerId, page, limit);
+        } else { // ?option=sent
             return socialService.getSentRequestsBySenderId(customerId, page, limit);
-        } else { // arrived
-            return socialService.getArrivedRequestsByRecipientId(customerId, page, limit);
         }
     }
 

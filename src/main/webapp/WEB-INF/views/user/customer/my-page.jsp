@@ -13,13 +13,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .square-div {
+            aspect-ratio: 1 / 1;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
-    <div class="row my-5">
+    <div class="row my-5 px-5">
         <div class="col-md-5 my-5">
-            <div class="card shadow my-3">
+            <div class="card shadow-sm border border-0 my-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
                         <div class="col fs-4">About Me</div>
@@ -71,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow my-3">
+            <div class="card shadow-sm border border-0 mt-3">
                 <div class="fw-lighter m-3 p-1">
                     <div class="row">
                         <div class="col-8 fs-4">Socials</div>
@@ -88,28 +93,39 @@
                             <div id="followersToastButton" type="button"
                                  class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 followers
-                                <span id="followersCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                <span id="followersCount"
+                                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
                             </div>
                             <div id="followingsToastButton" type="button"
                                  class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                 followings
-                                <span id="followingsCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                <span id="followingsCount"
+                                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-<%--                    // TODO: Buttons categorization into 'PENDING' / 'ACCEPTED' / 'DENIED' / 'SENT'--%>
                     <div class="p-2 m-3">
-                        <div id="arrivedRequests"
+                        <div id="pendingRequests"
                              type="button"
                              class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
-                            Arrived requests
+                            Pending
+                        </div>
+                        <div id="acceptedRequests"
+                             type="button"
+                             class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
+                            Accepted
+                        </div>
+                        <div id="declinedRequests"
+                             type="button"
+                             class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill ">
+                            Declined
                         </div>
                         <div id="sentRequests"
                              type="button"
-                             class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
-                            Sent requests
+                             class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">
+                            Sent
                         </div>
                         <hr/>
                         <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
@@ -127,16 +143,43 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-7 my-5">
-            <div class="card shadow overflow-auto my-3">
-                <div class="d-flex fs-4 m-3 p-1 fw-lighter ">Some Contents..
+        <div class="col-md-7 my-5 px-4">
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-4">
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                        picture
+                    </div>
                 </div>
-                <div class="card-body">
-                    Some Contents..
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                        picture
+                    </div>
+                </div>
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                        picture
+                    </div>
+                </div>
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
+                        picture
+                    </div>
+                </div>
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
+                        picture
+                    </div>
+                </div>
+                <div class="col my-3">
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
+                        picture
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <div class="toast-container position-fixed bottom-0 end-0 p-4">
     <div id="successfulToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -149,7 +192,7 @@
     </div>
     <div id="postsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
          data-bs-autohide="false">
-        <div class="toast-body">
+        <div class="toast-body bg-light-subtle rounded-3">
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -173,7 +216,7 @@
     </div>
     <div id="reviewsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
          data-bs-autohide="false">
-        <div class="toast-body">
+        <div class="toast-body bg-light-subtle rounded-3">
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -197,7 +240,7 @@
     </div>
     <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
          data-bs-autohide="false">
-        <div class="toast-body">
+        <div class="toast-body bg-light-subtle rounded-3">
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -222,7 +265,7 @@
     </div>
     <div id="followingsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
          data-bs-autohide="false">
-        <div class="toast-body">
+        <div class="toast-body bg-light-subtle rounded-3">
             <div class="row">
                 <div class="col">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -247,42 +290,6 @@
 </div>
 </body>
 <script>
-
-    function accept(senderId) {
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/follow/accept?sender-id=" + senderId, true);
-        xhr.responseType = "text";
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                alert("success message")
-                window.location.reload();
-            } else {
-                alert(xhr.responseText);
-            }
-        };
-
-        xhr.send();
-
-    }
-
-    function decline(senderId) {
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/follow/decline?id=" + senderId, true);
-        xhr.responseType = "text";
-
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                alert("success message")
-            } else {
-                alert(xhr.responseText);
-            }
-        };
-
-        xhr.send();
-    }
 
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -378,7 +385,6 @@
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
                 if (data.length === 0) {
-                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
@@ -435,7 +441,6 @@
             followingsLoadingSpinner.style.display = 'block';
             getFollowings(page).then(data => {
                 if (data.length === 0) {
-                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings yet.</span>`
                     followingsLoadingSpinner.style.display = 'none'
                     isFollowingFetching = false;
                 }
@@ -566,7 +571,7 @@
     let isRequestLast = false;
     let isRequestsFetching = false;
     let pageOnRequests = 0
-    let requestFetchingOption = 'arrived'
+    let requestFetchingOption = 'pending'
 
     const requestLoadingSpinner = document.getElementById('requestLoadingSpinner')
     const requestsOutputArea = document.getElementById('requestsOutputArea')
@@ -584,6 +589,7 @@
             if (data.length < 5) {
                 isRequestLast = true;
                 isRequestsFetching = false;
+                requestLoadingSpinner.style.display = 'none';
             }
 
             data.forEach(datum => {
@@ -591,13 +597,13 @@
                 function getStatusClasses(status) {
                     switch (status) {
                         case 'PENDING':
-                            return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
-                        case 'ACCEPTED':
                             return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                        case 'ACCEPTED':
+                            return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
                         case 'DECLINED':
                             return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                         default:
-                            return 'badge bg-secondary rounded-pill my-1 requestStatusButton';
+                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
                     }
                 }
 
@@ -622,21 +628,39 @@
 
     fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
 
+    document.getElementById('pendingRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'pending'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('acceptedRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'accepted'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('declinedRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'declined'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
     document.getElementById('sentRequests').addEventListener('click', function () {
         requestsOutputArea.innerHTML = ''
 
         pageOnRequests = 0
         isRequestLast = false;
         requestFetchingOption = 'sent'
-        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-    })
-
-    document.getElementById('arrivedRequests').addEventListener('click', function () {
-        requestsOutputArea.innerHTML = ''
-
-        pageOnRequests = 0
-        isRequestLast = false;
-        requestFetchingOption = 'arrived'
         fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
     })
 
@@ -657,7 +681,7 @@
         }
     })
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         if (event.target.classList.contains('requestStatusButton')) {
             const button = event.target;
             const requestId = button.getAttribute('data-request-id')
@@ -671,15 +695,16 @@
                     function getStatusClasses(status) {
                         switch (status) {
                             case 'PENDING':
-                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
-                            case 'ACCEPTED':
                                 return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'ACCEPTED':
+                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
                             case 'DECLINED':
                                 return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                             default:
-                                return 'badge bg-secondary rounded-pill my-1 requestStatusButton';
+                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
                         }
                     }
+
                     const newStatusClasses = getStatusClasses(status);
 
                     button.textContent = status;
