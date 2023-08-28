@@ -29,7 +29,7 @@ public class ReviewDto {
 	private boolean blocked;
 	private Double reviewAvg;
 	private int customerId;
-	private String customerUsername;
+	private String customerName;
 	private String nickname;
 	private int ownerId;
 
