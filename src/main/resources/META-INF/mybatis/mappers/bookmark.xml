@@ -26,4 +26,15 @@
 			customer_id = #{customerId}
 		order by id asc
 	</select>
+	
+	<select id="getBookmarkByStoreIdAndCustomerId" resultType="Bookmark">
+		select
+			store_id		as "store.id",
+			customer_id		as "customer.id"
+		from
+			BOOKMARKS
+		where
+			store_id = #{storeId}
+			and customer_id = #{customerId}		
+	</select>
 </mapper>
