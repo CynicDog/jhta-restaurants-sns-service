@@ -55,9 +55,9 @@ public class PostController {
     private final Storage storage;
 
     @GetMapping("")
-    public String Post(int id, Model model) {
+    public String Post(int id, @AuthenticationPrincipal SecurityUser securityUser ,  Model model) {
 
-        PostDto dto = postService.selectPost(id);
+        PostDto dto = postService.selectPost(id,securityUser);
         model.addAttribute("post", dto);
 
         return "post/posting";
@@ -147,9 +147,9 @@ public class PostController {
     }
 
     @GetMapping("/followerPost/detail")
-    public String followerPostDetail(@RequestParam("id") int id, Model model) {
+    public String followerPostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
 
-        PostDto dto = postService.selectPost(id);
+        PostDto dto = postService.selectPost(id, securityUser);
 
 
         model.addAttribute("post", dto);
