@@ -2,6 +2,28 @@
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.PostMapper">
 
 	<select id="getAllPosts" resultType="Post">
+	    select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked
+		from
+			POSTS p
+		inner join
+			USERS u on p.customer_id = u.id
+	    order by
+			p.create_date desc
+		limit
+			#{start}, #{end}
+	</select>
+	
+	<select id="getRecentPostsThree" resultType="Post">
 	    select 
 	        id             as id,
 	        title          as title,
@@ -14,7 +36,38 @@
 	        blocked        as blocked
 	    from
 	        POSTS
-	    order by id asc
+	    order by 
+	    	id desc
+	    limit
+			0, 3
+	</select>
+	
+	<select id="getRecentPostsThreeOfFollowersByFollowed" parameterType="int" resultType="Post">
+		select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked
+		from
+			POSTS p
+		inner join
+			USERS u on p.customer_id = u.id
+		where
+			p.customer_id in (
+				select follower_id
+				from FOLLOWS
+				where followed_id = #{followedId}
+			)
+		order by
+			p.create_date desc
+		limit
+			0, 1
 	</select>
 	
 	<select id="getPostById" parameterType="int" resultType="Post">
