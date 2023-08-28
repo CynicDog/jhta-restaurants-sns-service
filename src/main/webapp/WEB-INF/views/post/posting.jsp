@@ -35,7 +35,7 @@
 			<div class="row border-bottom">
 				<div class="col-1"></div>
 				<div class="col-3 my-5">
-					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
+					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/store/detail?id=${data.store.id}'" style=" cursor: pointer;">
 						<img src="../../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 					</div>
 				</div>
@@ -47,9 +47,9 @@
 					<p class="text-secondary">${data.store.address }</p>
 					<p>${data.content }</p>
 				</div>
-				<div class="col-2 my-5 position-relative">
+				<div class="bookmark col-2 my-5 position-relative" id="box-${data.store.id}">
 					<button class="btn ms-3 position-absolute" id="box">
-						<i class="bi bi-star" style="color:gold; font-size:28px;" ></i>
+						<i class="bi bi-star" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
 					</button>
 				</div>
 			</div>
@@ -157,7 +157,7 @@
 </div>
 
 <script type="text/javascript">
-	$('#box i').click(function(){
+	/* $('#box i').click(function(){
 		if($(this).hasClass('bi-star-fill')){
 			$(this).removeClass('bi-star-fill')
 					.addClass('bi-star')
@@ -165,15 +165,37 @@
 			$(this).removeClass('bi-star')
 					.addClass('bi-star-fill')
 		}
-	})
+	}) */
 	
 	
 	const myOffcanvas = document.getElementById("offcanvasExample");
 	myOffcanvas.addEventListener("hide.bs.offcanvas", function() {
 		$(".offcanvas-backdrop").remove();
 	})
-	//
+	
+	$("[id^=box-]").on('click', '[id^="star-"]', function(){
+		
+	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
+	    if (${pageContext.request.userPrincipal != null}) {
 
+	    	let bookmarkIdd = $(this).attr('index-id');
+			//fill -> blank
+			if ($(this).hasClass('bi-star-fill')) {
+					$(this).removeClass('bi-star-fill').addClass('bi-star')
+					$.getJSON('/bookmark/delete', {storeId : bookmarkIdd});
+			//blank -> fill		
+			} else {
+				$(this).removeClass('bi-star').addClass('bi-star-fill')
+				$.getJSON('/bookmark/insert', {storeId : bookmarkIdd});
+
+			}
+	    } else {
+	       // 로그인되지 않은 경우, 로그인 페이지 열기
+	        window.location.href = "/user/login";
+	    }
+	});
+	
+	
 </script>
 </body>
 </html>
