@@ -11,10 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Alias("PagedStores")
-
-public class PagedStores {
-
-	private Pagination pagination;
-	private List<SearchedStore> stores;
+@Alias("HomeDto")
+public class HomeDto {
+	private List<HomeContent> homeContents;
 }
