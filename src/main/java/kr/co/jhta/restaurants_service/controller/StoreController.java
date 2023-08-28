@@ -8,11 +8,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import kr.co.jhta.restaurants_service.dto.*;
+import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +26,7 @@ import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -124,7 +128,13 @@ public class StoreController {
 	}
 	
 	@GetMapping("/detail")
-    public String detail(@RequestParam("id") int storeId, Model model) {
+    public String detail(@RequestParam("id") int storeId, Model model, @AuthenticationPrincipal SecurityUser user) {
+		
+		if (user != null) {
+	        int customerId = user.getUser().getId();
+	        Bookmark bookmark  = storeService.getBookmark(storeId, customerId);
+	        model.addAttribute("bookmark", bookmark);
+	    }
 		
 		storeService.updateReadCount(storeId);
 		reviewService.getAllReviewRatingByStoreId(storeId);
@@ -135,10 +145,13 @@ public class StoreController {
 //      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
         
         // 모델에 가게 정보를 추가합니다.
+        model.addAttribute("reviewCount", reviewDetailDto.getReviewCount());
+        model.addAttribute("bookmarkCount", reviewDetailDto.getBookmarkCount());
         model.addAttribute("store", dto.getStore());
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         model.addAttribute("storeAvg", reviewDetailDto);
+        model.addAttribute("stores", dto.getStores());
         // 모델에 리뷰 정보를 추가합니다.
 //        model.addAttribute("reviews", reviewDto);
 //        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());
@@ -158,11 +171,19 @@ public class StoreController {
 		return storeService.getStoreOpenTimesById(storeId);
 	}
 
-//	store/detail/reviews?id=\${storeId}
+	// store/detail/reviews?id=\${storeId}
 	@GetMapping("/detail/reviews")
 	@ResponseBody
 	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit) throws InterruptedException {
 
 		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId);
 	}
+	
+	@PostMapping("/bookmark")
+	@ResponseBody
+	public String bookmark(int storeId, String job, @AuthenticationPrincipal SecurityUser securityUser) {
+		storeService.changeBookmark(storeId, job, securityUser);
+
+		return "success";
+	} 
 }

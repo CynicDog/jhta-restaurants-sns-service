@@ -20,6 +20,9 @@ public class ReviewDetailDto {
 	private double storeReviewAvg;
 	private List<Review> allReviewsByStoreId;
 	
+	private int reviewCount;
+	private int bookmarkCount;
+	
 	public boolean isTaste() {
 		return reviewKeywords
 				.stream()
