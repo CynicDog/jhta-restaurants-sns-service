@@ -230,6 +230,15 @@
                                             <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                             <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                         </div>
+                                        <div id="review-keyword-button">
+											<span class="badge badge-sm text-bg-danger bg-opacity-75 fw-lighter m-2 p-1">#음식이 맛있어요</span>
+											<button type="button" class="btn border-opacity-10" > +4 </button>
+											<span class="badge badge-sm text-bg-secondary bg-opacity-75 fw-lighter m-2 p-1">#주차가 편해요</span>
+											<span class="badge badge-sm text-bg-info bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 청결해요</span>
+											<span class="badge badge-sm text-bg-primary bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 넓어요</span>
+											<span class="badge badge-sm text-bg-warning bg-opacity-75 text-white fw-lighter m-2 p-1">#분위기가 좋아요</span>
+											<span class="badge badge-sm text-bg-success bg-opacity-75 fw-lighter m-2 p-1">#친절해요</span>
+                                        </div>
                                         <div class="row">
                                             <div class="col">
                                                 <button type="button" class="btn btn-light btn-sm" style="color: #838383">
@@ -528,34 +537,91 @@
             }
 
 
-            data.forEach(datum => {
-                    reviewOutputArea.innerHTML += `
-                        <div>
-                            \${datum.content}
+            data.forEach(datum => {		
+                reviewOutputArea.innerHTML += `
+                	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="text-center card-title my-1">
+                                    <div class="ratio ratio-1x1">
+                                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+                                    </div>
+                                    <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
+                                </div>
+                                <div class="text-center card-title my-1">
+                                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg.toFixed(1) }</span>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="row mb-2">
+                                    <div class="col-9">
+                                   		<p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
+                                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                    </div>
+                                    <div class="col-3 text-end">
+                                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">       
+                                        \${(() => {
+                                            switch (datum.rating) {
+                                            case 5:
+                                                return '맛있어요';
+                                            case 3:
+                                                return '괜찮아요';
+                                            case 1:
+                                                return '별로에요';
+                                            default:
+                                                return datum.rating;
+                                       		 }
+                                    	})()}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                            <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+                                        </button>
+                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                            <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+                                        </button>
+                                        <span class="float-end">
+                                        <button id="btn-answer-103" type="button" class="btn btn-light">
+				                                <span>답글</span>
+				                            </button>
+											<button type="button" class="btn btn-light btn-sm text-danger">
+												<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+											</button>
+										</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            \${datum.customerUsername}
-                        </div>
-                    `
-                    
-                   /*  datam.reviewPictures.forEach(picName => {
-                    	fetch(`/gcp/getPictures?pictureName=\${picName}`)
-                    	.then(response => {
-                    		if (response.ok) {
-                    			
-                    			return response.image()
-                    		}
-                    	})
-                    	.then(image => {
-                    	})
-                    })  */
-                }
-            )
-        })
-        isReviewsFetching = false;
-    }
-    
-    fetchAndRenderReviews(pageOnReview);
+                    </div>
+                </div>
+			`
+               /*  datam.reviewPictures.forEach(picName => {
+                	fetch(`/gcp/getPictures?pictureNameame}`)
+                	.then(response => {
+                		if (response.ok) {
+                			
+                			return response.image()
+                		}
+                	})
+                	.then(image => {
+                	})
+                })  */
+            }
+        )
+    })
+    isReviewsFetching = false;
+}
+
+fetchAndRenderReviews(pageOnReview);
 
     
     $("#btn-bookmark").click(function() {
