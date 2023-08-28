@@ -42,7 +42,7 @@
 		<div class= "row d-flex justify-content-between mt-3">
 			<div class="col-2">
 	            <nav id="home-left-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
-	                <nav class="nav nav-pills flex-column fw-lighter">
+	                <nav class="nav nav-pills flex-column fw-lighter ps-3">
                         <sec:authorize access="isAuthenticated()">
 	                    	<sec:authorize access="hasRole('ROLE_OWNER')">
 		                    	<a class="nav-link my-3 text-secondary" href="/owner/my-page">마이페이지</a>
@@ -77,6 +77,62 @@
 				</div>
 				<div id="store-card-\${store.id}" index-id ="\${i}" class="card mb-5" style="border: none;" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
 					<img src="resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					<div class="card-body pt-1 ps-1" >
+						<i class="bi bi-heart fs-4"></i>
+						<p class="card-text ">Some quick example text to build on
+							the card title and make up the bulk of the card's content.</p>
+						<div class="border d-flex justify-content-between">
+							<div class="row">
+								<div class="col ms-1">
+						           <p class="mb-0"><strong>가게 이름</strong></p>	
+						           <p class="text-secondary mb-0"><small>가게 주소</small></p>	
+								</div>
+							</div>
+							<div class="d-flex align-items-center px-2">
+								<i class="bi bi-star fs-4"></i>
+							</div>
+						</div>		
+					</div>
+				</div>
+				<div id=home-content-header class="d-flex justify-content-between" >
+					<div id="home-content-writer" class="">
+						<div class="d-flex justify-content-start">
+							<p class="me-2">작성자 </p>
+							<p class="text-secondary"><small> 3.5</small></p>
+						</div>					
+					</div>
+					<div id="home-content-follow" class="">
+						<button class="btn btn-secondary">팔로우</button>
+					</div>
+				</div>
+				<div id="store-card" index-id ="" class="card mb-5" style="border: none;" onclick="" style="cursor: pointer;">
+					<div id="carouselHomeContentIndicators" class="carousel slide">
+					  <div class="carousel-indicators">
+					    <button type="button" data-bs-target="#carouselHomeContentIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					    <button type="button" data-bs-target="#carouselHomeContentIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					    <button type="button" data-bs-target="#carouselHomeContentIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					  </div>
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <img src="resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					    </div>
+					    <div class="carousel-item">
+					      <img src="resources/image/cafe2.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					    </div>
+					    <div class="carousel-item">
+					      <img src="resources/image/cafe3.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+					    </div>
+					  </div>
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeContentIndicators" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeContentIndicators" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>
+					
 					<div class="card-body pt-1 ps-1" >
 						<i class="bi bi-heart fs-4"></i>
 						<p class="card-text ">Some quick example text to build on
@@ -144,8 +200,6 @@
 					
 			</div>
 		</div>
-
-
 	</div>
 	<%@ include file="common/footer.jsp" %>
 </div>
