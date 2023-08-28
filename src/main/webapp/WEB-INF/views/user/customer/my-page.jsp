@@ -74,6 +74,22 @@
                             <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
                         </div>
                     </div>
+                    <div class="row mx-2">
+                        <div class="col-sm-4 my-1 fw-lighter">
+                            <label for="preference" class="col-sm-2 col-form-label"><span
+                                    style="white-space: nowrap">Preference</span></label>
+                        </div>
+                        <div class="col-sm-8 my-1">
+                            <div class="form-control-plaintext" id="preference">
+                                <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
+                                    #청결해요
+                                </span>
+                                <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
+                                    #주차가 편해요
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="card shadow-sm border border-0 mt-3">
@@ -146,17 +162,17 @@
         <div class="col-md-7 my-5 px-4">
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-4">
                 <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
                         picture
                     </div>
                 </div>
                 <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
                         picture
                     </div>
                 </div>
                 <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0" >
+                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
                         picture
                     </div>
                 </div>
