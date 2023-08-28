@@ -30,6 +30,8 @@ public class ReviewDto {
 	private Double reviewAvg;
 	private int customerId;
 	private String customerUsername;
+	private String nickname;
+	private int ownerId;
 
 	private List<ReviewPicture> reviewPictures;
 	private List<ReviewKeyword> reviewKeywords;
@@ -68,15 +70,23 @@ public class ReviewDto {
 //	public void setReviewKeywords(List<ReviewKeyword> reviewKeywords) {
 //		this.reviewKeywords = reviewKeywords;
 //	}
-
-	public ReviewDto(int id, int rating, String content, Date createDate, int likedCount, int reportCount, int customerId,  String customerUsername) {
-		this.id = id;
-		this.rating = rating;
-		this.content = content;
-		this.createDate = createDate;
-		this.likedCount = likedCount;
-		this.reportCount = reportCount;
-		this.customerId = customerId;
-		this.customerUsername = customerUsername;
-	}
+//
+//	public ReviewDto(int id, int rating, String content, Date createDate, int likedCount, int reportCount, int customerId,  String customerUsername,
+//			 boolean disabled, boolean blocked, double reviewAvg, String nickname, int ownerId ) {
+//		this.id = id;
+//		this.rating = rating;
+//		this.content = content;
+//		this.createDate = createDate;
+//		this.likedCount = likedCount;
+//		this.reportCount = reportCount;
+//		this.customerId = customerId;
+//		this.customerUsername = customerUsername;
+//		this.disabled = disabled;
+//		this.blocked = blocked;
+//		this.reviewAvg = reviewAvg;
+//		this.nickname = nickname;
+//		this.ownerId = ownerId;
+//	}
+	
+	
 }

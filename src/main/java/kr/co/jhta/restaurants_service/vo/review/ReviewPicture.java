@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Setter @Getter
 @NoArgsConstructor
 @Alias("ReviewPicture")
@@ -15,5 +17,6 @@ public class ReviewPicture {
 	@Id
 	private int id;
 	private String pictureName;
+	@JsonIgnore
 	private Review review;
 }
