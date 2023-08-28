@@ -685,8 +685,7 @@
         const scrollPos = this.scrollTop + this.clientHeight;
         const scrollHeight = this.scrollHeight;
 
-        if (scrollPos === scrollHeight) {
-
+        if (scrollPos +.5 >= scrollHeight) {
             if (isRequestsFetching || isRequestLast) {
                 // do nothing
             } else {
