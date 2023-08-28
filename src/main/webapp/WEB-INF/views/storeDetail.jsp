@@ -95,31 +95,31 @@
                             <div class="col-4">
 							    <span class="my-2 float-end">
 							        <sec:authorize access="isAuthenticated()">
-                                        <sec:authentication property="principal.user.id" var="loginId"/>
-                                        <c:if test="${store.owner.id ne loginId}">
+							            <sec:authentication property="principal.user.id" var="loginId"/>
+							            <c:if test="${store.owner.id ne loginId}">
 							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							                    리뷰<i class="bi bi-brush"></i>
 							                </button>
-                                            <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
-							                    <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							                <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                    <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							                </button>
-                                        </c:if>
-                                    </sec:authorize>
+							            </c:if>
+							        </sec:authorize>
 							        <sec:authorize access="!isAuthenticated()">
 							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
-							            	리뷰<i class="bi bi-brush"></i>
+							                리뷰<i class="bi bi-brush"></i>
 							            </button>
-                                        <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
-							                <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							            <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							            </button>
-                                    </sec:authorize>
+							        </sec:authorize>
 							    </span>
-                            </div>
+							</div>
                         </div>
                         <div>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
-                            <span id="bookmark-count" style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>0</span>
+                            <i class="bi bi-eye-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${store.readCount }</span>
+                            <i class="bi bi-pen-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${reviewCount }</span>
+                            <i class="bi bi-star-fill" style="color: #C0C0C0;"></i> <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${bookmarkCount }</span>
                         </div>
                         <div class="row">
                             <table class="table">
@@ -183,7 +183,7 @@
         <div class="row">
             <div class="col-8">
                 <span class="fs-4 fw-lighter">리뷰</span>
-                <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewSummary.total })</span>
+                <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewCount })</span>
                 <div class="btn-group p-1 float-end">
                     <button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })
                     </button>
@@ -428,22 +428,25 @@
                 </div>
                 <div class="col-md-4 p-4">
                     <div class="row">
+                    	<c:forEach var="s" items="${stores }">
+                    	
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
                             <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
                                 <div class="d-flex align-items-start">
                                     <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
+                                        <h5 class="card-title mt-0" style="margin-left: 5px;">${store.name }</h5>
                                         <p class="card-text text-sm ml-1">
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">카테고리</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">리뷰 평점</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">거리</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    	</c:forEach>
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
                             <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
@@ -556,30 +559,37 @@
 
     
     $("#btn-bookmark").click(function() {
-    	let storeId = $(this).attr("data-store-id");
-    	let $icon = $(this).find('i');
-    	let $bookmark = $("#bookmark-count");
-    	let currentBookmarkCount = parseInt($bookmark.text());
+        // 로그인 여부 확인
+        if (${pageContext.request.userPrincipal != null}) {
+            let storeId = $(this).attr("data-store-id");
+            let $icon = $(this).find('i');
+            let $bookmark = $("#bookmark-count");
+            let currentBookmarkCount = parseInt($bookmark.text());
 
-    	let add = "Y";
-    	if ($icon.hasClass("bi-star-fill")) {
-    		add = "N";
-    	} else {
-    		add ="Y";
-    	}
+            let add = "Y";
+            if ($icon.hasClass("bi-star-fill")) {
+                add = "N";
+            } else {
+                add = "Y";
+            }
 
-    	// bookmark?storeId=21&job=Y
-    	$.post("bookmark", {storeId:storeId, job:add}, function(result) {
-    		if ($icon.hasClass("bi-star-fill")) {
-    			currentBookmarkCount--;
-    			$icon.removeClass("bi-star-fill").addClass("bi-star")
-    		} else {
-    			currentBookmarkCount++;
-    			$icon.removeClass("bi-star").addClass("bi-star-fill")
-    		}
-    		$bookmark.text(currentBookmarkCount);
-    	})
+            // bookmark?storeId=21&job=Y
+            $.post("bookmark", {storeId:storeId, job:add}, function(result) {
+                if ($icon.hasClass("bi-star-fill")) {
+                    currentBookmarkCount--;
+                    $icon.removeClass("bi-star-fill").addClass("bi-star");
+                } else {
+                    currentBookmarkCount++;
+                    $icon.removeClass("bi-star").addClass("bi-star-fill");
+                }
+                $bookmark.text(currentBookmarkCount);
+            });
+        } else {
+            // 로그인되지 않은 경우, 로그인 페이지 열기
+            window.location.href = "/user/login";
+        }
     });
+
     
     
     $("#btn-review-all").click(function () {

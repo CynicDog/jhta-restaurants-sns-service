@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -23,6 +24,7 @@ import kr.co.jhta.restaurants_service.mapper.FoodMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Food;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
@@ -118,8 +120,40 @@ public class StoreService {
 		List<StoreOpenTime> openTimes = storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
 		dto.setOpenTimes(openTimes);
 		
+		Map<String, Object> map = getXY(store.getLatitude(), store.getLongitude());
+		map.put("storeId", storeId);
+		List<Store> stores = storeMapper.getStoresByXY(map);
+		
+		dto.setStores(stores);
+		
 		return dto;
 	}
+	
+	private Map<String, Object> getXY(double lat, double lon) {
+		Map<String, Object> map = new HashMap<>();
+		
+		double mForLatitude =(1 /(6371* 1 *(Math.PI/ 180)))/ 1000;
+		  //m당 x 좌표 이동 값
+		double mForLongitude =(1 /(6371* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(lat))))/ 1000;
+
+	  //현재 위치 기준 검색 거리 좌표
+		double maxY = lat +(getDistance(lat)* mForLatitude);
+		double minY = lat -(getDistance(lat)* mForLatitude);
+		double maxX = lon +(getDistance(lat)* mForLongitude);
+		double minX = lon -(getDistance(lat)* mForLongitude);
+
+		map.put("minX", minX);
+		map.put("maxX", maxX);
+		map.put("minY", minY);
+		map.put("maxY", maxY);
+		
+		return map;
+	}
+	
+	private double getDistance(double lat) {
+		return 6371*Math.cos(lat)*(Math.PI/ 180);
+	}
+	
 	
   
 	public List<Store> getStoresByUserId(int userId) {
@@ -160,6 +194,37 @@ public class StoreService {
 		
 		storeMapper.updateStore(store);
 
+	}
+
+	public Object changeBookmark(int storeId, String job, SecurityUser securityUser) {
+		
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("storeId", storeId);
+	    paramMap.put("customerId", securityUser.getUser().getId());
+
+	    if ("Y".equals(job)) {
+	        // 북마크 추가 로직
+	        storeMapper.insertBookmark(paramMap);
+	    } else if ("N".equals(job)) {
+	        // 북마크 삭제 로직
+	        storeMapper.deleteBookmark(paramMap);
+	    }
+
+	    // 변경된 북마크 상태를 반환
+	    return getUpdatedBookmarkStatus(storeId, securityUser);
+	}
+
+	private Object getUpdatedBookmarkStatus(int storeId, SecurityUser securityUser) {
+		return null;
+	}
+
+	public List<BookmarkedStore> getBookmarkedStoresByUserId(int id) {
+		return null;
+	}
+	
+	public Bookmark getBookmark(int storeId, int customerId) {
+	    Bookmark bookmark = storeMapper.getBookmarkByStoreIdAndCustomerId(storeId, customerId);
+	    return bookmark;
 	}
 
 }
