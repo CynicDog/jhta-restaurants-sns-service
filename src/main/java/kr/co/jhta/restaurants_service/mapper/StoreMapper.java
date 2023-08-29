@@ -16,37 +16,41 @@ import kr.co.jhta.restaurants_service.vo.store.Store;
 @Mapper
 public interface StoreMapper {
 
-	void insertStore(Store store);
-	
-	List<SearchedStore> getStores(Map<String,Object> param);
-	
-	Store getStoreById(int storeId);
-	
-	List<VisitedStore> getVisitedStoresById(Map<String,Object> param);
-	
-	List<BookmarkedStore> getBookmarkedStoresByUserId(int customerId);
-	
-	void updateStore(Store store);	
-	
-	List<Store> getAllStores();
-	
-	int getTotalRows(Map<String,Object> param);
-	
-	List<Store> getStoreByName(String keyword);
+    void insertStore(Store store);
 
-	List<VisitedStore> getVisitedStores(Map<String, Object> param);
+    List<SearchedStore> getStores(Map<String, Object> param);
 
-	Object changeBookmark(int storeId, String job, SecurityUser securityUser);
+    Store getStoreById(int storeId);
 
-	void insertBookmark(Map<String, Object> paramMap);
+    List<VisitedStore> getVisitedStoresById(Map<String, Object> param);
 
-	void deleteBookmark(Map<String, Object> paramMap);
-	
-	int getReviewCountByStoreId(int storeId);
-	
-	int getBookmarkCountByStoreId(int storeId);
-	
-	Bookmark getBookmarkByStoreIdAndCustomerId(@Param("storeId") int storeId, @Param("customerId") int customerId);
+    List<BookmarkedStore> getBookmarkedStoresByUserId(int customerId);
 
-	List<Store> getStoresByXY(Map<String, Object> map);
+    void updateStore(Store store);
+
+    List<Store> getAllStores();
+
+    int getTotalRows(Map<String, Object> param);
+
+    List<Store> getStoreByName(String keyword);
+
+    List<VisitedStore> getVisitedStores(Map<String, Object> param);
+
+    Object changeBookmark(int storeId, String job, SecurityUser securityUser);
+
+    void insertBookmark(Map<String, Object> paramMap);
+
+    void deleteBookmark(Map<String, Object> paramMap);
+
+    int getReviewCountByStoreId(int storeId);
+
+    int getBookmarkCountByStoreId(int storeId);
+
+    Bookmark getBookmarkByStoreIdAndCustomerId(@Param("storeId") int storeId,
+											   @Param("customerId") int customerId);
+
+    List<Store> getClosestStores(@Param("latitude") double latitude,
+								 @Param("longitude") double longitude,
+								 @Param("storeId") int storeId,
+								 @Param("limit") int limit);
 }
