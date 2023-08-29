@@ -193,4 +193,64 @@
 		ORDER BY r.create_date DESC
 		LIMIT #{begin}, #{end}
 	</select>
+	
+	<select id="getThreeFollowerReivews" parameterType="int" resultType="Review">
+		select
+			r.id,			
+			r.rating,
+			r.content,
+			r.create_date		as 	createDate,
+			r.update_date		as	updateDate,
+			r.liked_count		as	likedCount,
+			r.report_count	as  reportCount,
+			r.disabled,
+			r.blocked,
+			r.customer_id		as "customer.id",	
+			u.username			as "customer.username",
+			r.store_id		as "store.id",
+			s.name			as "store.name"
+		from
+			REVIEWS r
+		inner join
+			USERS u on r.customer_id = u.id
+		inner join
+			STORES s on r.store_id = s.id
+		where
+			r.customer_id in (
+				select follower_id
+				from FOLLOWS
+				where followed_id = #{followedId}
+			)
+		order by
+			r.create_date desc
+		limit
+			0, 3
+	</select>
+	
+	<select id="getThreeRecentReivews" parameterType="int" resultType="Review">
+		select
+			r.id,			
+			r.rating,
+			r.content,
+			r.create_date		as 	createDate,
+			r.update_date		as	updateDate,
+			r.liked_count		as	likedCount,
+			r.report_count	as  reportCount,
+			r.disabled,
+			r.blocked,
+			r.customer_id		as "customer.id",	
+			u.username			as "customer.username",	
+			r.store_id		as "store.id",
+			s.name			as "store.name"
+		from
+			REVIEWS r
+		inner join
+			STORES s on r.store_id = s.id
+		inner join
+			USERS u on r.customer_id = u.id	
+		order by
+			r.create_date desc
+		limit
+			0, 3
+	</select>
 </mapper>

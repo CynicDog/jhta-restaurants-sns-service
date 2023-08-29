@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
+import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
@@ -80,9 +83,32 @@ public class ReviewController {
 		return "reviewDetail";
 	}
 	
-	@GetMapping("/follower")
-	public String followerReview(){
+	@GetMapping("/allReviews")
+	public String AllReivews(Model model) {
 		return "followerReview";
 	}
+	
+	@GetMapping("/followerReveiws")
+	public String followerReview(){
+		
+		return "followerReview";
+	}
+	
+	@ResponseBody
+    @GetMapping("/get/allReview")
+    public List<Review> getAllReviews(@RequestParam("page") Integer page,
+                                   @RequestParam("limit") Integer limit) {
+
+        return reviewService.getAllReviewsPaginated(page, limit);
+    }
+	
+	@ResponseBody
+    @GetMapping("/get/followerReview")
+    public List<Review> getFollowerReviews(@RequestParam("page") Integer page,
+                                   @RequestParam("limit") Integer limit,
+                                   @AuthenticationPrincipal SecurityUser securityUser) {
+
+        return reviewService.getFollowerReviewsPaginated(page, limit, securityUser);
+    }
 
 }

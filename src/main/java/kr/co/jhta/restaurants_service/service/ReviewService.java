@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.ReviewRepository;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
+import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
@@ -51,6 +53,8 @@ public class ReviewService {
 	@Autowired private UserRepository userRepository;
 
 	@Autowired private ReviewRepository reviewRepository;
+
+	private final Logger logger = Logger.getLogger(PostService.class);
 
 	// 새 리뷰 등록하기
 	public void createReview(ReviewCommand form, SecurityUser securityUser) {
@@ -219,5 +223,31 @@ public class ReviewService {
 		int end = begin + limit;
 
 		return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+    }
+    
+    public List<Review> getThreeRecentReview(){
+    	List<Review> reviews = reviewMapper.getThreeRecentReivews();
+    	
+    	return reviews;
+    }
+    
+    public List<Review> getThreeFollowerReview(SecurityUser securityUser){
+    	List<Review> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
+    	
+    	return reviews;
+    }
+    
+    public List<Review> getAllReviewsPaginated(int page, int limit){
+    	int begin = (page - 1) * limit;
+		int end = begin + limit;
+		
+		return reviewMapper.getAllReivewsPaginated(begin, end);
+    }
+    
+    public List<Review> getFollowerReviewsPaginated(int page, int limit, SecurityUser securityUser){
+    	int begin = (page - 1) * limit;
+		int end = begin + limit;
+		
+		return reviewMapper.getFollowerReivewsPaginated(begin, end, securityUser.getUser().getId());
     }
 }

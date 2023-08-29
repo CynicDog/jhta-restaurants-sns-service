@@ -24,18 +24,21 @@
 	</select>
 	
 	<select id="getRecentPostsThree" resultType="Post">
-	    select 
-	        id             as id,
-	        title          as title,
-	        sub_title      as subTitle,
-	        create_date as createDate, 
-	        update_date as updateDate,
-	        customer_id    as "customer.id",
-	        report_count   as reportCount,
-	        disabled       as disabled,
-	        blocked        as blocked
-	    from
-	        POSTS
+	    select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked
+		from
+			POSTS p
+		inner join
+			USERS u on p.customer_id = u.id
 	    order by 
 	    	id desc
 	    limit
@@ -67,7 +70,7 @@
 		order by
 			p.create_date desc
 		limit
-			0, 1
+			0, 3
 	</select>
 	
 	<select id="getPostById" parameterType="int" resultType="Post">

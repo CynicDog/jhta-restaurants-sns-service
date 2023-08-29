@@ -94,5 +94,100 @@
 	</div>
 	<%@ include file="common/footer.jsp" %>
 </div>
+<script type="text/javascript">
+	let isPostFetching = false;
+	let isPostLast = false;
+	const postsLoadingSpinner = document.getElementById('postsLoadingSpinner')
+	
+	let pageOnPosts = 1;
+	
+	const getPosts = (page) => {
+	    return fetch(`/post/get/followerReview?page=\${page}&limit=9`).then(response => response.json());
+	}
+	
+	function fetchAndRenderPosts(currentPage) {
+	
+	    isPostFetching = true;
+	    postsLoadingSpinner.style.display = 'block';
+	
+	    getPosts(currentPage).then(data => {
+	
+	        if (data.length < 9) {
+	            isPostLast = true;
+	            postsLoadingSpinner.style.display = 'none';
+	        }
+	
+	        data.forEach(datum => {
+	            document.getElementById('postsOutputArea').innerHTML += `
+	        					<div class="col-md-4 my-3">
+	        						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='followerPost/detail?id=\${datum.id}'" style=" cursor: pointer;">
+	        							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+	        							<div class="card-img-overlay">
+	        								<p><strong>\${datum.title}</strong></p>
+	        							</div>
+	        						</div>
+	        						<div class="row">
+	        							<div class="col">
+	        								<strong >\${datum.customer.username}</strong>
+	        							</div>
+	        							<div class="col text-end">
+	        								\${timeForToday(datum.createDate)}
+	        							</div>
+	        						</div>
+	        					</div>
+	            `
+	        })
+	    })
+	    isPostFetching = false;
+	}
+	
+	window.onscroll = function () {
+	    console.log(window.innerHeight)
+	    console.log(window.scrollY)
+	    console.log(document.body.offsetHeight)
+	
+	    if ((window.innerHeight + window.scrollY) + .5 >= document.body.offsetHeight) {
+	
+	        if (isPostFetching || isPostLast) {
+	            // do nothing;
+	        } else {
+	            pageOnPosts += 1;
+	            fetchAndRenderPosts(pageOnPosts);
+	        }
+	    }
+	}
+	
+	// initial fetching and rendering
+	fetchAndRenderPosts(pageOnPosts);
+	
+	function timeForToday(value) {
+	    const today = new Date();
+	    const timeValue = new Date(value);
+	    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+	
+	    if (betweenTime < 1) return '방금전';
+	    if (betweenTime < 60) {
+	        return `\${betweenTime}분전`;
+	    }
+	
+	    const betweenTimeHour = Math.floor(betweenTime / 60);
+	    if (betweenTimeHour < 24) {
+	        return `\${betweenTimeHour}시간전`;
+	    }
+	
+	    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+	    if (betweenTimeDay < 365) {
+	        return `\${betweenTimeDay}일전`;
+	    }
+	
+	    return `\${Math.floor(betweenTimeDay / 365)}년전`;
+	}
+	
+	$("[id^=dateInput]").each(function (index, input) {
+	    let value = $(input).val();
+	    let elapsed = timeForToday(value);
+	    $(input).next().text(elapsed);
+	})
+</script>
 </body>
 </html>

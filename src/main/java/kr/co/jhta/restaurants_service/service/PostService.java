@@ -44,7 +44,7 @@ public class PostService {
 	private final FollowsRepository followsRepository;
 
 	
-	public List<Post> getRecentPosts(){
+	public List<Post> getThreeRecentPosts(){
 		List<Post> posts = postmapper.getRecentPostsThree();
 		return posts;
 	}

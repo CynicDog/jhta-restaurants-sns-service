@@ -43,15 +43,17 @@ html, body {
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
-							<c:if test="${review.review.rating eq 5}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
-							</c:if>
-							<c:if test="${review.review.rating eq 3}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">괜찮아요</span>
-							</c:if>
-							<c:if test="${review.review.rating eq 1}">
-								<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
-							</c:if>
+							<c:choose>
+								<c:when test="${review.review.rating eq 5}">
+									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
+								</c:when>
+								<c:when test="${review.review.rating eq 3}">
+									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">괜찮아요</span>
+								</c:when>
+								<c:when test="${review.review.rating eq 1}">
+									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
+								</c:when>
+							</c:choose>
 						</div>
 					</div>
 					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
