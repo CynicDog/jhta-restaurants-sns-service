@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.service;
 
 import java.util.List;
 
+
 import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
-import kr.co.jhta.restaurants_service.dto.ReviewListDto;
+//import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;

@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.controller;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
-import kr.co.jhta.restaurants_service.dto.ReviewListDto;
+//import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.vo.post.Post;
