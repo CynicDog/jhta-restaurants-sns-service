@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.HomeContent;
+import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.HomeService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
@@ -50,6 +51,15 @@ public class HomeController {
 		
 		return result;
   }
+	
+	@GetMapping("/anofeed")
+	@ResponseBody
+	public List<HomeAnonymousFeed> getHomeFeedsAnonymous(){
+		
+		List<HomeAnonymousFeed> result = homeService.getAnonymousFeeds();
+		
+		return result;
+	}
 
 	@GetMapping("/contents")
 	public String contents(Model model, @AuthenticationPrincipal SecurityUser securityUser) {

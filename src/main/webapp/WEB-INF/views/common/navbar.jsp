@@ -203,7 +203,7 @@
 	$("#customerBookmark").click(function() {
 		  getVisitedStores();
 	   	  if (${pageContext.request.userPrincipal != null}) {
-	        // 로그인된 경우, 다른 창 열기 또는 특별한 동작 수행
+	        // 로그인된 경우
 	    	getBookmarkedStores();
 	      }
 	});

@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.HomeMapper">
 	
-	<resultMap id="HomeResultMap1" type="HomeContent">
+	<resultMap id="HomeResultByFollowMap" type="HomeContent">
 	    <id column="id" property="id" />
 	    <result column="username" property="username" />
 	    <result column="storeName" property="storeName" />
@@ -12,11 +12,14 @@
 	    <result column="reviewId" property="reviewId" />
 	    <result column="rating" property="rating" />
 	    <result column="storeId" property="storeId"/>
+	    <result column="isBookmarked" property="isBookmarked"/>
+	    <result column="isLiked" property="isLiked"/>
+	    
 	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
          select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
 	</resultMap>
 	
-	<select id="getHomeFeedsByFollowerId" resultMap="HomeResultMap1">
+	<select id="getHomeFeedsByFollowerId" resultMap="HomeResultByFollowMap">
 		select 
 			*,
 			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
@@ -30,11 +33,67 @@
 				S.id			as storeId,
 				S.category		as category,
 				S.address		as address,
-				R.rating		as rating
+				R.rating		as rating,
+				if(B.id, 'y', 'n')	as isBookmarked,
+				if(L.id, 'y', 'n')	as isLiked
+				
 			from REVIEWS R
 			join USERS U on R.customer_id = U.id
 			join STORES S on R.store_id = S.id
-			join FOLLOWS F on R.customer_id = F.follower_id and #{value} = F.followed_id) as subquery
+			join FOLLOWS F on R.customer_id = F.follower_id and #{value} = F.followed_id
+			left join BOOKMARKS B on S.id = B.store_id and B.customer_id  = #{value}
+			left join REVIEW_LIKES L on R.id = L.review_id and #{value} = L.customer_id
+			
+			) as subquery
+	</select>
+	
+	<resultMap id="HomeAnonymousResultMap" type="HomeAnonymousFeed">
+	    <id column="id" property="id" />
+   	    <result column="username" property="username" />
+	    <result column="reviewId" property="reviewId" />
+	    <result column="content" property="content" />
+	    <result column="storeName" property="storeName" />
+	    <result column="storeId" property="storeId" />
+	    <result column="category" property="category" />
+	    <result column="address" property="address" />
+	    <result column="rating" property="rating" />
+   	    <result column="createDate" property="createDate" />
+   	    <result column="likeCnt" property="likeCnt" />
+   	    
+	    
+	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
+         select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
+	</resultMap>
+	<select id="getAnonymousFeeds" resultMap="HomeAnonymousResultMap">
+		select 
+			*,
+			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
+		from
+			(select
+				
+				R.id			as reviewId,
+				U.username		as username, 
+				R.content		as content,
+				S.name			as storeName,
+				S.id			as storeId,
+				S.category		as category,
+				S.address		as address,
+				R.rating		as rating,
+				R.create_date	as createDate,
+				IFNULL(L.like_cnt,0)	as likeCnt
+				
+			from REVIEWS R
+			join USERS U on R.customer_id = U.id
+			join STORES S on R.store_id = S.id
+			left join 
+	       	   (select
+	       	   		id, 
+	        	 	review_id, 
+	        	 	COUNT(customer_id) as like_cnt
+		        from REVIEW_LIKES
+		        group by review_id
+	           ) L on R.id = L.review_id
+			) as subquery
 	</select>
 	
 
