@@ -52,11 +52,13 @@
 		                	</sec:authorize>
 		                    <a class="nav-link my-3 text-secondary" href="">메시지</a>
 	                        <a class="nav-link my-3 text-secondary" href="/user/logout">로그아웃</a>
+	                        <a class="nav-link my-3 text-secondary" href="/contents">컨텐츠</a>
 	                    </sec:authorize>
 	                    <sec:authorize access="isAnonymous()">
     			           	<a class="nav-link my-3 text-secondary" href="/user/login">로그인</a>
     			           	<a class="nav-link my-3 text-secondary" href="/customer/signup">회원가입(일반)</a>
     			           	<a class="nav-link my-3 text-secondary" href="/owner/signup">회원가입(사장님)</a>
+	                        <a class="nav-link my-3 text-secondary" href="/contents">컨텐츠</a>
 	                    </sec:authorize>
 	                </nav>
 	            </nav>

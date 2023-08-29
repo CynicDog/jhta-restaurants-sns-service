@@ -85,12 +85,7 @@
 					</div>
 				</div>
 			</div>
-			
-			
-			
 		</div>
-	
-	
 	</div>
 	<%@ include file="common/footer.jsp" %>
 </div>
@@ -102,7 +97,7 @@
 	let pageOnPosts = 1;
 	
 	const getPosts = (page) => {
-	    return fetch(`/post/get/followerReview?page=\${page}&limit=9`).then(response => response.json());
+	    return fetch(`/post/get/followerPost?page=\${page}&limit=9`).then(response => response.json());
 	}
 	
 	function fetchAndRenderPosts(currentPage) {
@@ -121,7 +116,7 @@
 	            document.getElementById('postsOutputArea').innerHTML += `
 	        					<div class="col-md-4 my-3">
 	        						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='followerPost/detail?id=\${datum.id}'" style=" cursor: pointer;">
-	        							<img src="resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+	        							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 	        							<div class="card-img-overlay">
 	        								<p><strong>\${datum.title}</strong></p>
 	        							</div>
