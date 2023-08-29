@@ -95,31 +95,31 @@
                             <div class="col-4">
 							    <span class="my-2 float-end">
 							        <sec:authorize access="isAuthenticated()">
-                                        <sec:authentication property="principal.user.id" var="loginId"/>
-                                        <c:if test="${store.owner.id ne loginId}">
+							            <sec:authentication property="principal.user.id" var="loginId"/>
+							            <c:if test="${store.owner.id ne loginId}">
 							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							                    리뷰<i class="bi bi-brush"></i>
 							                </button>
-                                            <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
-							                    <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							                <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                    <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							                </button>
-                                        </c:if>
-                                    </sec:authorize>
+							            </c:if>
+							        </sec:authorize>
 							        <sec:authorize access="!isAuthenticated()">
 							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
-							            	리뷰<i class="bi bi-brush"></i>
+							                리뷰<i class="bi bi-brush"></i>
 							            </button>
-                                        <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
-							                <i id="bookmark-${store.id }" class="bi bi-star" style="color: gold; font-size: 28px;"></i>
+							            <button class="btn" id="btn-bookmark" data-store-id="${store.id }">
+							                <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							            </button>
-                                    </sec:authorize>
+							        </sec:authorize>
 							    </span>
-                            </div>
+							</div>
                         </div>
                         <div>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-eye-fill"></i>${store.readCount }</span>
-                            <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-pen-fill"></i>123</span>
-                            <span id="bookmark-count" style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;"><i class="bi bi-star-fill"></i>0</span>
+                            <i class="bi bi-eye-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${store.readCount }</span>
+                            <i class="bi bi-pen-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${reviewCount }</span>
+                            <i class="bi bi-star-fill" style="color: #C0C0C0;"></i> <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${bookmarkCount }</span>
                         </div>
                         <div class="row">
                             <table class="table">
@@ -183,7 +183,7 @@
         <div class="row">
             <div class="col-8">
                 <span class="fs-4 fw-lighter">리뷰</span>
-                <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewSummary.total })</span>
+                <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewCount })</span>
                 <div class="btn-group p-1 float-end">
                     <button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })
                     </button>
@@ -229,6 +229,15 @@
                                             <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                             <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
                                             <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                        </div>
+                                        <div id="review-keyword-button">
+											<span class="badge badge-sm text-bg-danger bg-opacity-75 fw-lighter m-2 p-1">#음식이 맛있어요</span>
+											<button type="button" class="btn border-opacity-10" > +4 </button>
+											<span class="badge badge-sm text-bg-secondary bg-opacity-75 fw-lighter m-2 p-1">#주차가 편해요</span>
+											<span class="badge badge-sm text-bg-info bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 청결해요</span>
+											<span class="badge badge-sm text-bg-primary bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 넓어요</span>
+											<span class="badge badge-sm text-bg-warning bg-opacity-75 text-white fw-lighter m-2 p-1">#분위기가 좋아요</span>
+											<span class="badge badge-sm text-bg-success bg-opacity-75 fw-lighter m-2 p-1">#친절해요</span>
                                         </div>
                                         <div class="row">
                                             <div class="col">
@@ -428,22 +437,25 @@
                 </div>
                 <div class="col-md-4 p-4">
                     <div class="row">
+                    	<c:forEach var="s" items="${stores }">
+                    	
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
                             <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
                                 <div class="d-flex align-items-start">
                                     <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
+                                        <h5 class="card-title mt-0" style="margin-left: 5px;">${store.name }</h5>
                                         <p class="card-text text-sm ml-1">
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">카테고리</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">리뷰 평점</span>
+                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">거리</span>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    	</c:forEach>
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
                             <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
@@ -490,96 +502,159 @@
 </div>
 <script>
 
-    let pageOnReview = 1;
-    const reviewOutputArea = document.getElementById('reviewOutputArea');
+	let pageOnReview = 1;
+	const reviewOutputArea = document.getElementById('reviewOutputArea');
+	
+	reviewOutputArea.addEventListener('scroll', function () {
+	
+	    const scrollPos = this.scrollTop + this.clientHeight;
+	    const scrollHeight = this.scrollHeight;
+	
+	    if (scrollPos === scrollHeight) {
+	        pageOnReview += 1;
+	        fetchAndRenderReviews(pageOnReview);
+	    }
+	})
+	
+	let isReviewsFetching = false;
+	let isReviewsLast = false;
+	const storeId = ${store.id};
+	
+	const getReviews = (page) => {
+	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5`).then(response => response.json());
+	}
+	
+	function fetchAndRenderReviews(pageOnReview) {
+	    if (isReviewsFetching || isReviewsLast) {
+	        return;
+	    }
+	
+	    isReviewsFetching = true;
+	    getReviews(pageOnReview).then(data => {
+	
+	        if (data.length < 5) {
+	            isReviewsLast = true;
+	        }
 
-    reviewOutputArea.addEventListener('scroll', function () {
-
-        const scrollPos = this.scrollTop + this.clientHeight;
-        const scrollHeight = this.scrollHeight;
-
-        if (scrollPos === scrollHeight) {
-            pageOnReview += 1;
-            fetchAndRenderReviews(pageOnReview);
-        }
-    })
-
-    let isReviewsFetching = false;
-    let isReviewsLast = false;
-    const storeId = ${store.id};
-
-    const getReviews = (page) => {
-        return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5`).then(response => response.json());
-    }
-
-    function fetchAndRenderReviews(pageOnReview) {
-        if (isReviewsFetching || isReviewsLast) {
-            return;
-        }
-
-        isReviewsFetching = true;
-        getReviews(pageOnReview).then(data => {
-
-            if (data.length < 5) {
-                isReviewsLast = true;
+            data.forEach(datum => {		
+                reviewOutputArea.innerHTML += `
+                	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="text-center card-title my-1">
+                                    <div class="ratio ratio-1x1">
+                                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+                                    </div>
+                                    <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
+                                </div>
+                                <div class="text-center card-title my-1">
+                                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg.toFixed(1) }</span>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="row mb-2">
+                                    <div class="col-9">
+                                   		<p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
+                                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                    </div>
+                                    <div class="col-3 text-end">
+                                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">       
+                                        \${(() => {
+                                            switch (datum.rating) {
+                                            case 5:
+                                                return '맛있어요';
+                                            case 3:
+                                                return '괜찮아요';
+                                            case 1:
+                                                return '별로에요';
+                                            default:
+                                                return datum.rating;
+                                       		 }
+                                    	})()}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                            <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+                                        </button>
+                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                            <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+                                        </button>
+                                        <span class="float-end">
+                                        <button id="btn-answer-103" type="button" class="btn btn-light">
+				                                <span>답글</span>
+				                            </button>
+											<button type="button" class="btn btn-light btn-sm text-danger">
+												<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+											</button>
+										</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			`
+               /*  datam.reviewPictures.forEach(picName => {
+                	fetch(`/gcp/getPictures?pictureNameame}`)
+                	.then(response => {
+                		if (response.ok) {
+                			
+                			return response.image()
+                		}
+                	})
+                	.then(image => {
+                	})
+                })  */
             }
+        )
+    })
+    isReviewsFetching = false;
+}
 
-
-            data.forEach(datum => {
-                    reviewOutputArea.innerHTML += `
-                        <div>
-                            \${datum.content}
-                        </div>
-                        <div>
-                            \${datum.customerUsername}
-                        </div>
-                    `
-                    
-                   /*  datam.reviewPictures.forEach(picName => {
-                    	fetch(`/gcp/getPictures?pictureName=\${picName}`)
-                    	.then(response => {
-                    		if (response.ok) {
-                    			
-                    			return response.image()
-                    		}
-                    	})
-                    	.then(image => {
-                    	})
-                    })  */
-                }
-            )
-        })
-        isReviewsFetching = false;
-    }
-    
-    fetchAndRenderReviews(pageOnReview);
+fetchAndRenderReviews(pageOnReview);
 
     
     $("#btn-bookmark").click(function() {
-    	let storeId = $(this).attr("data-store-id");
-    	let $icon = $(this).find('i');
-    	let $bookmark = $("#bookmark-count");
-    	let currentBookmarkCount = parseInt($bookmark.text());
+        // 로그인 여부 확인
+        if (${pageContext.request.userPrincipal != null}) {
+            let storeId = $(this).attr("data-store-id");
+            let $icon = $(this).find('i');
+            let $bookmark = $("#bookmark-count");
+            let currentBookmarkCount = parseInt($bookmark.text());
 
-    	let add = "Y";
-    	if ($icon.hasClass("bi-star-fill")) {
-    		add = "N";
-    	} else {
-    		add ="Y";
-    	}
+            let add = "Y";
+            if ($icon.hasClass("bi-star-fill")) {
+                add = "N";
+            } else {
+                add = "Y";
+            }
 
-    	// bookmark?storeId=21&job=Y
-    	$.post("bookmark", {storeId:storeId, job:add}, function(result) {
-    		if ($icon.hasClass("bi-star-fill")) {
-    			currentBookmarkCount--;
-    			$icon.removeClass("bi-star-fill").addClass("bi-star")
-    		} else {
-    			currentBookmarkCount++;
-    			$icon.removeClass("bi-star").addClass("bi-star-fill")
-    		}
-    		$bookmark.text(currentBookmarkCount);
-    	})
+            // bookmark?storeId=21&job=Y
+            $.post("bookmark", {storeId:storeId, job:add}, function(result) {
+                if ($icon.hasClass("bi-star-fill")) {
+                    currentBookmarkCount--;
+                    $icon.removeClass("bi-star-fill").addClass("bi-star");
+                } else {
+                    currentBookmarkCount++;
+                    $icon.removeClass("bi-star").addClass("bi-star-fill");
+                }
+                $bookmark.text(currentBookmarkCount);
+            });
+        } else {
+            // 로그인되지 않은 경우, 로그인 페이지 열기
+            window.location.href = "/user/login";
+        }
     });
+
     
     
     $("#btn-review-all").click(function () {

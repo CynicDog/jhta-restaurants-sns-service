@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Param;
 import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.SearchedStore;
 import kr.co.jhta.restaurants_service.dto.VisitedStore;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 
 @Mapper
@@ -24,7 +26,7 @@ public interface StoreMapper {
 	
 	List<BookmarkedStore> getBookmarkedStoresByUserId(int customerId);
 	
-	void updateStore(Store store);
+	void updateStore(Store store);	
 	
 	List<Store> getAllStores();
 	
@@ -34,5 +36,17 @@ public interface StoreMapper {
 
 	List<VisitedStore> getVisitedStores(Map<String, Object> param);
 
+	Object changeBookmark(int storeId, String job, SecurityUser securityUser);
+
+	void insertBookmark(Map<String, Object> paramMap);
+
+	void deleteBookmark(Map<String, Object> paramMap);
 	
+	int getReviewCountByStoreId(int storeId);
+	
+	int getBookmarkCountByStoreId(int storeId);
+	
+	Bookmark getBookmarkByStoreIdAndCustomerId(@Param("storeId") int storeId, @Param("customerId") int customerId);
+
+	List<Store> getStoresByXY(Map<String, Object> map);
 }

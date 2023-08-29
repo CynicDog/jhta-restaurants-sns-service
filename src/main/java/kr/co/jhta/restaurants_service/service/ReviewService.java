@@ -186,11 +186,15 @@ public class ReviewService {
 	public ReviewDetailDto getRatingAvgByStoreId(int storeId) {
 		ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
 		
-		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
+		int reviewCount = storeMapper.getReviewCountByStoreId(storeId);
+		int bookmarkCount = storeMapper.getBookmarkCountByStoreId(storeId);
 		
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
 		double storeReviewAvg = getAllReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
 		
 		reviewDetailDto.setStoreReviewAvg(storeReviewAvg);
+		reviewDetailDto.setReviewCount(reviewCount);
+		reviewDetailDto.setBookmarkCount(bookmarkCount);
 		
 		return reviewDetailDto;
 	}
