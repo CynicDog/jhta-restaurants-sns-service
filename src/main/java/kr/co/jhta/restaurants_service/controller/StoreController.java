@@ -27,6 +27,7 @@ import kr.co.jhta.restaurants_service.service.BookmarkService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import kr.co.jhta.restaurants_service.vo.store.Bookmark;
+import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.store.StoreOpenTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -191,4 +192,14 @@ public class StoreController {
 
 		return "success";
 	} 
+	
+	/*
+	 * @GetMapping("/review") public String reviewPage(@RequestParam("storeId") int
+	 * storeId, Model model) { Store store = storeService.getStoreById(storeId);
+	 * model.addAttribute("storeName", store.getName());
+	 * 
+	 * // 다른 필요한 정보도 모델에 추가 가능
+	 * 
+	 * return "review"; }
+	 */
 }
