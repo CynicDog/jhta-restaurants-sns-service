@@ -272,7 +272,7 @@
                                             <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
                                         </div>
                                         <div class="col-3 text-end">
-                                            <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">
+                                        	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
                                             \${(() => {
                                                 switch (datum.rating) {
                                                 case 5:

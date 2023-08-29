@@ -51,13 +51,13 @@ html, body {
 
 							<c:choose>
 								<c:when test="${review.review.rating eq 5}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">맛있어요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">맛있어요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 3}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">괜찮아요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">괜찮아요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 1}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">별로에요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">별로에요</span>
 								</c:when>
 							</c:choose>
 
@@ -97,7 +97,7 @@ html, body {
               		</div>
 				</div>
 				<div class="row col-3 m-3">
-					<a href="/store/detail"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
+					<a href="/store/detail?id=${review.review.store.id}"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
 				</div>	
 				<div class="row m-3">
 						<span style="font-size: 15px;">
