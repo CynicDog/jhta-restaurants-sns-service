@@ -15,16 +15,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 <style type="text/css">
-        html, body {
-            height: 100%;
-        }
-
-        .wrap {
-            position: relative;
-            min-height: 100%;
-            padding-bottom: 70px;
-        }
-
         .border-opacity-10.active {
             color: #ff792a;
         }
@@ -200,239 +190,7 @@
             </div>
             <div class="row">
                 <div class="col-md-8" id="review-list">
-                    <div id="reviewOutputArea" class="overflow-scroll" style="max-height: 600px">
-                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="text-center card-title my-1">
-                                            <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-                                            </div>
-                                            <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
-                                        </div>
-                                        <div class="text-center card-title my-1">
-                                            <span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row mb-2">
-                                            <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-                                                <p class="col card-text">리뷰 내용</p>
-                                            </div>
-                                            <div class="col-3 text-end">
-                                                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요!</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        </div>
-                                        <div id="review-keyword-button">
-											<span class="badge badge-sm text-bg-danger bg-opacity-75 fw-lighter m-2 p-1">#음식이 맛있어요</span>
-											<button type="button" class="btn border-opacity-10" > +4 </button>
-											<span class="badge badge-sm text-bg-secondary bg-opacity-75 fw-lighter m-2 p-1">#주차가 편해요</span>
-											<span class="badge badge-sm text-bg-info bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 청결해요</span>
-											<span class="badge badge-sm text-bg-primary bg-opacity-75 text-white fw-lighter m-2 p-1">#매장이 넓어요</span>
-											<span class="badge badge-sm text-bg-warning bg-opacity-75 text-white fw-lighter m-2 p-1">#분위기가 좋아요</span>
-											<span class="badge badge-sm text-bg-success bg-opacity-75 fw-lighter m-2 p-1">#친절해요</span>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                                </button>
-                                                <span class="float-end">
-                                                <button id="btn-answer-103" type="button" class="btn btn-light">
-					                                <span>답글</span>
-					                            </button>
-												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-												</button>
-											</span>
-                                            </div>
-                                        </div>
-                                        <!-- 답글 작성 폼 -->
-						                <div style="display:none" data-review-form="103">
-						                    <form id="form-answer-103" method="post" action="/review/addAnswer">
-						                        <input type="hidden" name="reviewId" value="103" />
-						                        <input type="hidden" name="storeId" value="32" />
-						                        <div class="row" id="cardAndTextarea" style="display: none;">
-						                            <div class="col-12">
-						                                <div class="card">
-						                                    <div class="card-body d-flex flex-row justify-content-between align-items-start">
-						                                        <textarea class="form-control" name="content" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
-						                                        <button class="btn btn-outline-secondary submit-reply-button" type="submit" id="button-addon2"><i class="bi bi-pencil"></i></button>
-						                                    </div>
-						                                </div>
-						                            </div>
-						                        </div>
-						                    </form>
-						                </div>
-						                <div class="row" id="ownerComment-103" style="display:none">
-						                    <div class="col">
-						                        <div class="card">
-						                            <div class="card-body">
-						                                <p class="col card-text" style="font-size: small; color: #adb5bd;">${store.name}</p>
-						                                <p class="card-text">리뷰 답글</p>
-						                            </div>
-						                        </div>
-						                    </div>
-						                </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="text-center card-title my-1">
-                                            <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-                                            </div>
-                                            <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
-                                        </div>
-                                        <div class="text-center card-title my-1">
-                                            <span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row mb-2">
-                                            <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-                                                <p class="col card-text">리뷰 내용</p>
-                                            </div>
-                                            <div class="col-3 text-end">
-                                                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요!</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                                </button>
-                                                <span class="float-end">
-												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-												</button>
-											</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="text-center card-title my-1">
-                                            <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-                                            </div>
-                                            <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
-                                        </div>
-                                        <div class="text-center card-title my-1">
-                                            <span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row mb-2">
-                                            <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-                                                <p class="col card-text">리뷰 내용</p>
-                                            </div>
-                                            <div class="col-3 text-end">
-                                                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요!</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                                </button>
-                                                <span class="float-end">
-                                                
-												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-												</button>
-											</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating="3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <div class="text-center card-title my-1">
-                                            <div class="ratio ratio-1x1">
-                                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-                                            </div>
-                                            <span style="font-size: medium; font-weight: bold;">[ customer.usernmae ]</span>
-                                        </div>
-                                        <div class="text-center card-title my-1">
-                                            <span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row mb-2">
-                                            <div class="col-9">
-                                                <p class="col card-text" style="font-size: small; color: #adb5bd;">리뷰 작성일</p>
-                                                <p class="col card-text">리뷰 내용</p>
-                                            </div>
-                                            <div class="col-3 text-end">
-                                                <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요!</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                            <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                    <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                                </button>
-                                                <span class="float-end">
-												<button type="button" class="btn btn-light btn-sm text-danger">
-													<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-												</button>
-											</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="reviewOutputArea">
                     </div>
                 </div>
                 <div class="col-md-4 p-4">
@@ -469,36 +227,23 @@
     <%@ include file="common/footer.jsp" %>
 </div>
 <script>
+    const storeId = ${store.id};
 
-	let pageOnReview = 1;
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
-	
-	reviewOutputArea.addEventListener('scroll', function () {
-	
-	    const scrollPos = this.scrollTop + this.clientHeight;
-	    const scrollHeight = this.scrollHeight;
-	
-	    if (scrollPos === scrollHeight) {
-	        pageOnReview += 1;
-	        fetchAndRenderReviews(pageOnReview);
-	    }
-	})
-	
-	let isReviewsFetching = false;
+
+    let pageOnReview = 1;
+    let isReviewsFetching = false;
 	let isReviewsLast = false;
-	const storeId = ${store.id};
+    let reviewFetchingOption = 'all';
 	
-	const getReviews = (page) => {
-	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5`).then(response => response.json());
+	const getReviews = (option, page) => {
+	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5&option=\${option}`).then(response => response.json());
 	}
 	
-	function fetchAndRenderReviews(pageOnReview) {
-	    if (isReviewsFetching || isReviewsLast) {
-	        return;
-	    }
-	
+	function fetchAndRenderReviews(reviewFetchingOption, pageOnReview) {
+
 	    isReviewsFetching = true;
-	    getReviews(pageOnReview).then(data => {
+	    getReviews(reviewFetchingOption, pageOnReview).then(data => {
 	
 	        if (data.length < 5) {
 	            isReviewsLast = true;
@@ -507,70 +252,70 @@
             data.forEach(datum => {		
                 reviewOutputArea.innerHTML += `
                 	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="text-center card-title my-1">
-                                    <div class="ratio ratio-1x1">
-                                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="text-center card-title my-1">
+                                        <div class="ratio ratio-1x1">
+                                            <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+                                        </div>
+                                        <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
                                     </div>
-                                    <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
-                                </div>
-                                <div class="text-center card-title my-1">
-                                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null? '' : datum.reviewAvg.toFixed(1) }</span>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <div class="row mb-2">
-                                    <div class="col-9">
-                                   		<p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-                                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
-                                    </div>
-                                    <div class="col-3 text-end">
-                                        <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">       
-                                        \${(() => {
-                                            switch (datum.rating) {
-                                            case 5:
-                                                return '맛있어요';
-                                            case 3:
-                                                return '괜찮아요';
-                                            case 1:
-                                                return '별로에요';
-                                            default:
-                                                return datum.rating;
-                                       		 }
-                                    	})()}
-                                        </span>
+                                    <div class="text-center card-title my-1">
+                                        <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null? '' : datum.reviewAvg.toFixed(1) }</span>
                                     </div>
                                 </div>
-                                <div class="d-flex">
-                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                    <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                            <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                        </button>
-                                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                            <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                        </button>
-                                        <span class="float-end">
-                                        <button id="btn-answer-103" type="button" class="btn btn-light">
-				                                <span>답글</span>
-				                            </button>
-											<button type="button" class="btn btn-light btn-sm text-danger">
-												<i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-											</button>
-										</span>
+                                <div class="col-10">
+                                    <div class="row mb-2">
+                                        <div class="col-9">
+                                            <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
+                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">
+                                            \${(() => {
+                                                switch (datum.rating) {
+                                                case 5:
+                                                    return '맛있어요';
+                                                case 3:
+                                                    return '괜찮아요';
+                                                case 1:
+                                                    return '별로에요';
+                                                default:
+                                                    return datum.rating;
+                                                 }
+                                            })()}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+                                            </button>
+                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+                                            </button>
+                                            <span class="float-end">
+                                            <button id="btn-answer-103" type="button" class="btn btn-light">
+                                                    <span>답글</span>
+                                                </button>
+                                                <button type="button" class="btn btn-light btn-sm text-danger">
+                                                    <i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-			`
+                `
                /*  datam.reviewPictures.forEach(picName => {
                 	fetch(`/gcp/getPictures?pictureNameame}`)
                 	.then(response => {
@@ -582,14 +327,70 @@
                 	.then(image => {
                 	})
                 })  */
-            }
-        )
+                }
+            )
+        })
+        isReviewsFetching = false;
+    }
+
+    // initial fetching
+    fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
+
+    document.getElementById('btn-review-all').addEventListener('click', function() {
+
+        reviewOutputArea.innerHTML = '';
+
+        isReviewsLast = false;
+        isReviewsFetching = false;
+        pageOnReview = 1;
+        reviewFetchingOption = 'all';
+        fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
     })
-    isReviewsFetching = false;
-}
 
-fetchAndRenderReviews(pageOnReview);
+    document.getElementById('btn-review-good').addEventListener('click', function() {
 
+        reviewOutputArea.innerHTML = '';
+
+        isReviewsLast = false;
+        isReviewsFetching = false;
+        pageOnReview = 1;
+        reviewFetchingOption = 'good';
+        fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
+    })
+
+    document.getElementById('btn-review-soso').addEventListener('click', function() {
+
+        reviewOutputArea.innerHTML = '';
+
+        isReviewsLast = false;
+        isReviewsFetching = false;
+        pageOnReview = 1;
+        reviewFetchingOption = 'soso';
+        fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
+    })
+
+    document.getElementById('btn-review-bad').addEventListener('click', function() {
+
+        reviewOutputArea.innerHTML = '';
+
+        isReviewsLast = false;
+        isReviewsFetching = false;
+        pageOnReview = 1;
+        reviewFetchingOption = 'bad';
+        fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
+    })
+
+    window.onscroll = function () {
+        if ((window.innerHeight + window.scrollY +.5) >= document.body.offsetHeight) {
+
+            if (isReviewsFetching || isReviewsLast) {
+                // do nothing
+            } else {
+                pageOnReview += 1;
+                fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
+            }
+        }
+    }
     
     $("#btn-bookmark").click(function() {
         // 로그인 여부 확인
@@ -734,9 +535,6 @@ fetchAndRenderReviews(pageOnReview);
             $(this).addClass('active').css('color', '#ff792a'); // 선택한 버튼의 텍스트 색 변경
         });
     });
-
-
-
 
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("modalImg");

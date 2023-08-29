@@ -21,4 +21,8 @@ public interface ReviewMapper {
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
 	List<ReviewDto> getReviewsByStoreId(int storeId);
 	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId);
+    List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
+														  @Param("end") int end,
+														  @Param("storeId") int storeId,
+														  @Param("rating") int rating);
 }

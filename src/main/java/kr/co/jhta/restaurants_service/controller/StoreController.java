@@ -138,8 +138,7 @@ public class StoreController {
 		
 		storeService.updateReadCount(storeId);
 		reviewService.getAllReviewRatingByStoreId(storeId);
-		
-		
+
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
 //      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
@@ -174,9 +173,15 @@ public class StoreController {
 	// store/detail/reviews?id=\${storeId}
 	@GetMapping("/detail/reviews")
 	@ResponseBody
-	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit) throws InterruptedException {
+	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("option") String option) throws InterruptedException {
 
-		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId);
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId, option);
 	}
 	
 	@PostMapping("/bookmark")
