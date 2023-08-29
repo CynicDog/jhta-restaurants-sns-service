@@ -151,7 +151,7 @@ public class StoreController {
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         model.addAttribute("storeAvg", reviewDetailDto);
-        model.addAttribute("stores", dto.getStores());
+        model.addAttribute("closestStores", dto.getClosestStores());
         // 모델에 리뷰 정보를 추가합니다.
 //        model.addAttribute("reviews", reviewDto);
 //        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());

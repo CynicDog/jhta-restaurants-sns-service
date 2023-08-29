@@ -17,7 +17,7 @@ public class StoreDetailDto {
 	private Store store;
 	private List<Food> foods;
 	private List<StoreOpenTime> openTimes;
-	private List<Store> stores;
+	private List<Store> closestStores;
 	
 	public double getDistance(double lat1, double lon1, double lat2, double lon2) {
 		  double dLat = Math.toRadians(lat2 - lat1);

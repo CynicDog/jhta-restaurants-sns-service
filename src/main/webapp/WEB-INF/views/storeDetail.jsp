@@ -437,7 +437,7 @@
                 </div>
                 <div class="col-md-4 p-4">
                     <div class="row">
-                    	<c:forEach var="s" items="${stores }">
+                    	<c:forEach var="closestStore" items="${closestStores }">
                     	
                         <div class="mb-3">
                             <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
@@ -445,7 +445,7 @@
                                 <div class="d-flex align-items-start">
                                     <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
                                     <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">${store.name }</h5>
+                                        <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name }</h5>
                                         <p class="card-text text-sm ml-1">
                                             <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">카테고리</span>
                                             <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">리뷰 평점</span>
@@ -456,38 +456,6 @@
                             </div>
                         </div>
                     	</c:forEach>
-                        <div class="mb-3">
-                            <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
-                                <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/422968/2269093_1684374788537_1000001500?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
-                                    <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
-                                        <p class="card-text text-sm ml-1">
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
-                                <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/42185_1657640746441273.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
-                                    <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">가게 이름</h5>
-                                        <p class="card-text text-sm ml-1">
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">첫 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">두 번째 줄</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">세 번째 줄</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <!-- <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
                         <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
@@ -549,7 +517,7 @@
                                     <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
                                 </div>
                                 <div class="text-center card-title my-1">
-                                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg.toFixed(1) }</span>
+                                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null? '' : datum.reviewAvg.toFixed(1) }</span>
                                 </div>
                             </div>
                             <div class="col-10">

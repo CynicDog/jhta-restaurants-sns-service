@@ -119,24 +119,21 @@ public class StoreService {
 		
 		List<StoreOpenTime> openTimes = storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
 		dto.setOpenTimes(openTimes);
-		
-		Map<String, Object> map = getXY(store.getLatitude(), store.getLongitude());
-		map.put("storeId", storeId);
-		List<Store> stores = storeMapper.getStoresByXY(map);
-		
-		dto.setStores(stores);
+
+		List<Store> closestStores = storeMapper.getClosestStores(store.getLatitude(), store.getLongitude(), storeId, 3);
+		dto.setClosestStores(closestStores);
 		
 		return dto;
 	}
 	
 	private Map<String, Object> getXY(double lat, double lon) {
 		Map<String, Object> map = new HashMap<>();
-		
-		double mForLatitude =(1 /(6371* 1 *(Math.PI/ 180)))/ 1000;
-		  //m당 x 좌표 이동 값
-		double mForLongitude =(1 /(6371* 1 *(Math.PI/ 180)* Math.cos(Math.toRadians(lat))))/ 1000;
 
-	  //현재 위치 기준 검색 거리 좌표
+		double mForLatitude = (1 / (6371 * 1 * (Math.PI / 180))) / 1000;
+		//m당 x 좌표 이동 값
+		double mForLongitude = (1 / (6371 * 1 *(Math.PI / 180) * Math.cos(Math.toRadians(lat)))) / 1000;
+
+	  	//현재 위치 기준 검색 거리 좌표
 		double maxY = lat +(getDistance(lat)* mForLatitude);
 		double minY = lat -(getDistance(lat)* mForLatitude);
 		double maxX = lon +(getDistance(lat)* mForLongitude);
@@ -146,7 +143,7 @@ public class StoreService {
 		map.put("maxX", maxX);
 		map.put("minY", minY);
 		map.put("maxY", maxY);
-		
+
 		return map;
 	}
 	
