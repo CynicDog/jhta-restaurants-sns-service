@@ -27,5 +27,7 @@ public class HomeContent {
 	private String createDate;
 	private Integer reviewId;
 	private Integer rating;
+	private String isBookmarked;
+	private String isLiked;
 	
 }

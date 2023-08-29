@@ -119,6 +119,57 @@
 <script type="text/javascript">
 	document.getElementById("form-navbar-search").style.display = "none";
 	
+	//Click Listener - bookmark star 
+	$("#home-content").on('click', '[id^="star-"]', function(){
+		
+	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
+	    if (${pageContext.request.userPrincipal != null}) {
+			//로그인 했을 때
+	    	let storeId = $(this).attr('store-id');
+			console.log("storeId :" , storeId);
+			//star- fill -> blank
+			if ($(this).hasClass('bi-star-fill')) {
+					$(this).removeClass('bi-star-fill').addClass('bi-star')
+					$.getJSON('/bookmark/delete', {storeId : storeId});
+			//star- blank -> fill		
+			} else {
+				$(this).removeClass('bi-star').addClass('bi-star-fill')
+				$.getJSON('/bookmark/insert', {storeId : storeId});
+
+			}
+	    } else {
+	       // 로그인되지 않은 경우, 로그인 페이지 열기
+	       	alert("로그인이 필요합니다");
+	        window.location.href = "/user/login";
+	    }
+	});
+	
+	//Click Listener - Review Like 
+	$("#home-content").on('click', '[id^="like-"]', function(){
+		
+	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
+	    if (${pageContext.request.userPrincipal != null}) {
+			//로그인 했을 때
+	    	let reviewId = $(this).attr('review-id');
+			//like- fill -> blank
+			if ($(this).hasClass('bi-heart-fill')) {
+					$(this).removeClass('bi-heart-fill').addClass('bi-heart')
+					$.getJSON('/like/delete', {reviewId : reviewId});
+			//like- blank -> fill		
+			} else {
+				$(this).removeClass('bi-heart').addClass('bi-heart-fill')
+				$.getJSON('/like/insert', {reviewId : reviewId});
+
+			}
+	    } else {
+	       // 로그인되지 않은 경우, 로그인 페이지 열기
+	       	alert("로그인이 필요합니다");
+	        window.location.href = "/user/login";
+	    }
+	});
+	
+	
+	
 	//로그인 확인
 	if (${pageContext.request.userPrincipal != null}) {
 			getFeed();
@@ -129,6 +180,15 @@
 	function getFeed() {
 		$.getJSON('/feed', function(result) {
 			result.forEach(function(feed){
+				
+				let star;
+				if(feed.isBookmarked==='y'){ star = 'bi-star-fill';}
+				if(feed.isBookmarked==='n'){ star = 'bi-star';}
+
+				let like;
+				if(feed.isLiked==='y'){ like = 'bi-heart-fill';}
+				if(feed.isLiked==='n'){ like = 'bi-heart';}
+				
 				let content = `
 					<div id=home-content-header class="d-flex justify-content-between mb-2" >
 						<div id="home-feed-writer" class="">
@@ -153,17 +213,16 @@
 						
 						<div class="card-body pt-1 ps-1" >
 							<p class="card-text mb-1">\${feed.content}</p>
-							<i class="bi bi-heart fs-4"></i>
-							<div class="border d-flex justify-content-between mt-2" 
-								onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
-								<div class="row">
+							<i class="bi \${like} fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
+							<div class="border d-flex justify-content-between mt-2" >
+								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
 									<div class="col ms-1">
 							           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
 							           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
 									</div>
 								</div>
 								<div class="d-flex align-items-center px-2">
-									<i class="bi bi-star fs-4"></i>
+									<i class="bi \${star} fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
 								</div>
 							</div>		
 						</div>
