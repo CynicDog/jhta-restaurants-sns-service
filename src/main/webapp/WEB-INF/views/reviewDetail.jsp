@@ -39,10 +39,16 @@ html, body {
 						</a>
 					</div>
 					<div class="col-2">
-						<p class="mb-5 my-5" style="font-size:30px;"><strong>${review.review.customer.fullName }</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
+						<p class="mb-5 my-5" style="font-size:30px;"><strong>
+						<c:choose>
+							<c:when test="${not empty review.review.customer.nickname }">${review.review.customer.nickname }</c:when>
+							<c:otherwise>${review.review.customer.username }</c:otherwise>
+						</c:choose>
+						</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
 					</div>
 					<div class="col-8">
 						<div class="row float-end">
+
 							<c:choose>
 								<c:when test="${review.review.rating eq 5}">
 									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
@@ -54,6 +60,7 @@ html, body {
 									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
 								</c:when>
 							</c:choose>
+
 						</div>
 					</div>
 					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">

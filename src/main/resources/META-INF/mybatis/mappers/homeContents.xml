@@ -1,44 +1,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.HomeMapper">
 	
-	<select id="" resultType="HomeContent">
+	<resultMap id="HomeResultMap1" type="HomeContent">
+	    <id column="id" property="id" />
+	    <result column="username" property="username" />
+	    <result column="storeName" property="storeName" />
+	    <result column="category" property="category" />
+	    <result column="address" property="address" />
+	    <result column="content" property="content" />
+	    <result column="createDate" property="createDate" />
+	    <result column="reviewId" property="reviewId" />
+	    <result column="rating" property="rating" />
+	    <result column="storeId" property="storeId"/>
+	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
+         select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
+	</resultMap>
+	
+	<select id="getHomeFeedsByFollowerId" resultMap="HomeResultMap1">
 		select 
 			*,
 			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
 		from
 			(select
-				R.id			as id,
-				R.id			as "review.id",
-				NULL			as "post.id",
+				R.id			as reviewId,
 				U.username		as username, 
 				content			as content,
-				NULL			as title,
 				R.create_date	as createDate,
 				S.name			as storeName,
+				S.id			as storeId,
 				S.category		as category,
-				S.address		as address
+				S.address		as address,
+				R.rating		as rating
 			from REVIEWS R
-			inner join USERS U on R.customer_id = U.id
-			inner join STORES S on R.store_id = S.id
-			
-			union
-				
-			select
-				P.id			as id,
-				NULL			as "review.id",
-				P.id			as "post.id",
-				U.username		as username, 
-				content			as content,
-				P.title			as title,
-				P.create_date	as createDate,
-				S.name			as storeName,
-				S.category		as category,
-				S.address		as address
-			from POSTS P
-			inner join USERS U on P.customer_id = U.id
-			inner join POST_DATA PD on P.id = PD.post_id
-			inner join STORES S on PD.store_id = S.id) as subquery
-		limit 1, 10	
+			join USERS U on R.customer_id = U.id
+			join STORES S on R.store_id = S.id
+			join FOLLOWS F on R.customer_id = F.follower_id and #{value} = F.followed_id) as subquery
 	</select>
+	
 
 </mapper>

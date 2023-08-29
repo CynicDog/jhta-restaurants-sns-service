@@ -39,7 +39,7 @@ public class FollowRequest {
     }
 
     public enum RequestStatus {
-        PENDING, ACCEPTED, DECLINED
+        PENDING, ACCEPTED, DECLINED, SENT
     }
 
     public int getId() {

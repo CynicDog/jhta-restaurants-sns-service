@@ -217,12 +217,20 @@ public class ReviewService {
 		return reviewRating;
 	}
 
-    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId) {
+    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId, String option) {
 
 		int begin = (page - 1) * limit;
 		int end = begin + limit;
 
-		return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+		if (option.equals("all")) {
+			return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+		} else if (option.equals("good")) {
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 5);
+		} else if (option.equals("soso")) {
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 3);
+		} else { // bad
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 1);
+		}
     }
     
     public List<Review> getThreeRecentReview(){

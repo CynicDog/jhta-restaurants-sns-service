@@ -48,7 +48,7 @@ public class ReviewController {
 	
 	// 리뷰 등록 요청 처리 
 	@PostMapping
-	public String reviewRegister(ReviewCommand form, SecurityUser securityUser) throws IOException {
+	public String reviewRegister(ReviewCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
 	
 		reviewService.createReview(form, securityUser);
 		log.info("리뷰 신규 등록 -> {}", form);

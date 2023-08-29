@@ -10,6 +10,7 @@ import kr.co.jhta.restaurants_service.vo.socials.Follow;
 import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -57,12 +58,46 @@ public class SocialService {
 
     public long getFollowingsCountByCustomerId(Integer customerId) {
         return followsRepository.countByCompositePrimaryKeys_FollowerId(customerId);
+
+    }
+
+    public List<FollowRequestDto> getArrivedRequestsDeniedByRecipientId(Integer customerId, int page, int limit) {
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.DECLINED, PageRequest.of(page, limit))
+                .stream()
+                .map(request -> {
+                    Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
+                    return new FollowRequestDto(request, user);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<FollowRequestDto> getArrivedRequestsPendingByRecipientId(Integer customerId, int page, int limit) {
+
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.PENDING, PageRequest.of(page, limit))
+                .stream()
+                .map(request -> {
+                    Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
+                    return new FollowRequestDto(request, user);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<FollowRequestDto> getArrivedRequestsAcceptedByRecipientId(Integer customerId, int page, int limit) {
+
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.ACCEPTED, PageRequest.of(page, limit))
+                .stream()
+                .map(request -> {
+                    Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
+                    return new FollowRequestDto(request, user);
+                })
+                .collect(Collectors.toList());
     }
 
     public List<FollowRequestDto> getSentRequestsBySenderId(Integer customerId, int page, int limit) {
         return followRequestRepository.findBySenderIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
+                    request.setStatus(FollowRequest.RequestStatus.SENT);
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getRecipientId(), User.DISABLED.NO);
                     return new FollowRequestDto(request, user);
                 })

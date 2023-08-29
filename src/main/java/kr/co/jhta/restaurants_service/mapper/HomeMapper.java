@@ -9,5 +9,5 @@ import kr.co.jhta.restaurants_service.dto.HomeContent;
 @Mapper
 public interface HomeMapper {
 
-	List<HomeContent> getHomeContents();
+	List<HomeContent> getHomeFeedsByFollowerId(int userId);
 }
