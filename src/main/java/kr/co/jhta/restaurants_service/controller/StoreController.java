@@ -138,8 +138,7 @@ public class StoreController {
 		
 		storeService.updateReadCount(storeId);
 		reviewService.getAllReviewRatingByStoreId(storeId);
-		
-		
+
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
 //      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
@@ -151,7 +150,7 @@ public class StoreController {
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         model.addAttribute("storeAvg", reviewDetailDto);
-        model.addAttribute("stores", dto.getStores());
+        model.addAttribute("closestStores", dto.getClosestStores());
         // 모델에 리뷰 정보를 추가합니다.
 //        model.addAttribute("reviews", reviewDto);
 //        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());
@@ -174,9 +173,15 @@ public class StoreController {
 	// store/detail/reviews?id=\${storeId}
 	@GetMapping("/detail/reviews")
 	@ResponseBody
-	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit) throws InterruptedException {
+	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("option") String option) throws InterruptedException {
 
-		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId);
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId, option);
 	}
 	
 	@PostMapping("/bookmark")
