@@ -168,13 +168,11 @@
 	    }
 	});
 	
-	
-	
 	//로그인 확인
 	if (${pageContext.request.userPrincipal != null}) {
 			getFeed();
 		} else{
-			
+			getAnonymousFeed();
 		}
 	
 	function getFeed() {
@@ -230,103 +228,146 @@
 			`;
 				$("#home-content").append(content);
 			});
-			
 		});
-		
-		function generateRating(rating){
-			let badge = ""
-			if(rating==5){
-				let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">맛있어요!</span> `;
-				badge += content;
+	}
+	function getAnonymousFeed(){
+		$.getJSON('/anofeed',function(result){
+			result.forEach(function(feed){
 				
-			}else if(rating==3){
-				let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요</span> `;
-				badge += content;
-
-			}else if(rating==1){
-				let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">별로에요</span> `;
-				badge += content;
-
-			}else{
-				return badge;
-			}
+				let content = `
+					<div id=home-content-header class="d-flex justify-content-between mb-2" >
+						<div id="home-feed-writer" class="">
+							<div class="d-flex justify-content-start">
+								<span class="me-2">\${feed.username} </span>
+								\${generateRating(feed.rating)}
+							</div>					
+						</div>
+						<div id="home-feed-follow" class="">
+						</div>
+					</div>
+					<div id="store-card" index-id ="" class="card mb-5" style="border: none;" onclick="" style="cursor: pointer;">
+						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
+						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
+						 	\${generateIndicator(feed.reviewPictures,feed)}
+						  </div>
+						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
+							\${generatePicture(feed.reviewPictures)}
+						  </div>
+						  \${generateControlButton(feed.reviewPictures,feed)}
+						</div>
+						
+						<div class="card-body pt-1 ps-1" >
+							<p class="card-text mb-1">\${feed.content}</p>
+							<i class="bi bi-heart fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
+							<div class="border d-flex justify-content-between mt-2" >
+								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
+									<div class="col ms-1">
+							           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
+							           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
+									</div>
+								</div>
+								<div class="d-flex align-items-center px-2">
+									<i class="bi bi-star fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
+								</div>
+							</div>		
+						</div>
+					</div>
+			`;
+				$("#home-content").append(content);
+			});
+		})
+	}
+	function generateRating(rating){
+		let badge = ""
+		if(rating==5){
+			let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">맛있어요!</span> `;
+			badge += content;
 			
-			let content =  `<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span> `;
+		}else if(rating==3){
+			let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">괜찮아요</span> `;
+			badge += content;
+
+		}else if(rating==1){
+			let content =  `<span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">별로에요</span> `;
+			badge += content;
+
+		}else{
 			return badge;
 		}
 		
-		function generateIndicator(pictures,feed){
-			let indicators = "";
-			if(pictures.length==1){
-				return indicators;
-			}
-			pictures.forEach(function(picture, index) {
-				
-
-					if (index==0){
-						let indicator = `
-							<button type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-						`
-						indicators += indicator;
-					}else{
-						let indicator = `
-						    <button type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide-to="\${index}" aria-label="Slide \${index}"></button>
-						`
-							indicators += indicator;
-					}
-			})
+		let content =  `<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span> `;
+		return badge;
+	}
+	
+	function generateIndicator(pictures,feed){
+		let indicators = "";
+		if(pictures.length==1){
 			return indicators;
-
 		}
-		
-		function generatePicture(pictures) {
-			let images = "";
-			pictures.forEach(function(picture, index) {
-				console.log("index : ", index);
-				if(index==0){
-					console.log("first pic ");
-
-					let imgContent = `
-					    <div class="carousel-item active">
-					      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
-					    </div>			
-						`
-					images += imgContent;
-
+		pictures.forEach(function(picture, index) {
+				if (index==0){
+					let indicator = `
+						<button type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					`
+					indicators += indicator;
 				}else{
-					let imgContent = `
-					    <div class="carousel-item">
-					      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
-					    </div>			
-						`
-					images += imgContent;
+					let indicator = `
+					    <button type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide-to="\${index}" aria-label="Slide \${index}"></button>
+					`
+						indicators += indicator;
 				}
-			})
-			
-			return images;
-		}
-		
-		function generateControlButton(pictures,feed){
-			
-			let buttons=""
-			
-			if (pictures.length==1){
-				return buttons;
+		})
+		return indicators;
+	}
+	
+	function generatePicture(pictures) {
+		let images = "";
+		pictures.forEach(function(picture, index) {
+			console.log("index : ", index);
+			if(index==0){
+				console.log("first pic ");
+
+				let imgContent = `
+				    <div class="carousel-item active">
+				      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+				    </div>			
+					`
+				images += imgContent;
+
+			}else{
+				let imgContent = `
+				    <div class="carousel-item">
+				      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+				    </div>			
+					`
+				images += imgContent;
 			}
-			let button = `
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
-			`
-			buttons+= button;
+		})
+		
+		return images;
+	}
+	
+	function generateControlButton(pictures,feed){
+		let buttons=""
+		
+		if (pictures.length==1){
 			return buttons;
 		}
+		let button = `
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselHomeFeedIndicators-\${feed.id}" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		`
+		buttons+= button;
+		return buttons;
 	}
+	
+
 </script>
 </body>
 </html>
