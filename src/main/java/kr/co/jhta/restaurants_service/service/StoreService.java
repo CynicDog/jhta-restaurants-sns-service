@@ -227,4 +227,8 @@ public class StoreService {
 	    return bookmark;
 	}
 
+	/*
+	 * public Store getStoreById(int storeId) { return null; }
+	 */
+
 }

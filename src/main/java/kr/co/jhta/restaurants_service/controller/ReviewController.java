@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
+import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
+import kr.co.jhta.restaurants_service.service.StoreService;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
+import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +37,7 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	private StoreService storeService;
 	
 
 	// 리뷰 등록화면
@@ -84,5 +89,15 @@ public class ReviewController {
 	public String followerReview(){
 		return "followerReview";
 	}
+	
+	/*
+	 * @GetMapping("/review") public String reviewPage(@RequestParam("storeId") int
+	 * storeId, Model model) { Store store = storeService.getStoreById(storeId);
+	 * model.addAttribute("store", store);
+	 * 
+	 * // 모델에 다른 필요한 정보도 추가할 수 있음
+	 * 
+	 * return "review"; // 리뷰 페이지로 이동 }
+	 */
 
 }

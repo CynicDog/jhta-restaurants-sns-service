@@ -33,8 +33,9 @@
 <div class="wrap">
 	<div class="container">
 	    <div class="restaurant-name">
-	        <strong style="color: #ff792a;">맛집</strong> <span>에 대한 솔직한 리뷰를 써주세요.</span>
-	    </div>
+		   <div id="restaurant-name-placeholder"> <strong style="color: #ff792a;">${store.name}</strong>
+		   에 대한 솔직한 리뷰를 써주세요.</div>
+		</div>
 	<form id="reviewForm" method="post" enctype="multipart/form-data" action="">
    		<input type="hidden" name="storeId" value="${param.storeId }"/>
    		<sec:authentication property="principal.user.id" var="userId"/>
@@ -108,7 +109,7 @@
 			</div>
 		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
 		    <div class="buttons">
-		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;">취소</button>
+		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" onclick="goBack()">취소</button>
 		        <button id="btn-review-submit" type="submit" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
 		    </div>
 		</div>
@@ -297,8 +298,26 @@ $(function() {
 		console.log("FFFFFFFFFFFF files -> ", document.getElementById("imageFile").files)
 	}) */
 	
+	
 });
-
+	
+	// 이전 화면으로 돌아가는 함수
+	function goBack() {
+	    window.history.back();
+	}
+	
+	// 이벤트 디바운싱을 적용한 취소 버튼 클릭 이벤트 처리
+	const cancelButton = document.getElementById('cancelButton');
+	let isCancelButtonClicked = false;
+	cancelButton.addEventListener('click', function () {
+	    if (!isCancelButtonClicked) {
+	        isCancelButtonClicked = true;
+	        goBack();
+	        setTimeout(() => {
+	            isCancelButtonClicked = false;
+	        }, 1000); // 1초 동안 이벤트를 막음
+	    }
+	});
 </script>
 </body>
 </html>
