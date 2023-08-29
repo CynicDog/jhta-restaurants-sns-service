@@ -18,8 +18,7 @@ import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import kr.co.jhta.restaurants_service.dto.ReviewListDto;
+//import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.PostService;
 import kr.co.jhta.restaurants_service.service.ReviewService;

@@ -38,26 +38,26 @@ html, body {
 							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
 						</a>
 					</div>
-					<div class="col-2">
+					<div class="col-3">
 						<p class="mb-5 my-5" style="font-size:30px;"><strong>
 						<c:choose>
 							<c:when test="${not empty review.review.customer.nickname }">${review.review.customer.nickname }</c:when>
 							<c:otherwise>${review.review.customer.username }</c:otherwise>
 						</c:choose>
-						</strong></p><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="#.#" />
+						</strong><span style="color: #ffc107;"><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="(#.#)" /></span></p>
 					</div>
-					<div class="col-8">
+					<div class="col-7">
 						<div class="row float-end">
 
 							<c:choose>
 								<c:when test="${review.review.rating eq 5}">
-									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">맛있어요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">맛있어요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 3}">
-									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">괜찮아요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">괜찮아요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 1}">
-									<span class="badge rounded-pill" style="color: #ff792a; font-size:20px; ">별로에요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#f5a35b">별로에요</span>
 								</c:when>
 							</c:choose>
 
@@ -209,13 +209,7 @@ html, body {
 	
 	
 // 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
-let modal = new bootstrap.Mo
-
-
-
-
-
-dal("#Modal");
+let modal = new bootstrap.Modal("#Modal");
 // 전체 이미지 갯수를 조회해서 대입한다.
 let imgLength = $("#image-row .img-thumbnail").length;
 // 현재 모달차에 표시되고 있는 이미지의 인덱스가 대입되는 변수다.
