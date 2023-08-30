@@ -121,6 +121,10 @@
 <script type="text/javascript">
 	document.getElementById("form-navbar-search").style.display = "none";
 	
+	let pageOnFeed = 1;
+    let isFeedsFetching = false;
+	let isFeedsLast = false;
+	
 	//Click Listener - bookmark star 
 	$("#home-content").on('click', '[id^="star-"]', function(){
 		
@@ -178,7 +182,13 @@
 		}
 	
 	function getFeed() {
-		$.getJSON('/feed', function(result) {
+		isFeedsFetching = true;
+		$.getJSON('/feed',{page : pageOnFeed, limit:5}, function(result) {
+			
+	        if (result.length < 5) {
+	            isFeedsLast = true;
+	        }
+			
 			result.forEach(function(feed){
 				
 				let star;
@@ -231,9 +241,17 @@
 				$("#home-content").append(content);
 			});
 		});
+		isFeedsFetching = false;
+
 	}
+	
 	function getAnonymousFeed(){
-		$.getJSON('/anofeed',function(result){
+		isFeedsFetching = true;
+		$.getJSON('/anofeed',{page : pageOnFeed, limit:5},function(result){
+			
+	        if (result.length < 5) {
+	            isFeedsLast = true;
+	        }
 			result.forEach(function(feed){
 				
 				let content = `
@@ -278,7 +296,9 @@
 				$("#home-content").append(content);
 			});
 		})
+		isFeedsFetching = false;
 	}
+	
 	function generateRating(rating){
 		let badge = ""
 		if(rating==5){
@@ -303,7 +323,7 @@
 	
 	function generateIndicator(pictures,feed){
 		let indicators = "";
-		if(pictures.length==1){
+		if(pictures.length<=1){
 			return indicators;
 		}
 		pictures.forEach(function(picture, index) {
@@ -352,7 +372,7 @@
 	function generateControlButton(pictures,feed){
 		let buttons=""
 		
-		if (pictures.length==1){
+		if (pictures.length<=1){
 			return buttons;
 		}
 		let button = `
@@ -369,6 +389,24 @@
 		return buttons;
 	}
 	
+	
+    window.onscroll = function () {
+        if ((window.innerHeight + window.scrollY +.5) >= document.body.offsetHeight) {
+
+            if (isFeedsFetching || isFeedsLast) {
+                // do nothing
+            } else {
+        	    if (${pageContext.request.userPrincipal != null}) {
+                	pageOnFeed += 1;
+                	getFeed();
+					
+        	    }else{
+                	pageOnFeed += 1;
+                	getAnonymousFeed();
+        	    }
+            }
+        }
+    }
 
 </script>
 </body>
