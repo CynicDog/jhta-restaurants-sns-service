@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     boolean existsUserByNickname(String nickname);
 
     Projection.User findUserProjectionByIdAndDisabled(int id, User.DISABLED disabled);
+
+    Optional<User> findUserById(int userId);
 }

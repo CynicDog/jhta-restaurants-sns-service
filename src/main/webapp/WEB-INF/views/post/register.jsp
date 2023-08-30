@@ -498,7 +498,6 @@
     	  }
     }
     
-    
 	input.onkeyup = (e) => {
 	    let userData = e.target.value;
 	    

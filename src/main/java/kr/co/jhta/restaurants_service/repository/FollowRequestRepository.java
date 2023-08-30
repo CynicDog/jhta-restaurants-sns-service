@@ -14,4 +14,6 @@ public interface FollowRequestRepository extends JpaRepository<FollowRequest, In
     Page<FollowRequest> findByRecipientIdOrderByCreateDateDesc(int recipientId, Pageable pageable);
 
     Page<FollowRequest> findByRecipientIdAndStatusOrderByCreateDate(Integer customerId, FollowRequest.RequestStatus requestStatus, PageRequest of);
+
+    boolean existsFollowRequestBySenderIdAndRecipientId(int senderId, int recipientId);
 }
