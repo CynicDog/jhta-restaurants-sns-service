@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -83,10 +84,12 @@ public class ReviewService {
 		
 		if (form.getChooseFile() != null) {
 			for (MultipartFile fileName : form.getChooseFile()) {
-				ReviewPicture reviewPciture = new ReviewPicture();
-				reviewPciture.setPictureName(fileName.getOriginalFilename());
-				reviewPciture.setReview(review);
-				reviewPictureMapper.insertReveiwPicture(reviewPciture);
+				ReviewPicture reviewPicture = new ReviewPicture();
+				reviewPicture.setPictureName(fileName.getOriginalFilename());
+				reviewPicture.setReview(review);
+				reviewPicture.setUser(securityUser.getUser());
+				reviewPicture.setCreateDate(new Date());
+				reviewPictureMapper.insertReveiwPicture(reviewPicture);
 			}
 		}		
 

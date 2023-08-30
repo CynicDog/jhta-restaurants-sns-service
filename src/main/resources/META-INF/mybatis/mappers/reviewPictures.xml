@@ -3,9 +3,9 @@
 	
 	<insert id="insertReveiwPicture" parameterType="ReviewPicture">
 	  insert into REVIEW_PICTURES
-	  (picture_name, review_id)
+	  (picture_name, review_id, user_id, createDate)
 	  values
-	  (#{pictureName}, #{review.id})
+	  (#{pictureName}, #{review.id}, #{user.id}, #{createDate})
 	</insert>
 	
 	<select id="getReviewPicturesByReviewId" parameterType="int" resultType="ReviewPicture">

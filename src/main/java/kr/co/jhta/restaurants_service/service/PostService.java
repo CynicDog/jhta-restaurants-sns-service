@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
@@ -15,7 +16,6 @@ import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
@@ -61,7 +61,7 @@ public class PostService {
 		return storeMapper.getStoreByName(keyword);
     }
 
-	public void insertPost(Post post, List<PostDataCommand> postDataCommands) throws IOException {
+	public void insertPost(SecurityUser securityUser, Post post, List<PostDataCommand> postDataCommands) throws IOException {
 
 		postmapper.insertPost(post);
 
@@ -72,6 +72,8 @@ public class PostService {
 					return new PostData(post, store, postDataCommand.getContent(), postDataCommand.getChooseFile().getOriginalFilename());
 				})
 				.forEach(postData -> {
+					postData.setUser(securityUser.getUser());
+					postData.setCreateDate(new Date());
 					postDataMapper.insertPostData(postData);
 				});
     }

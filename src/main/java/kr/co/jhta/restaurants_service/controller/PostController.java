@@ -140,7 +140,7 @@ public class PostController {
 
         @SuppressWarnings("unchecked") List<PostDataCommand> postDataCommands = (List<PostDataCommand>) httpSession.getAttribute("postData");
 
-        postService.insertPost(new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), postCommand.getCreateDate(), postCommand.getUpdateDate(), securityUser.getUser()), postDataCommands);
+        postService.insertPost(securityUser, new Post(postCommand.getPostTitle(), postCommand.getPostSubtitle(), postCommand.getCreateDate(), postCommand.getUpdateDate(), securityUser.getUser()), postDataCommands);
 
         httpSession.setAttribute("postData", null);
 
