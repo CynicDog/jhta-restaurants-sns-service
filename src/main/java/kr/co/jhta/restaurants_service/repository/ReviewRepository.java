@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    Page<Projection.Review> findReviewsByCustomerIdAndBlockedOrderByCreateDate(
+    Page<Projection.Review> findReviewsByCustomerIdAndBlockedOrderByCreateDateDesc(
             int customerId, Review.BLOCKED blocked, Pageable pageable
     );
 

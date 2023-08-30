@@ -166,7 +166,7 @@ public class ReviewService {
 
 	public Page<Projection.Review> getNonBlockedReviewsByCustomerIdOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
 
-		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDate(customerId, no, PageRequest.of(page, limit));
+		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDateDesc(customerId, no, PageRequest.of(page, limit));
 	}
 
 

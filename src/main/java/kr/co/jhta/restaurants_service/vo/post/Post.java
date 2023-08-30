@@ -52,9 +52,6 @@ public class Post {
 	@Enumerated(EnumType.STRING)
 	private BLOCKED blocked;
 
-	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-	Set<PostData> postDataSet;
-
 	public Post() {
 
 		this.createDate = new Date(); /// default to current time

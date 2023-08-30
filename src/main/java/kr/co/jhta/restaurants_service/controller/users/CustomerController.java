@@ -210,6 +210,14 @@ public class CustomerController {
         return "/user/customer/my-page";
     }
 
+    @GetMapping("/user-details")
+    public String userDetailsPage(@RequestParam("id") int userId, Model model) {
+
+        model.addAttribute("customer", userService.getUserById(userId));
+
+        return "/user/customer/user-details";
+    }
+
     @ResponseBody
     @GetMapping("/requests")
     public List<FollowRequestDto> followRequests(@AuthenticationPrincipal SecurityUser securityUser,

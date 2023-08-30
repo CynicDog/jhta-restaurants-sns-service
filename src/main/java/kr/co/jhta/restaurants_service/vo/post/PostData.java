@@ -22,7 +22,8 @@ public class PostData {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne @JsonIgnore
+	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "post_id")
 	private Post post;
 

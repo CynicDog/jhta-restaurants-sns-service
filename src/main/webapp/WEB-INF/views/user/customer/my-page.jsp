@@ -162,15 +162,15 @@
             </div>
         </div>
         <div class="col-md-7 my-5 px-4">
-            <div class="pb-4 mb-4 border-bottom text-end">
+            <div class="pb-2 my-1 border-bottom text-end">
                 <span id="postPicturesButton"
                       type="button"
-                      class="badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                      class="badge bg-primary-subtle text-primary-emphasis rounded-pill mx-1">
                     Post Pictures
                 </span>
                 <span id="reviewPicturesButton"
                       type="button"
-                      class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                      class="badge bg-success-subtle text-success-emphasis rounded-pill mx-1">
                     Review Pictures
                 </span>
             </div>
@@ -407,7 +407,7 @@
                     followersOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill"> \${datum.nickname}</div>
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -463,7 +463,7 @@
                     followingsOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill"> \${datum.nickname}</div>
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -500,6 +500,15 @@
             followingsToastBootstrap.show()
         })
 
+        addEventListener('click', function (event) {
+            if (event.target.classList.contains('userDetailEntry')) {
+                const button = event.target;
+                const userId = button.getAttribute('data-user-id')
+
+                window.location.href = `/customer/user-details?id=\${userId}`
+            }
+        })
+
         const getPosts = page => {
             return fetch(`/customer/posts?page=\${page}&limit=7`).then(response => response.json());
         }
@@ -523,7 +532,7 @@
                     postOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium"> \${datum.title}</div>
+                                <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
                             </div>
                             <div class="text-end m-2">
@@ -536,6 +545,15 @@
                 })
             })
         }
+
+        addEventListener('click', function(event) {
+            if (event.target.classList.contains('postDetailEntry')) {
+                const button = event.target
+                const postId = button.getAttribute('data-post-id')
+
+                window.location.href = `/post/detail?id=\${postId}`
+            }
+        })
 
         const getReviews = page => {
             return fetch(`/customer/reviews?page=\${page}&limit=7`).then(response => response.json());
@@ -560,7 +578,7 @@
                     reviewsOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium"> \${datum.store.name} (\${datum.rating}) </div>
+                                <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${datum.content}
                             </div>
                             <div class="text-end m-2">
@@ -574,6 +592,15 @@
             })
         }
     });
+
+    addEventListener('click', function(event) {
+        if (event.target.classList.contains('storeDetailsEntry')) {
+            const button = event.target;
+            const storeId = button.getAttribute('data-store-id')
+
+            window.location.href = `/store/detail?id=\${storeId}`
+        }
+    })
 
     let isRequestLast = false;
     let isRequestsFetching = false;
@@ -753,7 +780,7 @@
                 pictureDataOutputArea.innerHTML += `
                     <div class="col-4 my-3">
                         <div class=" rounded-4 text-bg-light shadow-sm border border-0">
-                            <img src="/images/post/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                            <img type="button" src="/images/post/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover storeDetailsEntry" style="height: 200px; width: 100%" data-store-id="\${datum.store.id}">
                         </div>
                     </div>
                 `
@@ -778,7 +805,7 @@
                 pictureDataOutputArea.innerHTML += `
                     <div class="col-4 my-3">
                         <div class=" rounded-4 text-bg-light shadow-sm border border-0">
-                            <img src="/images/review/jpeg/\${datum.pictureName}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                            <img src="/images/review/jpeg/\${datum.pictureName}" alt="Image"  class="object-fit-cover storeDetailsEntry" data-store-id="\${datum.review.store.id}" style="height: 200px; width: 100%">
                         </div>
                     </div>
                 `
