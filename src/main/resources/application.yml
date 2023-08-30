@@ -61,3 +61,7 @@ data:
   go:
     kr:
       service-key: LuOmWzPRFEp4asq7iwuM2e%2FgkyoRK5nw1dXv%2F3QdMo8kxm9oxvr0PCnRTQfxGgMMvyuIfyzzm%2BIM1WqdYBgpPg%3D%3D
+
+gcp:
+  bucket:
+    name: jhta-restaurants-sns-service
