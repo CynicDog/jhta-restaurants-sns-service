@@ -246,16 +246,16 @@ public class ReviewService {
     }
     
     public List<Review> getAllReviewsPaginated(int page, int limit){
-    	int begin = (page - 1) * limit;
-		int end = begin + limit;
+    	int start = (page - 1) * limit;
+		int end = start + limit;
 		
-		return reviewMapper.getAllReivewsPaginated(begin, end);
+		return reviewMapper.getAllReivewsPaginated(start, end);
     }
     
     public List<Review> getFollowerReviewsPaginated(int page, int limit, SecurityUser securityUser){
-    	int begin = (page - 1) * limit;
-		int end = begin + limit;
+    	int start = (page - 1) * limit;
+		int end = start + limit;
 		
-		return reviewMapper.getFollowerReivewsPaginated(begin, end, securityUser.getUser().getId());
+		return reviewMapper.getFollowerReivewsPaginated(start, end, securityUser.getUser().getId());
     }
 }
