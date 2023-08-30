@@ -36,89 +36,57 @@
 	<div class="container border-top mt-3" >
 		<div class="row text-center border-bottom">
 			<div class="col-12 my-5">
-				<h2>Follower Review</h2>
-				<h4 class="text-secondary">( 내가 팔로우한 사람들의 리뷰를 확인해보세요! )</h4>
+				<h2>All Review</h2>
+				<h4 class="text-secondary">( 사람들의 리뷰를 확인해보세요! )</h4>
 			</div>
 		</div>
 	</div>
-	<div class="container">
-		<div class="row mt-4 mb-3">
-			
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay cardname">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					<div class="card-img-overlay cardratting text-end text-warning">
-						<strong style="font-size:20px;">5.0</strong>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<strong >리뷰어 닉네임</strong>
-					</div>
-					<div class="col text-end">
-						<p class="text-end text-secondary">3분전</p>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-4 my-3">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
-
-					<div class="card-img-overlay cardname">
-						<p><strong>인생 카페 10선</strong></p>
-					</div>
-					<div class="card-img-overlay cardratting text-end text-warning">
-						<strong style="font-size:20px;">5.0</strong>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<strong >리뷰어 닉네임</strong>
-					</div>
-					<div class="col text-end">
-						<p class="text-end text-secondary">3분전</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="container justify-content-center align-items-center">
+        <div id="reviewsOutputArea" class="row mt-4 mb-3">
+        </div>
+        <div class="text-center">
+            <div class="btn disabled border border-0">
+                <div id="reviewsLoadingSpinner"
+                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                     style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
 	<%@ include file="common/footer.jsp" %>
 </div>
 <script type="text/javascript">
-	let isPostFetching = false;
-	let isPostLast = false;
-	const postsLoadingSpinner = document.getElementById('postsLoadingSpinner')
+	let isReviewFetching = false;
+	let isReviewLast = false;
+	const reviewsLoadingSpinner = document.getElementById('reviewsLoadingSpinner')
 	
-	let pageOnPosts = 1;
+	let pageOnReviews = 1;
 	
-	const getPosts = (page) => {
-	    return fetch(`/post/get/followerPost?page=\${page}&limit=9`).then(response => response.json());
+	const getReviews = (page) => {
+	    return fetch(`/review/get/allReview?page=\${page}&limit=9`).then(response => response.json());
 	}
 	
-	function fetchAndRenderPosts(currentPage) {
+	function fetchAndRenderReviews(currentPage) {
 	
-	    isPostFetching = true;
-	    postsLoadingSpinner.style.display = 'block';
+	    isReviewFetching = true;
+	    reviewsLoadingSpinner.style.display = 'block';
 	
-	    getPosts(currentPage).then(data => {
-	
+	    getReviews(currentPage).then(data => {
+			console.log(data)
 	        if (data.length < 9) {
-	            isPostLast = true;
-	            postsLoadingSpinner.style.display = 'none';
+	            isReviewLast = true;
+	            reviewsLoadingSpinner.style.display = 'none';
 	        }
 	
 	        data.forEach(datum => {
-	            document.getElementById('postsOutputArea').innerHTML += `
+	        	
+	            document.getElementById('reviewsOutputArea').innerHTML += `
 	        					<div class="col-md-4 my-3">
-	        						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='followerPost/detail?id=\${datum.id}'" style=" cursor: pointer;">
+	        						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=\${datum.id}'" style=" cursor: pointer;">
 	        							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
 	        							<div class="card-img-overlay">
-	        								<p><strong>\${datum.title}</strong></p>
+	        								<p><strong>\${datum.store.name}</strong></p>
 	        							</div>
 	        						</div>
 	        						<div class="row">
@@ -133,7 +101,7 @@
 	            `
 	        })
 	    })
-	    isPostFetching = false;
+	    isReviewFetching = false;
 	}
 	
 	window.onscroll = function () {
@@ -143,17 +111,17 @@
 	
 	    if ((window.innerHeight + window.scrollY) + .5 >= document.body.offsetHeight) {
 	
-	        if (isPostFetching || isPostLast) {
+	        if (isReviewFetching || isReviewLast) {
 	            // do nothing;
 	        } else {
-	            pageOnPosts += 1;
-	            fetchAndRenderPosts(pageOnPosts);
+	            pageOnReviews += 1;
+	            fetchAndRenderReviews(pageOnReviews);
 	        }
 	    }
 	}
 	
 	// initial fetching and rendering
-	fetchAndRenderPosts(pageOnPosts);
+	fetchAndRenderReviews(pageOnReviews);
 	
 	function timeForToday(value) {
 	    const today = new Date();
@@ -178,11 +146,6 @@
 	    return `\${Math.floor(betweenTimeDay / 365)}년전`;
 	}
 	
-	$("[id^=dateInput]").each(function (index, input) {
-	    let value = $(input).val();
-	    let elapsed = timeForToday(value);
-	    $(input).next().text(elapsed);
-	})
 </script>
 </body>
 </html>

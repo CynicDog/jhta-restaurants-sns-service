@@ -16,18 +16,31 @@
     googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
     <style type="text/css">
-        img {
+        .card-image {
             width: 100%;
             height: 250px;
             object-fit: cover;
             filter: brightness(70%);
         }
 
-        .card-img-overlay {
-            position: absolute;
-            top: 30%;
-            font-size: 22px;
-        }
+        .cards {
+			position: relative;
+			align-text:center;
+		}
+		
+		.card-image-overlay {
+			position: absolute;
+		}
+		
+		.title-text {
+		   	position: absolute;
+		   	width: 100%;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    text-align:center;
+		    font-size:18px;
+		}
     </style>
     <title>Insert title here</title>
 </head>
@@ -83,10 +96,13 @@
             data.forEach(datum => {
                 document.getElementById('postsOutputArea').innerHTML += `
             					<div class="col-md-4 my-3">
-            						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='allPost/detail?id=\${datum.id}'" style=" cursor: pointer;">
-            							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+            						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='detail?id=\${datum.id}'" style=" cursor: pointer;">
+            							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
             							<div class="card-img-overlay">
-            								<p><strong>\${datum.title}</strong></p>
+            								<div class="title-text">
+	            								<strong>\${datum.title}</strong><br>
+	            								<div class="text-white" style="opacity:80%;">( \${datum.subTitle} )</div>
+	            							</div>
             							</div>
             						</div>
             						<div class="row">
@@ -145,12 +161,6 @@
 
         return `\${Math.floor(betweenTimeDay / 365)}년전`;
     }
-
-    $("[id^=dateInput]").each(function (index, input) {
-        let value = $(input).val();
-        let elapsed = timeForToday(value);
-        $(input).next().text(elapsed);
-    })
 </script>
 </body>
 </html>

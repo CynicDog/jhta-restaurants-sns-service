@@ -7,25 +7,32 @@
 <title>Insert title here</title>
 <%@ include file="common/navbar.jsp" %>
 <style type="text/css">
-	.wrap{
+	.cards {
 		position: relative;
-		min-height: 100%;
-		padding-bottom: 100px;
+		align-text:center;
 	}
 	
-	.card-img-overlay{
+	.card-image-overlay {
 		position: absolute;
-		top: 30%;
-		font-size: 22px;
 	}
 	
-	img{
+	.title-text {
+	   	position: absolute;
+	   	width: 100%;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    text-align:center;
+	    font-size:18px;
+	}
+	
+	.card-image {
 		width: 100%;
 		height: 200px;
 		object-fit:cover;
 		filter: brightness(70%);
 	}
-	
+		
 	.search-bar {
   		width: 800px;
 	}
@@ -45,14 +52,26 @@
 		</div>
 		<div class="row mb-3 border-bottom">
 			
-			<c:forEach var="data" items="${recentPosts }" >
-				<div class="col-4 mb-4">
-					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='allPost/detail?id=${data.id}'" style=" cursor: pointer;">
-						<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+			<c:forEach var="recentPostdata" items="${recentPosts }" >
+				<c:set var="sysYear"><fmt:formatDate value="${recentPostdata.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
+				<div class="col-md-4 mb-4">
+					<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${recentPostdata.id}'" style=" cursor: pointer;">
+						<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
 	
 						<div class="card-img-overlay">
-							<div><strong>${data.title }</strong></div>
-							<div class="text-white" style="opacity:80%;">( ${data.subTitle } )</div>
+							<div class="title-text">
+								<strong>${recentPostdata.title }</strong><br>
+								<div class="text-white" style="opacity:80%;">( ${recentPostdata.subTitle } )</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<strong >${recentPostdata.customer.username }</strong>
+						</div>
+						<div class="col text-end">
+							<input type="hidden" id="dateInput-${recentPostdata.id }" type="text" value="${sysYear }" >
+							<p class="text-end text-secondary" id="dateValue-${recentPostdata.id }"></p>
 						</div>
 					</div>
 				</div>
@@ -72,37 +91,94 @@
 			<div class="row mb-3 border-bottom">
 				
 				<c:forEach var="followerPostData" items="${recentPostsOfFollower }" >
-					<div class="col-4 mb-4">
-						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='followerPost/detail?id=${data.id}'" style=" cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+					<c:set var="sysYear"><fmt:formatDate value="${followerPostData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
+					<div class="col-md-4 mb-4">
+						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
+							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
-								<div><strong>${followerPostData.title }</strong></div>
-								<div class="text-white" style="opacity:80%;">( ${followerPostData.subTitle } )</div>
+								<div class="title-text">
+									<strong>${followerPostData.title }</strong><br>
+									<div class="text-white" style="opacity:80%;">( ${followerPostData.subTitle } )</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<strong >${followerPostData.customer.username }</strong>
+							</div>
+							<div class="col text-end">
+								<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
+								<p class="text-end text-secondary" id="dateValue-${followerPostData.id }"></p>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 				
 			</div>
-			
+		</sec:authorize>
+			<div class="row mt-3">
+				<div class="col">
+					<h4 class="my-3 text-secondary"><strong>Recent Review</strong></h4>
+				</div>
+				<div class="col text-end">
+					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/allReviews'"> more</button>
+				</div>
+			</div>
+			<div class="row mb-3 border-bottom">
+				<c:forEach var="recentReviewData" items="${recentReviews }" >
+					<c:set var="sysYear"><fmt:formatDate value="${recentReviewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
+					<div class="col-md-4 mb-4">
+						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentReviewData.id}'" style=" cursor: pointer;">
+							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+		
+							<div class="card-img-overlay">
+								<div class="title-text">
+									<strong>${recentReviewData.store.name }</strong><br>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<strong >${recentReviewData.customer.username }</strong>
+							</div>
+							<div class="col text-end">
+								<input type="hidden" id="dateInput-${recentReviewData.id }" type="text" value="${sysYear }" >
+								<p class="text-end text-secondary" id="dateValue-${recentReviewData.id }"></p>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		<sec:authorize access="isAuthenticated()">
 			<div class="row mt-3">
 				<div class="col">
 					<h4 class="my-3 text-secondary"><strong>Follower Review</strong></h4>
 				</div>
 				<div class="col text-end">
-					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/follower'"> more</button>
+					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/followerReviews'"> more</button>
 				</div>
 			</div>
 			<div class="row mb-3 border-bottom">
-				<c:forEach var="data" items="${posts }" >
-					<div class="col-4 mb-4">
-						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${data.review.id}'" style=" cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+				<c:forEach var="recentFollowerReivewData" items="${recentFollowerReivews }" >
+					<c:set var="sysYear"><fmt:formatDate value="${recentFollowerReivewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
+					<div class="col-md-4 mb-4">
+						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
+							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
-								<div><strong>${data.title }</strong></div>
-								<div class="text-white" style="opacity:80%;">( ${data.subTitle } )</div>
+								<div class="title-text">
+									<strong>${recentFollowerReivewData.store.name }</strong><br>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<strong >${recentFollowerReivewData.customer.username }</strong>
+							</div>
+							<div class="col text-end">
+								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
+								<p class="text-end text-secondary" id="dateValue-${recentFollowerReivewData.id }"></p>
 							</div>
 						</div>
 					</div>
@@ -119,17 +195,49 @@
 			</div>
 		</div>
 		<div class="row mb-3 border-bottom">
-			<div class="col-4 mb-4">
-				<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+			<div class="col-md-4 mb-4">
+				<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
+					<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
 
 					<div class="card-img-overlay">
-						<p><strong>인생 카페 10선</strong></p>
+						<div class="title-text">
+							<strong>${recentFollowerReivewData.store.name }</strong><br>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>	
 </div>
+<script type="text/javascript">
+	function timeForToday(value) {
+	    const today = new Date();
+	    const timeValue = new Date(value);
+	    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+	
+	    if (betweenTime < 1) return '방금전';
+	    if (betweenTime < 60) {
+	        return `\${betweenTime}분전`;
+	    }
+	
+	    const betweenTimeHour = Math.floor(betweenTime / 60);
+	    if (betweenTimeHour < 24) {
+	        return `\${betweenTimeHour}시간전`;
+	    }
+	
+	    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+	    if (betweenTimeDay < 365) {
+	        return `\${betweenTimeDay}일전`;
+	    }
+	
+	    return `\${Math.floor(betweenTimeDay / 365)}년전`;
+	}
+	
+	$("[id^=dateInput]").each(function (index, input) {
+	    let value = $(input).val();
+	    let elapsed = timeForToday(value);
+	    $(input).next().text(elapsed);
+	})
+</script>
 </body>
 </html>

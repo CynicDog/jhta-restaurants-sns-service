@@ -83,7 +83,7 @@
             data.forEach(datum => {
                 document.getElementById('postsOutputArea').innerHTML += `
             					<div class="col-md-4 my-3">
-            						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='followerPost/detail?id=\${datum.id}'" style=" cursor: pointer;">
+            						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='detail?id=\${datum.id}'" style=" cursor: pointer;">
             							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
             							<div class="card-img-overlay">
             								<p><strong>\${datum.title}</strong></p>

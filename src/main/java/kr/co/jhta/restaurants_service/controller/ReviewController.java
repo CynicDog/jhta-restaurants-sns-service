@@ -115,10 +115,10 @@ public class ReviewController {
 	
 	@GetMapping("/allReviews")
 	public String AllReivews(Model model) {
-		return "followerReview";
+		return "allReview";
 	}
 	
-	@GetMapping("/followerReveiws")
+	@GetMapping("/followerReviews")
 	public String followerReview(){
 		
 		return "followerReview";

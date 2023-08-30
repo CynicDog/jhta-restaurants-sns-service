@@ -147,8 +147,8 @@ public class PostController {
         return ResponseEntity.ok().body("Success!");
     }
 
-    @GetMapping("/followerPost/detail")
-    public String followerPostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
+    @GetMapping("/detail")
+    public String PostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
 
         PostDto dto = postService.selectPost(id, securityUser);
 
@@ -157,15 +157,7 @@ public class PostController {
         return "post/posting";
     }
     
-    @GetMapping("/allPost/detail")
-    public String PostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser, Model model) {
-    	
-    	PostDto dto = postService.selectPost(id, securityUser);
-    	
-    	model.addAttribute("post", dto);
-    	
-    	return "post/posting";
-    }
+    
 
 //    storage = StorageOptions.getDefaultInstance().getService();
 //    

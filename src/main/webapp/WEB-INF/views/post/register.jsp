@@ -110,7 +110,7 @@
                                                     </div>
                                                     <input style="visibility: hidden;" type="file" id="imageFile-0"
                                                            name="chooseFile"
-                                                           accept="image/*">
+                                                           accept="image/jpeg">
                                                 </div>
                                                 <div class="text-center" style="display:none;">
                                                     <img class="img-thumbnail border-0"
@@ -250,7 +250,7 @@
                                 </div>
                                 <input style="visibility: hidden;" type="file" id="imageFile-\${formIndex}"
                                        name="chooseFile"
-                                       accept="image/*">
+                                       accept="image/jpeg">
                             </div>
                             <div class="text-center" style="display:none;">
                                 	<img class="img-thumbnail border-0"

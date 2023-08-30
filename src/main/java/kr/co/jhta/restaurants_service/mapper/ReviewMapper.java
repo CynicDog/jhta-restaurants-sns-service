@@ -32,7 +32,7 @@ public interface ReviewMapper {
 	List<Review> getAllReivewsPaginated(@Param("begin") int begin, @Param("end") int end);
 	List<Review> getFollowerReivewsPaginated(@Param("begin") int begin, @Param("end") int end, @Param("followedId") int followedId);
 
-  List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
+	List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
 														  @Param("end") int end,
 														  @Param("storeId") int storeId,
 														  @Param("rating") int rating);
