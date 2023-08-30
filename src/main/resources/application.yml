@@ -47,7 +47,7 @@ spring:
     gcp:
       storage:
         credentials:
-          location: classpath:e-object-396210-29e7528877fc.json
+          location: classpath:clean-utility-397500-2724d898a363.json
 
 mybatis:
   mapper-locations:

@@ -85,7 +85,7 @@ public class PostController {
     public ResponseEntity<String> insertPostData(MultipartFile chooseFile, int storeId, String content, @RequestParam(name = "data-id") int toBeDeleted, HttpSession httpSession) throws IOException {
 
         try {
-            String bucketName = "jhta-restaurant-service";
+            String bucketName = "jhta-restaurants-sns-service";
             String objectName = "post/" + chooseFile.getOriginalFilename();
 
             BlobId blobId = BlobId.of(bucketName, objectName);
