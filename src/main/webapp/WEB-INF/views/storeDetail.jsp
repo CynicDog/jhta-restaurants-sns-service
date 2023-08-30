@@ -72,19 +72,19 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-md-8">
                 <div>
                     <header>
-                        <div class="row">
-                            <div class="col-8">
-                                <p class="restaurants_name my-3">
-                                    <span class="fs-4 fw-lighter">${store.name}</span>
-                                    <span class="rate-point mx-3 fs-3 fw-lighter" style="color: #ff792a;"><fmt:formatNumber value="${storeAvg.storeReviewAvg }" pattern="#.#" /></span>
-                                </p>
-                            </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <p class="restaurants_name my-3">
+                                <span class="fs-4 fw-lighter">${store.name}</span>
+                                <span class="rate-point mx-3 fs-3 fw-lighter" style="color: #ff792a;"><fmt:formatNumber value="${storeAvg.storeReviewAvg }" pattern="#.#" /></span>
+                            </p>
+                        </div>
                             <div class="col-4">
-							    <span class="my-2 float-end">
-							        <sec:authorize access="isAuthenticated()">
+						       <span class="float-end">
+							       <sec:authorize access="isAuthenticated()">
 							            <sec:authentication property="principal.user.id" var="loginId"/>
 							            <c:if test="${store.owner.id ne loginId}">
 							                <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
@@ -94,7 +94,7 @@
 							                    <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							                </button>
 							            </c:if>
-							        </sec:authorize>
+							       </sec:authorize>
 							        <sec:authorize access="!isAuthenticated()">
 							            <button type="button" class="btn" style="color: #ff792a;" onclick="location.href='/review?storeId=${param.id }'">
 							                리뷰<i class="bi bi-brush"></i>
@@ -103,122 +103,116 @@
 							                <i id="bookmark-${store.id }" class="bi ${not empty bookmark ? 'bi-star-fill' : 'bi-star'}" style="color: gold; font-size: 28px;"></i>
 							            </button>
 							        </sec:authorize>
-							    </span>
+								</span>
 							</div>
-                        </div>
+						</div>
                         <div>
                             <i class="bi bi-eye-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${store.readCount }</span>
                             <i class="bi bi-pen-fill" style="color: #C0C0C0;"></i><span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${reviewCount }</span>
                             <i class="bi bi-star-fill" style="color: #C0C0C0;"></i> <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${bookmarkCount }</span>
                         </div>
-                        <div class="row">
-                            <table class="table">
-                                <tr>
-                                    <th style="width: 120px;"><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
-                                    <td>${store.address}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="bi bi-telephone"></i><span class="fw-lighter mx-2">전화번호</span></th>
-                                    <td>${store.phone}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="bi bi-shop"></i><span class="fw-lighter mx-2">가게 소개</span></th>
-                                    <td>${store.description}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="bi bi-tag"></i><span class="fw-lighter mx-2">음식 종류</span></th>
-                                    <td>${store.category}</td>
-                                </tr>
-                                <tr>
-                                    <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
-                                    <td id="daysArea">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
-                                    <td>
-                                        <c:forEach var="food" items="${foods}">
-                                            <div class="col my-2">
-                                                <span class="food-name d-inline-block" style="width: 120px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
-                                            </div>
-                                        </c:forEach>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        <table class="table">
+                            <tr>
+                                <th style="width: 120px;"><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
+                                <td>${store.address}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="bi bi-telephone"></i><span class="fw-lighter mx-2">전화번호</span></th>
+                                <td>${store.phone}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="bi bi-shop"></i><span class="fw-lighter mx-2">가게 소개</span></th>
+                                <td>${store.description}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="bi bi-tag"></i><span class="fw-lighter mx-2">음식 종류</span></th>
+                                <td>${store.category}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="bi bi-alarm"></i><span class="fw-lighter mx-2">영업시간</span></th>
+                                <td id="daysArea">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
+                                <td>
+                                    <c:forEach var="food" items="${foods}">
+                                        <div class="col my-2">
+                                            <span class="food-name d-inline-block" style="width: 120px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+                                        </div>
+                                    </c:forEach>
+                                </td>
+                            </tr>
+                        </table>
                     </header>
                 </div>
+                <div class="row">
+				    <div class="col-4">
+				        <span class="fs-4 fw-lighter">리뷰</span>
+				        <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewCount })</span>
+				    </div>
+				    <div class="col-8 p-1 text-end">
+				        <button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })
+				        </button>
+				        <button id="btn-review-good" type="button" class="btn border-opacity-10 " style="background: none; border: none;">맛있어요(${reviewSummary.good })
+				        </button>
+				        <button id="btn-review-soso" type="button" class="btn border-opacity-10" style="background: none; border: none;">괜찮아요(${reviewSummary.soso })
+				        </button>
+				        <button id="btn-review-bad" type="button" class="btn border-opacity-10" style="background: none; border: none;">별로에요(${reviewSummary.bad })
+				        </button>
+				    </div>
+		            <div id="review-list">
+		                <div id="reviewOutputArea">
+		                </div>
+		            </div>
+				</div>
             </div>
-            <div class="col-4">
-                <div id="map" style="width: 400px; height: 350px; cursor: pointer;"></div>
-            </div>
-            <!-- 지도 모달 -->
-            <div class="row">
-                <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
-                    <div class="col-12">
-                        <span class="close" onclick="closeMapModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div class="modal-body">
-                                        <div id="largeMap" style="width: 100%; height: 800px;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-4" style="position: relative;">
+            	<div style="position: sticky; top: 0;">
+	                <div id="map" style="width: 400px; height: 350px; cursor: pointer;"></div>
+		                <div class="p-4">
+		                <div class="row">
+		                	<c:forEach var="closestStore" items="${closestStores }">
+		                    <div class="mb-3">
+		                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
+		                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
+		                            <div class="d-flex align-items-start">
+		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px;">
+		                                <div class="ml-3">
+		                                    <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name }</h5>
+		                                    <p class="card-text text-sm ml-1">
+		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
+		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>주소:</strong> ${closestStore.address }</span>
+		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>전화번호:</strong> ${closestStore.phone } </span>
+		                                    </p>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                	</c:forEach>
+		                    <!-- <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="..."> -->
+		                </div>
+		            </div>
+	            </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-8">
-                <span class="fs-4 fw-lighter">리뷰</span>
-                <span class="fs-4 fw-lighter" style="color: #adb5bd;">(${reviewCount })</span>
-                <div class="btn-group p-1 float-end">
-                    <button id="btn-review-all" type="button" class="btn border-opacity-10 active" style="background: none; border: none;">전체(${reviewSummary.total })
-                    </button>
-                    <button id="btn-review-good" type="button" class="btn border-opacity-10 " style="background: none; border: none;">
-                        <span class="visually-hidden">Button</span> 맛있어요(${reviewSummary.good })
-                    </button>
-                    <button id="btn-review-soso" type="button" class="btn border-opacity-10" style="background: none; border: none;">
-                        <span class="visually-hidden">Button</span> 괜찮아요(${reviewSummary.soso })
-                    </button>
-                    <button id="btn-review-bad" type="button" class="btn border-opacity-10" style="background: none; border: none;">
-                        <span class="visually-hidden">Button</span> 별로에요(${reviewSummary.bad })
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8" id="review-list">
-                    <div id="reviewOutputArea">
-                    </div>
-                </div>
-                <div class="col-md-4 p-4">
-                    <div class="row">
-                    	<c:forEach var="closestStore" items="${closestStores }">
-                    	
-                        <div class="mb-3">
-                            <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-                            <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 140px;">
-                                <div class="d-flex align-items-start">
-                                    <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 120px; height: 120px;">
-                                    <div class="ml-3">
-                                        <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name }</h5>
-                                        <p class="card-text text-sm ml-1">
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">카테고리</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">리뷰 평점</span>
-                                            <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;">거리</span>
-                                        </p>
-                                    </div>
-                                </div>
+    </div>
+    <!-- 지도 모달 -->
+    <div class="row">
+        <div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+            <div class="col-12">
+                <span class="close" onclick="closeMapModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-body">
+                                <div id="largeMap" style="width: 100%; height: 800px;"></div>
                             </div>
                         </div>
-                    	</c:forEach>
-                        <!-- <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-                        <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="..."> -->
                     </div>
                 </div>
             </div>
