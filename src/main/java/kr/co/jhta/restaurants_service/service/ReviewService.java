@@ -139,9 +139,12 @@ public class ReviewService {
 		List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
 		Double reviewRatingByCustomerId = allReviewByCustomerId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
 		
+		List<ReviewPicture> reviewPictures = reviewPictureMapper.getReviewPicturesByReviewId(ReviewId);
+		
 		dto.setReview(review);
 		dto.setReviewKeywords(reviewKeyword);
 		dto.setReviewRatingByCustomerId(reviewRatingByCustomerId);
+		dto.setReviewPicturesByReviewId(reviewPictures);
 
 		return dto;
 	}

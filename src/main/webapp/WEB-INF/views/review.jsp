@@ -148,7 +148,7 @@ $(function() {
     });
 	
 	// 이미지 필드의 이미지가 변경되면 
-	$("#imageFile").on("change", function(event) {
+	$(".photo-section").on("change", "#imageFile", function(event) {
 		// 버튼과  이미지태그르 생성한다.
 		let content = `
 			<button type="button" class="btn position-relative">
@@ -169,8 +169,11 @@ $(function() {
 
 	    // FileReader객체로 파일을 읽어온다.
 	    reader.readAsDataURL(file);
+	    
+	    $(".photo-section").prepend($("#imageFile").attr("id", "").attr("name", "chooseFile"));
+	    $("label[for=imageFile]").after(`<input style="visibility: hidden" type="file" id="imageFile" accept="image/*" >`);
 	});
- 
+	
 	$("textarea[name=content]").keyup(function() {
 		
 	    let maxLength = 2000; 
