@@ -36,5 +36,4 @@ public interface ReviewMapper {
 														  @Param("end") int end,
 														  @Param("storeId") int storeId,
 														  @Param("rating") int rating);
-
 }
