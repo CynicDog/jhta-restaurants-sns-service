@@ -14,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Alias("HomeContent")
-public class HomeContent {
+@Alias("HomeFeed")
+public class HomeFeed {
 	private int id;
 	private String username;
 	private String storeName;

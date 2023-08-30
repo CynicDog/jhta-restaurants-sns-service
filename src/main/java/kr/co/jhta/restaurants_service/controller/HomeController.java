@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.controller;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.jboss.logging.Logger;
@@ -8,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.jhta.restaurants_service.dto.HomeContent;
+import kr.co.jhta.restaurants_service.dto.HomeFeed;
 import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.HomeService;
@@ -44,20 +46,17 @@ public class HomeController {
 
 	@GetMapping("/feed")
 	@ResponseBody
-	public List<HomeContent> getHomeFeeds(@AuthenticationPrincipal SecurityUser user){
+	public List<HomeFeed> getHomeFeeds(int page, int limit, @AuthenticationPrincipal SecurityUser user){
 		
-		List<HomeContent> result = homeService.getFeeds(user.getUser().getId());
+		List<HomeFeed> result = homeService.getFeeds(page, limit, user.getUser().getId());
 		
 		return result;
   }
 	
 	@GetMapping("/anofeed")
 	@ResponseBody
-	public List<HomeAnonymousFeed> getHomeFeedsAnonymous(){
-		
-		List<HomeAnonymousFeed> result = homeService.getAnonymousFeeds();
-		
-		return result;
+	public List<HomeAnonymousFeed> getHomeFeedsAnonymous(int page, int limit){
+		return homeService.getAnonymousFeeds(page, limit);
 	}
 
 	@GetMapping("/contents")

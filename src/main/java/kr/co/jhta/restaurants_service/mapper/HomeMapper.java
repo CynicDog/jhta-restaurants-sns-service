@@ -3,14 +3,15 @@ package kr.co.jhta.restaurants_service.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
-import kr.co.jhta.restaurants_service.dto.HomeContent;
+import kr.co.jhta.restaurants_service.dto.HomeFeed;
 
 @Mapper
 public interface HomeMapper {
 
-	List<HomeContent> getHomeFeedsByFollowerId(int userId);
+	List<HomeFeed> getHomeFeedsByFollowerId(int begin, int end, int userId);
 
-	List<HomeAnonymousFeed> getAnonymousFeeds();
+	List<HomeAnonymousFeed> getAnonymousFeeds(int begin, int end);
 }
