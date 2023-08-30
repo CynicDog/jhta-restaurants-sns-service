@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import kr.co.jhta.restaurants_service.dto.*;
 import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
 
+import kr.co.jhta.restaurants_service.vo.review.Review;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -143,7 +144,8 @@ public class StoreController {
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
 //      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
-        
+        List<ReviewDto> recentReviews = reviewService.getReviewsPaginatedByStoreId(1, 5, storeId, "all");
+
         // 모델에 가게 정보를 추가합니다.
         model.addAttribute("reviewCount", reviewDetailDto.getReviewCount());
         model.addAttribute("bookmarkCount", reviewDetailDto.getBookmarkCount());
@@ -152,6 +154,7 @@ public class StoreController {
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         model.addAttribute("storeAvg", reviewDetailDto);
         model.addAttribute("closestStores", dto.getClosestStores());
+		model.addAttribute("recentReviews", recentReviews);
         // 모델에 리뷰 정보를 추가합니다.
 //        model.addAttribute("reviews", reviewDto);
 //        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());

@@ -25,11 +25,9 @@
 <div class="wrap">
     <div class="container">
         <div class="row row-cols-5" style="cursor: pointer;">
-            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 1" onclick="openModal(this)">
-            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 2" onclick="openModal(this)">
-            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 3" onclick="openModal(this)">
-            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 4" onclick="openModal(this)">
-            <img class="img-thumbnail" src="https://mp-seoul-image-production-s3.mangoplate.com/417406/927873_1585054126226_34632?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80" alt="Thumbnail 5" onclick="openModal(this)">
+            <c:forEach var="recentReview" items="${recentReviews}">
+                <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" alt="Thumbnail 1" onclick="openModal(this)">
+            </c:forEach>
         </div>
         <div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
             <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
@@ -48,6 +46,7 @@
                     <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
                         <div class="card-body d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
+<%--                                TODO --%>
                                 <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
                                 <div class="ml-2">
                                     <span style="font-size: medium; font-weight: bold;">정손님</span>
@@ -284,7 +283,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex" id="picturesOutputArea">
-
+                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 100%">
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -309,12 +308,7 @@
                         </div>
                     </div>
                 `
-                const picturesOutputArea = document.getElementById('picturesOutputArea')
-                datum.reviewPictures.forEach(picture => {
-                    picturesOutputArea.innerHTML += `
-                        <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 100%">
-                    `
-                })}
+                }
             )
         })
         isReviewsFetching = false;
