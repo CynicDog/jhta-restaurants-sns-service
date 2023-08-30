@@ -243,7 +243,8 @@
 	            isReviewsLast = true;
 	        }
 
-            data.forEach(datum => {		
+            data.forEach(datum => {
+
                 reviewOutputArea.innerHTML += `
                 	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
                         <div class="card-body">
@@ -282,10 +283,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex">
-                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
-                                        <img class="img-thumbnail" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" style="width: 120px; height: 120px;" alt="...">
+                                    <div class="d-flex" id="picturesOutputArea">
+
                                     </div>
                                     <div class="row">
                                         <div class="col">
@@ -310,18 +309,12 @@
                         </div>
                     </div>
                 `
-               /*  datam.reviewPictures.forEach(picName => {
-                	fetch(`/gcp/getPictures?pictureNameame}`)
-                	.then(response => {
-                		if (response.ok) {
-                			
-                			return response.image()
-                		}
-                	})
-                	.then(image => {
-                	})
-                })  */
-                }
+                const picturesOutputArea = document.getElementById('picturesOutputArea')
+                datum.reviewPictures.forEach(picture => {
+                    picturesOutputArea.innerHTML += `
+                        <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 100%">
+                    `
+                })}
             )
         })
         isReviewsFetching = false;

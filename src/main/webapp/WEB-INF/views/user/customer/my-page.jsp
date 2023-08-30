@@ -753,7 +753,7 @@
                 pictureDataOutputArea.innerHTML += `
                     <div class="col-4 my-3">
                         <div class=" rounded-4 text-bg-light shadow-sm border border-0">
-                            <img src="/images/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                            <img src="/images/post/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
                         </div>
                     </div>
                 `
@@ -775,14 +775,13 @@
             }
 
             data.content.forEach(datum => {
-                console.log('datum')
-                // pictureDataOutputArea.innerHTML += `
-                //     <div class="col-4 my-3">
-                //         <div class=" rounded-4 text-bg-light shadow-sm border border-0">
-                //             <img src="/images/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
-                //         </div>
-                //     </div>
-                // `
+                pictureDataOutputArea.innerHTML += `
+                    <div class="col-4 my-3">
+                        <div class=" rounded-4 text-bg-light shadow-sm border border-0">
+                            <img src="/images/review/jpeg/\${datum.pictureName}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                        </div>
+                    </div>
+                `
             })
         })
     }

@@ -97,7 +97,7 @@ public class GcpStorageDemo {
 
     @GetMapping("/review/jpeg/{imageName}")
     @ResponseBody
-    public ResponseEntity<byte[]> serveReviewJPEGImage(@PathVariable String imageName) throws IOException {
+    public ResponseEntity<byte[]> serveReviewJpegImage(@PathVariable String imageName) throws IOException {
 
         BlobId blobId = BlobId.of(bucketName,"review/" + imageName);
 
