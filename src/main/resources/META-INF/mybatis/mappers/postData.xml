@@ -2,9 +2,9 @@
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.PostDataMapper">
 	<insert id="insertPostData" parameterType="PostData">
 	    INSERT INTO POST_DATA
-	    	(post_id, store_id, content, picture_file)
+	    	(post_id, store_id, content, picture_file, customer_id, createDate)
 	    VALUES 
-	    	(#{post.id}, #{store.id}, #{content}, #{pictureFile})
+	    	(#{post.id}, #{store.id}, #{content}, #{pictureFile}, #{user.id}, #{createDate})
 	</insert>
 	
 	<select id="getPostDataByPostId" parameterType="int" resultType="PostData">
