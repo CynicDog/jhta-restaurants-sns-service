@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.controller;
 
 import java.io.IOException;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
@@ -41,9 +48,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/review")
 public class ReviewController {
 	
-	@Autowired
-	private ReviewService reviewService;
-	private StoreService storeService;
+	
+	private final ReviewService reviewService;
+	
+	private final Storage storage;
 	
 
 	// 리뷰 등록화면
@@ -58,6 +66,21 @@ public class ReviewController {
 	@PostMapping
 	public String reviewRegister(ReviewCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
 	
+		 try {
+	            String bucketName = "jhta-restaurants-sns-service";
+	            for(MultipartFile imageName : form.getChooseFile()) {
+	            	String objectName = "review/" + imageName.getOriginalFilename();
+	            	
+	            	BlobId blobId = BlobId.of(bucketName, objectName);
+	            	BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(imageName.getContentType()).build();
+	            	
+	            	Blob blob = storage.create(blobInfo, imageName.getBytes());
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
 		reviewService.createReview(form, securityUser);
 		log.info("리뷰 신규 등록 -> {}", form);
 		log.info("리뷰 키워드 -> {}", form.getReviewKeyword());
@@ -66,7 +89,6 @@ public class ReviewController {
 		
 		return "redirect:/store/detail?id=" + form.getStoreId();
 	}
-	
 	// 리뷰 답글 등록 요청 처리
 		@PostMapping("/register")
 		public String reviewCommentRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
