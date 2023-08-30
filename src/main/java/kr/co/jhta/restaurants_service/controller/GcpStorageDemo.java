@@ -32,9 +32,9 @@ public class GcpStorageDemo {
     @Autowired
     PostService postService;
 
-    @GetMapping("/png/{imageName}")
+    @GetMapping("/post/png/{imageName}")
     @ResponseBody
-    public ResponseEntity<byte[]> servePngImage(@PathVariable String imageName) throws IOException {
+    public ResponseEntity<byte[]> servePostPngImage(@PathVariable String imageName) throws IOException {
 
         BlobId blobId = BlobId.of(bucketName,"post/" + imageName);
 
@@ -53,9 +53,9 @@ public class GcpStorageDemo {
         }
     }
 
-    @GetMapping("/jpeg/{imageName}")
+    @GetMapping("/post/jpeg/{imageName}")
     @ResponseBody
-    public ResponseEntity<byte[]> serveJpegImage(@PathVariable String imageName) throws IOException {
+    public ResponseEntity<byte[]> servePostJpegImage(@PathVariable String imageName) throws IOException {
 
         BlobId blobId = BlobId.of(bucketName,"post/" + imageName);
 
@@ -73,6 +73,49 @@ public class GcpStorageDemo {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/review/png/{imageName}")
+    @ResponseBody
+    public ResponseEntity<byte[]> serveReviewPngImage(@PathVariable String imageName) throws IOException {
+
+        BlobId blobId = BlobId.of(bucketName,"review/" + imageName);
+
+        Blob blob = storage.get(blobId);
+
+        if (blob != null) {
+            byte[] imageBytes = blob.getContent();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_PNG);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/review/jpeg/{imageName}")
+    @ResponseBody
+    public ResponseEntity<byte[]> serveReviewJPEGImage(@PathVariable String imageName) throws IOException {
+
+        BlobId blobId = BlobId.of(bucketName,"review/" + imageName);
+
+        Blob blob = storage.get(blobId);
+
+        if (blob != null) {
+            byte[] imageBytes = blob.getContent();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @GetMapping("/demo")
     public String demo() {
