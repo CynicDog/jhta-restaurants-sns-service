@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,9 +57,8 @@ public class CustomerController {
 
     @ResponseBody
     @PostMapping("/follow")
-    public ResponseEntity follow(
-            @RequestParam("recipientId") int recipientId,
-            @AuthenticationPrincipal SecurityUser securityUser) {
+    public ResponseEntity follow(@RequestParam("recipientId") int recipientId,
+                                 @AuthenticationPrincipal SecurityUser securityUser) {
 
         if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
             return ResponseEntity.ok().build();
@@ -71,28 +71,13 @@ public class CustomerController {
     @ResponseBody
     @GetMapping("/postData")
     public ResponseEntity<Page<PostData>> pictureData(@AuthenticationPrincipal SecurityUser securityUser,
-                                                       @RequestParam("page") Optional<Integer> page,
-                                                       @RequestParam("limit") Optional<Integer> limit) {
-
-        Page<PostData> postData =
-                postService.getPostDataByCustomerIdOrderByCreateDateDesc(
-                        securityUser.getUser().getId(),
-                        page.orElse(0),
-                        limit.orElse(9)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(postData));
-    }
-
-    @ResponseBody
-    @GetMapping("/others-postData")
-    public ResponseEntity<Page<PostData>> othersPictureData(@RequestParam("id") int userId,
                                                       @RequestParam("page") Optional<Integer> page,
-                                                      @RequestParam("limit") Optional<Integer> limit) {
+                                                      @RequestParam("limit") Optional<Integer> limit,
+                                                      @RequestParam("id") Optional<Integer> othersId) {
 
         Page<PostData> postData =
                 postService.getPostDataByCustomerIdOrderByCreateDateDesc(
-                        userId,
+                        othersId.orElse(securityUser.getUser().getId()),
                         page.orElse(0),
                         limit.orElse(9)
                 );
@@ -104,27 +89,12 @@ public class CustomerController {
     @GetMapping("/reviewData")
     public ResponseEntity<Page<ReviewPicture>> reviewData(@AuthenticationPrincipal SecurityUser securityUser,
                                                           @RequestParam("page") Optional<Integer> page,
-                                                          @RequestParam("limit") Optional<Integer> limit) {
+                                                          @RequestParam("limit") Optional<Integer> limit,
+                                                          @RequestParam("id") Optional<Integer> othersId) {
 
         Page<ReviewPicture> reviewData =
                 reviewService.getReviewPicturesByCustomerIdOrderByCreateDateDesc(
-                        securityUser.getUser().getId(),
-                        page.orElse(0),
-                        limit.orElse(9)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(reviewData));
-    }
-
-    @ResponseBody
-    @GetMapping("/others-reviewData")
-    public ResponseEntity<Page<ReviewPicture>> othersReviewData(@RequestParam("id") int userId,
-                                                          @RequestParam("page") Optional<Integer> page,
-                                                          @RequestParam("limit") Optional<Integer> limit) {
-
-        Page<ReviewPicture> reviewData =
-                reviewService.getReviewPicturesByCustomerIdOrderByCreateDateDesc(
-                        userId,
+                        othersId.orElse(securityUser.getUser().getId()),
                         page.orElse(0),
                         limit.orElse(9)
                 );
@@ -135,27 +105,12 @@ public class CustomerController {
     @ResponseBody
     @GetMapping("/reviews")
     public ResponseEntity<Page<Projection.Review>> reviews(@AuthenticationPrincipal SecurityUser securityUser,
-                                                         @RequestParam("page") Optional<Integer> page,
-                                                         @RequestParam("limit") Optional<Integer> limit) {
+                                                           @RequestParam("page") Optional<Integer> page,
+                                                           @RequestParam("limit") Optional<Integer> limit,
+                                                           @RequestParam("id") Optional<Integer> othersId) {
         Page<Projection.Review> reviews =
                 reviewService.getNonBlockedReviewsByCustomerIdOrderByCreateDate(
-                        securityUser.getUser().getId(),
-                        Review.BLOCKED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(reviews));
-    }
-
-    @ResponseBody
-    @GetMapping("/others-reviews")
-    public ResponseEntity<Page<Projection.Review>> othersReviews(@RequestParam("id") int userId,
-                                                                 @RequestParam("page") Optional<Integer> page,
-                                                                 @RequestParam("limit") Optional<Integer> limit) {
-        Page<Projection.Review> reviews =
-                reviewService.getNonBlockedReviewsByCustomerIdOrderByCreateDate(
-                        userId,
+                        othersId.orElse(securityUser.getUser().getId()),
                         Review.BLOCKED.NO,
                         page.orElse(0),
                         limit.orElse(10)
@@ -168,26 +123,11 @@ public class CustomerController {
     @GetMapping("/posts")
     public ResponseEntity<Page<Projection.Post>> posts(@AuthenticationPrincipal SecurityUser securityUser,
                                                        @RequestParam("page") Optional<Integer> page,
-                                                       @RequestParam("limit") Optional<Integer> limit) {
+                                                       @RequestParam("limit") Optional<Integer> limit,
+                                                       @RequestParam("id") Optional<Integer> othersId) {
         Page<Projection.Post> posts =
                 postService.getNonBlockedPostsByCustomerIdOrderByCreateDate(
-                        securityUser.getUser().getId(),
-                        Post.BLOCKED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(posts));
-    }
-
-    @ResponseBody
-    @GetMapping("/others-posts")
-    public ResponseEntity<Page<Projection.Post>> othersPosts(@RequestParam("id") int userId,
-                                                             @RequestParam("page") Optional<Integer> page,
-                                                             @RequestParam("limit") Optional<Integer> limit) {
-        Page<Projection.Post> posts =
-                postService.getNonBlockedPostsByCustomerIdOrderByCreateDate(
-                        userId,
+                        othersId.orElse(securityUser.getUser().getId()),
                         Post.BLOCKED.NO,
                         page.orElse(0),
                         limit.orElse(10)
@@ -199,29 +139,13 @@ public class CustomerController {
     @ResponseBody
     @GetMapping("/followings")
     public ResponseEntity<List<Projection.User>> followings(@AuthenticationPrincipal SecurityUser securityUser,
-                                                           @RequestParam("page") Optional<Integer> page,
-                                                           @RequestParam("limit") Optional<Integer> limit) {
+                                                            @RequestParam("page") Optional<Integer> page,
+                                                            @RequestParam("limit") Optional<Integer> limit,
+                                                            @RequestParam("id") Optional<Integer> othersId) {
 
         List<Projection.User> followers =
                 socialService.getNonDisabledFollowingsByCustomerIdOrderByCreateDate(
-                        securityUser.getUser().getId(),
-                        User.DISABLED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(followers));
-    }
-
-    @ResponseBody
-    @GetMapping("/others-followings")
-    public ResponseEntity<List<Projection.User>> othersFollowings(@RequestParam("id") int userId,
-                                                                  @RequestParam("page") Optional<Integer> page,
-                                                                  @RequestParam("limit") Optional<Integer> limit) {
-
-        List<Projection.User> followers =
-                socialService.getNonDisabledFollowingsByCustomerIdOrderByCreateDate(
-                        userId,
+                        othersId.orElse(securityUser.getUser().getId()),
                         User.DISABLED.NO,
                         page.orElse(0),
                         limit.orElse(10)
@@ -234,11 +158,12 @@ public class CustomerController {
     @GetMapping("/followers")
     public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser,
                                                            @RequestParam("page") Optional<Integer> page,
-                                                           @RequestParam("limit") Optional<Integer> limit) {
+                                                           @RequestParam("limit") Optional<Integer> limit,
+                                                           @RequestParam("id") Optional<Integer> othersId) {
 
         List<Projection.User> followers =
                 socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
-                        securityUser.getUser().getId(),
+                        othersId.orElse(securityUser.getUser().getId()),
                         User.DISABLED.NO,
                         page.orElse(0),
                         limit.orElse(10)
@@ -247,22 +172,6 @@ public class CustomerController {
         return ResponseEntity.of(Optional.ofNullable(followers));
     }
 
-    @ResponseBody
-    @GetMapping("/others-followers")
-    public ResponseEntity<List<Projection.User>> othersFollowers(@RequestParam("id") int userId,
-                                                                 @RequestParam("page") Optional<Integer> page,
-                                                                 @RequestParam("limit") Optional<Integer> limit) {
-
-        List<Projection.User> followers =
-                socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
-                        userId,
-                        User.DISABLED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(followers));
-    }
 
     @ResponseBody
     @PostMapping(value = "/otp-check", consumes = "application/json")
@@ -365,15 +274,21 @@ public class CustomerController {
 
     @ResponseBody
     @GetMapping("/followers-count")
-    public long followersCount(@AuthenticationPrincipal SecurityUser securityUser) {
+    public long followersCount(@AuthenticationPrincipal SecurityUser securityUser,
+                               @RequestParam("id") Optional<Integer> othersId) {
 
-        return socialService.getFollowersCountByCustomerId(securityUser.getUser().getId());
+        return socialService.getFollowersCountByCustomerId(
+                othersId.orElse(securityUser.getUser().getId())
+        );
     }
 
     @ResponseBody
     @GetMapping("/followings-count")
-    public long followingsCount(@AuthenticationPrincipal SecurityUser securityUser) {
+    public long followingsCount(@AuthenticationPrincipal SecurityUser securityUser,
+                                @RequestParam("id") Optional<Integer> othersId) {
 
-        return socialService.getFollowingsCountByCustomerId(securityUser.getUser().getId());
+        return socialService.getFollowingsCountByCustomerId(
+                othersId.orElse(securityUser.getUser().getId())
+        );
     }
 }

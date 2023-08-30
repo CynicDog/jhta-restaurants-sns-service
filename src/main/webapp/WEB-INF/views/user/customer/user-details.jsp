@@ -359,7 +359,7 @@
         })
 
         const getFollowers = page => {
-            return fetch(`/customer/others-followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/customer/followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowers(page) {
@@ -415,7 +415,7 @@
         })
 
         const getFollowings = page => {
-            return fetch(`/customer/others-followings?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/customer/followings?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowings(page) {
@@ -486,7 +486,7 @@
         })
 
         const getPosts = page => {
-            return fetch(`/customer/others-posts?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/customer/posts?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderPosts(page) {
@@ -532,7 +532,7 @@
         })
 
         const getReviews = page => {
-            return fetch(`/customer/others-reviews?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/customer/reviews?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderReviews(page) {
@@ -599,11 +599,11 @@
     let currentFetchingOption = null;
 
     const getPostData = page => {
-        return fetch(`/customer/others-postData?id=\${userId}&page=\${page}&limit=9`).then(response => response.json());
+        return fetch(`/customer/postData?id=\${userId}&page=\${page}&limit=9`).then(response => response.json());
     }
 
     const getReviewData = page => {
-        return fetch(`/customer/others-reviewData?id=\${userId}&page=\${page}&limit=9`).then(response => response.json());
+        return fetch(`/customer/reviewData?id=\${userId}&page=\${page}&limit=9`).then(response => response.json());
     }
 
     function fetchAndRenderPostData(page) {
@@ -721,6 +721,24 @@
         const messagingToastBootstrap = bootstrap.Toast.getOrCreateInstance(messagingToast);
         messagingToastBootstrap.show();
     }
+
+    const updateFollowersCount = () => {
+        fetch(`/customer/followers-count?id=\${userId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followersCount').textContent = data;
+            });
+    };
+    updateFollowersCount();
+
+    const updateFollowingsCount = () => {
+        fetch(`/customer/followings-count?id=\${userId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followingsCount').textContent = data;
+            });
+    };
+    updateFollowingsCount();
 
 </script>
 </html>
