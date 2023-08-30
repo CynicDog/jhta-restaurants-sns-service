@@ -15,10 +15,11 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 <style type="text/css">
-        .border-opacity-10.active {
-            color: #ff792a;
-        }
-    </style>
+	.border-opacity-10.active {
+	    color: #ff792a;
+	}
+	
+</style>
 </head>
 <body>
 <%@ include file="common/navbar.jsp" %>
@@ -39,7 +40,7 @@
                 </div>
                 <div class=" text-center" style="background-color: black; width: 80%;">
                     <div class="fotorama" data-nav="thumbs">
-                        <img class="modal-content" id="modalImg" style="max-width: 70%; max-height: 80vh; margin: auto; display: block;">
+                        <img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
                     </div>
                 </div>
                 <div style="width: 400px;" class="2">
@@ -50,7 +51,6 @@
                                 <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
                                 <div class="ml-2">
                                     <span style="font-size: medium; font-weight: bold;">정손님</span>
-                                    <p style="font-size: small; color: #adb5bd;">회원 등급</p>
                                 </div>
                                 <div class="p-2 ml-auto">
                                     <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
@@ -137,7 +137,7 @@
                                 <td>
                                     <c:forEach var="food" items="${foods}">
                                         <div class="col my-2">
-                                            <span class="food-name d-inline-block" style="width: 120px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+                                            <span class="food-name d-inline-block" style="width: 150px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
                                         </div>
                                     </c:forEach>
                                 </td>
@@ -172,16 +172,16 @@
 		                <div class="p-4">
 		                <div class="row">
 		                	<c:forEach var="closestStore" items="${closestStores }">
-		                    <div class="mb-3">
+		                    <div class="mb-3" style="cursor: pointer;">
 		                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
 		                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
-		                            <div class="d-flex align-items-start">
+		                            <div class="d-flex align-items-start" onclick="location.href='/store/detail?id=${closestStore.id }'">
 		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px;">
 		                                <div class="ml-3">
 		                                    <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name }</h5>
-		                                    <p class="card-text text-sm ml-1">
+		                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
-		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>주소:</strong> ${closestStore.address }</span>
+		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>전화번호:</strong> ${closestStore.phone } </span>
 		                                    </p>
 		                                </div>
@@ -283,7 +283,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex" id="picturesOutputArea">
-                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 100%">
+                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="img-thumbnail" style="height: 120px; width: 120px">
                                     </div>
                                     <div class="row">
                                         <div class="col">
