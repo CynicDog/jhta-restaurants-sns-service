@@ -24,134 +24,136 @@
 <div class="container">
     <div class="row my-5 px-5">
         <div class="col-md-5 my-5">
-            <div class="card shadow-sm border border-0 my-3">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
-                        <div class="col fs-4">About Me</div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-end">
-                            <div id="postsToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                posts
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    ${postsCount}
-                                </span>
+            <div class="position-sticky" style="top: 5rem;">
+                <div class="card shadow-sm border border-0 my-3">
+                    <div class="fw-lighter m-3 p-1">
+                        <div class="row">
+                            <div class="col fs-4">About Me</div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-end">
+                                <div id="postsToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    posts
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        ${postsCount}
+                                    </span>
+                                </div>
+                                <div id="reviewsToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    reviews
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        ${reviewsCount}
+                                    </span>
+                                </div>
                             </div>
-                            <div id="reviewsToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                reviews
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    ${reviewsCount}
-                                </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row mx-2">
-                        <div class="col-sm-4 my-1 fw-lighter">
-                            <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
+                            </div>
                         </div>
-                        <div class="col-sm-8 my-1">
-                            <p class="form-control-plaintext" id="fullName"> ${ customer.fullName } </p>
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="email" class="col-sm-2 col-form-label"><span
+                                        style="white-space: nowrap">Email</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mx-2">
-                        <div class="col-sm-4 my-1 fw-lighter">
-                            <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
-                        </div>
-                        <div class="col-sm-8 my-1">
-                            <p class="form-control-plaintext" id="nickName"> ${ customer.nickname } </p>
-                        </div>
-                    </div>
-                    <div class="row mx-2">
-                        <div class="col-sm-4 my-1 fw-lighter">
-                            <label for="email" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Email</span></label>
-                        </div>
-                        <div class="col-sm-8 my-1">
-                            <p class="form-control-plaintext" id="email"> ${ customer.email } </p>
-                        </div>
-                    </div>
-                    <div class="row mx-2">
-                        <div class="col-sm-4 my-1 fw-lighter">
-                            <label for="preference" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Preference</span></label>
-                        </div>
-                        <div class="col-sm-8 my-1">
-                            <div class="form-control-plaintext" id="preference">
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="preference" class="col-sm-2 col-form-label"><span
+                                        style="white-space: nowrap">Preference</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <div class="form-control-plaintext" id="preference">
                                 <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
                                     #청결해요
                                 </span>
-                                <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
+                                    <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
                                     #주차가 편해요
                                 </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card shadow-sm border border-0 mt-3">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
-                        <div class="col-8 fs-4">Socials</div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch"
-                                       id="flexSwitchCheckDefault">
-                                <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                <div class="card shadow-sm border border-0 mt-3">
+                    <div class="fw-lighter m-3 p-1">
+                        <div class="row">
+                            <div class="col-8 fs-4">Socials</div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col text-end">
+                                <div id="followersToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    followers
+                                    <span id="followersCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                </div>
+                                <div id="followingsToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    followings
+                                    <span id="followingsCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row my-2">
-                        <div class="col text-end">
-                            <div id="followersToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                followers
-                                <span id="followersCount"
-                                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                    <div class="card-body">
+                        <div class="p-2 m-3">
+                            <div id="pendingRequests"
+                                 type="button"
+                                 class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
+                                Pending
                             </div>
-                            <div id="followingsToastButton" type="button"
-                                 class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                followings
-                                <span id="followingsCount"
-                                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            <div id="acceptedRequests"
+                                 type="button"
+                                 class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
+                                Accepted
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="p-2 m-3">
-                        <div id="pendingRequests"
-                             type="button"
-                             class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
-                            Pending
-                        </div>
-                        <div id="acceptedRequests"
-                             type="button"
-                             class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
-                            Accepted
-                        </div>
-                        <div id="declinedRequests"
-                             type="button"
-                             class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill ">
-                            Declined
-                        </div>
-                        <div id="sentRequests"
-                             type="button"
-                             class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">
-                            Sent
-                        </div>
-                        <hr/>
-                        <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
-                        </div>
-                        <div class="text-center">
-                            <div class="btn border border-0 disabled">
-                                <div id="requestLoadingSpinner"
-                                     class="spinner-border spinner-border-sm text-primary m-1" role="status"
-                                     style="display: none;">
-                                    <span class="visually-hidden">Loading...</span>
+                            <div id="declinedRequests"
+                                 type="button"
+                                 class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill ">
+                                Declined
+                            </div>
+                            <div id="sentRequests"
+                                 type="button"
+                                 class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">
+                                Sent
+                            </div>
+                            <hr/>
+                            <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
+                            </div>
+                            <div class="text-center">
+                                <div class="btn border border-0 disabled">
+                                    <div id="requestLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                         style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -160,35 +162,26 @@
             </div>
         </div>
         <div class="col-md-7 my-5 px-4">
-            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-4">
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
-                    </div>
-                </div>
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
-                    </div>
-                </div>
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
-                    </div>
-                </div>
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
-                    </div>
-                </div>
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
-                    </div>
-                </div>
-                <div class="col my-3">
-                    <div class="square-div rounded-2 text-bg-light shadow-sm border border-0">
-                        picture
+            <div class="pb-4 mb-4 border-bottom text-end">
+                <span id="postPicturesButton"
+                      type="button"
+                      class="badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                    Post Pictures
+                </span>
+                <span id="reviewPicturesButton"
+                      type="button"
+                      class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                    Review Pictures
+                </span>
+            </div>
+            <div id="pictureDataOutputArea" class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-4">
+            </div>
+            <div class="text-center">
+                <div class="btn border border-0 disabled">
+                    <div id="picturesLoadingSpinner"
+                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                         style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -580,8 +573,6 @@
                 })
             })
         }
-
-
     });
 
     let isRequestLast = false;
@@ -685,7 +676,7 @@
         const scrollPos = this.scrollTop + this.clientHeight;
         const scrollHeight = this.scrollHeight;
 
-        if (scrollPos +.5 >= scrollHeight) {
+        if (scrollPos + .5 >= scrollHeight) {
             if (isRequestsFetching || isRequestLast) {
                 // do nothing
             } else {
@@ -729,6 +720,118 @@
                 })
         }
     })
+
+    const picturesLoadingSpinner = document.getElementById('picturesLoadingSpinner')
+    const pictureDataOutputArea = document.getElementById('pictureDataOutputArea');
+
+    let pageOnPictureData = 0;
+    let isPictureDataLast = false;
+    let isPictureDataFetching = false;
+
+    let currentFetchingOption = null;
+
+    const getPostData = page => {
+        return fetch(`/customer/postData?page=\${page}&limit=9`).then(response => response.json());
+    }
+
+    const getReviewData = page => {
+        return fetch(`/customer/reviewData?page=\${page}&limit=9`).then(response => response.json());
+    }
+
+    function fetchAndRenderPostData(page) {
+        isPictureDataFetching = true;
+        picturesLoadingSpinner.style.display = 'block';
+
+        getPostData(page).then(data => {
+
+            if (data.last) {
+                isPictureDataLast = true;
+                picturesLoadingSpinner.style.display = 'none';
+            }
+
+            data.content.forEach(datum => {
+                pictureDataOutputArea.innerHTML += `
+                    <div class="col-4 my-3">
+                        <div class=" rounded-4 text-bg-light shadow-sm border border-0">
+                            <img src="/images/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                        </div>
+                    </div>
+                `
+                picturesLoadingSpinner.style.display = 'none'
+                isPictureDataFetching = false;
+            })
+        })
+    }
+
+    function fetchAndRenderReviewData(page) {
+        isPictureDataFetching = true;
+        picturesLoadingSpinner.style.display = 'block';
+
+        getReviewData(page).then(data => {
+
+            if (data.last) {
+                isPictureDataLast = true;
+                picturesLoadingSpinner.style.display = 'none';
+            }
+
+            data.content.forEach(datum => {
+                console.log('datum')
+                // pictureDataOutputArea.innerHTML += `
+                //     <div class="col-4 my-3">
+                //         <div class=" rounded-4 text-bg-light shadow-sm border border-0">
+                //             <img src="/images/jpeg/\${datum.pictureFile}" alt="Image"  class="object-fit-cover" style="height: 200px; width: 100%">
+                //         </div>
+                //     </div>
+                // `
+            })
+        })
+    }
+
+    // initial loading
+    fetchAndRenderPostData(pageOnPictureData);
+    currentFetchingOption = (page) => {
+        return fetchAndRenderPostData(page)
+    }
+
+    document.getElementById('postPicturesButton').addEventListener('click', function() {
+
+        pictureDataOutputArea.innerHTML = ''
+        pageOnPictureData = 0
+        isPictureDataLast = false;
+        isPictureDataFetching = false;
+
+        fetchAndRenderPostData(pageOnPictureData)
+        currentFetchingOption = (page) => {
+            return fetchAndRenderPostData(page)
+        }
+    })
+
+    document.getElementById('reviewPicturesButton').addEventListener('click', function() {
+
+        pictureDataOutputArea.innerHTML = ''
+        pageOnPictureData = 0
+        isPictureDataLast = false;
+        isPictureDataFetching = false;
+
+        fetchAndRenderReviewData(pageOnPictureData)
+        currentFetchingOption = (page) => {
+            return fetchAndRenderReviewData(page)
+        }
+    })
+
+    window.onscroll = function () {
+
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
+
+            console.log('hi')
+            if (isPictureDataFetching || isPictureDataLast) {
+                // do nothing
+            } else {
+                pageOnPictureData += 1;
+                currentFetchingOption(pageOnPictureData);
+            }
+        }
+    }
 
     const updateFollowersCount = () => {
         fetch(`/customer/followers-count`)

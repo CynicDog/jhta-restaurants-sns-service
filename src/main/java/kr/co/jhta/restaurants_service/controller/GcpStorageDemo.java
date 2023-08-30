@@ -3,6 +3,9 @@ package kr.co.jhta.restaurants_service.controller;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
+import kr.co.jhta.restaurants_service.service.PostService;
+import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/images")
@@ -24,6 +28,9 @@ public class GcpStorageDemo {
 
     @Autowired
     Storage storage;
+
+    @Autowired
+    PostService postService;
 
     @GetMapping("/png/{imageName}")
     @ResponseBody
@@ -66,7 +73,6 @@ public class GcpStorageDemo {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @GetMapping("/demo")
     public String demo() {

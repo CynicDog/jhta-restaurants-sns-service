@@ -8,13 +8,14 @@ import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
+import kr.co.jhta.restaurants_service.repository.PostDataRepository;
 import kr.co.jhta.restaurants_service.repository.PostRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 
-import org.apache.ibatis.annotations.Param;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
@@ -42,7 +43,7 @@ public class PostService {
 	private final BookmarkMapper bookmarkMapper;
 	private final PostRepository postRepository;
 	private final FollowsRepository followsRepository;
-
+	private final PostDataRepository postDataRepository;
 	
 	public List<Post> getThreeRecentPosts(){
 		List<Post> posts = postmapper.getRecentPostsThree();
@@ -99,10 +100,6 @@ public class PostService {
 
 	}
 
-	public List<Post> getPostsByCustomerId(int id) {
-		return postRepository.findPostsByCustomerId(id);
-	}
-
     public Page<Projection.Post> getNonBlockedPostsByCustomerIdOrderByCreateDate(int id, Post.BLOCKED no, Integer page, Integer limit) {
 
 		Page<Projection.Post> postsPaginated = postRepository.findPostsByCustomerIdAndBlockedOrderByCreateDate(id, no, PageRequest.of(page, limit));
@@ -141,5 +138,9 @@ public class PostService {
 
 		return postmapper.getPostsPaginatedOfFollowersByFollowed(start, end, securityUser.getUser().getId());
     }
-//
+
+	public Page<PostData> getPostDataByCustomerIdOrderByCreateDateDesc(int id, Integer page, Integer limit) {
+
+		return postDataRepository.findByUserIdOrderByCreateDateDesc(id, PageRequest.of(page, limit));
+	}
 }

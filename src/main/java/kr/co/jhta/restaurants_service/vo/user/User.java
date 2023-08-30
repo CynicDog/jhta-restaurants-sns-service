@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.vo.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,8 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
+
+    @JsonIgnore
     private String password;
 
     @Column(name = "full_name")
