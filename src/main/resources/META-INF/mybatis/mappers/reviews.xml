@@ -3,9 +3,9 @@
 
 	<insert id="insertReview" parameterType="Review">
 	  insert into REVIEWS
-	  	(rating, content, customer_id, store_id)
+	  	(rating, content, customer_id, store_id, create_date, update_date)
 	  values
-	  	(#{rating}, #{content}, #{customer.id}, #{store.id})
+	  	(#{rating}, #{content}, #{customer.id}, #{store.id}, #{createDate}, #{updateDate})
 	  <selectKey keyProperty="id" resultType="int" order="AFTER">
            SELECT LAST_INSERT_ID()
       </selectKey>
