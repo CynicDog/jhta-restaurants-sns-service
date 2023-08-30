@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.vo.post;
 
 import java.util.Date;
+import java.util.Set;
 
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.apache.ibatis.type.Alias;
@@ -50,6 +51,9 @@ public class Post {
 
 	@Enumerated(EnumType.STRING)
 	private BLOCKED blocked;
+
+	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+	Set<PostData> postDataSet;
 
 	public Post() {
 

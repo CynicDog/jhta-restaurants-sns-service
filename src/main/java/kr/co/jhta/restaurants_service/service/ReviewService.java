@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 // import java.util.stream.Collectors;
 
 import kr.co.jhta.restaurants_service.projection.Projection;
+import kr.co.jhta.restaurants_service.repository.ReviewPictureRepository;
 import kr.co.jhta.restaurants_service.repository.ReviewRepository;
 
 import org.jboss.logging.Logger;
@@ -54,6 +55,8 @@ public class ReviewService {
 	@Autowired private UserRepository userRepository;
 
 	@Autowired private ReviewRepository reviewRepository;
+
+	@Autowired private ReviewPictureRepository reviewPictureRepository;
 
 	private final Logger logger = Logger.getLogger(PostService.class);
 
@@ -258,5 +261,10 @@ public class ReviewService {
 		int end = begin + limit;
 		
 		return reviewMapper.getFollowerReivewsPaginated(begin, end, securityUser.getUser().getId());
+    }
+
+    public Page<ReviewPicture> getReviewPicturesByCustomerIdOrderByCreateDateDesc(int customerId, Integer page, Integer limit) {
+
+		return reviewPictureRepository.findByUserIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit));
     }
 }

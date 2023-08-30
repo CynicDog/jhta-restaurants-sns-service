@@ -11,7 +11,9 @@ import kr.co.jhta.restaurants_service.service.PostService;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.SocialService;
 import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostData;
 import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
 import kr.co.jhta.restaurants_service.vo.user.User;
@@ -53,6 +55,37 @@ public class CustomerController {
         this.reviewService = reviewService;
     }
 
+    @ResponseBody
+    @GetMapping("/postData")
+    public ResponseEntity<Page<PostData>> pictureData(@AuthenticationPrincipal SecurityUser securityUser,
+                                                       @RequestParam("page") Optional<Integer> page,
+                                                       @RequestParam("limit") Optional<Integer> limit) {
+
+        Page<PostData> postData =
+                postService.getPostDataByCustomerIdOrderByCreateDateDesc(
+                        securityUser.getUser().getId(),
+                        page.orElse(0),
+                        limit.orElse(9)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(postData));
+    }
+
+    @ResponseBody
+    @GetMapping("/reviewData")
+    public ResponseEntity<Page<ReviewPicture>> reviewData(@AuthenticationPrincipal SecurityUser securityUser,
+                                                          @RequestParam("page") Optional<Integer> page,
+                                                          @RequestParam("limit") Optional<Integer> limit) {
+
+        Page<ReviewPicture> reviewData =
+                reviewService.getReviewPicturesByCustomerIdOrderByCreateDateDesc(
+                        securityUser.getUser().getId(),
+                        page.orElse(0),
+                        limit.orElse(9)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(reviewData));
+    }
     @ResponseBody
     @GetMapping("/reviews")
     public ResponseEntity<Page<Projection.Review>> reviews(@AuthenticationPrincipal SecurityUser securityUser,
@@ -124,7 +157,6 @@ public class CustomerController {
     public ResponseEntity otpCheck(@RequestBody OtpCommand otpCommand, HttpSession session) {
 
         UserCommand userCommand = Optional.ofNullable((UserCommand) session.getAttribute("userCommand")).orElse(null);
-        logger.info(userCommand.getFullName());
 
         boolean isValid = otpService.validateOtp(otpCommand);
 
