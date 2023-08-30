@@ -645,7 +645,7 @@
 
                 requestsOutputArea.innerHTML += `
                 <div class="border rounded p-2 my-2 d-flex align-items-center">
-                    <div class="fw-light mx-1">\${datum.user.nickname}</div>
+                    <div class="fw-light mx-1 userDetailEntry" type="button"  data-user-id="\${datum.user.id}">\${datum.user.nickname}</div>
                     <div class="ms-auto">
                         <span type="button"
                               data-request-id="\${datum.followRequest.id}"

@@ -141,4 +141,15 @@ public class SocialService {
 
         return followRequest.getStatus().toString();
     }
+
+    public boolean handleFollowRequest(int senderId, int recipientId) {
+
+        // if there's no request before
+        if (!followRequestRepository.existsFollowRequestBySenderIdAndRecipientId(senderId, recipientId)) {
+            followRequestRepository.save(new FollowRequest(senderId, recipientId));
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -86,9 +86,9 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public Projection.User getUserById(int recipientId) {
+    public User getUserById(int userId) {
 
-        return userRepository.findUserProjectionByIdAndDisabled(recipientId, User.DISABLED.NO);
+        return userRepository.findUserById(userId).orElse(null);
     }
 }
 
