@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.projection;
 
 import kr.co.jhta.restaurants_service.vo.store.Store;
+import kr.co.jhta.restaurants_service.vo.user.User;
 
 public class Projection {
 
@@ -123,6 +124,24 @@ public class Projection {
 
         public String getNickname() {
             return nickname;
+        }
+    }
+
+    public static class Bookmark {
+        private int id;
+        private kr.co.jhta.restaurants_service.vo.user.User customer;
+
+        public Bookmark(int id, kr.co.jhta.restaurants_service.vo.user.User customer) {
+            this.id = id;
+            this.customer = customer;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public kr.co.jhta.restaurants_service.vo.user.User getCustomer() {
+            return customer;
         }
     }
 }

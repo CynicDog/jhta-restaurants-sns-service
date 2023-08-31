@@ -176,6 +176,18 @@
                     openTimesBadges += openTimesBadge;
                 })
 
+                let wishersBadges = '';
+                datum.wishers.forEach(wisher => {
+                    const wishersBadge = `
+                        <span type="button"
+                              class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill my-2 userDetailEntry"
+                              data-user-id=\${wisher.id}>
+                            \${wisher.nickname}
+                        </span>
+                    `
+                    wishersBadges += wishersBadge;
+                })
+
                 contentOutputArea.innerHTML += `
                         <div class="bg-light rounded-3 p-3 my-4 shadow-sm">
                             <div class="row d-flex align-items-center justify-content-center">
@@ -198,16 +210,20 @@
                             <div class="fw-light shadow-sm rounded-2 bg-white my-3 p-4 overflow-auto">
                                 \${datum.store.description}
                             </div>
-                            <div id="foodsOutputArea"  class="my-4 px-4">
+                            <div class="my-4 px-4">
                                 \${foodBadges}
                             </div>
-                            <div id="openTimesOutputArea" class="my-3">
+                            <div class="my-3">
                                 \${openTimesBadges}
+                            </div>
+                            <div class="m-4 pt-3">
+                                <span class="fw-lighter fs-6">Bookmarked by..</span>
+                                <div class="border-top">
+                                    \${wishersBadges}
+                                </div>
                             </div>
                         </div>
                 `
-
-
                 isStoreFetching = true;
                 storeLoadingSpinner.style.display = 'none';
             })
@@ -240,6 +256,15 @@
             const storeId = button.getAttribute('data-store-id')
 
             window.location.href = `/store/detail?id=\${storeId}`
+        }
+    })
+
+    addEventListener('click', function (event) {
+        if (event.target.classList.contains('userDetailEntry')) {
+            const button = event.target;
+            const userId = button.getAttribute('data-user-id')
+
+            window.location.href = `/customer/user-details?id=\${userId}`
         }
     })
 

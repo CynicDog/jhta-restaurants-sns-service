@@ -381,7 +381,7 @@
 
                 data.forEach(datum => {
                     followersOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
                                 <div>\${datum.email}</div>
@@ -437,7 +437,7 @@
 
                 data.forEach(datum => {
                     followingsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
                                 <div>\${datum.email}</div>
@@ -506,7 +506,7 @@
                 isPostLast = data.last;
                 data.content.forEach(datum => {
                     postOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
@@ -557,7 +557,7 @@
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${truncatedContent}
