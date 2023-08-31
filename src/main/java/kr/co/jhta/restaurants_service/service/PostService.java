@@ -98,6 +98,9 @@ public class PostService {
 		Post post = postmapper.getPostById(postId);
 		
 		List<PostDataDto> postDatas = postDataMapper.getPostDataByPostId(postId);
+		for(PostDataDto postdata : postDatas) {
+			logger.info(postdata.getPostData().toString());;
+		}
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
 		
 		if(securityUser != null) {

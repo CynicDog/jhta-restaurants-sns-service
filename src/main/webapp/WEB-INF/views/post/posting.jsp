@@ -37,7 +37,7 @@
 				<div class="col-1"></div>
 				<div class="col-3 my-5">
 					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/store/detail?id=${data.store.id}'" style=" cursor: pointer;">
-						<img src="../../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+						<img src="/images/post/jpeg/${data.postData.pictureFile }" class="card-img-top rounded" alt="...">
 					</div>
 				</div>
 				<div class="col-6 my-5 text-left">
