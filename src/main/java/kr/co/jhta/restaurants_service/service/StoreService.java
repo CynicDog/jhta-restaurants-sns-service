@@ -197,8 +197,13 @@ public class StoreService {
 	    return bookmark;
 	}
 
-	/*
-	 * public Store getStoreById(int storeId) { return null; }
-	 */
+	
+	 public Store getStoreById(int storeId) { 
+
+		 Store store = storeMapper.getStoreById(storeId);
+		 
+	 return store;
+	 }
+	
 
 }

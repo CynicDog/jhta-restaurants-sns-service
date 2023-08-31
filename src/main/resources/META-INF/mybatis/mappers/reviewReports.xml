@@ -3,9 +3,9 @@
 	
 	<insert id="insertReveiwReport" parameterType="ReviewReport">
 	  insert into REVIEW_REPORTS
-	  (content, reporter_id, review_id, admin_id, category)
+	  (content, create_date, reporter_id, review_id, admin_id, category)
 	  values
-	  (#{content}, #{reporter.id}, #{review.id} #{admin.id}, #{category})
+	  (#{content}, #{createDate}, #{reporter.id}, #{review.id}, #{admin.id}, #{category})
 	</insert>
 	
 </mapper>

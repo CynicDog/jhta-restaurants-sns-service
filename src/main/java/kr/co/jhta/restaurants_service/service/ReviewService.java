@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
+import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
 //import kr.co.jhta.restaurants_service.dto.ReviewListDto;
@@ -29,6 +30,7 @@ import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
+import kr.co.jhta.restaurants_service.mapper.ReviewReportMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.repository.UserRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -36,6 +38,7 @@ import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
+import kr.co.jhta.restaurants_service.vo.review.ReviewReport;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -58,6 +61,8 @@ public class ReviewService {
 	@Autowired private ReviewRepository reviewRepository;
 
 	@Autowired private ReviewPictureRepository reviewPictureRepository;
+	
+	@Autowired private ReviewReportMapper reviewReportMapper;
 
 	private final Logger logger = Logger.getLogger(PostService.class);
 
@@ -70,6 +75,7 @@ public class ReviewService {
 		review.setContent(form.getContent());
 		review.setStore(storeMapper.getStoreById(form.getStoreId()));
 		review.setCustomer(userRepository.getReferenceById(securityUser.getUser().getId()));
+		review.setCreateDate(new Date());
 
 		reviewMapper.insertReview(review);
 
@@ -147,6 +153,21 @@ public class ReviewService {
 		dto.setReviewPicturesByReviewId(reviewPictures);
 
 		return dto;
+	}
+	
+	public void createReviewReport(ReviewReportCommand form, SecurityUser securityUser) {
+		ReviewReport reviewReport = new ReviewReport();
+		
+		 // 문자열 값을 enum 값으로 변환
+	    ReviewReport.CATEGORY categoryEnum = ReviewReport.CATEGORY.valueOf(form.getCategory());
+	    reviewReport.setCategory(categoryEnum);
+	    reviewReport.setContent(form.getContent());
+	    reviewReport.setCreateDate(new Date());
+		reviewReport.setReporter(securityUser.getUser());
+		reviewReport.setReview(reviewMapper.getReviewById(form.getReviewId()));
+	    
+	    reviewReportMapper.insertReveiwReport(reviewReport);
+		
 	}
 
 //	  public List<Review> getAllReviews() {
