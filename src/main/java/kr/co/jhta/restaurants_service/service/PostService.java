@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.dto.HomePostDto;
 import kr.co.jhta.restaurants_service.dto.PostDataDto;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
+import kr.co.jhta.restaurants_service.mapper.HomeMapper;
 import kr.co.jhta.restaurants_service.mapper.PostCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
@@ -41,6 +42,7 @@ public class PostService {
 
 	private final PostMapper postmapper;
 	private final StoreMapper storeMapper;
+	private final HomeMapper homeMapper; 
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final BookmarkMapper bookmarkMapper;
@@ -53,11 +55,9 @@ public class PostService {
 		return posts;
 	}
 	
-	public List<Post> getPostsOrderByLike(){
-		List<Post> posts = postmapper.getPostsOrderByLike();
-		
-		return null;
-		
+	public List<HomePostDto> getPostsOrderByLike(){
+		List<HomePostDto> posts = homeMapper.getPostsOrderByLike();
+		return posts;
 	}
 	
 	

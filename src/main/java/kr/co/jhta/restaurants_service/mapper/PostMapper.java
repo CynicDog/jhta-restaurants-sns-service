@@ -28,7 +28,4 @@ public interface PostMapper {
     List<Post> getRecentPostsThree();
     List<Post> getRecentPostsThreeOfFollowersByFollowed(int followedId);
 
-	List<Post> getPostsOrderByLike();
-
-
 }

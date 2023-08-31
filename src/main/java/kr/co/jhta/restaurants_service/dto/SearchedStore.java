@@ -22,6 +22,7 @@ public class SearchedStore {
 	private String category;
     private double latitude;
     private double longitude;
+    private String pictureName;
 
 	
 }

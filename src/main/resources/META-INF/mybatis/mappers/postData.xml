@@ -23,5 +23,4 @@
 		where a.post_id = #{id}
 		group by a.id, a.post_id, a.store_id, a.content, a.picture_file, s.name, s.address;
 	</select>
-	
 </mapper>
