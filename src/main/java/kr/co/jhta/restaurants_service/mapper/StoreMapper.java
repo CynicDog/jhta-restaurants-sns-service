@@ -53,4 +53,6 @@ public interface StoreMapper {
 								 @Param("longitude") double longitude,
 								 @Param("storeId") int storeId,
 								 @Param("limit") int limit);
+    
+    double getCommendedStoreReviewAvg(int storeId);
 }
