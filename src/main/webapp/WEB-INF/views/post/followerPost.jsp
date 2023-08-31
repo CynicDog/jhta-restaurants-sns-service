@@ -65,7 +65,7 @@
     let pageOnPosts = 1;
 
     const getPosts = (page) => {
-        return fetch(`/post/get/followerPost?page=\${page}&limit=9`).then(response => response.json());
+        return fetch(`/post/get/followerPost?page=\${page}&limit=4`).then(response => response.json());
     }
 
     function fetchAndRenderPosts(currentPage) {
@@ -75,7 +75,7 @@
 
         getPosts(currentPage).then(data => {
 
-            if (data.length < 9) {
+            if (data.length < 4) {
                 isPostLast = true;
                 postsLoadingSpinner.style.display = 'none';
             }
@@ -99,9 +99,9 @@
             						</div>
             					</div>
                 `
+                isPostFetching = false;
             })
         })
-        isPostFetching = false;
     }
 
     window.onscroll = function () {

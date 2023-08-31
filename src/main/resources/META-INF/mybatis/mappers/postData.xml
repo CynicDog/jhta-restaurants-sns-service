@@ -7,18 +7,21 @@
 	    	(#{post.id}, #{store.id}, #{content}, #{pictureFile}, #{user.id}, #{createDate})
 	</insert>
 	
-	<select id="getPostDataByPostId" parameterType="int" resultType="PostData">
+	<select id="getPostDataByPostId" parameterType="int" resultType="PostDataDto">
 		select 
-			A.id as id,
-			A.post_id as "post.id",
-			A.store_id as "store.id",
-			A.content as content,
-			A.picture_file as pictureFile,
-			B.name as "store.name", 
-			B.address as "store.address"
-		from POST_DATA A, STORES B
-		where post_id = #{value}
-		and A.store_id = B.id
+		    a.id as id,
+		    a.post_id as "post.id",
+		    a.store_id as "store.id",
+		    a.content as content,
+		    a.picture_file as pictureFile,
+		    s.name as "store.name", 
+		    s.address as "store.address",
+		    AVG(r.rating) as averageRating
+		from POST_DATA a
+		join STORES s on a.store_id = s.id
+		join REVIEWS r on s.id = r.store_id
+		where a.post_id = #{id}
+		group by a.id, a.post_id, a.store_id, a.content, a.picture_file, s.name, s.address;
 	</select>
 	
 </mapper>

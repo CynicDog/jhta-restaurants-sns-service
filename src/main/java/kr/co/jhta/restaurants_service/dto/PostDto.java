@@ -16,7 +16,6 @@ import lombok.Setter;
 public class PostDto {
 	
 	private Post post;
-	private List<PostData> postData;
+	private List<PostDataDto> postDatas;
 	private List<PostComment> postComments;
-	private List<Bookmark> bookmark;
 }
