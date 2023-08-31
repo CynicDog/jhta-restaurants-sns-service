@@ -73,7 +73,12 @@
 	    reviewsLoadingSpinner.style.display = 'block';
 	
 	    getReviews(currentPage).then(data => {
-			console.log(data)
+			if (data.length === 0) {
+	            isReviewLast = true;
+	            reviewsLoadingSpinner.style.display = 'none';
+	            return;
+        	}
+			
 	        if (data.length < 9) {
 	            isReviewLast = true;
 	            reviewsLoadingSpinner.style.display = 'none';
@@ -99,9 +104,9 @@
 	        						</div>
 	        					</div>
 	            `
+			    isReviewFetching = false;
 	        })
 	    })
-	    isReviewFetching = false;
 	}
 	
 	window.onscroll = function () {

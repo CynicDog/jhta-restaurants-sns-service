@@ -20,7 +20,7 @@
 	    order by
 			p.create_date desc
 		limit
-			#{start}, #{end}
+			#{start}, #{limit}
 	</select>
 	
 	<select id="getRecentPostsThree" resultType="Post">
@@ -146,7 +146,7 @@
 		order by
 			p.create_date desc
 		limit
-			#{start}, #{end}
+			#{start}, 9
 	</select>
 	
 	<select id="getPostsOrderByLike" resultType="Post">
