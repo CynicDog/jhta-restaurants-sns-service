@@ -50,11 +50,22 @@ public class PostService {
 		return posts;
 	}
 	
+	public List<Post> getPostsOrderByLike(){
+		List<Post> posts = postmapper.getPostsOrderByLike();
+		
+		return null;
+		
+	}
+	
+	
+	
 	public List<Post> getRecentPostsThreeOfFollowersByFollowed(SecurityUser securityUser){
 		logger.info(securityUser.getUser());
 		List<Post> posts = postmapper.getRecentPostsThreeOfFollowersByFollowed(securityUser.getUser().getId());
 		return posts;
 	}
+	
+	
 	
 	public List<Store> getStoresByKeyword(String keyword) {
 
@@ -143,4 +154,5 @@ public class PostService {
 
 		return postDataRepository.findByUserIdOrderByCreateDateDesc(id, PageRequest.of(page, limit));
 	}
+	
 }

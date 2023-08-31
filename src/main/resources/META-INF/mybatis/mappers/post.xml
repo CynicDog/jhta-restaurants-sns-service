@@ -148,4 +148,35 @@
 		limit
 			#{start}, #{end}
 	</select>
+	
+	<select id="getPostsOrderByLike" resultType="Post">
+	    select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked
+<!-- 			IFNULL(L.like_cnt,0)	as likeCnt -->
+			
+		from
+			POSTS p
+		join
+			USERS u on p.customer_id = u.id
+<!-- 	    join  -->
+<!-- 	       	   (select -->
+<!-- 	        	 	post_id,  -->
+<!-- 	        	 	COUNT(customer_id) as like_cnt -->
+<!-- 		        from POST_LIKES -->
+<!-- 		        group by post_id -->
+<!-- 	           ) L on p.id = L.post_id -->
+<!-- 	    join -->
+<!-- 	    	POST_DATA D on p.id = D.post_id -->
+	    	 
+	    	
+	</select>
 </mapper>

@@ -39,17 +39,16 @@ public class HomeController {
 	
 
 	@GetMapping
-	public String home() {
+	public String home(Model model) {
+		
+//		postService.getPostsOrderByLike();
 		return "home";
 	}
-	
 
 	@GetMapping("/feed")
 	@ResponseBody
 	public List<HomeFeed> getHomeFeeds(int page, int limit, @AuthenticationPrincipal SecurityUser user){
-		
 		List<HomeFeed> result = homeService.getFeeds(page, limit, user.getUser().getId());
-		
 		return result;
   }
 	
@@ -82,6 +81,7 @@ public class HomeController {
 		model.addAttribute("recentPosts", recentPosts);
 		model.addAttribute("recentReviews", recentReviews);
 		return "contents";
-
 	}
+
+	
 }
