@@ -115,9 +115,9 @@
             						</div>
             					</div>
                 `
+	        	isPostFetching = false;
             })
         })
-        isPostFetching = false;
     }
 
     window.onscroll = function () {

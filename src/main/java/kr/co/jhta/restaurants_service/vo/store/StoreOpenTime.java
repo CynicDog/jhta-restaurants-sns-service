@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.vo.store;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import org.apache.ibatis.type.Alias;
 
@@ -24,7 +25,7 @@ public class StoreOpenTime {
 	@Column(name = "close_time")
 	private String closeTime;
 
-	@ManyToOne
+	@ManyToOne @JsonIgnore
 	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
 

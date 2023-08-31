@@ -4,6 +4,7 @@ import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreOpenTimeCommand;
 import kr.co.jhta.restaurants_service.controller.command.UserCommand;
+import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.security.service.UserService;
 import kr.co.jhta.restaurants_service.service.StoreService;
@@ -207,6 +208,21 @@ public class OwnerController {
         model.addAttribute("stores", stores);
 
         return "user/owner/my-page";
+    }
+
+    @GetMapping("/stores")
+    public ResponseEntity<List<StoreDetailDto>> stores(@AuthenticationPrincipal SecurityUser securityUser,
+                                                       @RequestParam("page") Optional<Integer> page,
+                                                       @RequestParam("limit") Optional<Integer> limit,
+                                                       @RequestParam("id") Optional<Integer> othersId) {
+
+        List<StoreDetailDto> stores = storeService.getPaginatedStoresByUserId(
+                othersId.orElse(securityUser.getUser().getId()),
+                page.orElse(0),
+                limit.orElse(3)
+        );
+
+        return ResponseEntity.ok(stores);
     }
 
     public static String[] PUBLIC_URLS = { "/owner/signup" };

@@ -19,12 +19,11 @@ public interface PostMapper {
 	
 	void deletePost(int postId);
 	
-	
 	Post getPostById(int postId);
 	
 	int getTotalRows(Map<String,Object> param);
-	List<Post> getAllPosts(@Param("start") int start, @Param("end") int end);
-    List<Post> getPostsPaginatedOfFollowersByFollowed(@Param("start") int start, @Param("end") int end, @Param("followedId") int followedId);
+	List<Post> getAllPosts(@Param("start") int start, @Param("limit") int limit);
+    List<Post> getPostsPaginatedOfFollowersByFollowed(@Param("start") int start, @Param("limit") int limit, @Param("followedId") int followedId);
     
     List<Post> getRecentPostsThree();
     List<Post> getRecentPostsThreeOfFollowersByFollowed(int followedId);

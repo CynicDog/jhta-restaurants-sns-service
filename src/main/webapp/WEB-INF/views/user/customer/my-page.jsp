@@ -575,11 +575,16 @@
 
                 isReviewLast = data.last;
                 data.content.forEach(datum => {
+
+                    const truncatedContent = (datum.content.split(' ').length > 30)
+                        ? `\${datum.content.split(' ').slice(0, 50).join(' ')} (...)`
+                        : datum.content;
+
                     reviewsOutputArea.innerHTML += `
                         <div class="shadow border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
-                                \${datum.content}
+                                \${truncatedContent}
                             </div>
                             <div class="text-end m-2">
                                 <i style="color: #cb444a" class="bi bi-trash m-2"></i>
@@ -849,7 +854,6 @@
 
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
 
-            console.log('hi')
             if (isPictureDataFetching || isPictureDataLast) {
                 // do nothing
             } else {
