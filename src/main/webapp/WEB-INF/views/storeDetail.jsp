@@ -38,11 +38,11 @@
                         &#10094;
                     </button>
                 </div>
-                <div class=" text-center" style="background-color: black; width: 80%;">
-                    <div class="fotorama" data-nav="thumbs">
-                        <img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
-                    </div>
-                </div>
+                <div class="text-center" style="background-color: black; width: 80%;">
+				    <div class="fotorama" data-nav="thumbs">
+				        <img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
+				    </div>
+				</div>
                 <div style="width: 400px;" class="2">
                     <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
                         <div class="card-body d-flex flex-column align-items-start">
@@ -178,7 +178,7 @@
 		                            <div class="d-flex align-items-start" onclick="location.href='/store/detail?id=${closestStore.id }'">
 		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px;">
 		                                <div class="ml-3">
-		                                    <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name }</h5>
+		                                    <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name } <span></span></h5>
 		                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>

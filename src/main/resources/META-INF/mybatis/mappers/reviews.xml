@@ -313,7 +313,7 @@
 		order by
 			r.create_date desc
 		limit
-			#{begin}, #{end}
+			#{begin}, #{limit}
 	</select>
 	
 	<select id="getFollowerReivewsPaginated" resultType="Review">
@@ -346,7 +346,7 @@
 		order by
 			r.create_date desc
 		limit
-			#{begin}, #{end}
+			#{begin}, #{limit}
 	</select>
 
 	<select id="getReviewsPaginatedByStoreIdAndRating" resultMap="ReviewResultMap">

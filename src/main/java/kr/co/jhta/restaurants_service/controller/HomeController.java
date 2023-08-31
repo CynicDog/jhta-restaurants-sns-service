@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.HomeFeed;
+import kr.co.jhta.restaurants_service.dto.HomePostDto;
 import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.HomeService;
@@ -39,17 +40,17 @@ public class HomeController {
 	
 
 	@GetMapping
-	public String home() {
+	public String home(Model model) {
+		
+		List<HomePostDto> postList = postService.getPostsOrderByLike();
+		model.addAttribute("postList", postList);
 		return "home";
 	}
-	
 
 	@GetMapping("/feed")
 	@ResponseBody
 	public List<HomeFeed> getHomeFeeds(int page, int limit, @AuthenticationPrincipal SecurityUser user){
-		
 		List<HomeFeed> result = homeService.getFeeds(page, limit, user.getUser().getId());
-		
 		return result;
   }
 	
@@ -82,6 +83,7 @@ public class HomeController {
 		model.addAttribute("recentPosts", recentPosts);
 		model.addAttribute("recentReviews", recentReviews);
 		return "contents";
-
 	}
+
+	
 }

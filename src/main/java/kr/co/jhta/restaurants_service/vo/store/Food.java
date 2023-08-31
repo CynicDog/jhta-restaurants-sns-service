@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.vo.store;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class Food {
 	private String name;
 	private int price;
 
-	@ManyToOne
+	@ManyToOne @JsonIgnore
 	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
 

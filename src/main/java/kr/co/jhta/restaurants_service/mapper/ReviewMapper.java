@@ -29,8 +29,8 @@ public interface ReviewMapper {
 	List<Review> getThreeRecentReivews();
 	List<Review> getThreeFollowerReivews(@Param("followedId") int followedId);
 	
-	List<Review> getAllReivewsPaginated(@Param("begin") int begin, @Param("end") int end);
-	List<Review> getFollowerReivewsPaginated(@Param("begin") int begin, @Param("end") int end, @Param("followedId") int followedId);
+	List<Review> getAllReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit);
+	List<Review> getFollowerReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit, @Param("followedId") int followedId);
 
 	List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
 														  @Param("end") int end,

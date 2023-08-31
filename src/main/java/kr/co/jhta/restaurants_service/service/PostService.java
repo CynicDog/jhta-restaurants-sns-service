@@ -2,10 +2,13 @@ package kr.co.jhta.restaurants_service.service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.dto.HomePostDto;
+import kr.co.jhta.restaurants_service.dto.PostDataDto;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import kr.co.jhta.restaurants_service.mapper.PostMapper;
 import kr.co.jhta.restaurants_service.mapper.StoreMapper;
 import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
+import kr.co.jhta.restaurants_service.mapper.HomeMapper;
 import kr.co.jhta.restaurants_service.mapper.PostCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
@@ -38,6 +42,7 @@ public class PostService {
 
 	private final PostMapper postmapper;
 	private final StoreMapper storeMapper;
+	private final HomeMapper homeMapper; 
 	private final PostDataMapper postDataMapper;
 	private final PostCommentMapper postCommentMapper;
 	private final BookmarkMapper bookmarkMapper;
@@ -50,11 +55,20 @@ public class PostService {
 		return posts;
 	}
 	
+	public List<HomePostDto> getPostsOrderByLike(){
+		List<HomePostDto> posts = homeMapper.getPostsOrderByLike();
+		return posts;
+	}
+	
+	
+	
 	public List<Post> getRecentPostsThreeOfFollowersByFollowed(SecurityUser securityUser){
 		logger.info(securityUser.getUser());
 		List<Post> posts = postmapper.getRecentPostsThreeOfFollowersByFollowed(securityUser.getUser().getId());
 		return posts;
 	}
+	
+	
 	
 	public List<Store> getStoresByKeyword(String keyword) {
 
@@ -83,19 +97,46 @@ public class PostService {
 
 		Post post = postmapper.getPostById(postId);
 		
-		List<PostData> postDatas = postDataMapper.getPostDataByPostId(postId);
+		List<PostDataDto> postDatas = postDataMapper.getPostDataByPostId(postId);
+		for(PostDataDto postdata : postDatas) {
+			logger.info(postdata.getPostData().toString());;
+		}
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
 		
 		if(securityUser != null) {
-			List<Bookmark> bookmarks = bookmarkMapper.getBookmarksByCustomerId(securityUser.getUser().getId());
-			dto.setBookmark(bookmarks);
+			for(PostDataDto postData : postDatas) {
+				Bookmark bookmarks = bookmarkMapper.getBookmarkByStoreIdAndCustomerId(postData.getStore().getId() ,securityUser.getUser().getId());
+				postData.setBookmark(bookmarks);
+			}
 		}
 
 		dto.setPost(post);
-		dto.setPostData(postDatas);
+		dto.setPostDatas(postDatas);
 		dto.setPostComments(postComments);
 
 		return dto;
+	}
+	
+	public Object changeBookmark(int storeId, String job, SecurityUser securityUser) {
+		
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("storeId", storeId);
+	    paramMap.put("customerId", securityUser.getUser().getId());
+
+	    if ("Y".equals(job)) {
+	        // 북마크 추가 로직
+	        storeMapper.insertBookmark(paramMap);
+	    } else if ("N".equals(job)) {
+	        // 북마크 삭제 로직
+	        storeMapper.deleteBookmark(paramMap);
+	    }
+
+	    // 변경된 북마크 상태를 반환
+	    return getUpdatedBookmarkStatus(storeId, securityUser);
+	}
+	
+	private Object getUpdatedBookmarkStatus(int storeId, SecurityUser securityUser) {
+		return null;
 	}
 
 	public void updatePost(String title, String content, String pictureName) {
@@ -127,22 +168,22 @@ public class PostService {
     }
     
     public List<Post> getAllPosts(int page, int limit){
+
     	int start = (page - 1) * limit;
-    	int end = start + limit;
     	
-    	return postmapper.getAllPosts(start, end);
+    	return postmapper.getAllPosts(start, limit);
     }
 
     public List<Post> getPostsPaginatedOfFollowersByFollowed(int page, int limit, SecurityUser securityUser) {
 
 		int start = (page - 1) * limit;
-		int end = start + limit;
 
-		return postmapper.getPostsPaginatedOfFollowersByFollowed(start, end, securityUser.getUser().getId());
+		return postmapper.getPostsPaginatedOfFollowersByFollowed(start, limit, securityUser.getUser().getId());
     }
 
 	public Page<PostData> getPostDataByCustomerIdOrderByCreateDateDesc(int id, Integer page, Integer limit) {
 
 		return postDataRepository.findByUserIdOrderByCreateDateDesc(id, PageRequest.of(page, limit));
 	}
+	
 }
