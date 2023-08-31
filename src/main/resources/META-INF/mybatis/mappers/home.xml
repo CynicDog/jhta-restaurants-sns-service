@@ -94,11 +94,31 @@
 		limit #{begin}, #{end}
 	</select>
 	
-	<select id="">
-		select
+	<select id="getPostsOrderByLike" resultType="HomePostDto">
+	    select
+			p.id             as id,
+			p.title          as title,
+			p.sub_title      as subTitle,
+			p.create_date 	 as createDate,
+			p.update_date 	 as updateDate,
+			p.customer_id    as "customer.id",
+			u.username 	   	 as "customer.username",
+			p.report_count   as reportCount,
+			p.disabled       as disabled,
+			p.blocked        as blocked,
+			filename	 	 as pictureFile,	
+			p.liked_count	 as likedCount
 		from
-		
-	
+			POSTS p
+		join
+			USERS u on p.customer_id = u.id
+	    join
+	    	(select 
+	    		p.id,  (select pd.picture_file  from POST_DATA pd where pd.post_id = p.id LIMIT 1 offset 0) filename 
+			 from 
+				POSTS p) D on p.id = D.id
+		order by likedCount desc		
+		limit 0,5
 	</select>
 	
 

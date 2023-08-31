@@ -13,6 +13,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    
+    <style type="text/css">
+		.card-text {
+			white-space: normal;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+					 -webkit-line-clamp: 3;
+					 -webkit-box-orient: vertical;
+		}
+	</style>
 </head>
 <body>
 
@@ -67,30 +78,19 @@
 			<div class="col-4 mb-3 me-3" id="home-content"></div>
 			
 			<div class="col-3 pt-3 home-side-contents" >
-				<c:forEach var="post" items="${result}">
+				<h4 class="mb-3">인기 포스트</h4>
+				<c:forEach var="post" items="${postList}">
 					<div class="card mb-3" style="border: none;">
 						<div class="row d-flex justify-content-between">
 							<div class="col-7">
 								<p>${post.title}</p>
-								<p>${post.subTitle}</p>
 							</div>
 							<div class="col-4">
-								<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
+								<img src="/images/post/png/${post.pictureFile}" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
 							</div>
 						</div>
 					</div>
 				</c:forEach>
-				<div class="card mb-3" style="border: none;">
-					<div class="row d-flex justify-content-between">
-						<div class="col-7">
-							<p>타이틀</p>
-							<p>서브 타이틀</p>
-						</div>
-						<div class="col-4">
-							<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -330,7 +330,7 @@
 
 				let imgContent = `
 				    <div class="carousel-item active">
-				      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+				      <img src="/images/review/png/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
 				    </div>			
 					`
 				images += imgContent;
@@ -338,7 +338,7 @@
 			}else{
 				let imgContent = `
 				    <div class="carousel-item">
-				      <img src="resources/image/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
+				      <img src="/images/review/png/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
 				    </div>			
 					`
 				images += imgContent;

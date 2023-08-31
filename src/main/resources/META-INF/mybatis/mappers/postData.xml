@@ -20,5 +20,4 @@
 		where post_id = #{value}
 		and A.store_id = B.id
 	</select>
-	
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.HomeFeed;
+import kr.co.jhta.restaurants_service.dto.HomePostDto;
 import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.HomeService;
@@ -41,7 +42,8 @@ public class HomeController {
 	@GetMapping
 	public String home(Model model) {
 		
-//		postService.getPostsOrderByLike();
+		List<HomePostDto> postList = postService.getPostsOrderByLike();
+		model.addAttribute("postList", postList);
 		return "home";
 	}
 
