@@ -200,6 +200,7 @@ public class StoreService {
 	    return bookmark;
 	}
 
+
 	public List<StoreDetailDto> getPaginatedStoresByUserId(Integer userId, Integer page, Integer limit) {
 
 		Page<Store> stores = storeRepository.findStoreByOwnerId(userId, PageRequest.of(page, limit));
