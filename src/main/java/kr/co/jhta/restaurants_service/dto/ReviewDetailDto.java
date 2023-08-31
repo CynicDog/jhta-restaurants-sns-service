@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
+import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class ReviewDetailDto {
 	private double reviewRatingByCustomerId;
 	private double storeReviewAvg;
 	private List<Review> allReviewsByStoreId;
+	private List<ReviewPicture> reviewPicturesByReviewId;
 	
 	private int reviewCount;
 	private int bookmarkCount;

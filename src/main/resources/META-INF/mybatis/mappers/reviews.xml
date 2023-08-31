@@ -349,7 +349,7 @@
 			#{begin}, #{end}
 	</select>
 
-	<select id="getReviewsPaginatedByStoreIdAndRating" resultType="ReviewDto">
+	<select id="getReviewsPaginatedByStoreIdAndRating" resultMap="ReviewResultMap">
 		SELECT
 			r.id,
 			r.rating,

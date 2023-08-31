@@ -101,31 +101,37 @@ html, body {
 				</div>	
 				<div class="row m-3">
 						<span style="font-size: 15px;">
-							<i id="recomened" class="bi bi-heart-fill text-danger"></i>
+							<i id="recomened" class="bi bi-heart-fill text-danger" ></i>
 							<a>${review.review.likedCount }</a>
 							<a class="float-end pt-1 mt-1 text-secondary"><fmt:formatDate value="${review.review.createDate }" pattern="yyyy-M-d" /></a>
 						</span>
 					<p class="border border-secondary border-opacity-50 rounded p-3" style="font-size:20px;">${review.review.content }</p>
 				</div>
 				<div class="row" id="image-row">
+				<c:forEach var="picture" items="${review.reviewPicturesByReviewId }" varStatus="loop">
+					<c:choose>
+					<c:when test="${loop.index lt 2}">
 					<div class="col-4 " >
-						<img class="img-thumbnail" data-image-index="0" src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" alt="..."  style="width: 100%; height: 100%; cursor: pointer;">
+						<img class="img-thumbnail object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..."  style="width: 100%; height: 450px; cursor: pointer;">
 					</div>
-					<div class="col-4" >
-						<img class="img-thumbnail" data-image-index="1" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA2MjlfMjI5%2FMDAxNjg4MDAwMDc5OTE4.3bW9-0ndIwGAf1J8XmmnZDEM4fmtlo1rO78I4DcOCxAg.1y7MtQUbq9xy1dcRcvcu_VJ92UqdMyARE3-ynUXiWlgg.PNG.ggguuuiii%2F20230629_095340.png&type=sc960_832" alt="..." style="width: 100%; height: 100%; cursor: pointer;">
-					</div>
-					<div class="col-4" >
+					</c:when>
+					<c:when test="${loop.index eq 2}">
+					<div class="col-4">
 						<div class="card bg-dark text-center text-white fs-1">
-							<img class="img-thumbnail card-img opacity-50" data-image-index="2" src="https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/12e66f74-ca37-4a97-b19e-8e9231541a4a.jpeg" alt="..." style="width: 100%; height: 100%; cursor: pointer;">
+							<img class="img-thumbnail card-img opacity-50 object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px; cursor: pointer;">
 							<div class="col-1 card-img-overlay position-absolute top-50 start-50 translate-middle" >
-							<p class="position-absolute top-50 start-50 translate-middle">+1</p>
+							<p class="position-absolute top-50 start-50 translate-middle">+${loop.index}</p>
 							</div>
 						</div>
 					</div>
+					</c:when>
+					<c:when test="${loop.index eq 3}">
 					<div class="col-4 visually-hidden" >
-						<img class="img-thumbnail card-img" data-image-index="3" src="https://d20aeo683mqd6t.cloudfront.net/images/imgs/000/015/214/original/image006.jpeg?1561342506&d=750x750" alt="..." style="width: 100%; height: 100%;">
+						<img class="img-thumbnail card-img object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px;">
 					</div>
-					
+					</c:when>
+					</c:choose>
+				</c:forEach>
 					<!-- Modal -->
 					<div id="Modal" class="modal fade" aria-hidden="true" tabindex="-1">
 						<div class="modal-dialog modal-dialog-centered modal-xl">
@@ -136,7 +142,7 @@ html, body {
 							            <button class="modal-nav-button" id="prevButton" >&#10094;</button>
 							        </div>
 							        <div class="col-10 text-center">
-							            <img class="modal-content" id="modalImg" style="width: 100%; height: 100%;">
+							            <img class="modal-content object-fit-cover" id="modalImg" style="width: 100%; height: 1200px;">
 							        </div>
 							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="nextButton" >&#10095;</button>
