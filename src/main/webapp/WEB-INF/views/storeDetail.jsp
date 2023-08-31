@@ -18,14 +18,17 @@
 	.border-opacity-10.active {
 	    color: #ff792a;
 	}
-	
+	.img-thumbnail {
+        max-height: 250px; /* 원하는 높이로 조절해주세요 */
+        object-fit: cover;
+    }
 </style>
 </head>
 <body>
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
-        <div class="row row-cols-5" style="cursor: pointer;">
+        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer;">
             <c:forEach var="recentReview" items="${recentReviews}">
                 <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
@@ -40,7 +43,7 @@
                 </div>
                 <div class="text-center" style="background-color: black; width: 80%;">
 				    <div class="fotorama" data-nav="thumbs">
-				        <img class="modal-content" id="modalImg" style="max-width: 100%; max-height: 80vh; margin: auto; display: block;">
+				        <img class="modal-content" id="modalImg" style="width: auto; height: auto; max-width: 100%; max-height: 80vh; margin: auto; display: block;">
 				    </div>
 				</div>
                 <div style="width: 400px;" class="2">
@@ -56,10 +59,11 @@
                                     <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
                                 </div>
                             </div>
-                            <div>
-                                처음 와봤는데 너무 맛있어요 다음에 재방문 100%입니다! 처음 와봤는데 너무 맛있어요 다음에 재방문 100%입니다! 처음 와봤는데 너무 맛있어요 다음에
-                                재방문 100%입니다!
-                            </div>
+                            <c:forEach var="review" items="${recentReviews}">
+							    <div class="review">
+							        <p>${review.content}</p>
+							    </div>
+							</c:forEach>
                         </div>
                     </div>
                 </div>
@@ -172,13 +176,13 @@
 		                <div class="p-4">
 		                <div class="row">
 		                	<c:forEach var="closestStore" items="${closestStores }">
-		                    <div class="mb-3" style="cursor: pointer;">
+		                    <div class="mb-3">
 		                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
 		                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
-		                            <div class="d-flex align-items-start" onclick="location.href='/store/detail?id=${closestStore.id }'">
-		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px;">
+		                            <div class="d-flex align-items-start">
+		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id }'">
 		                                <div class="ml-3">
-		                                    <h5 class="card-title mt-0" style="margin-left: 5px;">${closestStore.name } <span></span></h5>
+		                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> ${closestStore.name } <span></span></h5>
 		                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>
@@ -282,9 +286,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex" id="picturesOutputArea">
-                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="img-thumbnail" style="height: 120px; width: 120px">
-                                    </div>
+                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea"></div>
                                     <div class="row">
                                         <div class="col">
                                             <button type="button" class="btn btn-light btn-sm" style="color: #838383">
@@ -307,12 +309,17 @@
                             </div>
                         </div>
                     </div>
-                `
-                }
-            )
-        })
-        isReviewsFetching = false;
-    }
+                    `
+                    const picturesOutputArea = document.getElementById('picturesOutputArea')
+                    datum.reviewPictures.forEach(picture => {
+                        picturesOutputArea.innerHTML += `
+                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 200px; width: 100%">
+                        `
+                    })}
+                )
+            })
+            isReviewsFetching = false;
+        }
 
     // initial fetching
     fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
