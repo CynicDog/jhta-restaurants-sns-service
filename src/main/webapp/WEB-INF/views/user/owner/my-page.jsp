@@ -22,152 +22,89 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-md-5 my-5">
-            <div class="card shadow my-3">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
-                        <div class="col-8 fs-4">About Me</div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="nickname" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Nickname</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="nickname"> ${owner.nickname} </p>
+            <div class="position-sticky" style="top: 5rem;">
+                <div class="card shadow-sm border border-0 my-3">
+                    <div class="fw-lighter m-3 p-1">
+                        <div class="row">
+                            <div class="col-8 fs-4">About Me</div>
                         </div>
                     </div>
-                    <div class="row m-2">
-                        <div class="col-sm-3 my-1 fw-lighter">
-                            <label for="email" class="col-sm-2 col-form-label"><span
-                                    style="white-space: nowrap">Email</span></label>
-                        </div>
-                        <div class="col-sm-9 my-1">
-                            <p class="form-control-plaintext" id="email"> ${owner.email} </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <span class="fw-li"></span>
-            <div class="card shadow">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row align-items-center">
-                        <div class="col fs-4">
-                            Socials
-                        </div>
-                        <div class="col text-end">
-                            <div class="badge text-bg-secondary position-relative mx-2"
-                                 id="followersPopover"
-                                 type="button"
-                                 data-bs-container="body"
-                                 data-bs-toggle="popover"
-                                 data-bs-placement="bottom"
-                                 data-bs-html="true"
-                                 data-bs-content="<p class='link-secondary m-1' id='follow-list'>Here's your followers</p>">
-                                followers
-                                <%--                                <c:if test="${not empty follwers}">--%>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
-                                </span>
-                                <%--                                </c:if>--%>
+                    <div class="card-body">
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="fullName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Full Name</span></label>
                             </div>
-                            <div class="badge text-bg-secondary position-relative mx-2"
-                                 id="followingsPopover"
-                                 type="button"
-                                 data-bs-container="body"
-                                 data-bs-toggle="popover"
-                                 data-bs-placement="bottom"
-                                 data-bs-html="true"
-                                 data-bs-content="<p class='link-secondary m-1' id='follow-list'>Here's your followers</p>">
-                                followings
-                                <%--                                <c:if test="${not empty followings}">--%>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    99+
-                                </span>
-                                <%--                                </c:if>--%>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="fullName"> ${ owner.fullName } </p>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="nickName" class="col-sm-2 col-form-label"><span style="white-space: nowrap">Nickname</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="nickName"> ${ owner.nickname } </p>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-sm-4 my-1 fw-lighter">
+                                <label for="email" class="col-sm-2 col-form-label"><span
+                                        style="white-space: nowrap">Email</span></label>
+                            </div>
+                            <div class="col-sm-8 my-1">
+                                <p class="form-control-plaintext" id="email"> ${ owner.email } </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <c:if test="${not empty recipients}">
-                        <div class="p-2 m-3">
-                            <p class="my-1">Sent requests</p>
-                            <hr/>
-                            <c:forEach items="${recipients}" var="recipient">
-                                <div class="border rounded p-2 my-2 d-flex align-items-center">
-                                    <span class="fw-bold mx-1">${recipient.email}</span>
-                                    <div class="ms-auto">
-                                        <span class="badge bg-secondary my-1">Pending</span>
-                                    </div>
-                                </div>
-                            </c:forEach>
+                <span class="fw-li"></span>
+                <div class="card shadow-sm border border-0">
+                    <div class="fw-lighter m-3 p-1">
+                        <div class="row align-items-center">
+                            <div class="col fs-4">
+                                Some components..
+                            </div>
                         </div>
-                    </c:if>
-                    <c:if test="${not empty senders}">
-                        <div class="p-2 m-3">
-                            <p class="my-1">Arrived requests</p>
-                            <hr/>
-                            <c:forEach items="${senders}" var="sender">
-                                <div class="border rounded p-2 my-2 d-flex align-items-center">
-                                    <span class="fw-bold mx-1">${sender.email}</span>
-                                    <div class="ms-auto">
-                                        <a href="" class="btn btn-outline-secondary btn-sm"
-                                           onclick="accept(${sender.id})">accept</a>
-                                        <a href="" class="btn btn-outline-danger btn-sm"
-                                           onclick="decline()">decline</a>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </div>
-                    </c:if>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-7 my-5">
-            <div class="card shadow overflow-auto my-3" style="max-height: 900px;">
-                <div class="fw-lighter m-3 p-1">
-                    <div class="row">
-                        <div class="col-8 fs-4">My Stores</div>
-                        <div class="col-4 d-flex justify-content-end">
-                            <div class="my-2">
-                                <div id="registerStorePopover"
-                                     data-bs-container="body"
-                                     data-bs-toggle="popover"
-                                     data-bs-placement="bottom"
-                                     data-bs-html="true"
-                                     data-bs-content="<a class='link-secondary m-1 link-underline-opacity-0' href='/owner/register'>Let's go register your store!</a>">
-                                    <i type="button" class="bi bi-plus-circle" style="color: #838383"></i>
-                                </div>
-                            </div>
+            <div class="fw-lighter m-3 p-1">
+                <div class="row">
+                    <div class="col-4 fs-4">My Stores</div>
+                    <div class="col-8 d-flex justify-content-end">
+                        <div class="pb-2 my-1 border-bottom text-end">
+                                <span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill my-2"
+                                      type="button"
+                                      onclick="window.location.href=`/owner/register`">
+                                    Add your store!
+                                </span>
+                            <span id="storesButton"
+                                  type="button"
+                                  class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill mx-1">
+                                    My stores
+                                </span>
+                            <span id="reviewsButton"
+                                  type="button"
+                                  class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill mx-1">
+                                    Reviews
+                                </span>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <c:if test="${not empty stores}">
-                        <ol class="list-group list-group-numbered">
-                            <c:forEach items="${stores}" var="store">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${store.name}</div>
-                                        <c:choose>
-                                            <c:when test="${store.description.length() gt 50}">
-                                                ${store.description.substring(0, 50)} ...
-                                            </c:when>
-                                            <c:otherwise>
-                                                ${store.description}
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </div>
-                                    <i type="button" class="bi bi-pencil-square"></i>
-                                </li>
-                            </c:forEach>
-                        </ol>
-                    </c:if>
-                    <c:if test="${empty stores}">
-                        <p class="my-1">No stores registered yet.</p>
-                    </c:if>
+            </div>
+            <div class="card-body">
+                <div id="contentOutputArea">
+                </div>
+                <div class="text-center">
+                    <div class="btn border border-0 disabled">
+                        <div id="storeLoadingSpinner"
+                             class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                             style="display: none;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -186,142 +123,155 @@
 </body>
 <script>
 
-    function accept(senderId) {
+    const storeLoadingSpinner = document.getElementById('storeLoadingSpinner')
+    const contentOutputArea = document.getElementById('contentOutputArea')
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/follow/accept?sender-id=" + senderId, true);
-        xhr.responseType = "text";
+    let pageOnStore = 0;
+    let isStoreFetching = false;
+    let isStoreLast = false;
 
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                alert("success message")
-                window.location.reload();
-            } else {
-                alert(xhr.responseText);
-            }
-        };
+    let currentFetchingOption = null;
 
-        xhr.send();
-
+    const getStores = page => {
+        return fetch(`/owner/stores?page=\${page}&limit=3`).then(response => response.json());
     }
 
-    function decline(senderId) {
+    function fetchAndRenderStores(page) {
+        isStoreFetching = true
+        storeLoadingSpinner.style.display = 'block';
 
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/follow/decline?id=" + senderId, true);
-        xhr.responseType = "text";
+        getStores(page).then(data => {
 
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                alert("success message")
-            } else {
-                alert(xhr.responseText);
+            if (data.last) {
+                isStoreLast = true;
+                storeLoadingSpinner.style.display = 'none'
             }
-        };
 
-        xhr.send();
+            data.forEach(datum => {
+
+                function removeSecondsFromTime(timeString) {
+                    return timeString.split(':').slice(0, 2).join(':');
+                }
+
+                let foodBadges = '';
+                datum.foods.forEach(food => {
+                    const foodBadge = `
+                        <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill mx-1">
+                            \${food.name}
+                        </span>
+                    `;
+                    foodBadges += foodBadge;
+                });
+
+                let openTimesBadges = '';
+                datum.openTimes.forEach(openTime => {
+                    const openTimesBadge = `
+                        <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill position-relative mx-4 my-2">
+                            \${openTime.day}
+                            <span class="position-absolute top-100 start-100 translate-middle badge rounded-pill bg-secondary-subtle text-secondary my-1">
+                                \${removeSecondsFromTime(openTime.openTime)} ~ \${removeSecondsFromTime(openTime.closeTime)}
+                            </span>
+                        </span>
+                    `
+                    openTimesBadges += openTimesBadge;
+                })
+
+                contentOutputArea.innerHTML += `
+                        <div class="bg-light rounded-3 p-3 my-4 shadow-sm">
+                            <div class="row d-flex align-items-center justify-content-center">
+                                <div class="col-lg-10">
+                                    <span type="button" class="fs-3 fw-lighter storeDetailsEntry" data-store-id="\${datum.store.id}">
+                                        \${datum.store.name}
+                                    </span>
+                                    <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill ">
+                                        \${datum.store.address}
+                                    </span>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="text-end">
+                                        <span class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill mx-1">
+                                            \${datum.store.category}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fw-light shadow-sm rounded-2 bg-white my-3 p-4 overflow-auto">
+                                \${datum.store.description}
+                            </div>
+                            <div id="foodsOutputArea"  class="my-4 px-4">
+                                \${foodBadges}
+                            </div>
+                            <div id="openTimesOutputArea" class="my-3">
+                                \${openTimesBadges}
+                            </div>
+                        </div>
+                `
+
+
+                isStoreFetching = true;
+                storeLoadingSpinner.style.display = 'none';
+            })
+        })
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
+    // initial loading
+    fetchAndRenderStores(pageOnStore);
+    currentFetchingOption = (page) => {
+        return fetchAndRenderStores(page)
+    }
 
-        const params = new URLSearchParams(window.location.search);
+    document.getElementById('storesButton').addEventListener('click', function () {
 
-        const registerStoreIcon = new bootstrap.Popover(document.querySelector('#registerStorePopover'))
-        const followersPopover = new bootstrap.Popover(document.querySelector('#followersPopover'), {
-            trigger: 'manual',
-            content: "init",
-        });
-        const followingsPopover = new bootstrap.Popover(document.querySelector('#followingsPopover'), {
-            trigger: 'manual',
-            content: "init",
-        });
+        contentOutputArea.innerHTML = '';
 
-        // window.location.href = "/owner/my-page?registration=success"
-        if (params.get("registration") === "success") {
-            showMessagingToast("Successfully registered :)");
+        pageOnStore = 0;
+        isStoreFetching = false;
+        isStoreLast = false;
+
+        fetchAndRenderStores(pageOnStore);
+        currentFetchingOption = (page) => {
+            return fetchAndRenderStores(page)
         }
+    })
 
-        let followersPopoverVisible = false;
-        document.body.addEventListener('click', function (event) {
-            if (event.target.matches('#followersPopover')) {
-                if (followersPopoverVisible) {
-                    followersPopover.hide();
-                } else {
-                    // TODO: Fetch followers and replace the below dummy users
-                    // Load the content
+    addEventListener('click', function(event) {
+        if (event.target.classList.contains('storeDetailsEntry')) {
+            const button = event.target;
+            const storeId = button.getAttribute('data-store-id')
 
-                    followersPopover.setContent({
-                        '.popover-body': `
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">John Doe</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">Alice Smith</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                    });
-                    followersPopover.show();
-                }
-
-                followersPopoverVisible = !followersPopoverVisible;
-            }
-        });
-
-        let followingsPopoverVisible = false;
-        document.body.addEventListener('click', function (event) {
-
-            if (event.target.matches('#followingsPopover')) {
-                if (followingsPopoverVisible) {
-                    followingsPopover.hide();
-                } else {
-                    // TODO: Fetch followers and replace the below dummy users
-                    // Load the content
-                    followingsPopover.setContent({
-                        '.popover-body': `
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">John Doe</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 my-1">
-                                    <div class="d-flex align-items-start">
-                                        <img class="rounded-circle" src="/resources/image/user.png"  width="30" height="30" alt="User Image">
-                                        <p class="mx-2 my-1">Alice Smith</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `
-                    });
-                    followingsPopover.show();
-                }
-
-                followingsPopoverVisible = !followingsPopoverVisible;
-            }
-        });
-
-        function showMessagingToast(message) {
-            const successfulToast = document.getElementById('successfulToast');
-            const toastBody = successfulToast.querySelector('.toast-body');
-
-            toastBody.textContent = message;
-
-            const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
-            successfulToastBootstrap.show();
+            window.location.href = `/store/detail?id=\${storeId}`
         }
-    });
+    })
+
+    window.onscroll = function () {
+
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
+
+            if (isStoreFetching || isStoreLast) {
+                // do nothing
+            } else {
+                pageOnPictureData += 1;
+                currentFetchingOption(pageOnPictureData);
+            }
+        }
+    }
+
+
+    const params = new URLSearchParams(window.location.search);
+
+    // window.location.href = "/owner/my-page?registration=success"
+    if (params.get("registration") === "success") {
+        showMessagingToast("Successfully registered :)");
+    }
+
+    function showMessagingToast(message) {
+        const successfulToast = document.getElementById('successfulToast');
+        const toastBody = successfulToast.querySelector('.toast-body');
+
+        toastBody.textContent = message;
+
+        const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
+        successfulToastBootstrap.show();
+    }
 </script>
 </html>

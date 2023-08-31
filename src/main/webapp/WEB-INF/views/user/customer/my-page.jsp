@@ -854,7 +854,6 @@
 
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
 
-            console.log('hi')
             if (isPictureDataFetching || isPictureDataLast) {
                 // do nothing
             } else {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreCommand;
@@ -12,6 +13,8 @@ import kr.co.jhta.restaurants_service.repository.FoodRepository;
 import kr.co.jhta.restaurants_service.repository.StoreOpenTimeRepository;
 import kr.co.jhta.restaurants_service.repository.StoreRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import kr.co.jhta.restaurants_service.dto.Pagination;
@@ -197,8 +200,15 @@ public class StoreService {
 	    return bookmark;
 	}
 
-	/*
-	 * public Store getStoreById(int storeId) { return null; }
-	 */
+	public List<StoreDetailDto> getPaginatedStoresByUserId(Integer userId, Integer page, Integer limit) {
 
+		Page<Store> stores = storeRepository.findStoreByOwnerId(userId, PageRequest.of(page, limit));
+
+		return stores.stream()
+				.map(store -> {
+					List<Food> foods = foodRepository.getFoodsByStoreId(store.getId());
+					List<StoreOpenTime> storeOpenTimes = storeOpenTimeRepository.findStoreOpenTimeByStoreId(store.getId());
+					return  new StoreDetailDto(store, foods, storeOpenTimes);
+				}).collect(Collectors.toList());
+	}
 }

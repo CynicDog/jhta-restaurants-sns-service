@@ -18,4 +18,10 @@ public class StoreDetailDto {
 	private List<Food> foods;
 	private List<StoreOpenTime> openTimes;
 	private List<Store> closestStores;
+
+	public StoreDetailDto(Store store, List<Food> foods, List<StoreOpenTime> openTimes) {
+		this.store = store;
+		this.foods = foods;
+		this.openTimes = openTimes;
+	}
 }
