@@ -94,5 +94,12 @@
 		limit #{begin}, #{end}
 	</select>
 	
+	<select id="">
+		select
+		from
+		
+	
+	</select>
+	
 
 </mapper>

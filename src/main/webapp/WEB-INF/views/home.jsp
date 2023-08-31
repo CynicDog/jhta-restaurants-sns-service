@@ -64,48 +64,27 @@
 	            </nav>
 			</div>
 			
-			<div class="col-4 mb-3 me-3" id="home-content">
-			</div>
+			<div class="col-4 mb-3 me-3" id="home-content"></div>
 			
-			<div class="col-3 pt-3" >
-				<div class="card mb-3" style="border: none;">
-					<div class="row d-flex justify-content-between">
-						<div class="col-7">
-							<p>리스트 top 10</p>
-							<p>가게 이름 평균평점</p>
-						</div>
-						<div class="col-4">
-							<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
-						</div>
-					</div>
-				</div>
-				<div class="card mb-3" style="border: none;">
-					<div class="row d-flex justify-content-between">
-						<div class="col-7">
-							<p>리스트 top 10</p>
-							<p>가게 이름 평균평점</p>
-						</div>
-						<div class="col-4">
-							<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
+			<div class="col-3 pt-3 home-side-contents" >
+				<c:forEach var="post" items="${result}">
+					<div class="card mb-3" style="border: none;">
+						<div class="row d-flex justify-content-between">
+							<div class="col-7">
+								<p>${post.title}</p>
+								<p>${post.subTitle}</p>
+							</div>
+							<div class="col-4">
+								<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 				<div class="card mb-3" style="border: none;">
 					<div class="row d-flex justify-content-between">
 						<div class="col-7">
-							<p>리스트 top 10</p>
-							<p>가게 이름 평균평점</p>
-						</div>
-						<div class="col-4">
-							<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
-						</div>
-					</div>
-				</div>
-				<div class="card mb-3" style="border: none;">
-					<div class="row d-flex justify-content-between">
-						<div class="col-7">
-							<p>리스트 top 10</p>
-							<p>가게 이름 평균평점</p>
+							<p>타이틀</p>
+							<p>서브 타이틀</p>
 						</div>
 						<div class="col-4">
 							<img src="resources/image/cafe1.jpg" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:80px;">
@@ -146,7 +125,7 @@
 	    } else {
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
 	       	alert("로그인이 필요합니다");
-	        window.location.href = "/user/login";
+	        window.location.href = "/user/login?error=anonymous";
 	    }
 	});
 	
@@ -170,7 +149,7 @@
 	    } else {
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
 	       	alert("로그인이 필요합니다");
-	        window.location.href = "/user/login";
+	        window.location.href = "/user/login?error=anonymous";
 	    }
 	});
 	
@@ -203,7 +182,7 @@
 					<div id=home-content-header class="d-flex justify-content-between mb-2" >
 						<div id="home-feed-writer" class="">
 							<div class="d-flex justify-content-start">
-								<span class="me-2">\${feed.username} </span>
+								<span class="me-2 fw-bold">\${feed.username} </span>
 								\${generateRating(feed.rating)}
 							</div>					
 						</div>

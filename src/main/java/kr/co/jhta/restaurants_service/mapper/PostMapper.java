@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
+import kr.co.jhta.restaurants_service.vo.post.PostData;
+
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
@@ -26,4 +28,8 @@ public interface PostMapper {
     
     List<Post> getRecentPostsThree();
     List<Post> getRecentPostsThreeOfFollowersByFollowed(int followedId);
+
+	List<Post> getPostsOrderByLike();
+
+
 }
