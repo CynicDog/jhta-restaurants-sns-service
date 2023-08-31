@@ -57,12 +57,68 @@
                         </div>
                     </div>
                 </div>
-                <span class="fw-li"></span>
-                <div class="card shadow-sm border border-0">
+                <div class="card shadow-sm border border-0 mt-3">
                     <div class="fw-lighter m-3 p-1">
-                        <div class="row align-items-center">
-                            <div class="col fs-4">
-                                Some components..
+                        <div class="row">
+                            <div class="col-8 fs-4">Socials</div>
+                            <div class="col-4 d-flex justify-content-end">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                           id="flexSwitchCheckDefault">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col text-end">
+                                <div id="followersToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    followers
+                                    <span id="followersCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                </div>
+                                <div id="followingsToastButton" type="button"
+                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
+                                    followings
+                                    <span id="followingsCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="p-2 m-3">
+                            <div id="pendingRequests"
+                                 type="button"
+                                 class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
+                                Pending
+                            </div>
+                            <div id="acceptedRequests"
+                                 type="button"
+                                 class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
+                                Accepted
+                            </div>
+                            <div id="declinedRequests"
+                                 type="button"
+                                 class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill ">
+                                Declined
+                            </div>
+                            <div id="sentRequests"
+                                 type="button"
+                                 class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">
+                                Sent
+                            </div>
+                            <hr/>
+                            <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
+                            </div>
+                            <div class="text-center">
+                                <div class="btn border border-0 disabled">
+                                    <div id="requestLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                         style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,10 +174,353 @@
                         data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
+        <div id="followersToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-autohide="false">
+            <div class="toast-body bg-light-subtle rounded-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="fw-lighter fs-4">Followers
+
+                                <div class="btn border border-0 disabled">
+                                    <div id="followersLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                         style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="followersCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="followersOutputArea" class="my-2 p-1" style="max-height: 400px; overflow-y: auto;">
+                </div>
+            </div>
+        </div>
+        <div id="followingsToast" class="toast toast-add-menu" role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-autohide="false">
+            <div class="toast-body bg-light-subtle rounded-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="fw-lighter fs-4">Followings
+                                <div class="btn border border-0 disabled">
+                                    <div id="followingsLoadingSpinner"
+                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
+                                         style="display: none;">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="followingsCloseButton" type="button" class="btn-close" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="followingsOutputArea" class="my-2 p-1" style="max-height: 400px; overflow-y: auto;">
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 <script>
+
+    const followersToastButton = document.getElementById('followersToastButton')
+    const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
+
+    let followersToast = document.getElementById('followersToast')
+    let followersOutputArea = document.getElementById('followersOutputArea');
+
+    const followingsToastButton = document.getElementById('followingsToastButton')
+    const followingsLoadingSpinner = document.getElementById('followingsLoadingSpinner')
+
+    let followingsToast = document.getElementById('followingsToast')
+    let followingsOutputArea = document.getElementById('followingsOutputArea');
+
+    let pageOnFollower = 0
+    let isFollowerFetching = false;
+    let isFollowerLast = false;
+
+    let pageOnFollowing = 0
+    let isFollowingFetching = false;
+    let isFollowingLast = false;
+
+    const getFollowers = page => {
+        return fetch(`/customer/followers?page=\${page}&limit=7`).then(response => response.json());
+    }
+
+    function fetchAndRenderFollowers(page) {
+        if (isFollowerFetching || isFollowerLast) {
+            return;
+        }
+        isFollowerFetching = true;
+        followersLoadingSpinner.style.display = 'block';
+        getFollowers(page).then(data => {
+            if (data.length === 0) {
+                followersLoadingSpinner.style.display = 'none'
+                isFollowerFetching = false;
+            }
+
+            // where 7 is the limit of the number of response on each request
+            if (data.length < 7) {
+                isFollowerLast = true;
+            }
+
+            data.forEach(datum => {
+                followersOutputArea.innerHTML += `
+                        <div class="shadow-sm border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div>\${datum.email}</div>
+                            </div>
+                        </div>
+                    `
+                followersLoadingSpinner.style.display = 'none'
+                isFollowerFetching = false;
+            })
+        })
+    }
+
+    followersToastButton.addEventListener("click", function () {
+        const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
+
+        // initial loading
+        fetchAndRenderFollowers(pageOnFollower)
+
+        // infinite scrolling (scroll pagination)
+        followersOutputArea.addEventListener('scroll', function () {
+            const scrollPos = this.scrollTop + this.clientHeight;
+            const scrollHeight = this.scrollHeight
+
+            if (scrollPos === scrollHeight) {
+                pageOnFollower += 1;
+                fetchAndRenderFollowers(pageOnFollower)
+            }
+        })
+
+        followersToastBootstrap.show()
+    })
+
+    const getFollowings = page => {
+        return fetch(`/customer/followings?page=\${page}&limit=7`).then(response => response.json());
+    }
+
+    function fetchAndRenderFollowings(page) {
+        if (isFollowingFetching || isFollowingLast) {
+            return;
+        }
+        isFollowingFetching = true;
+        followingsLoadingSpinner.style.display = 'block';
+        getFollowings(page).then(data => {
+            if (data.length === 0) {
+                followingsLoadingSpinner.style.display = 'none'
+                isFollowingFetching = false;
+            }
+
+            // where 7 is the limit of the number of response on each request
+            if (data.length < 7) {
+                isFollowingLast = true;
+            }
+
+            data.forEach(datum => {
+                followingsOutputArea.innerHTML += `
+                        <div class="shadow-sm border border-light rounded m-3">
+                            <div class="p-3">
+                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div>\${datum.email}</div>
+                            </div>
+                        </div>
+                    `
+                followingsLoadingSpinner.style.display = 'none'
+                isFollowingFetching = false;
+            })
+        })
+    }
+
+    followingsToastButton.addEventListener("click", function () {
+        const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
+
+        // initial loading
+        fetchAndRenderFollowings(pageOnFollowing)
+
+        // infinite scrolling (scroll pagination)
+        followingsOutputArea.addEventListener('scroll', function () {
+            const scrollPos = this.scrollTop + this.clientHeight;
+            const scrollHeight = this.scrollHeight
+
+            if (scrollPos === scrollHeight) {
+                pageOnFollowing += 1;
+                fetchAndRenderFollowings(pageOnFollowing)
+            }
+        })
+
+        followingsToastBootstrap.show()
+    })
+
+    followingsToastButton.addEventListener("click", function () {
+        let followingsToast = document.getElementById('followingsToast')
+        const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
+        followingsToastBootstrap.show()
+    })
+
+    addEventListener('click', function (event) {
+        if (event.target.classList.contains('userDetailEntry')) {
+            const button = event.target;
+            const userId = button.getAttribute('data-user-id')
+
+            window.location.href = `/customer/user-details?id=\${userId}`
+        }
+    })
+
+    let isRequestLast = false;
+    let isRequestsFetching = false;
+    let pageOnRequests = 0
+    let requestFetchingOption = 'pending'
+
+    const requestLoadingSpinner = document.getElementById('requestLoadingSpinner')
+    const requestsOutputArea = document.getElementById('requestsOutputArea')
+
+    const getRequests = (option, page) => {
+        return fetch(`/customer/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
+    }
+
+    function fetchAndRenderRequests(option, page) {
+        isRequestsFetching = true
+        requestLoadingSpinner.style.display = 'block';
+
+        getRequests(option, page).then(data => {
+
+            if (data.length < 5) {
+                isRequestLast = true;
+                isRequestsFetching = false;
+                requestLoadingSpinner.style.display = 'none';
+            }
+
+            data.forEach(datum => {
+
+                function getStatusClasses(status) {
+                    switch (status) {
+                        case 'PENDING':
+                            return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                        case 'ACCEPTED':
+                            return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
+                        case 'DECLINED':
+                            return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
+                        default:
+                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                    }
+                }
+
+                const statusClasses = getStatusClasses(datum.followRequest.status);
+
+                requestsOutputArea.innerHTML += `
+                <div class="border rounded p-2 my-2 d-flex align-items-center">
+                    <div class="fw-light mx-1 userDetailEntry" type="button"  data-user-id="\${datum.user.id}">\${datum.user.nickname}</div>
+                    <div class="ms-auto">
+                        <span type="button"
+                              data-request-id="\${datum.followRequest.id}"
+                              class="\${statusClasses}">\${datum.followRequest.status}</span>
+                    </div>
+                </div>
+
+                `
+                requestLoadingSpinner.style.display = 'none';
+                isRequestsFetching = false;
+            })
+        })
+    }
+
+    fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+
+    document.getElementById('pendingRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'pending'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('acceptedRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'accepted'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('declinedRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'declined'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    document.getElementById('sentRequests').addEventListener('click', function () {
+        requestsOutputArea.innerHTML = ''
+
+        pageOnRequests = 0
+        isRequestLast = false;
+        requestFetchingOption = 'sent'
+        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+    })
+
+    requestsOutputArea.addEventListener('scroll', function () {
+
+        const scrollPos = this.scrollTop + this.clientHeight;
+        const scrollHeight = this.scrollHeight;
+
+        if (scrollPos + .5 >= scrollHeight) {
+            if (isRequestsFetching || isRequestLast) {
+                // do nothing
+            } else {
+                pageOnRequests += 1;
+                fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
+            }
+
+        }
+    })
+
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('requestStatusButton')) {
+            const button = event.target;
+            const requestId = button.getAttribute('data-request-id')
+
+            fetch(`/customer/requests-modify?requestId=\${requestId}`, {
+                method: "POST"
+            })
+                .then(response => response.text())
+                .then(status => {
+
+                    function getStatusClasses(status) {
+                        switch (status) {
+                            case 'PENDING':
+                                return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'ACCEPTED':
+                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'DECLINED':
+                                return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
+                            default:
+                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                        }
+                    }
+
+                    const newStatusClasses = getStatusClasses(status);
+
+                    button.textContent = status;
+                    button.className = newStatusClasses;
+
+                    updateFollowersCount();
+                })
+        }
+    })
+
 
     const storeLoadingSpinner = document.getElementById('storeLoadingSpinner')
     const contentOutputArea = document.getElementById('contentOutputArea')
@@ -281,10 +680,26 @@
         }
     }
 
+    const updateFollowersCount = () => {
+        fetch(`/customer/followers-count`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followersCount').textContent = data;
+            });
+    };
+    updateFollowersCount();
+
+    const updateFollowingsCount = () => {
+        fetch(`/customer/followings-count`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followingsCount').textContent = data;
+            });
+    };
+    updateFollowingsCount();
 
     const params = new URLSearchParams(window.location.search);
 
-    // window.location.href = "/owner/my-page?registration=success"
     if (params.get("registration") === "success") {
         showMessagingToast("Successfully registered :)");
     }

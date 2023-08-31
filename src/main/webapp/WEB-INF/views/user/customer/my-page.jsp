@@ -304,14 +304,12 @@
 
         const followersToastButton = document.getElementById('followersToastButton')
         const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
-        const followersCloseButton = document.getElementById('followersCloseButton');
 
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
         const followingsToastButton = document.getElementById('followingsToastButton')
         const followingsLoadingSpinner = document.getElementById('followingsLoadingSpinner')
-        const followingsCloseButton = document.getElementById('followingsCloseButton');
 
         let followingsToast = document.getElementById('followingsToast')
         let followingsOutputArea = document.getElementById('followingsOutputArea');
