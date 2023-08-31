@@ -381,7 +381,7 @@
         })
 
         const getFollowers = page => {
-            return fetch(`/customer/followers?page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followers?page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowers(page) {
@@ -402,10 +402,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followersOutputArea.innerHTML += `
                         <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -437,7 +443,7 @@
         })
 
         const getFollowings = page => {
-            return fetch(`/customer/followings?page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followings?page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowings(page) {
@@ -458,10 +464,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followingsOutputArea.innerHTML += `
                         <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -614,7 +626,7 @@
     const requestsOutputArea = document.getElementById('requestsOutputArea')
 
     const getRequests = (option, page) => {
-        return fetch(`/customer/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
+        return fetch(`/user/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
     }
 
     function fetchAndRenderRequests(option, page) {
@@ -722,7 +734,7 @@
             const button = event.target;
             const requestId = button.getAttribute('data-request-id')
 
-            fetch(`/customer/requests-modify?requestId=\${requestId}`, {
+            fetch(`/user/requests-modify?requestId=\${requestId}`, {
                 method: "POST"
             })
                 .then(response => response.text())
@@ -862,7 +874,7 @@
     }
 
     const updateFollowersCount = () => {
-        fetch(`/customer/followers-count`)
+        fetch(`/user/followers-count`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followersCount').textContent = data;
@@ -871,7 +883,7 @@
     updateFollowersCount();
 
     const updateFollowingsCount = () => {
-        fetch(`/customer/followings-count`)
+        fetch(`/user/followings-count`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followingsCount').textContent = data;

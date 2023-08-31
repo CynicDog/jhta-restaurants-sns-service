@@ -57,18 +57,6 @@ public class CustomerController {
     }
 
     @ResponseBody
-    @PostMapping("/follow")
-    public ResponseEntity follow(@RequestParam("recipientId") int recipientId,
-                                 @AuthenticationPrincipal SecurityUser securityUser) {
-
-        if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @ResponseBody
     @GetMapping("/postData")
     public ResponseEntity<Page<PostData>> pictureData(@AuthenticationPrincipal SecurityUser securityUser,
                                                       @RequestParam("page") Optional<Integer> page,
@@ -135,43 +123,6 @@ public class CustomerController {
 
         return ResponseEntity.of(Optional.ofNullable(posts));
     }
-
-    @ResponseBody
-    @GetMapping("/followings")
-    public ResponseEntity<List<Projection.User>> followings(@AuthenticationPrincipal SecurityUser securityUser,
-                                                            @RequestParam("page") Optional<Integer> page,
-                                                            @RequestParam("limit") Optional<Integer> limit,
-                                                            @RequestParam("id") Optional<Integer> othersId) {
-
-        List<Projection.User> followers =
-                socialService.getNonDisabledFollowingsByCustomerIdOrderByCreateDate(
-                        othersId.orElse(securityUser.getUser().getId()),
-                        User.DISABLED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(followers));
-    }
-
-    @ResponseBody
-    @GetMapping("/followers")
-    public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser,
-                                                           @RequestParam("page") Optional<Integer> page,
-                                                           @RequestParam("limit") Optional<Integer> limit,
-                                                           @RequestParam("id") Optional<Integer> othersId) {
-
-        List<Projection.User> followers =
-                socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
-                        othersId.orElse(securityUser.getUser().getId()),
-                        User.DISABLED.NO,
-                        page.orElse(0),
-                        limit.orElse(10)
-                );
-
-        return ResponseEntity.of(Optional.ofNullable(followers));
-    }
-
 
     @ResponseBody
     @PostMapping(value = "/otp-check", consumes = "application/json")
@@ -242,53 +193,5 @@ public class CustomerController {
         model.addAttribute("reviewsCount", reviewsCount);
 
         return "/user/customer/user-details";
-    }
-
-    @ResponseBody
-    @GetMapping("/requests")
-    public List<FollowRequestDto> followRequests(@AuthenticationPrincipal SecurityUser securityUser,
-                                                 @RequestParam("option") String option,
-                                                 @RequestParam("page") int page,
-                                                 @RequestParam("limit") int limit) {
-
-        Integer customerId = securityUser.getUser().getId();
-
-        if (option.equals("pending")) {
-            return socialService.getArrivedRequestsPendingByRecipientId(customerId, page, limit);
-        } else if (option.equals("accepted")) {
-            return socialService.getArrivedRequestsAcceptedByRecipientId(customerId, page, limit);
-        } else if (option.equals("declined")) {
-            return socialService.getArrivedRequestsDeniedByRecipientId(customerId, page, limit);
-        } else { // ?option=sent
-            return socialService.getSentRequestsBySenderId(customerId, page, limit);
-        }
-    }
-
-    // authenticated
-    @ResponseBody
-    @PostMapping("/requests-modify")
-    public String followRequestsModify(@RequestParam("requestId") int requestId, @AuthenticationPrincipal SecurityUser securityUser) {
-
-        return socialService.updateRequestStatus(requestId, securityUser.getUser().getId());
-    }
-
-    @ResponseBody
-    @GetMapping("/followers-count")
-    public long followersCount(@AuthenticationPrincipal SecurityUser securityUser,
-                               @RequestParam("id") Optional<Integer> othersId) {
-
-        return socialService.getFollowersCountByCustomerId(
-                othersId.orElse(securityUser.getUser().getId())
-        );
-    }
-
-    @ResponseBody
-    @GetMapping("/followings-count")
-    public long followingsCount(@AuthenticationPrincipal SecurityUser securityUser,
-                                @RequestParam("id") Optional<Integer> othersId) {
-
-        return socialService.getFollowingsCountByCustomerId(
-                othersId.orElse(securityUser.getUser().getId())
-        );
     }
 }

@@ -103,11 +103,14 @@ public class Projection {
         private String email;
         private String nickname;
 
-        public User(int id, String username, String email, String nickname) {
+        private kr.co.jhta.restaurants_service.vo.user.User.TYPE type;
+
+        public User(int id, String username, String email, String nickname, kr.co.jhta.restaurants_service.vo.user.User.TYPE type) {
             this.id = id;
             this.username = username;
             this.email = email;
             this.nickname = nickname;
+            this.type = type;
         }
 
         public int getId() {
@@ -124,6 +127,10 @@ public class Projection {
 
         public String getNickname() {
             return nickname;
+        }
+
+        public kr.co.jhta.restaurants_service.vo.user.User.TYPE getType() {
+            return type;
         }
     }
 

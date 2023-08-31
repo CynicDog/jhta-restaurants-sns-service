@@ -1,9 +1,18 @@
 package kr.co.jhta.restaurants_service.controller.users;
 
+import kr.co.jhta.restaurants_service.dto.FollowRequestDto;
+import kr.co.jhta.restaurants_service.projection.Projection;
+import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.service.SocialService;
+import kr.co.jhta.restaurants_service.vo.user.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -11,9 +20,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final SocialService socialService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SocialService socialService) {
         this.userService = userService;
+        this.socialService = socialService;
     }
 
     @ResponseBody
@@ -58,6 +69,102 @@ public class UserController {
         } else {
             return ResponseEntity.ok().body("Unique email!");
         }
+    }
+
+    @ResponseBody
+    @PostMapping("/follow")
+    public ResponseEntity follow(@RequestParam("recipientId") int recipientId,
+                                 @AuthenticationPrincipal SecurityUser securityUser) {
+
+        if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/followers")
+    public ResponseEntity<List<Projection.User>> followers(@AuthenticationPrincipal SecurityUser securityUser,
+                                                           @RequestParam("page") Optional<Integer> page,
+                                                           @RequestParam("limit") Optional<Integer> limit,
+                                                           @RequestParam("id") Optional<Integer> othersId) {
+
+        List<Projection.User> followers =
+                socialService.getNonDisabledFollowersByCustomerIdOrderByCreateDate(
+                        othersId.orElse(securityUser.getUser().getId()),
+                        User.DISABLED.NO,
+                        page.orElse(0),
+                        limit.orElse(10)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(followers));
+    }
+
+    @ResponseBody
+    @GetMapping("/followings")
+    public ResponseEntity<List<Projection.User>> followings(@AuthenticationPrincipal SecurityUser securityUser,
+                                                            @RequestParam("page") Optional<Integer> page,
+                                                            @RequestParam("limit") Optional<Integer> limit,
+                                                            @RequestParam("id") Optional<Integer> othersId) {
+
+        List<Projection.User> followers =
+                socialService.getNonDisabledFollowingsByCustomerIdOrderByCreateDate(
+                        othersId.orElse(securityUser.getUser().getId()),
+                        User.DISABLED.NO,
+                        page.orElse(0),
+                        limit.orElse(10)
+                );
+
+        return ResponseEntity.of(Optional.ofNullable(followers));
+    }
+
+    @ResponseBody
+    @GetMapping("/followers-count")
+    public long followersCount(@AuthenticationPrincipal SecurityUser securityUser,
+                               @RequestParam("id") Optional<Integer> othersId) {
+
+        return socialService.getFollowersCountByCustomerId(
+                othersId.orElse(securityUser.getUser().getId())
+        );
+    }
+
+    @ResponseBody
+    @GetMapping("/followings-count")
+    public long followingsCount(@AuthenticationPrincipal SecurityUser securityUser,
+                                @RequestParam("id") Optional<Integer> othersId) {
+
+        return socialService.getFollowingsCountByCustomerId(
+                othersId.orElse(securityUser.getUser().getId())
+        );
+    }
+
+    @ResponseBody
+    @GetMapping("/requests")
+    public List<FollowRequestDto> followRequests(@AuthenticationPrincipal SecurityUser securityUser,
+                                                 @RequestParam("option") String option,
+                                                 @RequestParam("page") int page,
+                                                 @RequestParam("limit") int limit) {
+
+        Integer customerId = securityUser.getUser().getId();
+
+        if (option.equals("pending")) {
+            return socialService.getArrivedRequestsPendingByRecipientId(customerId, page, limit);
+        } else if (option.equals("accepted")) {
+            return socialService.getArrivedRequestsAcceptedByRecipientId(customerId, page, limit);
+        } else if (option.equals("declined")) {
+            return socialService.getArrivedRequestsDeniedByRecipientId(customerId, page, limit);
+        } else { // ?option=sent
+            return socialService.getSentRequestsBySenderId(customerId, page, limit);
+        }
+    }
+
+    // authenticated
+    @ResponseBody
+    @PostMapping("/requests-modify")
+    public String followRequestsModify(@RequestParam("requestId") int requestId, @AuthenticationPrincipal SecurityUser securityUser) {
+
+        return socialService.updateRequestStatus(requestId, securityUser.getUser().getId());
     }
 
     @GetMapping("/login")
