@@ -63,6 +63,11 @@ public class StoreService {
 		this.storeOpenTimeRepository = storeOpenTimeRepository;
 	}
 
+	 public Store getStoreById(int storeId) { 
+		 Store store = storeMapper.getStoreById(storeId);
+		 return store;
+	 }
+	
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;

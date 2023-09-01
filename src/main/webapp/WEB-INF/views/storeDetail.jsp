@@ -261,11 +261,11 @@
                                 </div>
                                 <div class="col-10">
                                     <div class="row mb-2">
-                                        <div class="col-9">
+                                        <div class="col-9" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                             <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                            <p class="col card-text" >\${datum.content}</p>
                                         </div>
-                                        <div class="col-3 text-end">
+                                        <div class="col-3 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                         	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
                                             \${(() => {
                                                 switch (datum.rating) {
@@ -283,8 +283,9 @@
                                         </div>
                                     </div>
                                     <div class="d-flex" id="picturesOutputArea">
-                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="img-thumbnail" style="height: 120px; width: 120px">
+                                        <img src="/images/review/jpeg/\${datum.reviewPictures[0].pictureName}" alt="Image" class="img-thumbnail" style="height: 120px; width: 120px; cursor: pointer;" onclick="openModal(this)">
                                     </div>
+                                    <div id="review-keyword-badge"></div>
                                     <div class="row">
                                         <div class="col">
                                             <button type="button" class="btn btn-light btn-sm" style="color: #838383">
@@ -307,12 +308,17 @@
                             </div>
                         </div>
                     </div>
-                `
-                }
-            )
-        })
-        isReviewsFetching = false;
-    }
+                    `
+                    const reviewKeywordOutputArea = document.getElementById('review-keyword-badge')
+                    datum.reviewKeywords.forEach(keyword => {
+                    	reviewKeywordOutputArea.innerHTML += `
+							<span class="badge badge-sm text-bg-danger bg-opacity-75 fw-lighter m-2 p-1">${keyword.keyword}</span>
+                        `
+                    })}
+                )
+            })
+            isReviewsFetching = false;
+        }
 
     // initial fetching
     fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
