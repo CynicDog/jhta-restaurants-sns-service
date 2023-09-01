@@ -25,7 +25,7 @@ public interface ReviewMapper {
 	List<Review> getAllReviewsByCustomerId(int customerId);
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
 	List<ReviewDto> getReviewsByStoreId(int storeId);
-	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId);
+	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId, @Param("customerId") int customerId);
 	
 	
 	List<ReviewContentsDto> getThreeRecentReivews();
@@ -37,5 +37,6 @@ public interface ReviewMapper {
 	List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
 														  @Param("end") int end,
 														  @Param("storeId") int storeId,
-														  @Param("rating") int rating);
+														  @Param("rating") int rating,
+														  @Param("customerId") int customerId);
 }

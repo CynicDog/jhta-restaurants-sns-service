@@ -194,19 +194,19 @@ public class ReviewService {
 		return reviewRating;
 	}
 
-    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId, String option) {
+    public List<ReviewDto> getReviewsPaginatedByStoreId(int page, int limit, int storeId, String option, int customerId) {
 
 		int begin = (page - 1) * limit;
 		int end = begin + limit;
 
 		if (option.equals("all")) {
-			return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId);
+			return reviewMapper.getReviewsPaginatedByStoreId(begin, end, storeId, customerId);
 		} else if (option.equals("good")) {
-			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 5);
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 5, customerId);
 		} else if (option.equals("soso")) {
-			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 3);
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 3, customerId);
 		} else { // bad
-			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 1);
+			return reviewMapper.getReviewsPaginatedByStoreIdAndRating(begin, end, storeId, 1, customerId);
 		}
     }
     
