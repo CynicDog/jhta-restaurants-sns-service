@@ -266,11 +266,11 @@
                                 </div>
                                 <div class="col-10">
                                     <div class="row mb-2">
-                                        <div class="col-9">
+                                        <div class="col-9" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                             <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
                                             <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
                                         </div>
-                                        <div class="col-3 text-end">
+                                        <div class="col-3 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                         	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
                                             \${(() => {
                                                 switch (datum.rating) {

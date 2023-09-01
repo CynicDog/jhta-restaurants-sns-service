@@ -78,14 +78,15 @@
 			<div class="col-4 mb-3 me-3" id="home-content"></div>
 			
 			<div class="col-3 pt-3 home-side-contents" >
-				<h4 class="mb-3">인기 포스트</h4>
+				<h4 class="mb-4">인기 포스트</h4>
 				<c:forEach var="post" items="${postList}">
 					<div class="card mb-3" style="border: none;">
-						<div class="row d-flex justify-content-between">
-							<div class="col-7">
-								<p>${post.title}</p>
+						<div class="row d-flex justify-content-start">
+							<div class="col-7" style="overflow:hidden;">
+								<p style="white-space:nowrap;">${post.title}</p>
+								<p class="text-secondary" style="white-space:nowrap;">${post.subTitle}</p>
 							</div>
-							<div class="col-4">
+							<div class="col-3">
 								<img src="/images/post/png/${post.pictureFile}" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
 							</div>
 						</div>
@@ -189,19 +190,19 @@
 						<div id="home-feed-follow" class="">
 						</div>
 					</div>
-					<div id="store-card" index-id ="" class="card mb-5" style="border: none;" onclick="" style="cursor: pointer;">
+					<div id="store-card" index-id ="" class="card mb-5" style="border: none;">
 						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
 						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
 						 	\${generateIndicator(feed.reviewPictures,feed)}
 						  </div>
 						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
-							\${generatePicture(feed.reviewPictures)}
+							\${generatePicture(feed.reviewPictures,feed)}
 						  </div>
 						  \${generateControlButton(feed.reviewPictures,feed)}
 						</div>
 						
 						<div class="card-body pt-1 ps-1" >
-							<p class="card-text mb-1">\${feed.content}</p>
+							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
 							<i class="bi \${like} fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
 							<div class="border d-flex justify-content-between mt-2" >
 								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
@@ -244,19 +245,19 @@
 						<div id="home-feed-follow" class="">
 						</div>
 					</div>
-					<div id="store-card" index-id ="" class="card mb-5" style="border: none;" onclick="" style="cursor: pointer;">
+					<div id="store-card" class="card mb-5" style="border: none;">
 						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
 						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
 						 	\${generateIndicator(feed.reviewPictures,feed)}
 						  </div>
 						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
-							\${generatePicture(feed.reviewPictures)}
+							\${generatePicture(feed.reviewPictures,feed)}
 						  </div>
 						  \${generateControlButton(feed.reviewPictures,feed)}
 						</div>
 						
 						<div class="card-body pt-1 ps-1" >
-							<p class="card-text mb-1">\${feed.content}</p>
+							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
 							<i class="bi bi-heart fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
 							<div class="border d-flex justify-content-between mt-2" >
 								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
@@ -321,28 +322,21 @@
 		return indicators;
 	}
 	
-	function generatePicture(pictures) {
+	function generatePicture(pictures,feed) {
 		let images = "";
 		pictures.forEach(function(picture, index) {
-			console.log("index : ", index);
-			if(index==0){
-				console.log("first pic ");
-
-				let imgContent = `
-				    <div class="carousel-item active">
-				      <img src="/images/review/png/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
-				    </div>			
-					`
-				images += imgContent;
-
-			}else{
-				let imgContent = `
-				    <div class="carousel-item">
-				      <img src="/images/review/png/\${picture.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height:400px;">
-				    </div>			
-					`
-				images += imgContent;
-			}
+			
+			let activeClass="";
+			if(index==0){activeClass = "active";}
+			
+			let imgContent = `
+			    <div class="carousel-item \${activeClass}">
+			      <img src="/images/review/png/\${picture.pictureName}" class="card-img-top rounded " 
+			      alt="..." style="object-fit: cover; height:400px; cursor: pointer;"
+		    	  onclick="location.href='/review/detail?id=\${feed.reviewId}'">
+			    </div>			
+				`
+			images += imgContent;
 		})
 		
 		return images;

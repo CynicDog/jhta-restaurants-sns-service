@@ -8,5 +8,9 @@ public interface ReviewLikeMapper {
 	void insertLike(int customerId, int reviewId);
 
 	void deleteLike(int customerId, int reviewId);
+	
+	void addLike(int reviewId);
+	
+	void cancelLike(int reviewId);
 
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.jhta.restaurants_service.dto.HomeFeed;
 import kr.co.jhta.restaurants_service.dto.HomePostDto;
+import kr.co.jhta.restaurants_service.dto.PostContentsDto;
+import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.dto.HomeAnonymousFeed;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.HomeService;
@@ -62,15 +64,11 @@ public class HomeController {
 
 	@GetMapping("/contents")
 	public String contents(Model model, @AuthenticationPrincipal SecurityUser securityUser) {
-		List<Post> recentPosts = postService.getThreeRecentPosts();
-		List<Post> recentPostsOfFollowersByFollowed = new ArrayList<>();  // 초기화된 리스트 생성
-		List<Review> recentReviews = reviewService.getThreeRecentReview();
-		List<Review> recentFollowerReivews = new ArrayList<>();
+		List<PostContentsDto> recentPosts = postService.getThreeRecentPosts();
+		List<PostContentsDto> recentPostsOfFollowersByFollowed = new ArrayList<>();  // 초기화된 리스트 생성
+		List<ReviewContentsDto> recentReviews = reviewService.getThreeRecentReview();
+		List<ReviewContentsDto> recentFollowerReivews = new ArrayList<>();
 
-		for(Review review : recentReviews) {
-    		System.out.println(review.getStore().getName());
-    	}
-		
 	    if (securityUser != null && securityUser.getUser() != null) {
 	        recentPostsOfFollowersByFollowed = postService.getRecentPostsThreeOfFollowersByFollowed(securityUser);
 	        model.addAttribute("recentPostsOfFollower", recentPostsOfFollowersByFollowed);

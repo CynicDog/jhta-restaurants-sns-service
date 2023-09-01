@@ -17,10 +17,12 @@ public class ReviewLikeService {
 
 	public void insertLike(int customerId, int reviewId) {
 		reviewLikeMapper.insertLike(customerId,reviewId);
+		reviewLikeMapper.addLike(reviewId);
 	}
 
 	public void deleteLike(int customerId, int reviewId) {
-		reviewLikeMapper.deleteLike(customerId,reviewId);		
+		reviewLikeMapper.deleteLike(customerId,reviewId);
+		reviewLikeMapper.cancelLike(reviewId);
 	}
 
 }

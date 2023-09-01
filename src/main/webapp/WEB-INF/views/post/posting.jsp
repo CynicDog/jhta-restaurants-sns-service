@@ -17,6 +17,12 @@
 		#offcanvasExample {
 		    width: 40%;
 		}
+		.card-image {
+		width: 250px;
+		height: 250px;
+		object-fit:cover;
+		filter: brightness(70%);
+	}
 		
 	</style>
 </head>
@@ -34,24 +40,23 @@
 	<div class="container mt-2" >
 		<c:forEach var="data" items="${post.postDatas }">
 			<div class="row border-bottom">
-				<div class="col-1"></div>
-				<div class="col-3 my-5">
-					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/store/detail?id=${data.store.id}'" style=" cursor: pointer;">
-						<img src="/images/post/jpeg/${data.postData.pictureFile }" class="card-img-top rounded" alt="...">
+				<div class="col-4 my-5">
+					<div class="text-center text-light font-weight-bold" onclick="location.href='/store/detail?id=${data.storeId}'" style=" cursor: pointer;">
+						<img src="/images/post/jpeg/${data.pictureFile }" class="card-image" alt="...">
 					</div>
 				</div>
 				<div class="col-6 my-5 text-left">
 					<div class="d-flex">
-						<h3>${data.store.name }</h3>
+						<h3>${data.storeName }</h3>
 						<h3 class="text-warning ms-3"><strong><fmt:formatNumber value="${data.averageRating }" pattern="#.#" /></strong></h3>
 					</div>
-					<p class="text-secondary">${data.store.address }</p>
-					<p>${data.postData.content }</p>
+					<p class="text-secondary">${data.storeAddress }</p>
+					<p>${data.content }</p>
 				</div>
-				<div class="bookmark col-2 my-5 position-relative" id="box-${data.store.id}">
+				<div class="bookmark col-2 my-5 position-relative" id="box-${data.storeId}">
 					
 					<button class="btn ms-3 position-absolute" id="box">
-						<i class="bi ${not empty data.bookmark ? 'bi-star-fill' : 'bi-star'}" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
+						<i class="bi ${not empty data.bookmark ? 'bi-star-fill' : 'bi-star'}" id="star-${data.storeId}" index-id ="${data.storeId}" style="color:gold; font-size:28px;" ></i>
 					</button>
 						
 				</div>

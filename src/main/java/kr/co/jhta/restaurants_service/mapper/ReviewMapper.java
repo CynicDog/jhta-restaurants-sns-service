@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
+import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
 //import kr.co.jhta.restaurants_service.dto.ReviewListDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
@@ -16,6 +17,7 @@ import org.apache.ibatis.annotations.Param;
 public interface ReviewMapper {
 
 	void insertReview(Review review);
+	void deleteReview(int reviewId);
 	Review getReviewById(int id);
 	Review getReviewByCustomerId(int customerId);
 	Review getReviewByStoreId(int storeId);
@@ -24,13 +26,13 @@ public interface ReviewMapper {
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
 	List<ReviewDto> getReviewsByStoreId(int storeId);
 	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId);
-
 	
-	List<Review> getThreeRecentReivews();
-	List<Review> getThreeFollowerReivews(@Param("followedId") int followedId);
 	
-	List<Review> getAllReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit);
-	List<Review> getFollowerReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit, @Param("followedId") int followedId);
+	List<ReviewContentsDto> getThreeRecentReivews();
+	List<ReviewContentsDto> getThreeFollowerReivews(@Param("followedId") int followedId);
+	
+	List<ReviewContentsDto> getAllReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit);
+	List<ReviewContentsDto> getFollowerReivewsPaginated(@Param("begin") int begin, @Param("limit") int limit, @Param("followedId") int followedId);
 
 	List<ReviewDto> getReviewsPaginatedByStoreIdAndRating(@Param("begin") int begin,
 														  @Param("end") int end,

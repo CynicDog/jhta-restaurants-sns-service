@@ -23,9 +23,8 @@ public class HomeService {
 	public List<HomeFeed> getFeeds(int page, int limit, int userId) {
 		
 		int begin = (page - 1) * limit;
-		int end = begin + limit;
 		
-		List<HomeFeed> result = homeMapper.getHomeFeedsByFollowerId(begin, end, userId);
+		List<HomeFeed> result = homeMapper.getHomeFeedsByFollowerId(begin, limit, userId);
 		
 		return result;
 	}
@@ -33,9 +32,8 @@ public class HomeService {
 	public List<HomeAnonymousFeed> getAnonymousFeeds(int page, int limit) {
 		
 		int begin = (page - 1) * limit;
-		int end = begin + limit;
 		
-		return homeMapper.getAnonymousFeeds(begin,end);
+		return homeMapper.getAnonymousFeeds(begin,limit);
 	}
 
 
