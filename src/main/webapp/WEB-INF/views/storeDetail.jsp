@@ -265,11 +265,11 @@
                                 </div>
                                 <div class="col-10">
                                     <div class="row mb-2">
-                                        <div class="col-9">
+                                        <div class="col-9" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                             <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                            <p class="col card-text" >\${datum.content}</p>
                                         </div>
-                                        <div class="col-3 text-end">
+                                        <div class="col-3 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                         	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
                                             \${(() => {
                                                 switch (datum.rating) {
@@ -286,7 +286,8 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea"></div>
+                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea">
+                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             <button type="button" class="btn btn-light btn-sm" style="color: #838383">
@@ -313,7 +314,7 @@
                     const picturesOutputArea = document.getElementById('picturesOutputArea')
                     datum.reviewPictures.forEach(picture => {
                         picturesOutputArea.innerHTML += `
-                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 200px; width: 100%">
+                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 200px; width: 100%; cursor: pointer;" onclick="openModal(this)">
                         `
                     })}
                 )

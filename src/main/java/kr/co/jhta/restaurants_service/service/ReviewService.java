@@ -98,21 +98,6 @@ public class ReviewService {
 				reviewPictureMapper.insertReveiwPicture(reviewPicture);
 			}
 		}		
-
-//		if (!form.getChooseFile().isEmpty()) {
-//			ReviewPicture reviewPciture = new ReviewPicture();
-//			MultipartFile chooseFile = form.getChooseFile();
-//			reviewPciture.setPictureName(chooseFile.getOriginalFilename());
-//			reviewPciture.setReview(review);
-//			reviewPictureMapper.insertReveiwPicture(reviewPciture);
-//		}
-
-//		  review.setRating(3);
-//		  review.setContent("bbbbb");
-//		  reviewPciture.setPictureName(null);
-//		  reviewKeyword.setKeyword("청결해요");
-//		  review.setStore(storeMapper.getStoreById(21));
-
 	}
 
 	// 새 리뷰 답글 등록하기
@@ -155,6 +140,7 @@ public class ReviewService {
 		return dto;
 	}
 	
+	
 	public void createReviewReport(ReviewReportCommand form, SecurityUser securityUser) {
 		ReviewReport reviewReport = new ReviewReport();
 		
@@ -170,24 +156,6 @@ public class ReviewService {
 		
 	}
 
-//	  public List<Review> getAllReviews() {
-//		  List<Review> reviews= reviewMapper.getAllReviews();
-//		  return reviews;
-//	  }
-
-	// 리뷰아이디로 여러개의 리뷰사진 가져오기
-//	  public List<ReviewPicture> getReviewPicturesByReviewId(int ReviewId) {
-//		  List<ReviewPicture> reviewPictures = reviewPictureMapper.getReviewPicturesByReviewId(ReviewId);
-//		  List<ReviewPicture> reviewPicture = reviewPictures.stream()
-//				  .map(review -> {
-//					 review.setReview(reviewMapper.getReviewById(review.getReview().getId()));
-//					 return review;
-//				  }).collect(Collectors.toList());
-
-//		  return reviewPicture;
-//	  }
-
-
 	public Page<Projection.Review> getNonBlockedReviewsByCustomerIdOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
 
 		return reviewRepository.findReviewsByCustomerIdAndBlockedOrderByCreateDateDesc(customerId, no, PageRequest.of(page, limit));
@@ -199,23 +167,6 @@ public class ReviewService {
 		return reviewRepository.countByCustomerId(customerId);
 	}
 
-//	public ReviewDetailDto getReivewsByStoreId(int storeId) {
-//		ReviewDetailDto reviewDto = new ReviewDetailDto();
-
-//		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewByStoreId(storeId);	
-		
-//		List<Review> allReviewsByStoreId = getAllReviewsByStoreId.stream().map(
-//				review -> {
-//					review.setCustomer(userRepository.getReferenceById(review.getCustomer().getId()));
-//					return review;
-//				}).collect(Collectors.toList());
-//		double allRatingByStoreId = allReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating())); 
-		
-//		reviewDto.setStoreReviewAvg(allRatingByStoreId);
-//		reviewDto.setAllReviewsByStoreId(getAllReviewsByStoreId);
-		
-//		return reviewDto;
-//	}
 	
 	// 가게별 리뷰 평균 가져오기 
 	public ReviewDetailDto getRatingAvgByStoreId(int storeId) {
@@ -234,14 +185,7 @@ public class ReviewService {
 		return reviewDetailDto;
 	}
 	
-	// 가게별 전체 리뷰 가져오기 
-//	public List<ReviewDto> getReivewsByStoreId(int storeId) {
 
-//		List<ReviewDto> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
-		
-//		return getAllReviewsByStoreId;
-//	}
-	
 	// 리뷰 rating가져오기
 	public ReviewSummaryDto getAllReviewRatingByStoreId(int storeId) {
 		ReviewSummaryDto reviewRating = reviewMapper.getAllReviewRatingByStoreId(storeId);
@@ -291,5 +235,9 @@ public class ReviewService {
     public Page<ReviewPicture> getReviewPicturesByCustomerIdOrderByCreateDateDesc(int customerId, Integer page, Integer limit) {
 
 		return reviewPictureRepository.findByUserIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit));
+    }
+    
+    public void deletedReview(int reviewId) {
+    	reviewMapper.deleteReview(reviewId);
     }
 }

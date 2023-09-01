@@ -100,7 +100,6 @@ public class ReviewController {
 			return "redirect:/store/detail?id=" + storeId;
 		}
 		
-	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/detail")
 	public String reviewDetail(Model model, @RequestParam("id") int reviewId) {
 		 

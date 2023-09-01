@@ -380,4 +380,11 @@
 		LIMIT #{begin}, #{end}
 	</select>
   
+  	<delete id="deleteReview" parameterType="int">
+		delete from 
+			reviews
+		where
+			id = #{id}
+	</delete>
+  
 </mapper>

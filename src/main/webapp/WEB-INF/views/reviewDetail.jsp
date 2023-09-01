@@ -64,9 +64,10 @@ html, body {
 
 						</div>
 					</div>
+					<sec:authorize access="hasRole('ROLE_CUSTOMER')">
 					<form action="reviewReport" method="post" id="reportForm">
 					<input type="hidden" name="reviewId" value="${review.review.id }"/>
-					<sec:authentication property="principal.user.id" var="userId"/>
+					<sec:authentication property="principal.user.id" var="userId" />
 					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
        					<div class="modal-dialog">
                     		<div class="modal-content">
@@ -99,6 +100,7 @@ html, body {
              			</div>
               		</div>
 					</form>
+					</sec:authorize>
 				</div>
 				<div class="row col-3 m-3">
 					<a href="/store/detail?id=${review.review.store.id}"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
@@ -201,9 +203,8 @@ html, body {
   				</div>
 			</div>
 		</div>	
-	</div>	
-
 <%@ include file="common/footer.jsp"%>
+</div>
 </div>
 <script>
 
