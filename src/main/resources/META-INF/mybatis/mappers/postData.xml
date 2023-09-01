@@ -10,12 +10,12 @@
 	<select id="getPostDataByPostId" parameterType="int" resultType="PostDataDto">
 		select 
 		    a.id as id,
-		    a.post_id as "post.id",
-		    a.store_id as "store.id",
+		    a.post_id as postId,
+		    a.store_id as storeId,
 		    a.content as content,
 		    a.picture_file as pictureFile,
-		    s.name as "store.name", 
-		    s.address as "store.address",
+		    s.name as storeName, 
+		    s.address as storeAddress,
 		    AVG(r.rating) as averageRating
 		from POST_DATA a
 		join STORES s on a.store_id = s.id

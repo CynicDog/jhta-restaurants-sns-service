@@ -97,7 +97,7 @@
                 document.getElementById('postsOutputArea').innerHTML += `
             					<div class="col-md-4 my-3">
             						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='detail?id=\${datum.id}'" style=" cursor: pointer;">
-            							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+            							<img src="/images/post/jpeg/\${datum.pictureFile}" class="card-image" alt="...">
             							<div class="card-img-overlay">
             								<div class="title-text">
 	            								<strong>\${datum.title}</strong><br>
@@ -107,7 +107,7 @@
             						</div>
             						<div class="row">
             							<div class="col">
-            								<strong >\${datum.customer.username}</strong>
+            								<strong >\${datum.userName}</strong>
             							</div>
             							<div class="col text-end">
             								\${timeForToday(datum.createDate)}

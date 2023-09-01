@@ -8,6 +8,7 @@ import java.util.Map;
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.dto.HomePostDto;
+import kr.co.jhta.restaurants_service.dto.PostContentsDto;
 import kr.co.jhta.restaurants_service.dto.PostDataDto;
 import kr.co.jhta.restaurants_service.dto.PostDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
@@ -50,8 +51,9 @@ public class PostService {
 	private final FollowsRepository followsRepository;
 	private final PostDataRepository postDataRepository;
 	
-	public List<Post> getThreeRecentPosts(){
-		List<Post> posts = postmapper.getRecentPostsThree();
+	public List<PostContentsDto> getThreeRecentPosts(){
+		List<PostContentsDto> posts = postmapper.getRecentPostsThree();
+		
 		return posts;
 	}
 	
@@ -62,9 +64,8 @@ public class PostService {
 	
 	
 	
-	public List<Post> getRecentPostsThreeOfFollowersByFollowed(SecurityUser securityUser){
-		logger.info(securityUser.getUser());
-		List<Post> posts = postmapper.getRecentPostsThreeOfFollowersByFollowed(securityUser.getUser().getId());
+	public List<PostContentsDto> getRecentPostsThreeOfFollowersByFollowed(SecurityUser securityUser){
+		List<PostContentsDto> posts = postmapper.getRecentPostsThreeOfFollowersByFollowed(securityUser.getUser().getId());
 		return posts;
 	}
 	
@@ -98,17 +99,17 @@ public class PostService {
 		Post post = postmapper.getPostById(postId);
 		
 		List<PostDataDto> postDatas = postDataMapper.getPostDataByPostId(postId);
-		for(PostDataDto postdata : postDatas) {
-			logger.info(postdata.getPostData().toString());;
-		}
-		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
+		logger.info(postDatas.toString());
 		
 		if(securityUser != null) {
 			for(PostDataDto postData : postDatas) {
-				Bookmark bookmarks = bookmarkMapper.getBookmarkByStoreIdAndCustomerId(postData.getStore().getId() ,securityUser.getUser().getId());
+				Bookmark bookmarks = bookmarkMapper.getBookmarkByStoreIdAndCustomerId(postData.getStoreId() ,securityUser.getUser().getId());
 				postData.setBookmark(bookmarks);
 			}
 		}
+		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
+
+		
 
 		dto.setPost(post);
 		dto.setPostDatas(postDatas);
@@ -167,14 +168,14 @@ public class PostService {
 		return postRepository.countByCustomerId(customerId);
     }
     
-    public List<Post> getAllPosts(int page, int limit){
+    public List<PostContentsDto> getAllPosts(int page, int limit){
 
     	int start = (page - 1) * limit;
     	
     	return postmapper.getAllPosts(start, limit);
     }
 
-    public List<Post> getPostsPaginatedOfFollowersByFollowed(int page, int limit, SecurityUser securityUser) {
+    public List<PostContentsDto> getPostsPaginatedOfFollowersByFollowed(int page, int limit, SecurityUser securityUser) {
 
 		int start = (page - 1) * limit;
 

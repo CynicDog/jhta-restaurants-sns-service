@@ -11,22 +11,39 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     
     <style type="text/css">
-    	img{
-    		width: 100%;
-    		height: 250px;
-    		object-fit:cover;
-    		filter: brightness(70%);
-    	}
-    	.cardname{
-    		position: absolute;
-  			top:30%;
-  			font-size: 22px;
-    	}
+  
     	.cardratting{
     		position: absolute;
     		top:80%;
   			font-size: 20px;
     	}
+    	
+    	.card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: brightness(70%);
+        }
+
+        .cards {
+			position: relative;
+			align-text:center;
+		}
+		
+		.card-image-overlay {
+			position: absolute;
+		}
+		
+		.title-text {
+		   	position: absolute;
+		   	width: 100%;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+		    text-align:center;
+		    font-size:22px;
+		}
+		
     </style>
 <title>Insert title here</title>
 </head>
@@ -88,15 +105,15 @@
 	        	
 	            document.getElementById('reviewsOutputArea').innerHTML += `
 	        					<div class="col-md-4 my-3">
-	        						<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=\${datum.id}'" style=" cursor: pointer;">
-	        							<img src="../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+	        						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=\${datum.id}'" style=" cursor: pointer;">
+	        							<img src="/images/review/jpeg/\${datum.pictureName }" class="card-image" alt="...">
 	        							<div class="card-img-overlay">
-	        								<p><strong>\${datum.store.name}</strong></p>
+	        								<p><strong class="title-text">\${datum.storeName}</strong></p>
 	        							</div>
 	        						</div>
 	        						<div class="row">
 	        							<div class="col">
-	        								<strong >\${datum.customer.username}</strong>
+	        								<strong >\${datum.userName}</strong>
 	        							</div>
 	        							<div class="col text-end">
 	        								\${timeForToday(datum.createDate)}
