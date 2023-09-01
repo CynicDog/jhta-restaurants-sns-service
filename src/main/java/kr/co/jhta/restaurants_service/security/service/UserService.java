@@ -90,5 +90,16 @@ public class UserService implements UserDetailsService {
 
         return userRepository.findUserById(userId).orElse(null);
     }
+
+    public void modifyVisibility(SecurityUser securityUser) {
+        User user = securityUser.getUser();
+        if (user.getVisibility().equals(User.VISIBILITY.PUBLIC)) {
+            user.setVisibility(User.VISIBILITY.PRIVATE);
+            userRepository.save(user);
+        } else { // from PRIVATE to PUBLIC
+            user.setVisibility(User.VISIBILITY.PUBLIC);
+            userRepository.save(user);
+        }
+    }
 }
 

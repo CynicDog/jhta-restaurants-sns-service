@@ -52,6 +52,18 @@ public class CustomerController {
     }
 
     @ResponseBody
+    @GetMapping("posts-count")
+    public long postsCount(@RequestParam("id") int othersId) {
+        return postService.getPostsCountByCustomerId(othersId);
+    }
+
+    @ResponseBody
+    @GetMapping("reviews-count")
+    public long reviewsCount(@RequestParam("id") int othersId) {
+        return reviewService.getReviewsCountByCustomerId(othersId);
+    }
+
+    @ResponseBody
     @GetMapping("/postData")
     public ResponseEntity<Page<PostData>> pictureData(@AuthenticationPrincipal SecurityUser securityUser,
                                                       @RequestParam("page") Optional<Integer> page,

@@ -10,11 +10,9 @@ import kr.co.jhta.restaurants_service.vo.socials.Follow;
 import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,7 +60,7 @@ public class SocialService {
     }
 
     public List<FollowRequestDto> getArrivedRequestsDeniedByRecipientId(Integer customerId, int page, int limit) {
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.DECLINED, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.DECLINED, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
@@ -73,7 +71,7 @@ public class SocialService {
 
     public List<FollowRequestDto> getArrivedRequestsPendingByRecipientId(Integer customerId, int page, int limit) {
 
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.PENDING, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.PENDING, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
@@ -84,7 +82,7 @@ public class SocialService {
 
     public List<FollowRequestDto> getArrivedRequestsAcceptedByRecipientId(Integer customerId, int page, int limit) {
 
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.ACCEPTED, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.ACCEPTED, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
@@ -151,5 +149,10 @@ public class SocialService {
         } else {
             return false;
         }
+    }
+
+    public boolean doesThisUserFollowsOtherUser(int thisId, int othersId) {
+
+        return followsRepository.existsByCompositePrimaryKeys_FollowerIdAndCompositePrimaryKeys_FollowedId(thisId, othersId);
     }
 }
