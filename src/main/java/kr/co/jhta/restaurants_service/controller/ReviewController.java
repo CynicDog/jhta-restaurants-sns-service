@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +25,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
+import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
@@ -43,14 +45,16 @@ import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/review")
+@Slf4j
 public class ReviewController {
 	
 	
 	private final ReviewService reviewService;
+	
+	private final StoreService storeService;
 	
 	private final Storage storage;
 	
@@ -59,6 +63,9 @@ public class ReviewController {
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping
 	public String review(Model model, @RequestParam("storeId") int storeId ) {
+		
+		Store store = storeService.getStoreById(storeId);
+		model.addAttribute("store", store);
 		
 		return "review";
 	}
@@ -83,10 +90,6 @@ public class ReviewController {
 	        }
 
 		reviewService.createReview(form, securityUser);
-		log.info("리뷰 신규 등록 -> {}", form);
-		log.info("리뷰 키워드 -> {}", form.getReviewKeyword());
-//		log.info("가게 아이디-> {}", storeId);
-//		log.info("손님 아이디 -> {}", customerId);
 		
 		return "redirect:/store/detail?id=" + form.getStoreId();
 	}
@@ -97,21 +100,22 @@ public class ReviewController {
 			
 			return "redirect:/store/detail?id=" + storeId;
 		}
-	
+		
 	@GetMapping("/detail")
 	public String reviewDetail(Model model, @RequestParam("id") int reviewId) {
 		 
 		ReviewDetailDto dto = reviewService.selectReview(reviewId);
 		model.addAttribute("review", dto);
-		log.info("리뷰 -> {}", dto.getReview().getCustomer().getFullName());
-//		log.info("리뷰 -> {}", dto.getReviewKeywords().get(0).getKeyword());
-//		log.info("리뷰 -> {}", dto.getReviewKeywords().get(1).getKeyword());
-//		log.info("리뷰 -> {}", dto.getReview().getRating());
-//		log.info("리뷰 -> {}", dto.getReview().getContent());
-//		log.info("리뷰 -> {}", dto.getReview().getStore().getAddress());
-		log.info("리뷰 -> {}", dto.getReviewRatingByCustomerId());
 		
 		return "reviewDetail";
+	}
+	
+	@PostMapping("/reviewReport")
+	@ResponseBody
+	public ResponseEntity<String> reviewReportRegister(ReviewReportCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
+	    reviewService.createReviewReport(form, securityUser);
+	    log.info("신고 -> {}", form.getCategory());
+	    return ResponseEntity.ok().body("/detail?id=" + form.getReviewId()); // 리디렉션 경로 반환
 	}
 	
 	@GetMapping("/allReviews")

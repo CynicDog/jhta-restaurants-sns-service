@@ -14,4 +14,16 @@
 		where 
 			review_id = #{reviewId} and customer_id = #{customerId}
 	</delete>
+	
+	<update id="addLike" parameterType="int">
+		update REVIEWS
+		set liked_count = liked_count + 1
+		where id = #{value}
+	</update>
+	
+	<update id="cancelLike" parameterType="int">
+		update REVIEWS
+		set liked_count = liked_count - 1
+		where id = #{value}
+	</update>
 </mapper>

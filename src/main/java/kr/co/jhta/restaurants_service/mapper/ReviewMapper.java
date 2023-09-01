@@ -17,6 +17,7 @@ import org.apache.ibatis.annotations.Param;
 public interface ReviewMapper {
 
 	void insertReview(Review review);
+	void deleteReview(int reviewId);
 	Review getReviewById(int id);
 	Review getReviewByCustomerId(int customerId);
 	Review getReviewByStoreId(int storeId);
@@ -25,7 +26,7 @@ public interface ReviewMapper {
 	ReviewSummaryDto getAllReviewRatingByStoreId(int storeId);
 	List<ReviewDto> getReviewsByStoreId(int storeId);
 	List<ReviewDto> getReviewsPaginatedByStoreId(@Param("begin") int begin, @Param("end") int end, @Param("storeId") int storeId);
-
+	
 	
 	List<ReviewContentsDto> getThreeRecentReivews();
 	List<ReviewContentsDto> getThreeFollowerReivews(@Param("followedId") int followedId);

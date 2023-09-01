@@ -9,10 +9,14 @@ import java.util.stream.Collectors;
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreOpenTimeCommand;
+import kr.co.jhta.restaurants_service.projection.Projection;
+import kr.co.jhta.restaurants_service.repository.BookmarkRepository;
 import kr.co.jhta.restaurants_service.repository.FoodRepository;
 import kr.co.jhta.restaurants_service.repository.StoreOpenTimeRepository;
 import kr.co.jhta.restaurants_service.repository.StoreRepository;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
+import kr.co.jhta.restaurants_service.vo.user.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -40,6 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @ToString
 @Transactional
+@RequiredArgsConstructor
 public class StoreService {
 
 	private final StoreMapper storeMapper;
@@ -48,21 +53,13 @@ public class StoreService {
 	private final StoreRepository storeRepository;
 	private final FoodRepository foodRepository;
 	private final StoreOpenTimeRepository storeOpenTimeRepository;
+	private final BookmarkRepository bookmarkRepository;
 
-	public StoreService(StoreMapper storeMapper,
-						FoodMapper foodMapper,
-						StoreOpenTimeMapper storeOpenTimeMapper,
-						StoreRepository storeRepository,
-						FoodRepository foodRepository,
-						StoreOpenTimeRepository storeOpenTimeRepository) {
-		this.storeMapper = storeMapper;
-		this.foodMapper = foodMapper;
-		this.storeOpenTimeMapper = storeOpenTimeMapper;
-		this.storeRepository = storeRepository;
-		this.foodRepository = foodRepository;
-		this.storeOpenTimeRepository = storeOpenTimeRepository;
-	}
-
+	 public Store getStoreById(int storeId) { 
+		 Store store = storeMapper.getStoreById(storeId);
+		 return store;
+	 }
+	
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;
@@ -200,6 +197,7 @@ public class StoreService {
 	    return bookmark;
 	}
 
+
 	public List<StoreDetailDto> getPaginatedStoresByUserId(Integer userId, Integer page, Integer limit) {
 
 		Page<Store> stores = storeRepository.findStoreByOwnerId(userId, PageRequest.of(page, limit));
@@ -208,7 +206,12 @@ public class StoreService {
 				.map(store -> {
 					List<Food> foods = foodRepository.getFoodsByStoreId(store.getId());
 					List<StoreOpenTime> storeOpenTimes = storeOpenTimeRepository.findStoreOpenTimeByStoreId(store.getId());
-					return  new StoreDetailDto(store, foods, storeOpenTimes);
+					List<User> wishers = bookmarkRepository
+							.findByStoreId(store.getId()).stream()
+							.map(bookmark -> bookmark.getCustomer())
+							.collect(Collectors.toList());
+
+					return  new StoreDetailDto(store, foods, storeOpenTimes, wishers);
 				}).collect(Collectors.toList());
 	}
 }
