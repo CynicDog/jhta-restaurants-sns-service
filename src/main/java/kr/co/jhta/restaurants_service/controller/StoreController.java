@@ -132,8 +132,9 @@ public class StoreController {
 	@GetMapping("/detail")
     public String detail(@RequestParam("id") int storeId, Model model, @AuthenticationPrincipal SecurityUser user) {
 		
+		int customerId = 0;
 		if (user != null) {
-	        int customerId = user.getUser().getId();
+	        customerId = user.getUser().getId();
 	        Bookmark bookmark  = storeService.getBookmark(storeId, customerId);
 	        model.addAttribute("bookmark", bookmark);
 	    }
@@ -143,8 +144,7 @@ public class StoreController {
 
         StoreDetailDto dto = storeService.getStoreDetail(storeId);
         ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
-//      List<ReviewDto> reviewDto = reviewService.getReivewsByStoreId(storeId);
-        List<ReviewDto> recentReviews = reviewService.getReviewsPaginatedByStoreId(1, 5, storeId, "all");
+        List<ReviewDto> recentReviews = reviewService.getReviewsPaginatedByStoreId(1, 5, storeId, "all", customerId);
 
         // 모델에 가게 정보를 추가합니다.
         model.addAttribute("reviewCount", reviewDetailDto.getReviewCount());
@@ -156,14 +156,7 @@ public class StoreController {
         model.addAttribute("closestStores", dto.getClosestStores());
 		model.addAttribute("recentReviews", recentReviews);
         // 모델에 리뷰 정보를 추가합니다.
-//        model.addAttribute("reviews", reviewDto);
-//        log.info("리뷰 ---> []" , reviewDto.get(0).getReviewAvg());
-//        log.info("리뷰 사진 ---> []", reviewDto.get(0).getReviewKeywords().get(0).getKeyword());
         model.addAttribute("reviewSummary", reviewService.getAllReviewRatingByStoreId(storeId));
-//        model.addAttribute("storeAvg", reviewDto.getStoreReviewAvg());
-//        log.info("리뷰 -> [] ", reviewDto.getAllReviewsByStoreId().get(0).getCustomer().getFullName());
-//        log.info("가게 평점 -> [] ", reviewDto.getStoreReviewAvg());
-      
         return "storeDetail";
     }
 	
@@ -177,15 +170,24 @@ public class StoreController {
 	// store/detail/reviews?id=\${storeId}
 	@GetMapping("/detail/reviews")
 	@ResponseBody
-	public List<ReviewDto> reviews(@RequestParam("id") int storeId, @RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("option") String option) throws InterruptedException {
+	public List<ReviewDto> reviews(@RequestParam("id") int storeId, 
+			@RequestParam("page") int page, 
+			@RequestParam("limit") int limit, 
+			@RequestParam("option") String option,
+			@AuthenticationPrincipal SecurityUser user) throws InterruptedException {
 
 		try {
 			TimeUnit.SECONDS.sleep(1);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		int customerId = 0;
+		if (user != null) {
+	        customerId = user.getUser().getId();
+	    }
 
-		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId, option);
+		return reviewService.getReviewsPaginatedByStoreId(page, limit, storeId, option, customerId);
 	}
 	
 	@PostMapping("/bookmark")

@@ -191,6 +191,7 @@
 		<result column="username" property="customerName" />
 		<result column="nickname" property="nickname" />
 		<result column="owner_Id" property="ownerId" />
+		<result column="isLiked" property="isLiked"/>
 		<collection property="reviewPictures" column="id" ofType="kr.co.jhta.restaurants_service.vo.review.ReviewPicture"
 					select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
 		<collection property="reviewKeywords" column="id" ofType="kr.co.jhta.restaurants_service.vo.review.ReviewKeyword"
@@ -212,10 +213,12 @@
 			r.customer_id,
 			u.username,
 			u.nickname,
-			s.owner_Id
+			s.owner_Id,
+			if(l.id, 'y', 'n')	as isLiked
 		FROM REVIEWS r
 		JOIN USERS u ON r.customer_id = u.id
 		JOIN STORES s ON r.store_id = s.id
+		LEFT JOIN REVIEW_LIKES l on r.id = l.review_id and #{customerId} = l.customer_id
 		JOIN (
 			SELECT
 			customer_id,

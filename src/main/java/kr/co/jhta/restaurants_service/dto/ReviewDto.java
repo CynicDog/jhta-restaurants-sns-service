@@ -32,6 +32,7 @@ public class ReviewDto {
 	private String customerName;
 	private String nickname;
 	private int ownerId;
+	private String isLiked;
 
 	private List<ReviewPicture> reviewPictures;
 	private List<ReviewKeyword> reviewKeywords;

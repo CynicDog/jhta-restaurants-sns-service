@@ -225,7 +225,30 @@
 </div>
 <script>
     const storeId = ${store.id};
+    
+    $("#review-list").on('click', '[id^="recommend-"]', function(){
+        console.log("heart-clicked");
+        // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
+        if (${pageContext.request.userPrincipal != null}) {
+          //로그인 했을 때
+           const reviewId = $(this).attr('review-id');
+          //star- fill -> blank
+          if ($(this).hasClass('bi-heart-fill')) {
+                $(this).removeClass('bi-heart-fill').addClass('bi-heart')
+                $.getJSON('/like/delete', {reviewId : reviewId});
+          //star- blank -> fill      
+          } else {
+             $(this).removeClass('bi-heart').addClass('bi-heart-fill')
+             $.getJSON('/like/insert', {reviewId : reviewId});
 
+          }
+        } else {
+           // 로그인되지 않은 경우, 로그인 페이지 열기
+              alert("로그인이 필요합니다");
+            window.location.href = "/user/login?error=anonymous";
+        }
+    });
+    
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
 
     let pageOnReview = 1;
@@ -247,7 +270,12 @@
 	        }
 
             data.forEach(datum => {
-
+            	
+				let like;
+				if(datum.isLiked==='y'){ like = 'bi-heart-fill';}
+				if(datum.isLiked==='n'){ like = 'bi-heart';}
+				console.info(like);
+				
                 reviewOutputArea.innerHTML += `
                 	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
                         <div class="card-body">
@@ -297,15 +325,24 @@
                                                 <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                             </button>
                                             <span class="float-end">
-                                            <button id="btn-answer-103" type="button" class="btn btn-light">
-                                                    <span>답글</span>
+                                            <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
                                                 </button>
                                                 <button type="button" class="btn btn-light btn-sm text-danger">
-                                                    <i id="recomened" class="bi bi-heart" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                                    <i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
                                                 </button>
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="row" id="cardAndTextarea" style="display: none;">
+							        <div class="col-12">
+							            <div class="card">
+							                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+							                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+							                    <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
+							                </div>
+							            </div>
+							        </div>
+							    </div>
                                 </div>
                             </div>
                         </div>
@@ -379,6 +416,26 @@
                 fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
             }
         }
+        
+        
+    	const commentButton = document.getElementById('comment');
+    	const cardAndTextarea = document.getElementById('cardAndTextarea');
+    	const ownerComment = document.getElementById('ownerComment');
+
+    	// '답글' 버튼에 클릭 이벤트 리스너 추가
+    	commentButton.addEventListener('click', () => {
+    	    cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
+    	    ownerComment.style.display = 'none';     // 리뷰 답글 영역 숨김
+    	});
+
+    	const submitButton = document.getElementById('button-addon2');
+
+    	// '리뷰 작성' 버튼에 클릭 이벤트 리스너 추가
+    	submitButton.addEventListener('click', () => {
+    	    cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
+    	    ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
+    	});
+
     }
     
     $("#btn-bookmark").click(function() {
@@ -574,7 +631,7 @@
         }
     });
 
-    /* const commentButton = document.getElementById('comment');
+ /* const commentButton = document.getElementById('comment');
     const cardAndTextarea = document.getElementById('cardAndTextarea');
     const ownerComment = document.getElementById('ownerComment');
 
@@ -591,7 +648,7 @@
         cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
         ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
     }); */
-
+    
     // localStorage에 가게 id저장
     let store_id = `${param.id}`
     if (store_id) {
