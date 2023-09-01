@@ -63,12 +63,10 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="collapse navbar-collapse my-1" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto">
-            </ul>
-            <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
-                <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
-            </form>
+        <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
+            <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
+        </form>
+        <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav px-4">
                 <sec:authorize access="isAnonymous()">
 					<li class="nav-item py-0 px-2">
@@ -163,7 +161,7 @@
                     </sec:authorize>
                 </sec:authorize>
             </ul>
-        </ul>
+        </div>
     </div>	
 </nav>
 <script>

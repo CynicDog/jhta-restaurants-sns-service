@@ -13,9 +13,9 @@ import kr.co.jhta.restaurants_service.vo.post.Post;
 @Mapper
 public interface HomeMapper {
 
-	List<HomeFeed> getHomeFeedsByFollowerId(int begin, int end, int userId);
+	List<HomeFeed> getHomeFeedsByFollowerId(int begin, int limit, int userId);
 
-	List<HomeAnonymousFeed> getAnonymousFeeds(int begin, int end);
+	List<HomeAnonymousFeed> getAnonymousFeeds(int begin, int limit);
 	
 	List<HomePostDto> getPostsOrderByLike();
 

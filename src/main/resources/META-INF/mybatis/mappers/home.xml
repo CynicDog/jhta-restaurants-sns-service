@@ -4,6 +4,7 @@
 	<resultMap id="HomeResultByFollowMap" type="HomeFeed">
 	    <id column="id" property="id" />
 	    <result column="username" property="username" />
+	    <result column="userId" property="userId" />
 	    <result column="storeName" property="storeName" />
 	    <result column="category" property="category" />
 	    <result column="address" property="address" />
@@ -26,6 +27,7 @@
 			(select
 				R.id			as reviewId,
 				U.username		as username, 
+				U.id			as userId,
 				content			as content,
 				R.create_date	as createDate,
 				S.name			as storeName,
@@ -44,7 +46,7 @@
 			left join REVIEW_LIKES L on R.id = L.review_id and #{userId} = L.customer_id
 			
 			) as subquery
-		limit #{begin}, #{end}
+		limit #{begin}, #{limit}
 	</select>
 	
 	<resultMap id="HomeAnonymousResultMap" type="HomeAnonymousFeed">
@@ -91,7 +93,7 @@
 		        group by review_id
 	           ) L on R.id = L.review_id
 			) as subquery
-		limit #{begin}, #{end}
+		limit #{begin}, #{limit}
 	</select>
 	
 	<select id="getPostsOrderByLike" resultType="HomePostDto">
