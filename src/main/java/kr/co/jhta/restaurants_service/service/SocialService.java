@@ -60,7 +60,7 @@ public class SocialService {
     }
 
     public List<FollowRequestDto> getArrivedRequestsDeniedByRecipientId(Integer customerId, int page, int limit) {
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.DECLINED, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.DECLINED, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
@@ -71,7 +71,7 @@ public class SocialService {
 
     public List<FollowRequestDto> getArrivedRequestsPendingByRecipientId(Integer customerId, int page, int limit) {
 
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.PENDING, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.PENDING, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);
@@ -82,7 +82,7 @@ public class SocialService {
 
     public List<FollowRequestDto> getArrivedRequestsAcceptedByRecipientId(Integer customerId, int page, int limit) {
 
-        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDate(customerId, FollowRequest.RequestStatus.ACCEPTED, PageRequest.of(page, limit))
+        return followRequestRepository.findByRecipientIdAndStatusOrderByCreateDateDesc(customerId, FollowRequest.RequestStatus.ACCEPTED, PageRequest.of(page, limit))
                 .stream()
                 .map(request -> {
                     Projection.User user = userRepository.findUserProjectionByIdAndDisabled(request.getSenderId(), User.DISABLED.NO);

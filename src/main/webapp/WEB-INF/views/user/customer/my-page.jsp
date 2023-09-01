@@ -100,8 +100,8 @@
                             <div class="col-4 d-flex justify-content-end">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                                           id="socialVisibilityInput">
+                                    <label class="form-check-label" for="socialVisibilityInput">Private</label>
                                 </div>
                             </div>
                         </div>
@@ -301,6 +301,21 @@
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
+
+        const socialVisibilityInput = document.getElementById('socialVisibilityInput')
+        socialVisibilityInput.addEventListener('click', function() {
+            fetch(`/user/visibility`, { method: "POST" })
+        })
+
+        fetch('/user/visibility')
+            .then(response => response.text())
+            .then(responseText => {
+                if (responseText === 'PRIVATE') {
+                    socialVisibilityInput.checked = true;
+                } else {
+                    socialVisibilityInput.checked = false;
+                }
+            })
 
         const followersToastButton = document.getElementById('followersToastButton')
         const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')

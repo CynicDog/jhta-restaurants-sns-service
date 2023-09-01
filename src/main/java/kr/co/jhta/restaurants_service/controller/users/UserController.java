@@ -212,11 +212,19 @@ public class UserController {
 
     @ResponseBody
     @GetMapping("/visibility")
-    public String visibility(@RequestParam("id") int userId) {
+    public String visibility(@RequestParam("id") Optional<Integer> userId,
+                             @AuthenticationPrincipal SecurityUser securityUser) {
 
-        User user = userService.getUserById(userId);
+        User user = userService.getUserById(userId.orElse(securityUser.getUser().getId()));
 
         return user.getVisibility().toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/visibility")
+    public void visibility(@AuthenticationPrincipal SecurityUser securityUser) {
+
+        userService.modifyVisibility(securityUser);
     }
 
     @GetMapping("/login")
