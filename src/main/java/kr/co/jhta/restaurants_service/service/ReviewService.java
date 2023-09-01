@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
+
+import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDto;
@@ -208,25 +210,25 @@ public class ReviewService {
 		}
     }
     
-    public List<Review> getThreeRecentReview(){
-    	List<Review> reviews = reviewMapper.getThreeRecentReivews();
+    public List<ReviewContentsDto> getThreeRecentReview(){
+    	List<ReviewContentsDto> reviews = reviewMapper.getThreeRecentReivews();
     	
     	return reviews;
     }
     
-    public List<Review> getThreeFollowerReview(SecurityUser securityUser){
-    	List<Review> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
+    public List<ReviewContentsDto> getThreeFollowerReview(SecurityUser securityUser){
+    	List<ReviewContentsDto> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
     	
     	return reviews;
     }
     
-    public List<Review> getAllReviewsPaginated(int page, int limit){
+    public List<ReviewContentsDto> getAllReviewsPaginated(int page, int limit){
     	int start = (page - 1) * limit;
 		
 		return reviewMapper.getAllReivewsPaginated(start, limit);
     }
     
-    public List<Review> getFollowerReviewsPaginated(int page, int limit, SecurityUser securityUser){
+    public List<ReviewContentsDto> getFollowerReviewsPaginated(int page, int limit, SecurityUser securityUser){
     	int start = (page - 1) * limit;
 		
 		return reviewMapper.getFollowerReivewsPaginated(start, limit, securityUser.getUser().getId());

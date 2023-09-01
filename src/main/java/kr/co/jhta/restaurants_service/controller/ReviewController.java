@@ -27,6 +27,7 @@ import com.google.cloud.storage.Storage;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
+import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
@@ -139,7 +140,7 @@ public class ReviewController {
 	 */
 	@ResponseBody
     @GetMapping("/get/allReview")
-    public List<Review> getAllReviews(@RequestParam("page") Integer page,
+    public List<ReviewContentsDto> getAllReviews(@RequestParam("page") Integer page,
                                    @RequestParam("limit") Integer limit) {
 
         return reviewService.getAllReviewsPaginated(page, limit);
@@ -147,7 +148,7 @@ public class ReviewController {
 	
 	@ResponseBody
     @GetMapping("/get/followerReview")
-    public List<Review> getFollowerReviews(@RequestParam("page") Integer page,
+    public List<ReviewContentsDto> getFollowerReviews(@RequestParam("page") Integer page,
                                    @RequestParam("limit") Integer limit,
                                    @AuthenticationPrincipal SecurityUser securityUser) {
 
