@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -63,6 +64,10 @@ html, body {
 
 						</div>
 					</div>
+					<sec:authorize access="hasRole('ROLE_CUSTOMER')">
+					<form action="reviewReport" method="post" id="reportForm">
+					<input type="hidden" name="reviewId" value="${review.review.id }"/>
+					<sec:authentication property="principal.user.id" var="userId" />
 					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
        					<div class="modal-dialog">
                     		<div class="modal-content">
@@ -71,30 +76,31 @@ html, body {
                               			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                        			</div>
                           		<div class="modal-body">
-                             		<form>
-                               			<div class="col-md">
-                                   			<div class="form-floating">
-                                          		<select class="form-select" id="floatingSelectGrid">
-                                                 	<option selected>신고사유를 선택해 주세요</option>
-                                                  	<option value="1">욕설</option>
-                                                  	<option value="2">비방</option>
-                                                 	<option value="3">허위</option>
-                                              	</select> <label for="floatingSelectGrid">신고사유</label>
-                                          	</div>
-                                  		</div>
-                                   		<div class="mb-3">
-                                         	<label for="message-text" class="col-form-label">Message:</label>
-                                    		<textarea class="form-control" id="message-text"></textarea>
+                             		<div class="col-md">
+                                   		<div class="form-floating">
+                                         	<select class="form-select" id="floatingSelectGrid" name="category">
+                                               	<option selected>신고사유를 선택해 주세요</option>
+                                                <option value="PROFANITY">욕설</option>
+                                                <option value="FALSEHOOD">비방</option>
+                                                <option value="PROMOTIONAL">허위</option>
+                                          	</select>
+                                          	<label for="floatingSelectGrid">신고사유</label>
                                        	</div>
-                               		</form>
+                                 	</div>
+                                  	<div class="mb-3">
+                                      	<label for="message-text" class="col-form-label">Message:</label>
+                                    	<textarea class="form-control" id="message-text" name="content"></textarea>
+                                	</div>
                          		</div>
                           		<div class="modal-footer">
                                		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              		<button type="button" class="btn btn-primary">Send message</button>
+                              		<button type="submit" class="btn btn-primary">Send message</button>
                               	</div>
                				</div>
              			</div>
               		</div>
+					</form>
+					</sec:authorize>
 				</div>
 				<div class="row col-3 m-3">
 					<a href="/store/detail?id=${review.review.store.id}"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
@@ -120,14 +126,15 @@ html, body {
 						<div class="card bg-dark text-center text-white fs-1">
 							<img class="img-thumbnail card-img opacity-50 object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px; cursor: pointer;">
 							<div class="col-1 card-img-overlay position-absolute top-50 start-50 translate-middle" >
-							<p class="position-absolute top-50 start-50 translate-middle">+${loop.index}</p>
+							<p id="review-count" class="position-absolute top-50 start-50 translate-middle">+</p>
 							</div>
 						</div>
 					</div>
 					</c:when>
-					<c:when test="${loop.index eq 3}">
+					<c:when test="${loop.index ge 3}">
 					<div class="col-4 visually-hidden" >
 						<img class="img-thumbnail card-img object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px;">
+						<p id="hidden-review-count">+${loop.count - 2}</p>
 					</div>
 					</c:when>
 					</c:choose>
@@ -142,7 +149,7 @@ html, body {
 							            <button class="modal-nav-button" id="prevButton" >&#10094;</button>
 							        </div>
 							        <div class="col-10 text-center">
-							            <img class="modal-content object-fit-cover" id="modalImg" style="width: 100%; height: 1200px;">
+							            <img class="modal-content object-fit-cover" id="modalImg" style="width: 100%; height: 1000px;">
 							        </div>
 							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="nextButton" >&#10095;</button>
@@ -196,9 +203,8 @@ html, body {
   				</div>
 			</div>
 		</div>	
-	</div>	
-
 <%@ include file="common/footer.jsp"%>
+</div>
 </div>
 <script>
 
@@ -262,6 +268,39 @@ $("#nextButton").click(function() {
 $("#span-close-modal").click(function() {
 	modal.hide();
 });
+
+$(document).ready(function () {
+    var hiddenReviewCount = parseInt($("#hidden-review-count").text());
+    if (hiddenReviewCount > 0) {
+        $("#review-count").text("+" + hiddenReviewCount);
+    } else {
+        $("#review-count").hide();
+    }
+});
+
+
+/* 
+$(document).ready(function () {
+    $('#reportForm').submit(function (e) {
+        e.preventDefault(); // 기존 폼 제출 방지
+        $.ajax({
+            type: 'POST',
+            url: 'review/reviewReport',
+            data: $('#reportForm').serialize(),
+            success: function(data) {
+                console.log("신고 완료");
+                $('#reportModal').modal('hide');
+                
+                // 리디렉션 처리
+                window.location.href = data; // 리디렉션 경로로 이동
+            },
+            error: function() {
+                console.log("오류 발생");
+            }
+        });
+    });
+});
+ */
 
 /*
 	var modal = document.getElementById("Modal");

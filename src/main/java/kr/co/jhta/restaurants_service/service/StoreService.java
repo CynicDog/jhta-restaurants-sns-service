@@ -55,6 +55,11 @@ public class StoreService {
 	private final StoreOpenTimeRepository storeOpenTimeRepository;
 	private final BookmarkRepository bookmarkRepository;
 
+	 public Store getStoreById(int storeId) { 
+		 Store store = storeMapper.getStoreById(storeId);
+		 return store;
+	 }
+	
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;
@@ -191,6 +196,7 @@ public class StoreService {
 	    Bookmark bookmark = storeMapper.getBookmarkByStoreIdAndCustomerId(storeId, customerId);
 	    return bookmark;
 	}
+
 
 	public List<StoreDetailDto> getPaginatedStoresByUserId(Integer userId, Integer page, Integer limit) {
 

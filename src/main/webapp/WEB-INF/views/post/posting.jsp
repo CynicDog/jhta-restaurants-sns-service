@@ -17,40 +17,41 @@
 		#offcanvasExample {
 		    width: 40%;
 		}
+		
 	</style>
 </head>
 <body>
 <%@ include file="../common/navbar.jsp" %>
 <div class="wrap"> 
-	<div class="container border-top mt-3" >
+	<div class="container border-top mt-3 bg-light" >
 		<div class="row text-center border-bottom">
 			<div class="col-12 my-5">
-				<h2>${post.post.title}</h2>
-				<h4 class="text-secondary">( ${post.post.subTitle} )</h4>
+				<h2><strong>${post.post.title}</strong></h2>
+				<h4 class="text-secondary">" ${post.post.subTitle} "</h4>
 			</div>
 		</div>
 	</div>
 	<div class="container mt-2" >
-		<c:forEach var="data" items="${post.postData }">
+		<c:forEach var="data" items="${post.postDatas }">
 			<div class="row border-bottom">
 				<div class="col-1"></div>
 				<div class="col-3 my-5">
 					<div class="card text-center text-light font-weight-bold shadow" onclick="location.href='/store/detail?id=${data.store.id}'" style=" cursor: pointer;">
-						<img src="../../resources/image/cafe1.jpg" class="card-img-top rounded" alt="...">
+						<img src="/images/post/jpeg/${data.postData.pictureFile }" class="card-img-top rounded" alt="...">
 					</div>
 				</div>
 				<div class="col-6 my-5 text-left">
 					<div class="d-flex">
 						<h3>${data.store.name }</h3>
-						<h3 class="text-warning ms-3">5.0</h3>
+						<h3 class="text-warning ms-3"><strong><fmt:formatNumber value="${data.averageRating }" pattern="#.#" /></strong></h3>
 					</div>
 					<p class="text-secondary">${data.store.address }</p>
-					<p>${data.content }</p>
+					<p>${data.postData.content }</p>
 				</div>
 				<div class="bookmark col-2 my-5 position-relative" id="box-${data.store.id}">
 					
 					<button class="btn ms-3 position-absolute" id="box">
-						<i class="bi ${post.bookmark.size() > 0 ? 'bi-star-fill' : 'bi-star'}" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
+						<i class="bi ${not empty data.bookmark ? 'bi-star-fill' : 'bi-star'}" id="star-${data.store.id}" index-id ="${data.store.id}" style="color:gold; font-size:28px;" ></i>
 					</button>
 						
 				</div>
@@ -159,21 +160,19 @@
 </div>
 
 <script type="text/javascript">
-	/* $('#box i').click(function(){
-		if($(this).hasClass('bi-star-fill')){
-			$(this).removeClass('bi-star-fill')
-					.addClass('bi-star')
-		}else {
-			$(this).removeClass('bi-star')
-					.addClass('bi-star-fill')
-		}
-	}) */
-	
-	
+
 	const myOffcanvas = document.getElementById("offcanvasExample");
 	myOffcanvas.addEventListener("hide.bs.offcanvas", function() {
 		$(".offcanvas-backdrop").remove();
 	})
+	
+	myOffcanvas.addEventListener("shown.bs.offcanvas", function() {
+	    document.body.style.overflow = "hidden";
+	});
+	
+	myOffcanvas.addEventListener("hidden.bs.offcanvas", function() {
+	    document.body.style.overflow = "auto";
+	});
 	
 	$("[id^=box-]").on('click', '[id^="star-"]', function(){
 		

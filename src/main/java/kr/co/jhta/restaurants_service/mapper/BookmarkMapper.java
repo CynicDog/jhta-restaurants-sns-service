@@ -18,4 +18,7 @@ public interface BookmarkMapper {
 	List<Bookmark> getBookmarksByCustomerId(int customerId);
 
 	List<User> getCustomersByStoreId(@Param("storeId") int storeId);
+  
+	Bookmark getBookmarkByStoreIdAndCustomerId(int storeId, int customerId);
+
 }

@@ -99,9 +99,9 @@
 	        						</div>
 	        					</div>
 	            `
+			    isReviewFetching = false;
 	        })
 	    })
-	    isReviewFetching = false;
 	}
 	
 	window.onscroll = function () {

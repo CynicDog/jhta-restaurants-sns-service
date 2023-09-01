@@ -21,6 +21,7 @@ import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
 import kr.co.jhta.restaurants_service.dto.PostDto;
+import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
@@ -37,6 +38,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import kr.co.jhta.restaurants_service.service.PostService;
+import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +55,7 @@ public class PostController {
     public final Logger logger = Logger.getLogger(PostController.class);
     public final PostService postService;
     public final StoreService storeService;
+    private final ReviewService reviewService;
     private final Storage storage;
 
     @GetMapping("")
@@ -205,8 +208,7 @@ public class PostController {
         log.info("포스트 아이디 -> {}", form.getPostId());
         log.info("댓글 신규 등록 -> {}", form.getContent());
         log.info("유저 아이디 -> {}", securityUser.getUser());
-        return "redirect:/post/followerPost/detail?id=" + form.getPostId();
+        return "redirect:/post/detail?id=" + form.getPostId();
     }
-
-
+    
 }

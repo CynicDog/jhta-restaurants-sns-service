@@ -192,11 +192,6 @@
             
 			$.getJSON('stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
 										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
-				console.log("xStartValue : " + xStartValue);
-				console.log("xEndValue : " + xEndValue);
-				console.log("yStartValue : " + yStartValue);
-				console.log("yEndValue : " + yEndValue);
-				
 				let points = [];
 				let storeNames = [];
 				let i = 0;
@@ -205,7 +200,7 @@
 					let content = `
 						<div class="col-5 mb-3 me-3 store card-zoom">
 							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
-								<img src="../resources/image/cafe1.jpg" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
+								<img src="/images/review/png/\${store.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">
 								<div class="col text-start mt-1">							
@@ -299,12 +294,9 @@
 		}
 			
 		var container = document.getElementById('map');
-		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-		
 		var markers = [];
 		// 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
-		var infowindows =  [];
-		var bounds = new kakao.maps.LatLngBounds();    
+		var infowindows = [];
 		var options = {
 			//latitude,longitude 순으로 입력
 			center: new kakao.maps.LatLng(37.5729587735263, 126.992241734889),
@@ -316,6 +308,8 @@
 		var infoOverlay = [];
 
 		function drawMarker(points) {
+			// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+			let bounds = new kakao.maps.LatLngBounds();    
 			
 			//마커 지우기 - 새 페이지를 위해 
 			if(markers.length!=0){
@@ -343,8 +337,12 @@
 				    // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
 					infoOverlay[i].setMap(null);
 				});	
-			}		
-			setBounds();
+			}
+			console.log("points : ", points);
+	    	
+			// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+	  	 	// 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+			map.setBounds(bounds);
 			
 	 		// 마우스 드래그로 지도 이동/ 지도 확대,축소가 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 			kakao.maps.event.addListener(map, 'bounds_changed', function() {      
@@ -352,12 +350,6 @@
 			});
 		}
 
-		function setBounds() {
-    	// LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-  	 	 // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
-  	 		map.setBounds(bounds);
-		}
-		
 		let swLatLng; 
 		let neLatLng;
 		
@@ -387,7 +379,7 @@
 				buttonOverlay.setMap(map);
 				
 		        // 오버레이의 버튼에 이벤트를 추가
-		        var button = document.getElementById('search-button');
+		        let button = document.getElementById('search-button');
 		        button.addEventListener('click', searchByPosition);
 			
 		}

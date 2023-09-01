@@ -2,7 +2,13 @@
 <mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
 
 	<select id = "getStores" parameterType="map" resultType="SearchedStore">
-		select *
+		select *,
+			   (SELECT 
+			   		RP.PICTURE_NAME 
+			   	FROM 
+			   		REVIEW_PICTURES RP 
+			   	JOIN REVIEWS R ON RP.review_id = R.id 
+			   		WHERE RESULT.id = R.store_id limit 1 offset 0) pictureName
 		from (
 						select
 				            id      			as id,

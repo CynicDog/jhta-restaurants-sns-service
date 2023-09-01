@@ -1,6 +1,8 @@
 package kr.co.jhta.restaurants_service.vo.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import lombok.Getter;
@@ -30,7 +32,7 @@ public class PostData {
 	@OneToOne
 	@JoinColumn(name = "store_id")
 	private Store store;
-
+	
 	@OneToOne
 	@JoinColumn(name = "customer_id")
 	private User user;
@@ -39,7 +41,7 @@ public class PostData {
 	private Date createDate;
 
 	private String content;
-
+	
 	@Column(name = "picture_file")
 	private String pictureFile;
 
