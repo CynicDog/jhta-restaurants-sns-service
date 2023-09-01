@@ -370,6 +370,7 @@
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
                 if (data.length === 0) {
+                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
@@ -432,6 +433,7 @@
             followingsLoadingSpinner.style.display = 'block';
             getFollowings(page).then(data => {
                 if (data.length === 0) {
+                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings yet.</span>`
                     followingsLoadingSpinner.style.display = 'none'
                     isFollowingFetching = false;
                 }
@@ -493,7 +495,7 @@
                 const button = event.target;
                 const userId = button.getAttribute('data-user-id')
 
-                window.location.href = `/customer/user-details?id=\${userId}`
+                window.location.href = `/user/details?id=\${userId}`
             }
         })
 
@@ -629,6 +631,16 @@
 
         getPostData(page).then(data => {
 
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
+
             if (data.last) {
                 isPictureDataLast = true;
                 picturesLoadingSpinner.style.display = 'none';
@@ -653,6 +665,16 @@
         picturesLoadingSpinner.style.display = 'block';
 
         getReviewData(page).then(data => {
+
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
 
             if (data.last) {
                 isPictureDataLast = true;

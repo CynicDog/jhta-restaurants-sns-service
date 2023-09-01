@@ -14,21 +14,16 @@ import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
 import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
-import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.Otp;
-import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -180,18 +175,5 @@ public class CustomerController {
         model.addAttribute("reviewsCount", reviewsCount);
 
         return "/user/customer/my-page";
-    }
-
-    @GetMapping("/user-details")
-    public String userDetailsPage(@RequestParam("id") int userId, Model model) {
-
-        long postsCount = postService.getPostsCountByCustomerId(userId);
-        long reviewsCount = reviewService.getReviewsCountByCustomerId(userId);
-
-        model.addAttribute("customer", userService.getUserById(userId));
-        model.addAttribute("postsCount", postsCount);
-        model.addAttribute("reviewsCount", reviewsCount);
-
-        return "/user/customer/user-details";
     }
 }

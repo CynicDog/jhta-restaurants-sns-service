@@ -4,11 +4,14 @@ import kr.co.jhta.restaurants_service.dto.FollowRequestDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.security.service.UserService;
+import kr.co.jhta.restaurants_service.service.PostService;
+import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.SocialService;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,10 +24,14 @@ public class UserController {
 
     private final UserService userService;
     private final SocialService socialService;
+    private final PostService postService;
+    private final ReviewService reviewService;
 
-    public UserController(UserService userService, SocialService socialService) {
+    public UserController(UserService userService, SocialService socialService, PostService postService, ReviewService reviewService) {
         this.userService = userService;
         this.socialService = socialService;
+        this.postService = postService;
+        this.reviewService = reviewService;
     }
 
     @ResponseBody
@@ -165,6 +172,27 @@ public class UserController {
     public String followRequestsModify(@RequestParam("requestId") int requestId, @AuthenticationPrincipal SecurityUser securityUser) {
 
         return socialService.updateRequestStatus(requestId, securityUser.getUser().getId());
+    }
+
+    @GetMapping("/details")
+    public String userDetailsPage(@RequestParam("id") int userId, Model model) {
+
+        User user = userService.getUserById(userId);
+
+        if (user.getType().equals(User.TYPE.CUSTOMER)) {
+            long postsCount = postService.getPostsCountByCustomerId(userId);
+            long reviewsCount = reviewService.getReviewsCountByCustomerId(userId);
+
+            model.addAttribute("customer", user);
+            model.addAttribute("postsCount", postsCount);
+            model.addAttribute("reviewsCount", reviewsCount);
+
+            return "/user/customer/user-details";
+        } else {
+            model.addAttribute("owner", user);
+
+            return "/user/owner/user-details";
+        }
     }
 
     @GetMapping("/login")

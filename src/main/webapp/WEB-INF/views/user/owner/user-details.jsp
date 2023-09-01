@@ -86,42 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="p-2 m-3">
-                            <div id="pendingRequests"
-                                 type="button"
-                                 class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill ">
-                                Pending
-                            </div>
-                            <div id="acceptedRequests"
-                                 type="button"
-                                 class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill ">
-                                Accepted
-                            </div>
-                            <div id="declinedRequests"
-                                 type="button"
-                                 class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill ">
-                                Declined
-                            </div>
-                            <div id="sentRequests"
-                                 type="button"
-                                 class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill">
-                                Sent
-                            </div>
-                            <hr/>
-                            <div id="requestsOutputArea" class="overflow-scroll" style="max-height: 200px">
-                            </div>
-                            <div class="text-center">
-                                <div class="btn border border-0 disabled">
-                                    <div id="requestLoadingSpinner"
-                                         class="spinner-border spinner-border-sm text-primary m-1" role="status"
-                                         style="display: none;">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -131,21 +96,16 @@
                     <div class="col-4 fs-4">My Stores</div>
                     <div class="col-8 d-flex justify-content-end">
                         <div class="pb-2 my-1 border-bottom text-end">
-                                <span class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill my-2"
-                                      type="button"
-                                      onclick="window.location.href=`/owner/register`">
-                                    Add your store!
-                                </span>
                             <span id="storesButton"
                                   type="button"
                                   class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill mx-1">
-                                    My stores
-                                </span>
+                                    Stores
+                            </span>
                             <span id="reviewsButton"
                                   type="button"
                                   class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill mx-1">
                                     Reviews
-                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -228,6 +188,10 @@
 </body>
 <script>
 
+    const params = new URLSearchParams(window.location.search);
+
+    const userId = params.get("id");
+
     const followersToastButton = document.getElementById('followersToastButton')
     const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
 
@@ -249,7 +213,7 @@
     let isFollowingLast = false;
 
     const getFollowers = page => {
-        return fetch(`/user/followers?page=\${page}&limit=7`).then(response => response.json());
+        return fetch(`/user/followers?page=\${page}&limit=7&id=\${userId}`).then(response => response.json());
     }
 
     function fetchAndRenderFollowers(page) {
@@ -312,7 +276,7 @@
     })
 
     const getFollowings = page => {
-        return fetch(`/user/followings?page=\${page}&limit=7`).then(response => response.json());
+        return fetch(`/user/followings?page=\${page}&limit=7&id=\${userId}`).then(response => response.json());
     }
 
     function fetchAndRenderFollowings(page) {
@@ -389,153 +353,6 @@
         }
     })
 
-    let isRequestLast = false;
-    let isRequestsFetching = false;
-    let pageOnRequests = 0
-    let requestFetchingOption = 'pending'
-
-    const requestLoadingSpinner = document.getElementById('requestLoadingSpinner')
-    const requestsOutputArea = document.getElementById('requestsOutputArea')
-
-    const getRequests = (option, page) => {
-        return fetch(`/user/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
-    }
-
-    function fetchAndRenderRequests(option, page) {
-        isRequestsFetching = true
-        requestLoadingSpinner.style.display = 'block';
-
-        getRequests(option, page).then(data => {
-
-            if (data.length < 5) {
-                isRequestLast = true;
-                isRequestsFetching = false;
-                requestLoadingSpinner.style.display = 'none';
-            }
-
-            data.forEach(datum => {
-
-                function getStatusClasses(status) {
-                    switch (status) {
-                        case 'PENDING':
-                            return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
-                        case 'ACCEPTED':
-                            return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
-                        case 'DECLINED':
-                            return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
-                        default:
-                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
-                    }
-                }
-
-                const statusClasses = getStatusClasses(datum.followRequest.status);
-
-                requestsOutputArea.innerHTML += `
-                <div class="border rounded p-2 my-2 d-flex align-items-center">
-                    <div class="fw-light mx-1 userDetailEntry" type="button"  data-user-id="\${datum.user.id}">\${datum.user.nickname}</div>
-                    <div class="ms-auto">
-                        <span type="button"
-                              data-request-id="\${datum.followRequest.id}"
-                              class="\${statusClasses}">\${datum.followRequest.status}</span>
-                    </div>
-                </div>
-
-                `
-                requestLoadingSpinner.style.display = 'none';
-                isRequestsFetching = false;
-            })
-        })
-    }
-
-    fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-
-    document.getElementById('pendingRequests').addEventListener('click', function () {
-        requestsOutputArea.innerHTML = ''
-
-        pageOnRequests = 0
-        isRequestLast = false;
-        requestFetchingOption = 'pending'
-        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-    })
-
-    document.getElementById('acceptedRequests').addEventListener('click', function () {
-        requestsOutputArea.innerHTML = ''
-
-        pageOnRequests = 0
-        isRequestLast = false;
-        requestFetchingOption = 'accepted'
-        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-    })
-
-    document.getElementById('declinedRequests').addEventListener('click', function () {
-        requestsOutputArea.innerHTML = ''
-
-        pageOnRequests = 0
-        isRequestLast = false;
-        requestFetchingOption = 'declined'
-        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-    })
-
-    document.getElementById('sentRequests').addEventListener('click', function () {
-        requestsOutputArea.innerHTML = ''
-
-        pageOnRequests = 0
-        isRequestLast = false;
-        requestFetchingOption = 'sent'
-        fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-    })
-
-    requestsOutputArea.addEventListener('scroll', function () {
-
-        const scrollPos = this.scrollTop + this.clientHeight;
-        const scrollHeight = this.scrollHeight;
-
-        if (scrollPos + .5 >= scrollHeight) {
-            if (isRequestsFetching || isRequestLast) {
-                // do nothing
-            } else {
-                pageOnRequests += 1;
-                fetchAndRenderRequests(requestFetchingOption, pageOnRequests);
-            }
-
-        }
-    })
-
-    document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('requestStatusButton')) {
-            const button = event.target;
-            const requestId = button.getAttribute('data-request-id')
-
-            fetch(`/user/requests-modify?requestId=\${requestId}`, {
-                method: "POST"
-            })
-                .then(response => response.text())
-                .then(status => {
-
-                    function getStatusClasses(status) {
-                        switch (status) {
-                            case 'PENDING':
-                                return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
-                            case 'ACCEPTED':
-                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
-                            case 'DECLINED':
-                                return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
-                            default:
-                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
-                        }
-                    }
-
-                    const newStatusClasses = getStatusClasses(status);
-
-                    button.textContent = status;
-                    button.className = newStatusClasses;
-
-                    updateFollowersCount();
-                })
-        }
-    })
-
-
     const storeLoadingSpinner = document.getElementById('storeLoadingSpinner')
     const contentOutputArea = document.getElementById('contentOutputArea')
 
@@ -546,7 +363,7 @@
     let currentFetchingOption = null;
 
     const getStores = page => {
-        return fetch(`/owner/stores?page=\${page}&limit=3`).then(response => response.json());
+        return fetch(`/owner/stores?page=\${page}&limit=3&id=\${userId}`).then(response => response.json());
     }
 
     function fetchAndRenderStores(page) {
@@ -557,7 +374,6 @@
 
             if (data.length === 0) {
                 storeLoadingSpinner.style.display = 'none'
-
                 contentOutputArea.innerHTML = `
                     <div class="row text-center ">
                         <div class="fw-lighter fs-5">No stores yet.</div>
@@ -705,7 +521,7 @@
     }
 
     const updateFollowersCount = () => {
-        fetch(`/user/followers-count`)
+        fetch(`/user/followers-count?id=\${userId}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followersCount').textContent = data;
@@ -714,15 +530,13 @@
     updateFollowersCount();
 
     const updateFollowingsCount = () => {
-        fetch(`/user/followings-count`)
+        fetch(`/user/followings-count?id=\${userId}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followingsCount').textContent = data;
             });
     };
     updateFollowingsCount();
-
-    const params = new URLSearchParams(window.location.search);
 
     if (params.get("registration") === "success") {
         showMessagingToast("Successfully registered :)");
