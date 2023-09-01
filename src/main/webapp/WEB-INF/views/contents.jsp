@@ -56,7 +56,7 @@
 				<c:set var="sysYear"><fmt:formatDate value="${recentPostdata.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
 				<div class="col-md-4 mb-4">
 					<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${recentPostdata.id}'" style=" cursor: pointer;">
-						<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+						<img src="images/post/jpeg/${recentPostdata.pictureFile}" class="card-image" alt="...">
 	
 						<div class="card-img-overlay">
 							<div class="title-text">
@@ -67,7 +67,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<strong >${recentPostdata.customer.username }</strong>
+							<strong >${recentPostdata.userName }</strong>
 						</div>
 						<div class="col text-end">
 							<input type="hidden" id="dateInput-${recentPostdata.id }" type="text" value="${sysYear }" >
@@ -94,7 +94,7 @@
 					<c:set var="sysYear"><fmt:formatDate value="${followerPostData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
 					<div class="col-md-4 mb-4">
 						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+							<img src="images/post/jpeg/${followerPostData.pictureFile}" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
 								<div class="title-text">
@@ -105,7 +105,7 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${followerPostData.customer.username }</strong>
+								<strong >${followerPostData.userName }</strong>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
@@ -130,17 +130,17 @@
 					<c:set var="sysYear"><fmt:formatDate value="${recentReviewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
 					<div class="col-md-4 mb-4">
 						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentReviewData.id}'" style=" cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+							<img src="/images/review/jpeg/${recentReviewData.pictureName }" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
 								<div class="title-text">
-									<strong>${recentReviewData.store.name }</strong><br>
+									<strong>${recentReviewData.storeName }</strong><br>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${recentReviewData.customer.username }</strong>
+								<strong >${recentReviewData.userName }</strong>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentReviewData.id }" type="text" value="${sysYear }" >
@@ -164,17 +164,17 @@
 					<c:set var="sysYear"><fmt:formatDate value="${recentFollowerReivewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
 					<div class="col-md-4 mb-4">
 						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
-							<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+							<img src="/images/review/jpeg/${recentFollowerReivewData.pictureName }" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
 								<div class="title-text">
-									<strong>${recentFollowerReivewData.store.name }</strong><br>
+									<strong>${recentFollowerReivewData.storeName }</strong><br>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${recentFollowerReivewData.customer.username }</strong>
+								<strong >${recentFollowerReivewData.userName }</strong>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >

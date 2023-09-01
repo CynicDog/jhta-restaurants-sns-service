@@ -18,4 +18,6 @@ public interface FollowsRepository extends JpaRepository<Follow, FollowComposite
 
     long countByCompositePrimaryKeys_FollowedId(int customerId);
     long countByCompositePrimaryKeys_FollowerId(int customerId);
+
+    boolean existsByCompositePrimaryKeys_FollowerIdAndCompositePrimaryKeys_FollowedId(int followerId, int followedId);
 }

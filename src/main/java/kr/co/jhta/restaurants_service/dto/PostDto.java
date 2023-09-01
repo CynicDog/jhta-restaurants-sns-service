@@ -18,4 +18,11 @@ public class PostDto {
 	private Post post;
 	private List<PostDataDto> postDatas;
 	private List<PostComment> postComments;
+	
+	
+	public PostDto(Post post, List<PostDataDto> postDatas, List<PostComment> postComments) {
+		this.post = post;
+		this.postDatas = postDatas;
+		this.postComments = postComments;
+	}
 }

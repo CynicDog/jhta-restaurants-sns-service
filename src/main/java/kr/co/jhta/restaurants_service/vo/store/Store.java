@@ -56,7 +56,10 @@ public class Store {
 
     @ManyToOne
     private User owner;
-
+    
+    @Transient
+    private double averageRating = 0.0;
+    
     public Store() {
 
 

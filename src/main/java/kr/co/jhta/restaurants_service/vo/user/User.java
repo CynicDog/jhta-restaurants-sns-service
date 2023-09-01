@@ -63,11 +63,15 @@ public class User {
     )
     private List<Role> roles;
 
+    @Enumerated(EnumType.STRING)
+    private VISIBILITY visibility = VISIBILITY.PUBLIC;
+
     public User() {
 
         this.createDate = new Date(); // default to current time
         this.updateDate = new Date(); // default to current time
         this.disabled = DISABLED.NO; // default to `NO`
+        this.visibility = VISIBILITY.PUBLIC;
     }
 
     public User(TYPE type) {
@@ -76,6 +80,7 @@ public class User {
         this.createDate = new Date(); // default to current time
         this.updateDate = new Date(); // default to current time
         this.disabled = DISABLED.NO; // default to `NO`
+        this.visibility = VISIBILITY.PUBLIC;
     }
 
     public User(String username, String password, String fullName, String email, String phone, String nickname, Date birthday, String gender, TYPE type) {
@@ -100,6 +105,10 @@ public class User {
 
     public enum DISABLED {
         YES, NO
+    }
+
+    public enum VISIBILITY {
+        PUBLIC, PRIVATE
     }
 
     public void addRole(Role role) {

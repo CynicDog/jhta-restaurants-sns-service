@@ -232,21 +232,22 @@
 	</select>
 
 	
-	<select id="getThreeFollowerReivews" parameterType="int" resultType="Review">
+	<select id="getThreeFollowerReivews" parameterType="int" resultType="ReviewContentsDto">
 		select
 			r.id,			
 			r.rating,
 			r.content,
 			r.create_date		as 	createDate,
-			r.update_date		as	updateDate,
 			r.liked_count		as	likedCount,
-			r.report_count	as  reportCount,
-			r.disabled,
-			r.blocked,
-			r.customer_id		as "customer.id",	
-			u.username			as "customer.username",
-			r.store_id		as "store.id",
-			s.name			as "store.name"
+			r.customer_id		as customerId,
+			u.username			as userName,	
+			r.store_id		as storeId,
+			s.name			as storeName,
+			(   SELECT picture_name
+		        FROM REVIEW_PICTURES p
+		        WHERE r.id = p.review_id
+		        LIMIT 1
+		    ) as pictureName
 		from
 			REVIEWS r
 		inner join
@@ -265,21 +266,22 @@
 			0, 3
 	</select>
 	
-	<select id="getThreeRecentReivews" parameterType="int" resultType="Review">
+	<select id="getThreeRecentReivews" parameterType="int" resultType="ReviewContentsDto">
 		select
 			r.id,			
 			r.rating,
 			r.content,
 			r.create_date		as 	createDate,
-			r.update_date		as	updateDate,
 			r.liked_count		as	likedCount,
-			r.report_count	as  reportCount,
-			r.disabled,
-			r.blocked,
-			r.customer_id		as "customer.id",	
-			u.username			as "customer.username",	
-			r.store_id		as "store.id",
-			s.name			as "store.name"
+			r.customer_id		as customerId,
+			u.username			as userName,	
+			r.store_id		as storeId,
+			s.name			as storeName,
+			(   SELECT picture_name
+		        FROM REVIEW_PICTURES p
+		        WHERE r.id = p.review_id
+		        LIMIT 1
+		    ) as pictureName
 		from
 			REVIEWS r
 		inner join
@@ -292,21 +294,22 @@
 			0, 3
 	</select>
 	
-	<select id="getAllReivewsPaginated" resultType="Review">
+	<select id="getAllReivewsPaginated" resultType="ReviewContentsDto">
 		select
 			r.id,			
 			r.rating,
 			r.content,
 			r.create_date		as 	createDate,
-			r.update_date		as	updateDate,
 			r.liked_count		as	likedCount,
-			r.report_count		as  reportCount,
-			r.disabled,
-			r.blocked,
-			r.customer_id		as "customer.id",	
-			u.username			as "customer.username",	
-			r.store_id			as "store.id",
-			s.name				as "store.name"
+			r.customer_id		as customerId,
+			u.username			as userName,	
+			r.store_id		as storeId,
+			s.name			as storeName,
+			(   SELECT picture_name
+		        FROM REVIEW_PICTURES p
+		        WHERE r.id = p.review_id
+		        LIMIT 1
+		    ) as pictureName
 		from
 			REVIEWS r
 		inner join
@@ -319,21 +322,22 @@
 			#{begin}, #{limit}
 	</select>
 	
-	<select id="getFollowerReivewsPaginated" resultType="Review">
+	<select id="getFollowerReivewsPaginated" resultType="ReviewContentsDto">
 		select
 			r.id,			
 			r.rating,
 			r.content,
 			r.create_date		as 	createDate,
-			r.update_date		as	updateDate,
 			r.liked_count		as	likedCount,
-			r.report_count		as  reportCount,
-			r.disabled,
-			r.blocked,
-			r.customer_id		as "customer.id",	
-			u.username			as "customer.username",	
-			r.store_id			as "store.id",
-			s.name				as "store.name"
+			r.customer_id		as customerId,
+			u.username			as userName,	
+			r.store_id		as storeId,
+			s.name			as storeName,
+			(   SELECT picture_name
+		        FROM REVIEW_PICTURES p
+		        WHERE r.id = p.review_id
+		        LIMIT 1
+		    ) as pictureName
 		from
 			REVIEWS r
 		inner join

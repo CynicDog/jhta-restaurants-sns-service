@@ -18,6 +18,7 @@ import lombok.Setter;
 public class HomeFeed {
 	private int id;
 	private String username;
+	private String userId;
 	private String storeName;
 	private Integer storeId;
 	private String category;

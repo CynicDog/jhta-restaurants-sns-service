@@ -100,8 +100,8 @@
                             <div class="col-4 d-flex justify-content-end">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
+                                           id="socialVisibilityInput">
+                                    <label class="form-check-label" for="socialVisibilityInput">Private</label>
                                 </div>
                             </div>
                         </div>
@@ -302,16 +302,29 @@
 
     document.addEventListener("DOMContentLoaded", function () {
 
+        const socialVisibilityInput = document.getElementById('socialVisibilityInput')
+        socialVisibilityInput.addEventListener('click', function() {
+            fetch(`/user/visibility`, { method: "POST" })
+        })
+
+        fetch('/user/visibility')
+            .then(response => response.text())
+            .then(responseText => {
+                if (responseText === 'PRIVATE') {
+                    socialVisibilityInput.checked = true;
+                } else {
+                    socialVisibilityInput.checked = false;
+                }
+            })
+
         const followersToastButton = document.getElementById('followersToastButton')
         const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
-        const followersCloseButton = document.getElementById('followersCloseButton');
 
         let followersToast = document.getElementById('followersToast')
         let followersOutputArea = document.getElementById('followersOutputArea');
 
         const followingsToastButton = document.getElementById('followingsToastButton')
         const followingsLoadingSpinner = document.getElementById('followingsLoadingSpinner')
-        const followingsCloseButton = document.getElementById('followingsCloseButton');
 
         let followingsToast = document.getElementById('followingsToast')
         let followingsOutputArea = document.getElementById('followingsOutputArea');
@@ -383,7 +396,7 @@
         })
 
         const getFollowers = page => {
-            return fetch(`/customer/followers?page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followers?page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowers(page) {
@@ -404,10 +417,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followersOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -439,7 +458,7 @@
         })
 
         const getFollowings = page => {
-            return fetch(`/customer/followings?page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followings?page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowings(page) {
@@ -460,10 +479,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followingsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -505,7 +530,7 @@
                 const button = event.target;
                 const userId = button.getAttribute('data-user-id')
 
-                window.location.href = `/customer/user-details?id=\${userId}`
+                window.location.href = `/user/details?id=\${userId}`
             }
         })
 
@@ -530,7 +555,7 @@
                 isPostLast = data.last;
                 data.content.forEach(datum => {
                     postOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
@@ -581,7 +606,7 @@
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${truncatedContent}
@@ -616,7 +641,7 @@
     const requestsOutputArea = document.getElementById('requestsOutputArea')
 
     const getRequests = (option, page) => {
-        return fetch(`/customer/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
+        return fetch(`/user/requests?option=\${option}&page=\${page}&limit=5`).then(response => response.json())
     }
 
     function fetchAndRenderRequests(option, page) {
@@ -724,7 +749,7 @@
             const button = event.target;
             const requestId = button.getAttribute('data-request-id')
 
-            fetch(`/customer/requests-modify?requestId=\${requestId}`, {
+            fetch(`/user/requests-modify?requestId=\${requestId}`, {
                 method: "POST"
             })
                 .then(response => response.text())
@@ -776,6 +801,16 @@
 
         getPostData(page).then(data => {
 
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
+
             if (data.last) {
                 isPictureDataLast = true;
                 picturesLoadingSpinner.style.display = 'none';
@@ -800,6 +835,16 @@
         picturesLoadingSpinner.style.display = 'block';
 
         getReviewData(page).then(data => {
+
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
 
             if (data.last) {
                 isPictureDataLast = true;
@@ -864,7 +909,7 @@
     }
 
     const updateFollowersCount = () => {
-        fetch(`/customer/followers-count`)
+        fetch(`/user/followers-count`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followersCount').textContent = data;
@@ -873,7 +918,7 @@
     updateFollowersCount();
 
     const updateFollowingsCount = () => {
-        fetch(`/customer/followings-count`)
+        fetch(`/user/followings-count`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followingsCount').textContent = data;
