@@ -359,7 +359,7 @@
         })
 
         const getFollowers = page => {
-            return fetch(`/customer/followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowers(page) {
@@ -370,6 +370,7 @@
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
                 if (data.length === 0) {
+                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
@@ -380,10 +381,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followersOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -415,7 +422,7 @@
         })
 
         const getFollowings = page => {
-            return fetch(`/customer/followings?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
+            return fetch(`/user/followings?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
 
         function fetchAndRenderFollowings(page) {
@@ -426,6 +433,7 @@
             followingsLoadingSpinner.style.display = 'block';
             getFollowings(page).then(data => {
                 if (data.length === 0) {
+                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings yet.</span>`
                     followingsLoadingSpinner.style.display = 'none'
                     isFollowingFetching = false;
                 }
@@ -436,10 +444,16 @@
                 }
 
                 data.forEach(datum => {
+
+                    const typeClass = datum.type === 'CUSTOMER' ?
+                        'badge bg-success-subtle text-success-emphasis rounded-pill' :
+                        'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+
                     followingsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
                                 <div>\${datum.email}</div>
                             </div>
                         </div>
@@ -481,7 +495,7 @@
                 const button = event.target;
                 const userId = button.getAttribute('data-user-id')
 
-                window.location.href = `/customer/user-details?id=\${userId}`
+                window.location.href = `/user/details?id=\${userId}`
             }
         })
 
@@ -506,7 +520,7 @@
                 isPostLast = data.last;
                 data.content.forEach(datum => {
                     postOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
@@ -557,7 +571,7 @@
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
-                        <div class="shadow border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${truncatedContent}
@@ -617,6 +631,16 @@
 
         getPostData(page).then(data => {
 
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
+
             if (data.last) {
                 isPictureDataLast = true;
                 picturesLoadingSpinner.style.display = 'none';
@@ -641,6 +665,16 @@
         picturesLoadingSpinner.style.display = 'block';
 
         getReviewData(page).then(data => {
+
+            if (data.totalElements === 0) {
+                picturesLoadingSpinner.style.display = 'none'
+
+                pictureDataOutputArea.innerHTML = `
+                    <div class="row text-center ">
+                        <div class="fw-lighter fs-5">No pictures yet.</div>
+                    </div>
+                `
+            }
 
             if (data.last) {
                 isPictureDataLast = true;
@@ -706,7 +740,7 @@
     }
 
     document.getElementById('followRequestButton').addEventListener('click', function() {
-        fetch(`/customer/follow?recipientId=\${userId}`, {
+        fetch(`/user/follow?recipientId=\${userId}`, {
             method: "POST"
         }).then(response => {
             if (response.ok) {
@@ -728,7 +762,7 @@
     }
 
     const updateFollowersCount = () => {
-        fetch(`/customer/followers-count?id=\${userId}`)
+        fetch(`/user/followers-count?id=\${userId}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followersCount').textContent = data;
@@ -737,7 +771,7 @@
     updateFollowersCount();
 
     const updateFollowingsCount = () => {
-        fetch(`/customer/followings-count?id=\${userId}`)
+        fetch(`/user/followings-count?id=\${userId}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById('followingsCount').textContent = data;
