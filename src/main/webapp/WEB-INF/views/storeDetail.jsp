@@ -28,7 +28,7 @@
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
-        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer;">
+        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer;" id="review-img-thumbnail">
             <c:forEach var="recentReview" items="${recentReviews}">
                 <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" data-review-id="${recentReview.id }" id="review-img-${recentReview.id }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
@@ -50,7 +50,6 @@
                     <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
                         <div class="card-body d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
-<%--                                TODO --%>
                                 <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
                                 <div class="ml-2">
                                     <span style="font-size: medium; font-weight: bold;">정손님</span>
@@ -58,10 +57,8 @@
                                 <div class="p-2 ml-auto">
                                     <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
                                 </div>
-                            </div>
-                           
+                            </div>         
 							<div class="review" id="modal-review-content">  </div>
-							
                         </div>
                     </div>
                 </div>
@@ -266,11 +263,11 @@
                                 </div>
                                 <div class="col-10">
                                     <div class="row mb-2">
-                                        <div class="col-9" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
+                                        <div class="col-10" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                             <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
                                             <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
                                         </div>
-                                        <div class="col-3 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
+                                        <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
                                         	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
                                             \${(() => {
                                                 switch (datum.rating) {
@@ -315,7 +312,7 @@
                     if (datum.reviewPictures) {
 	                    datum.reviewPictures.forEach(picture => {
 	                        picturesOutputArea.innerHTML += `
-	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 100px; width: 100px">
+	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 120px">
 	                        `
 	                    })
 	                 }
@@ -531,7 +528,8 @@
  // 모달과 이미지 요소를 가져옴
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("modalImg");
-    var images = document.getElementsByClassName("img-thumbnail");
+    var images = document.querySelectorAll("#review-img-thumbnail .img-thumbnail");
+    console.log("사진갯수", images.length)
     var currentIndex; // 현재 이미지의 인덱스를 저장하는 변수
 
     // 모달을 열 때 호출되는 함수
