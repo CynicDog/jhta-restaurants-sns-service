@@ -101,11 +101,6 @@
                                   class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill mx-1">
                                     Stores
                             </span>
-                            <span id="reviewsButton"
-                                  type="button"
-                                  class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill mx-1">
-                                    Reviews
-                            </span>
                         </div>
                     </div>
                 </div>

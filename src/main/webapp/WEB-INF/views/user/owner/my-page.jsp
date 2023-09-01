@@ -140,12 +140,7 @@
                                   type="button"
                                   class="badge bg-success-subtle border border-success-subtle text-success-emphasis rounded-pill mx-1">
                                     My stores
-                                </span>
-                            <span id="reviewsButton"
-                                  type="button"
-                                  class="badge bg-warning-subtle border border-warning-subtle text-warning-emphasis rounded-pill mx-1">
-                                    Reviews
-                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
