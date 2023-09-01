@@ -19,7 +19,7 @@
 	    color: #ff792a;
 	}
 	.img-thumbnail {
-        max-height: 250px; /* 원하는 높이로 조절해주세요 */
+        max-height: 250px;
         object-fit: cover;
     }
 </style>
@@ -30,7 +30,7 @@
     <div class="container">
         <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer;">
             <c:forEach var="recentReview" items="${recentReviews}">
-                <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" alt="Thumbnail 1" onclick="openModal(this)">
+                <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" data-review-id="${recentReview.id }" id="review-img-${recentReview.id }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
         </div>
         <div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
@@ -59,11 +59,9 @@
                                     <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
                                 </div>
                             </div>
-                            <c:forEach var="review" items="${recentReviews}">
-							    <div class="review">
-							        <p>${review.content}</p>
-							    </div>
-							</c:forEach>
+                           
+							<div class="review" id="modal-review-content">  </div>
+							
                         </div>
                     </div>
                 </div>
@@ -182,7 +180,10 @@
 		                            <div class="d-flex align-items-start">
 		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id }'">
 		                                <div class="ml-3">
-		                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> ${closestStore.name } <span></span></h5>
+		                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
+		                                    	${closestStore.name } 
+		                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">${closestStore.averageRating }</span>
+		                                    </h5>
 		                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
 		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>
@@ -267,7 +268,7 @@
                                     <div class="row mb-2">
                                         <div class="col-9">
                                             <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'">\${datum.content}</p>
+                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
                                         </div>
                                         <div class="col-3 text-end">
                                         	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
@@ -286,7 +287,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea"></div>
+                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
                                     <div class="row">
                                         <div class="col">
                                             <button type="button" class="btn btn-light btn-sm" style="color: #838383">
@@ -310,16 +311,19 @@
                         </div>
                     </div>
                     `
-                    const picturesOutputArea = document.getElementById('picturesOutputArea')
-                    datum.reviewPictures.forEach(picture => {
-                        picturesOutputArea.innerHTML += `
-                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 200px; width: 100%">
-                        `
-                    })}
-                )
+                    const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
+                    if (datum.reviewPictures) {
+	                    datum.reviewPictures.forEach(picture => {
+	                        picturesOutputArea.innerHTML += `
+	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 100px; width: 100px">
+	                        `
+	                    })
+	                 }
+            	})
             })
             isReviewsFetching = false;
         }
+	
 
     // initial fetching
     fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
@@ -524,40 +528,62 @@
         });
     });
 
+ // 모달과 이미지 요소를 가져옴
     var modal = document.getElementById("myModal");
     var modalImg = document.getElementById("modalImg");
     var images = document.getElementsByClassName("img-thumbnail");
-    var currentIndex;
+    var currentIndex; // 현재 이미지의 인덱스를 저장하는 변수
 
+    // 모달을 열 때 호출되는 함수
     function openModal(image) {
-        modal.style.display = "block";
-        modalImg.src = image.src;
+        modal.style.display = "block"; // 모달을 보이게 함
+        modalImg.src = image.src; // 모달 이미지 요소의 소스를 클릭한 이미지의 소스로 설정
+
+        // 클릭한 이미지의 데이터 속성에서 리뷰 ID를 가져옴
+        let reviewId = image.getAttribute("data-review-id");
+        // 해당 리뷰 ID에 해당하는 리뷰 내용을 가져와 모달 내용에 설정
+        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
+        document.getElementById("modal-review-content").textContent = reviewContent;
+
+        // 클릭한 이미지의 인덱스를 현재 인덱스로 설정하고, 네비게이션 버튼 업데이트
         currentIndex = Array.from(images).indexOf(image);
         updateNavButtons();
     }
 
+    // 모달을 닫을 때 호출되는 함수
     function closeModal() {
-        modal.style.display = "none";
+        modal.style.display = "none"; // 모달을 숨김
     }
 
+    // 이미지 변경 함수 (좌우 버튼 클릭 시 호출)
     function changeImage(n) {
-        currentIndex += n;
+        currentIndex += n; // 현재 인덱스에 n을 더해 다음 이미지 인덱스 설정
         if (currentIndex < 0) {
-            currentIndex = images.length - 1;
+            currentIndex = images.length - 1; // 처음 이미지로 돌아감
         } else if (currentIndex >= images.length) {
-            currentIndex = 0;
+            currentIndex = 0; // 마지막 이미지로 돌아감
         }
-        modalImg.src = images[currentIndex].src;
+        modalImg.src = images[currentIndex].src; // 모달 이미지 요소의 소스를 변경된 이미지로 설정
+
+        // 이미지 변경할 때 리뷰 내용 업데이트
+        let reviewId = images[currentIndex].getAttribute("data-review-id");
+        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
+        document.getElementById("modal-review-content").textContent = reviewContent;
+
+        // 네비게이션 버튼 업데이트
         updateNavButtons();
     }
 
+    // 네비게이션 버튼 업데이트 함수
     function updateNavButtons() {
         var prevButton = document.getElementById("prevButton");
         var nextButton = document.getElementById("nextButton");
         if (images.length <= 1) {
+            // 이미지가 1장 이하면 네비게이션 버튼을 숨김
             prevButton.style.display = "none";
             nextButton.style.display = "none";
         } else {
+            // 이미지가 2장 이상이면 네비게이션 버튼을 표시
             prevButton.style.display = "block";
             nextButton.style.display = "block";
         }
@@ -565,13 +591,14 @@
 
     document.addEventListener("keydown", function (event) {
         if (event.keyCode === 27) {
-            closeModal();
+            closeModal(); 
         } else if (event.keyCode === 37) {
-            changeImage(-1);
+            changeImage(-1); 
         } else if (event.keyCode === 39) {
-            changeImage(1);
+            changeImage(1); 
         }
     });
+
 
     /* const commentButton = document.getElementById('comment');
     const cardAndTextarea = document.getElementById('cardAndTextarea');

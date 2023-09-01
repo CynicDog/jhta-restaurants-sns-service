@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper">
+<mapper namespace="kr.co.jhta.restaurants_service.mapper.StoreMapper"> 
 
 	<select id = "getStores" parameterType="map" resultType="SearchedStore">
 		select *,
@@ -299,7 +299,7 @@
 	</select>
 
 	<select id="getClosestStores" resultType="Store">
-		SELECT *
+		SELECT x.*, (select avg(rating) from REVIEWS r where r.store_id = x.id) averageRating
 		FROM (
 			SELECT
 				id 					AS id,
