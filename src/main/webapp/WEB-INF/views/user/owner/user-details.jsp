@@ -62,11 +62,6 @@
                         <div class="row">
                             <div class="col-8 fs-4">Socials</div>
                             <div class="col-4 d-flex justify-content-end">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
-                                </div>
                             </div>
                         </div>
                         <div class="row my-2">
@@ -184,8 +179,15 @@
 <script>
 
     const params = new URLSearchParams(window.location.search);
-
     const userId = params.get("id");
+
+    const visibility = fetch(`/user/visibility?id=\${userId}`)
+        .then(response => response.text())
+        .then(responseText => responseText === 'PUBLIC');
+
+    const follow = fetch(`/user/follow?id=\${userId}`)
+        .then(response => response.text())
+        .then(responseText => responseText === "YES")
 
     const followersToastButton = document.getElementById('followersToastButton')
     const followersLoadingSpinner = document.getElementById('followersLoadingSpinner')
@@ -253,21 +255,29 @@
     followersToastButton.addEventListener("click", function () {
         const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
 
-        // initial loading
-        fetchAndRenderFollowers(pageOnFollower)
+        visibility.then(public => {
+            follow.then(follow => {
+                if (public || follow) {
+                    // initial loading
+                    fetchAndRenderFollowers(pageOnFollower)
 
-        // infinite scrolling (scroll pagination)
-        followersOutputArea.addEventListener('scroll', function () {
-            const scrollPos = this.scrollTop + this.clientHeight;
-            const scrollHeight = this.scrollHeight
+                    // infinite scrolling (scroll pagination)
+                    followersOutputArea.addEventListener('scroll', function () {
+                        const scrollPos = this.scrollTop + this.clientHeight;
+                        const scrollHeight = this.scrollHeight
 
-            if (scrollPos === scrollHeight) {
-                pageOnFollower += 1;
-                fetchAndRenderFollowers(pageOnFollower)
-            }
+                        if (scrollPos === scrollHeight) {
+                            pageOnFollower += 1;
+                            fetchAndRenderFollowers(pageOnFollower)
+                        }
+                    })
+
+                    followersToastBootstrap.show()
+                } else {
+                    showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                }
+            })
         })
-
-        followersToastBootstrap.show()
     })
 
     const getFollowings = page => {
@@ -316,27 +326,29 @@
     followingsToastButton.addEventListener("click", function () {
         const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
 
-        // initial loading
-        fetchAndRenderFollowings(pageOnFollowing)
+        visibility.then(public => {
+            follow.then(follow => {
+                if (public || follow) {
+                    // initial loading
+                    fetchAndRenderFollowings(pageOnFollowing)
 
-        // infinite scrolling (scroll pagination)
-        followingsOutputArea.addEventListener('scroll', function () {
-            const scrollPos = this.scrollTop + this.clientHeight;
-            const scrollHeight = this.scrollHeight
+                    // infinite scrolling (scroll pagination)
+                    followingsOutputArea.addEventListener('scroll', function () {
+                        const scrollPos = this.scrollTop + this.clientHeight;
+                        const scrollHeight = this.scrollHeight
 
-            if (scrollPos === scrollHeight) {
-                pageOnFollowing += 1;
-                fetchAndRenderFollowings(pageOnFollowing)
-            }
-        })
+                        if (scrollPos === scrollHeight) {
+                            pageOnFollowing += 1;
+                            fetchAndRenderFollowings(pageOnFollowing)
+                        }
+                    })
 
-        followingsToastBootstrap.show()
-    })
-
-    followingsToastButton.addEventListener("click", function () {
-        let followingsToast = document.getElementById('followingsToast')
-        const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
-        followingsToastBootstrap.show()
+                    followingsToastBootstrap.show()
+                } else {
+                    showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                }
+            })
+        });
     })
 
     addEventListener('click', function (event) {
@@ -484,7 +496,7 @@
         }
     })
 
-    addEventListener('click', function(event) {
+    addEventListener('click', function (event) {
         if (event.target.classList.contains('storeDetailsEntry')) {
             const button = event.target;
             const storeId = button.getAttribute('data-store-id')
@@ -522,7 +534,16 @@
                 document.getElementById('followersCount').textContent = data;
             });
     };
-    updateFollowersCount();
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updateFollowersCount();
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
 
     const updateFollowingsCount = () => {
         fetch(`/user/followings-count?id=\${userId}`)
@@ -531,7 +552,17 @@
                 document.getElementById('followingsCount').textContent = data;
             });
     };
-    updateFollowingsCount();
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updateFollowingsCount();
+            }
+            else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
 
     if (params.get("registration") === "success") {
         showMessagingToast("Successfully registered :)");

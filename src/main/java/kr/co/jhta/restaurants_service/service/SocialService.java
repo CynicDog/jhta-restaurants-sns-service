@@ -10,11 +10,9 @@ import kr.co.jhta.restaurants_service.vo.socials.Follow;
 import kr.co.jhta.restaurants_service.vo.socials.FollowRequest;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import org.jboss.logging.Logger;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -151,5 +149,10 @@ public class SocialService {
         } else {
             return false;
         }
+    }
+
+    public boolean doesThisUserFollowsOtherUser(int thisId, int othersId) {
+
+        return followsRepository.existsByCompositePrimaryKeys_FollowerIdAndCompositePrimaryKeys_FollowedId(thisId, othersId);
     }
 }

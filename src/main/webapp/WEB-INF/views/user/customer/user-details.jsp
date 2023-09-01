@@ -35,16 +35,14 @@
                                 <div id="postsToastButton" type="button"
                                      class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                     posts
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        ${postsCount}
-                                    </span>
+                                    <span id="postsCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
                                 </div>
                                 <div id="reviewsToastButton" type="button"
                                      class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
                                     reviews
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        ${reviewsCount}
-                                    </span>
+                                    <span id="reviewsCount"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -98,11 +96,6 @@
                         <div class="row">
                             <div class="col-8 fs-4">Socials</div>
                             <div class="col-4 d-flex justify-content-end">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                           id="flexSwitchCheckDefault">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault">Private</label>
-                                </div>
                             </div>
                         </div>
                         <div class="row d-flex my-4">
@@ -318,46 +311,6 @@
         let isReviewFetching = false;
         let isReviewLast = false;
 
-        postsToastButton.addEventListener("click", function () {
-            const postsToastBootstrap = bootstrap.Toast.getOrCreateInstance(postsToast)
-
-            // initial loading
-            fetchAndRenderPosts(pageOnPost);
-
-            // infinite scrolling (scroll pagination)
-            postOutputArea.addEventListener('scroll', function () {
-                const scrollPos = this.scrollTop + this.clientHeight;
-                const scrollHeight = this.scrollHeight;
-
-                if (scrollPos === scrollHeight) {
-                    pageOnPost += 1;
-                    fetchAndRenderPosts(pageOnPost);
-                }
-            })
-
-            postsToastBootstrap.show()
-        })
-
-        reviewsToastButton.addEventListener("click", function () {
-            const reviewsToastBootstrap = bootstrap.Toast.getOrCreateInstance(reviewsToast)
-
-            // initial loading
-            fetchAndRenderReviews(pageOnReview);
-
-            // infinite scrolling (scroll pagination)
-            reviewsOutputArea.addEventListener('scroll', function () {
-                const scrollPos = this.scrollTop + this.clientHeight;
-                const scrollHeight = this.scrollHeight;
-
-                if (scrollPos === scrollHeight) {
-                    pageOnReview += 1;
-                    fetchAndRenderReviews(pageOnReview);
-                }
-            })
-
-            reviewsToastBootstrap.show()
-        })
-
         const getFollowers = page => {
             return fetch(`/user/followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
@@ -370,7 +323,6 @@
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
                 if (data.length === 0) {
-                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
@@ -404,21 +356,29 @@
         followersToastButton.addEventListener("click", function () {
             const followersToastBootstrap = bootstrap.Toast.getOrCreateInstance(followersToast)
 
-            // initial loading
-            fetchAndRenderFollowers(pageOnFollower)
+            visibility.then(public => {
+                follow.then(follow => {
+                    if (public || follow) {
+                        // initial loading
+                        fetchAndRenderFollowers(pageOnFollower)
 
-            // infinite scrolling (scroll pagination)
-            followersOutputArea.addEventListener('scroll', function () {
-                const scrollPos = this.scrollTop + this.clientHeight;
-                const scrollHeight = this.scrollHeight
+                        // infinite scrolling (scroll pagination)
+                        followersOutputArea.addEventListener('scroll', function () {
+                            const scrollPos = this.scrollTop + this.clientHeight;
+                            const scrollHeight = this.scrollHeight
 
-                if (scrollPos === scrollHeight) {
-                    pageOnFollower += 1;
-                    fetchAndRenderFollowers(pageOnFollower)
-                }
+                            if (scrollPos === scrollHeight) {
+                                pageOnFollower += 1;
+                                fetchAndRenderFollowers(pageOnFollower)
+                            }
+                        })
+
+                        followersToastBootstrap.show()
+                    } else {
+                        showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                    }
+                })
             })
-
-            followersToastBootstrap.show()
         })
 
         const getFollowings = page => {
@@ -433,7 +393,6 @@
             followingsLoadingSpinner.style.display = 'block';
             getFollowings(page).then(data => {
                 if (data.length === 0) {
-                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings yet.</span>`
                     followingsLoadingSpinner.style.display = 'none'
                     isFollowingFetching = false;
                 }
@@ -467,27 +426,29 @@
         followingsToastButton.addEventListener("click", function () {
             const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
 
-            // initial loading
-            fetchAndRenderFollowings(pageOnFollowing)
+            visibility.then(public => {
+                follow.then(follow => {
+                    if (public || follow) {
+                        // initial loading
+                        fetchAndRenderFollowings(pageOnFollowing)
 
-            // infinite scrolling (scroll pagination)
-            followingsOutputArea.addEventListener('scroll', function () {
-                const scrollPos = this.scrollTop + this.clientHeight;
-                const scrollHeight = this.scrollHeight
+                        // infinite scrolling (scroll pagination)
+                        followingsOutputArea.addEventListener('scroll', function () {
+                            const scrollPos = this.scrollTop + this.clientHeight;
+                            const scrollHeight = this.scrollHeight
 
-                if (scrollPos === scrollHeight) {
-                    pageOnFollowing += 1;
-                    fetchAndRenderFollowings(pageOnFollowing)
-                }
+                            if (scrollPos === scrollHeight) {
+                                pageOnFollowing += 1;
+                                fetchAndRenderFollowings(pageOnFollowing)
+                            }
+                        })
+
+                        followingsToastBootstrap.show()
+                    } else {
+                        showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                    }
+                })
             })
-
-            followingsToastBootstrap.show()
-        })
-
-        followingsToastButton.addEventListener("click", function () {
-            let followingsToast = document.getElementById('followingsToast')
-            const followingsToastBootstrap = bootstrap.Toast.getOrCreateInstance(followingsToast)
-            followingsToastBootstrap.show()
         })
 
         addEventListener('click', function (event) {
@@ -545,6 +506,34 @@
             }
         })
 
+        postsToastButton.addEventListener("click", function () {
+            const postsToastBootstrap = bootstrap.Toast.getOrCreateInstance(postsToast)
+
+            visibility.then(public => {
+                follow.then(follow => {
+                    if (public || follow) {
+                        // initial loading
+                        fetchAndRenderPosts(pageOnPost);
+
+                        // infinite scrolling (scroll pagination)
+                        postOutputArea.addEventListener('scroll', function () {
+                            const scrollPos = this.scrollTop + this.clientHeight;
+                            const scrollHeight = this.scrollHeight;
+
+                            if (scrollPos === scrollHeight) {
+                                pageOnPost += 1;
+                                fetchAndRenderPosts(pageOnPost);
+                            }
+                        })
+
+                        postsToastBootstrap.show()
+                    } else {
+                        showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                    }
+                })
+            })
+        })
+
         const getReviews = page => {
             return fetch(`/customer/reviews?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
         }
@@ -586,10 +575,46 @@
                 })
             })
         }
+
+        reviewsToastButton.addEventListener("click", function () {
+            const reviewsToastBootstrap = bootstrap.Toast.getOrCreateInstance(reviewsToast)
+
+            visibility.then(public => {
+                follow.then(follow => {
+                    if (public || follow) {
+                        // initial loading
+                        fetchAndRenderReviews(pageOnReview);
+
+                        // infinite scrolling (scroll pagination)
+                        reviewsOutputArea.addEventListener('scroll', function () {
+                            const scrollPos = this.scrollTop + this.clientHeight;
+                            const scrollHeight = this.scrollHeight;
+
+                            if (scrollPos === scrollHeight) {
+                                pageOnReview += 1;
+                                fetchAndRenderReviews(pageOnReview);
+                            }
+                        })
+
+                        reviewsToastBootstrap.show()
+                    } else {
+                        showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                    }
+                })
+            })
+        })
     });
 
     const params = new URLSearchParams(window.location.search);
     const userId = params.get("id");
+
+    const visibility = fetch(`/user/visibility?id=\${userId}`)
+        .then(response => response.text())
+        .then(responseText => responseText === 'PUBLIC');
+
+    const follow = fetch(`/user/follow?id=\${userId}`)
+        .then(response => response.text())
+        .then(responseText => responseText === "YES")
 
     addEventListener('click', function (event) {
         if (event.target.classList.contains('storeDetailsEntry')) {
@@ -693,36 +718,61 @@
         })
     }
 
-    // initial loading
-    fetchAndRenderPostData(pageOnPictureData);
-    currentFetchingOption = (page) => {
-        return fetchAndRenderPostData(page)
-    }
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                // initial loading
+                fetchAndRenderPostData(pageOnPictureData);
+                currentFetchingOption = (page) => {
+                    return fetchAndRenderPostData(page)
+                }
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
 
     document.getElementById('postPicturesButton').addEventListener('click', function () {
 
-        pictureDataOutputArea.innerHTML = ''
-        pageOnPictureData = 0
-        isPictureDataLast = false;
-        isPictureDataFetching = false;
+        visibility.then(public => {
+            follow.then(follow => {
+                if (public || follow) {
+                    pictureDataOutputArea.innerHTML = ''
+                    pageOnPictureData = 0
+                    isPictureDataLast = false;
+                    isPictureDataFetching = false;
 
-        fetchAndRenderPostData(pageOnPictureData)
-        currentFetchingOption = (page) => {
-            return fetchAndRenderPostData(page)
-        }
+                    fetchAndRenderPostData(pageOnPictureData)
+                    currentFetchingOption = (page) => {
+                        return fetchAndRenderPostData(page)
+                    }
+                } else {
+                    showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                }
+            })
+        })
     })
 
     document.getElementById('reviewPicturesButton').addEventListener('click', function () {
 
-        pictureDataOutputArea.innerHTML = ''
-        pageOnPictureData = 0
-        isPictureDataLast = false;
-        isPictureDataFetching = false;
+        visibility.then(public => {
+            follow.then(follow => {
+                if (public || follow) {
 
-        fetchAndRenderReviewData(pageOnPictureData)
-        currentFetchingOption = (page) => {
-            return fetchAndRenderReviewData(page)
-        }
+                    pictureDataOutputArea.innerHTML = ''
+                    pageOnPictureData = 0
+                    isPictureDataLast = false;
+                    isPictureDataFetching = false;
+
+                    fetchAndRenderReviewData(pageOnPictureData)
+                    currentFetchingOption = (page) => {
+                        return fetchAndRenderReviewData(page)
+                    }
+                } else {
+                    showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+                }
+            })
+        })
     })
 
     window.onscroll = function () {
@@ -739,7 +789,7 @@
         }
     }
 
-    document.getElementById('followRequestButton').addEventListener('click', function() {
+    document.getElementById('followRequestButton').addEventListener('click', function () {
         fetch(`/user/follow?recipientId=\${userId}`, {
             method: "POST"
         }).then(response => {
@@ -761,14 +811,56 @@
         messagingToastBootstrap.show();
     }
 
-    const updateFollowersCount = () => {
-        fetch(`/user/followers-count?id=\${userId}`)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('followersCount').textContent = data;
-            });
-    };
-    updateFollowersCount();
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                // do nothing
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updateFollowersCount();
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
+
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updateFollowingsCount();
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updatePostsCount();
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
+
+    visibility.then(public => {
+        follow.then(follow => {
+            if (public || follow) {
+                updateReviewsCount();
+            } else {
+                showMessagingToast("This is a private profile. To see the details, you need to follow first :)")
+            }
+        })
+    })
 
     const updateFollowingsCount = () => {
         fetch(`/user/followings-count?id=\${userId}`)
@@ -777,7 +869,30 @@
                 document.getElementById('followingsCount').textContent = data;
             });
     };
-    updateFollowingsCount();
+
+    const updateFollowersCount = () => {
+        fetch(`/user/followers-count?id=\${userId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('followersCount').textContent = data;
+            });
+    };
+
+    const updatePostsCount = () => {
+        fetch(`/customer/posts-count?id=\${userId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('postsCount').textContent = data;
+            })
+    }
+
+    const updateReviewsCount = () => {
+        fetch(`/customer/reviews-count?id=\${userId}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('reviewsCount').textContent = data;
+            })
+    }
 
 </script>
 </html>

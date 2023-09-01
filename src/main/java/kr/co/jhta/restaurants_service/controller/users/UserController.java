@@ -80,13 +80,28 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/follow")
-    public ResponseEntity follow(@RequestParam("recipientId") int recipientId,
+    public ResponseEntity followPost(@RequestParam("recipientId") int recipientId,
                                  @AuthenticationPrincipal SecurityUser securityUser) {
 
         if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ResponseBody
+    @GetMapping("/follow")
+    public String follow(@RequestParam("id") int othersId,
+                         @AuthenticationPrincipal SecurityUser securityUser) {
+
+        int thisId = securityUser.getUser().getId();
+
+        // if a user visiting her/his own page, or, does the other user follows the current user, return true.
+        if (othersId == thisId || socialService.doesThisUserFollowsOtherUser(thisId, othersId)) {
+            return "YES";
+        } else {
+            return "NO";
         }
     }
 
@@ -193,6 +208,15 @@ public class UserController {
 
             return "/user/owner/user-details";
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/visibility")
+    public String visibility(@RequestParam("id") int userId) {
+
+        User user = userService.getUserById(userId);
+
+        return user.getVisibility().toString();
     }
 
     @GetMapping("/login")

@@ -392,7 +392,6 @@
             followersLoadingSpinner.style.display = 'block';
             getFollowers(page).then(data => {
                 if (data.length === 0) {
-                    followersOutputArea.innerHTML += `<span class=fw-lighter m-3>No followers published yet.</span>`
                     followersLoadingSpinner.style.display = 'none'
                     isFollowerFetching = false;
                 }
@@ -455,7 +454,6 @@
             followingsLoadingSpinner.style.display = 'block';
             getFollowings(page).then(data => {
                 if (data.length === 0) {
-                    followingsOutputArea.innerHTML += `<span class=fw-lighter m-3>No followings published yet.</span>`
                     followingsLoadingSpinner.style.display = 'none'
                     isFollowingFetching = false;
                 }
