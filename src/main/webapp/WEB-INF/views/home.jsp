@@ -30,7 +30,6 @@
 <%@ include file="common/navbar.jsp"%>
 
 <div class="wrap">
-
 	<div class="container-fluid">
 		<div class= "row ">
 			<div class= "col-12">
@@ -40,8 +39,7 @@
 							<div class="mx-auto my-5 search-bar input-group" style="width: 60%;" >
 								<input name="keyword" type="text"
 									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
-									aria-label="Recipient's username"
-									aria-describedby="button-addon2">
+									aria-label="Recipient's username" aria-describedby="button-addon2">
 								<div class="input-group-append"></div>
 							</div>
 						</form>
@@ -61,9 +59,9 @@
 		                    	<a class="nav-link my-3 text-secondary" href="/customer/my-page">마이페이지</a>
 		                    	<a class="nav-link my-3 text-secondary" href="/post/register">새 포스트</a>
 		                	</sec:authorize>
-		                    <a class="nav-link my-3 text-secondary" href="">메시지</a>
-	                        <a class="nav-link my-3 text-secondary" href="/user/logout">로그아웃</a>
 	                        <a class="nav-link my-3 text-secondary" href="/contents">컨텐츠</a>
+		                    <a class="nav-link my-3 text-secondary" href="/message">메시지</a>
+	                        <a class="nav-link my-3 text-secondary" href="/user/logout">로그아웃</a>
 	                    </sec:authorize>
 	                    <sec:authorize access="isAnonymous()">
     			           	<a class="nav-link my-3 text-secondary" href="/user/login">로그인</a>
@@ -80,11 +78,11 @@
 			<div class="col-3 pt-3 home-side-contents" >
 				<h4 class="mb-4">인기 포스트</h4>
 				<c:forEach var="post" items="${postList}">
-					<div class="card mb-3" style="border: none;">
+					<div class="card mb-3" style="border: none; cursor: pointer;" onclick="location.href='/post/detail?id=${post.id}'">
 						<div class="row d-flex justify-content-start">
-							<div class="col-7" style="overflow:hidden;">
-								<p style="white-space:nowrap;">${post.title}</p>
-								<p class="text-secondary" style="white-space:nowrap;">${post.subTitle}</p>
+							<div class="col-7" style="display:block; overflow:hidden; white-space:nowrap; text-overflow:epllipsis;">
+								<p>${post.title}</p>
+								<p class="text-secondary" >${post.subTitle}</p>
 							</div>
 							<div class="col-3">
 								<img src="/images/post/png/${post.pictureFile}" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
@@ -105,23 +103,25 @@
     let isFeedsFetching = false;
 	let isFeedsLast = false;
 	
+	//로그인 확인
+	var isLogin;
+	isLogin = ${pageContext.request.userPrincipal != null} ? true : false;
+	getFeed();
+	
 	//Click Listener - bookmark star 
 	$("#home-content").on('click', '[id^="star-"]', function(){
-		
-	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
-	    if (${pageContext.request.userPrincipal != null}) {
 			//로그인 했을 때
-	    	let storeId = $(this).attr('store-id');
-			console.log("storeId :" , storeId);
-			//star- fill -> blank
-			if ($(this).hasClass('bi-star-fill')) {
-					$(this).removeClass('bi-star-fill').addClass('bi-star')
-					$.getJSON('/bookmark/delete', {storeId : storeId});
-			//star- blank -> fill		
-			} else {
-				$(this).removeClass('bi-star').addClass('bi-star-fill')
-				$.getJSON('/bookmark/insert', {storeId : storeId});
-
+    	if (isLogin) {
+    	let storeId = $(this).attr('store-id');
+		console.log("storeId :" , storeId);
+		//star- fill -> blank
+		if ($(this).hasClass('bi-star-fill')) {
+				$(this).removeClass('bi-star-fill').addClass('bi-star')
+				$.getJSON('/bookmark/delete', {storeId : storeId});
+		//star- blank -> fill		
+		} else {
+			$(this).removeClass('bi-star').addClass('bi-star-fill')
+			$.getJSON('/bookmark/insert', {storeId : storeId});
 			}
 	    } else {
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
@@ -134,7 +134,7 @@
 	$("#home-content").on('click', '[id^="like-"]', function(){
 		
 	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
-	    if (${pageContext.request.userPrincipal != null}) {
+	    if (isLogin) {
 			//로그인 했을 때
 	    	let reviewId = $(this).attr('review-id');
 			//like- fill -> blank
@@ -154,30 +154,19 @@
 	    }
 	});
 	
-	//로그인 확인
-	if (${pageContext.request.userPrincipal != null}) {
-			getFeed();
-		} else{
-			getAnonymousFeed();
-		}
-	
 	function getFeed() {
 		isFeedsFetching = true;
-		$.getJSON('/feed',{page : pageOnFeed, limit:5}, function(result) {
+		const url = isLogin ? '/feed' : '/anofeed'; 
+		
+		$.getJSON(url ,{page : pageOnFeed, limit:5}, function(result) {
 			
 	        if (result.length < 5) {
 	            isFeedsLast = true;
 	        }
 			
 			result.forEach(function(feed){
-				
-				let star;
-				if(feed.isBookmarked==='y'){ star = 'bi-star-fill';}
-				if(feed.isBookmarked==='n'){ star = 'bi-star';}
-
-				let like;
-				if(feed.isLiked==='y'){ like = 'bi-heart-fill';}
-				if(feed.isLiked==='n'){ like = 'bi-heart';}
+				let star = feed.isBookmarked==='y' ? 'bi-star-fill' : 'bi-star';
+				let like = feed.isLiked==='y' ? 'bi-heart-fill' : 'bi-heart';
 				
 				let content = `
 					<div id=home-content-header class="d-flex justify-content-between mb-2" >
@@ -221,61 +210,6 @@
 				$("#home-content").append(content);
 			});
 		});
-		isFeedsFetching = false;
-
-	}
-	
-	function getAnonymousFeed(){
-		isFeedsFetching = true;
-		$.getJSON('/anofeed',{page : pageOnFeed, limit:5},function(result){
-			
-	        if (result.length < 5) {
-	            isFeedsLast = true;
-	        }
-			result.forEach(function(feed){
-				
-				let content = `
-					<div id=home-content-header class="d-flex justify-content-between mb-2" >
-						<div id="home-feed-writer" class="">
-							<div class="d-flex justify-content-start">
-								<span class="me-2">\${feed.username} </span>
-								\${generateRating(feed.rating)}
-							</div>					
-						</div>
-						<div id="home-feed-follow" class="">
-						</div>
-					</div>
-					<div id="store-card" class="card mb-5" style="border: none;">
-						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
-						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
-						 	\${generateIndicator(feed.reviewPictures,feed)}
-						  </div>
-						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
-							\${generatePicture(feed.reviewPictures,feed)}
-						  </div>
-						  \${generateControlButton(feed.reviewPictures,feed)}
-						</div>
-						
-						<div class="card-body pt-1 ps-1" >
-							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
-							<i class="bi bi-heart fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
-							<div class="border d-flex justify-content-between mt-2" >
-								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
-									<div class="col ms-1">
-							           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
-							           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
-									</div>
-								</div>
-								<div class="d-flex align-items-center px-2">
-									<i class="bi bi-star fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
-								</div>
-							</div>		
-						</div>
-					</div>
-			`;
-				$("#home-content").append(content);
-			});
-		})
 		isFeedsFetching = false;
 	}
 	
@@ -364,19 +298,14 @@
 	
 	
     window.onscroll = function () {
-        if ((window.innerHeight + window.scrollY +.5) >= document.body.offsetHeight) {
+        if ((window.innerHeight + window.scrollY +1) >= document.body.offsetHeight) {
 
             if (isFeedsFetching || isFeedsLast) {
                 // do nothing
             } else {
-        	    if (${pageContext.request.userPrincipal != null}) {
-                	pageOnFeed += 1;
-                	getFeed();
-					
-        	    }else{
-                	pageOnFeed += 1;
-                	getAnonymousFeed();
-        	    }
+            	console.log("onScroll");
+             	pageOnFeed += 1;
+            	getFeed();        	    
             }
         }
     }

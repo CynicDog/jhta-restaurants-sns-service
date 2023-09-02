@@ -25,7 +25,7 @@ public class HomeAnonymousFeed {
 	private String createDate;
 	private Integer reviewId;
 	private Integer rating;
-	private Integer likeCnt;
+	private Integer likedCount;
 	private String isBookmarked;
 	private String isLiked;
 }
