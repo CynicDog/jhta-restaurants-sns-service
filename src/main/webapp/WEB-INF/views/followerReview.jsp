@@ -42,6 +42,14 @@
 		    text-align:center;
 		    font-size:22px;
 		}
+		
+		.keywords{
+			position: absolute;
+		   	width: 100%;
+		    bottom: 0%;
+		    right: 1%;
+		    font-size:18px;
+		}
     </style>
 <title>Insert title here</title>
 </head>
@@ -82,6 +90,25 @@
 	    return fetch(`/review/get/followerReview?page=\${page}&limit=9`).then(response => response.json());
 	}
 	
+	const getKeywordsByReviewId = (reviewId) => {
+		return fetch(`/review/get/keywords?reviewId=\${reviewId}`).then(response => response.json());
+	}
+	
+	function fetchAndFindKeywords(reviewId){
+		
+		getKeywordsByReviewId(reviewId).then(reviewData => {
+			
+			reviewData.forEach(reviewDatum => {
+				
+				document.getElementById(`id-\${reviewId}`).innerHTML += `
+					<span class="badge text-bg-secondary bg-opacity-50 fw-lighter m-1">\${reviewDatum.keyword}</span>
+				`
+			})
+			
+		})
+		
+	}
+	
 	function fetchAndRenderReviews(currentPage) {
 	
 	    isReviewFetching = true;
@@ -101,7 +128,10 @@
 	        						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=\${datum.id}'" style=" cursor: pointer;">
 	        							<img src="/images/review/jpeg/\${datum.pictureName }" class="card-image" alt="...">
 	        							<div class="card-img-overlay">
-	        								<p><strong class="title-text">\${datum.storeName}</strong></p>
+	        								<strong class="title-text">\${datum.storeName}</strong>
+	        								<div class="keywords text-end" id="id-\${datum.id}">
+	        									<div id="rating-\${datum.id}"></div>
+	        								</div>
 	        							</div>
 	        						</div>
 	        						<div class="row">
@@ -114,6 +144,17 @@
 	        						</div>
 	        					</div>
 	            `
+	            
+	            let rating = document.getElementById(`rating-\${datum.id}`);
+	            
+				if (datum.rating === 5) {
+				    rating.innerHTML = `<span class="badge text-bg-success bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">맛있어요</span>`;
+				} else if (datum.rating === 3) {
+					 rating.innerHTML = `<span class="badge text-bg-warning bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">괜찮아요</span>`;
+				} else {
+					rating.innerHTML = `<span class="badge text-bg-danger bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">별로에요</span>`;
+				}
+				
 			    isReviewFetching = false;
 	        })
 	    })
@@ -124,7 +165,7 @@
 	    console.log(window.scrollY)
 	    console.log(document.body.offsetHeight)
 	
-	    if ((window.innerHeight + window.scrollY) + .5 >= document.body.offsetHeight) {
+	    if ((window.innerHeight + window.scrollY) + 1.2 >= document.body.offsetHeight) {
 	
 	        if (isReviewFetching || isReviewLast) {
 	            // do nothing;

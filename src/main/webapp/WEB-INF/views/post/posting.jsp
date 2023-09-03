@@ -18,28 +18,28 @@
 		    width: 40%;
 		}
 		.card-image {
-		width: 250px;
-		height: 250px;
-		object-fit:cover;
-		filter: brightness(70%);
-	}
+			width: 270px;
+			height: 270px;
+			object-fit:cover;
+			filter: brightness(70%);
+		}
 		
 	</style>
 </head>
 <body>
 <%@ include file="../common/navbar.jsp" %>
 <div class="wrap"> 
-	<div class="container border-top mt-3 bg-light" >
-		<div class="row text-center border-bottom">
+	<div class="container" style="width:1320px;">
+		<div class="row text-center border-top mt-3 bg-light border-bottom" style="width:1320px;">
 			<div class="col-12 my-5">
 				<h2><strong>${post.post.title}</strong></h2>
 				<h4 class="text-secondary">" ${post.post.subTitle} "</h4>
 			</div>
 		</div>
 	</div>
-	<div class="container mt-2" >
+	<div class="container mt-2">
 		<c:forEach var="data" items="${post.postDatas }">
-			<div class="row border-bottom">
+			<div class="row border-bottom" style="width:1320px;">
 				<div class="col-4 my-5">
 					<div class="text-center text-light font-weight-bold" onclick="location.href='/store/detail?id=${data.storeId}'" style=" cursor: pointer;">
 						<img src="/images/post/jpeg/${data.pictureFile }" class="card-image" alt="...">
@@ -53,7 +53,7 @@
 					<p class="text-secondary">${data.storeAddress }</p>
 					<p>${data.content }</p>
 				</div>
-				<div class="bookmark col-2 my-5 position-relative" id="box-${data.storeId}">
+				<div class="bookmark col-2 my-5 position-relative" id="box-${data.storeId}" >
 					
 					<button class="btn ms-3 position-absolute" id="box">
 						<i class="bi ${not empty data.bookmark ? 'bi-star-fill' : 'bi-star'}" id="star-${data.storeId}" index-id ="${data.storeId}" style="color:gold; font-size:28px;" ></i>
@@ -63,7 +63,7 @@
 			</div>
 		</c:forEach>
 		
-		<div class="row my-3 justify-content-center">
+		<div class="row my-3 justify-content-center" style="width:1320px;">
 			<div class="col-11 text-end">
 				<div class="" style="bottom:0;right:0;">
 					<button class="btn btn-lg" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
