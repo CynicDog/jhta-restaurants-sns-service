@@ -28,7 +28,6 @@
 <body>
 
 <%@ include file="common/navbar.jsp"%>
-
 <div class="wrap">
 	<div class="container-fluid">
 		<div class= "row ">
@@ -60,7 +59,6 @@
 		                    	<a class="nav-link my-3 text-secondary" href="/post/register">새 포스트</a>
 		                	</sec:authorize>
 	                        <a class="nav-link my-3 text-secondary" href="/contents">컨텐츠</a>
-		                    <a class="nav-link my-3 text-secondary" href="/message">메시지</a>
 	                        <a class="nav-link my-3 text-secondary" href="/user/logout">로그아웃</a>
 	                    </sec:authorize>
 	                    <sec:authorize access="isAnonymous()">
