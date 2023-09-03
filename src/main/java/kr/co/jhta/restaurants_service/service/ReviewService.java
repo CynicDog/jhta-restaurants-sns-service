@@ -212,13 +212,19 @@ public class ReviewService {
     
     public List<ReviewContentsDto> getThreeRecentReview(){
     	List<ReviewContentsDto> reviews = reviewMapper.getThreeRecentReivews();
-    	
+    	for(ReviewContentsDto review : reviews) {
+    		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
+    		review.setKeywords(reviewKeyword);
+    	}
     	return reviews;
     }
     
     public List<ReviewContentsDto> getThreeFollowerReview(SecurityUser securityUser){
     	List<ReviewContentsDto> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
-    	
+    	for(ReviewContentsDto review : reviews) {
+    		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
+    		review.setKeywords(reviewKeyword);
+    	}
     	return reviews;
     }
     
@@ -232,6 +238,10 @@ public class ReviewService {
     	int start = (page - 1) * limit;
 		
 		return reviewMapper.getFollowerReivewsPaginated(start, limit, securityUser.getUser().getId());
+    }
+    
+    public List<ReviewKeyword> getReviewKeywords(int reviewId){
+    	return reviewKeywordMapper.getReviewKeywordsByReviewId(reviewId);
     }
 
     public Page<ReviewPicture> getReviewPicturesByCustomerIdOrderByCreateDateDesc(int customerId, Integer page, Integer limit) {

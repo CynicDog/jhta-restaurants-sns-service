@@ -1,7 +1,9 @@
 package kr.co.jhta.restaurants_service.dto;
 
 import java.util.Date;
+import java.util.List;
 
+import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReviewContentsDto {
 	private Integer id;
-	private Integer ratting;
+	private Integer rating;
 	private Date createDate;
 	private Integer likedCount;
 	private Integer customerId;
@@ -19,4 +21,5 @@ public class ReviewContentsDto {
 	private Integer storeId;
 	private String storeName;
 	private String pictureName;
+	private List<ReviewKeyword> keywords;
 }

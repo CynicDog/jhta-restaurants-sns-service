@@ -154,5 +154,11 @@ public class ReviewController {
 
         return reviewService.getFollowerReviewsPaginated(page, limit, securityUser);
     }
+	
+	@ResponseBody
+	@GetMapping("/get/keywords")
+	public List<ReviewKeyword> getReviewsKeywords(@RequestParam("reviewId") Integer reviewId){
+		return reviewService.getReviewKeywords(reviewId);
+	}
 
 }

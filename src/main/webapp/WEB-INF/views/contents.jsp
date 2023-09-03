@@ -26,6 +26,14 @@
 	    font-size:18px;
 	}
 	
+	.keywords{
+		position: absolute;
+	   	width: 100%;
+	    bottom: 0%;
+	    right: 1%;
+	    font-size:18px;
+	}
+	
 	.card-image {
 		width: 100%;
 		height: 200px;
@@ -55,7 +63,7 @@
 			<c:forEach var="recentPostdata" items="${recentPosts }" >
 				<c:set var="sysYear"><fmt:formatDate value="${recentPostdata.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
 				<div class="col-md-4 mb-4">
-					<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${recentPostdata.id}'" style=" cursor: pointer;">
+					<div class="cards text-center text-light font-weight-bold" onclick="location.href='post/detail?id=${recentPostdata.id}'" style=" cursor: pointer;">
 						<img src="images/post/jpeg/${recentPostdata.pictureFile}" class="card-image" alt="...">
 	
 						<div class="card-img-overlay">
@@ -93,7 +101,7 @@
 				<c:forEach var="followerPostData" items="${recentPostsOfFollower }" >
 					<c:set var="sysYear"><fmt:formatDate value="${followerPostData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
 					<div class="col-md-4 mb-4">
-						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
+						<div class="cards text-center text-light font-weight-bold" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
 							<img src="images/post/jpeg/${followerPostData.pictureFile}" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
@@ -129,18 +137,36 @@
 				<c:forEach var="recentReviewData" items="${recentReviews }" >
 					<c:set var="sysYear"><fmt:formatDate value="${recentReviewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
 					<div class="col-md-4 mb-4">
-						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentReviewData.id}'" style=" cursor: pointer;">
+						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=${recentReviewData.id}'" style=" cursor: pointer;">
 							<img src="/images/review/jpeg/${recentReviewData.pictureName }" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
 								<div class="title-text">
 									<strong>${recentReviewData.storeName }</strong><br>
 								</div>
+								<div class="keywords text-end">
+									<div>
+										<c:choose>
+											<c:when test="${recentReviewData.rating eq 5}">
+												 <span class="badge text-bg-success bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">맛있어요</span>
+											</c:when>
+											<c:when test="${recentReviewData.rating eq 3}">
+												 <span class="badge text-bg-warning bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">괜찮아요</span>
+											</c:when>
+											<c:when test="${recentReviewData.rating eq 1}">
+												 <span class="badge text-bg-danger bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">별로에요</span>
+											</c:when>
+										</c:choose>
+									</div>
+									<c:forEach var="keywordData" items="${recentReviewData.keywords }" >
+										<span class="badge text-bg-secondary bg-opacity-50 fw-lighter m-1">${keywordData.keyword}</span>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${recentReviewData.userName }</strong>
+								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentReviewData.userName }</strong></span>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentReviewData.id }" type="text" value="${sysYear }" >
@@ -163,18 +189,36 @@
 				<c:forEach var="recentFollowerReivewData" items="${recentFollowerReivews }" >
 					<c:set var="sysYear"><fmt:formatDate value="${recentFollowerReivewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
 					<div class="col-md-4 mb-4">
-						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
+						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
 							<img src="/images/review/jpeg/${recentFollowerReivewData.pictureName }" class="card-image" alt="...">
 		
 							<div class="card-img-overlay">
 								<div class="title-text">
 									<strong>${recentFollowerReivewData.storeName }</strong><br>
 								</div>
+								<div class="keywords text-end">
+									<div>
+										<c:choose>
+											<c:when test="${recentFollowerReivewData.rating eq 5}">
+												 <span class="badge text-bg-success bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">맛있어요</span>
+											</c:when>
+											<c:when test="${recentFollowerReivewData.rating eq 3}">
+												 <span class="badge text-bg-warning bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">괜찮아요</span>
+											</c:when>
+											<c:when test="${recentFollowerReivewData.rating eq 1}">
+												 <span class="badge text-bg-danger bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">별로에요</span>
+											</c:when>
+										</c:choose>
+									</div>
+									<c:forEach var="keywordData" items="${recentFollowerReivewData.keywords }" >
+										<span class="badge text-bg-secondary bg-opacity-50 fw-lighter m-1">${keywordData.keyword}</span>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${recentFollowerReivewData.userName }</strong>
+								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentFollowerReivewData.userName }</strong></span>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
