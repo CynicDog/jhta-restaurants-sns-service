@@ -337,6 +337,38 @@
         const messagingToastBootstrap = bootstrap.Toast.getOrCreateInstance(messagingToast);
         messagingToastBootstrap.show();
     }
+
+	document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('userFollow')) {
+            const button = event.target;
+            const requestId = button.getAttribute('data-user-id')
+
+            fetch(`/user/requests-modify?requestId=\${requestId}`, {
+                method: "POST"
+            })
+                .then(response => response.text())
+                .then(status => {
+
+                    function getStatusClasses(status) {
+                        switch (status) {
+                            case 'PENDING':
+                                return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'ACCEPTED':
+                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
+                            case 'DECLINED':
+                                return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
+                            default:
+                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                        }
+                    }
+
+                    const newStatusClasses = getStatusClasses(status);
+
+                    button.textContent = status;
+                    button.className = newStatusClasses;
+                })
+        }
+    })
 </script>
 </body>
 </html>
