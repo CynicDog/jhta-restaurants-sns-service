@@ -30,5 +30,6 @@ public class HomeFeed {
 	private Integer rating;
 	private String isBookmarked;
 	private String isLiked;
+	private Integer likedCount;
 	
 }

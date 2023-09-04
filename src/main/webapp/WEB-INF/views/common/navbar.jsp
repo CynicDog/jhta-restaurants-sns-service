@@ -63,7 +63,7 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
+        <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
             <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
         </form>
         <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">

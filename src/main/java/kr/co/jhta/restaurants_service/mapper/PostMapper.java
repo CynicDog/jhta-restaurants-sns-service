@@ -1,10 +1,11 @@
 package kr.co.jhta.restaurants_service.mapper;
 
-import java.util.List;
+import java.util.List;  
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.jhta.restaurants_service.controller.command.SearchParamCommand;
 import kr.co.jhta.restaurants_service.dto.PostContentsDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.post.Post;
@@ -28,5 +29,6 @@ public interface PostMapper {
     
     List<PostContentsDto> getRecentPostsThree();
     List<PostContentsDto> getRecentPostsThreeOfFollowersByFollowed(int followedId);
+    List<PostContentsDto> getPostsByStoreSearch(Map<String, Object> paramMap);
 
 }

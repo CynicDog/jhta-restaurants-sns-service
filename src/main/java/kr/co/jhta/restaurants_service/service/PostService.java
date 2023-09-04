@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import kr.co.jhta.restaurants_service.controller.command.PostCommentCommand;
 import kr.co.jhta.restaurants_service.controller.command.PostDataCommand;
+import kr.co.jhta.restaurants_service.controller.command.SearchParamCommand;
 import kr.co.jhta.restaurants_service.dto.HomePostDto;
 import kr.co.jhta.restaurants_service.dto.PostContentsDto;
 import kr.co.jhta.restaurants_service.dto.PostDataDto;
@@ -185,6 +186,19 @@ public class PostService {
 	public Page<PostData> getPostDataByCustomerIdOrderByCreateDateDesc(int id, Integer page, Integer limit) {
 
 		return postDataRepository.findByUserIdOrderByCreateDateDesc(id, PageRequest.of(page, limit));
+	}
+
+	public List<PostContentsDto> getPostsByStoreSearch(SearchParamCommand searchParam) {
+		
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("category", searchParam.getCategory());
+	    paramMap.put("keyword", searchParam.getKeyword());
+	    paramMap.put("xStart", searchParam.getXStart());
+	    paramMap.put("xEnd", searchParam.getXEnd());
+	    paramMap.put("yStart", searchParam.getYStart());
+	    paramMap.put("yEnd", searchParam.getYEnd());
+		
+		return postmapper.getPostsByStoreSearch(paramMap);
 	}
 	
 }
