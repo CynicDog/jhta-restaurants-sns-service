@@ -157,4 +157,42 @@
 		where
 			id = #{id}
 	</delete>
+	
+	<select id="getPostsByStoreSearch" parameterType="map" resultType="PostContentsDto">
+		SELECT 
+			p.id as id, 
+			MAX(p.title) as title, 
+			MAX(p.sub_title) as subTitle,
+			MAX(pd.picture_file) as pictureFile  
+		FROM POSTS p
+		JOIN POST_DATA pd ON p.id = pd.post_id
+		WHERE pd.store_id IN (
+		    SELECT S.id
+		    FROM STORES S
+		    LEFT join FOODS F on S.id = F.store_id
+		    <where>
+				<if test="category != null">
+				     S.category =  #{category}
+			    </if>
+			   
+				<if test="keyword != null">
+					and
+					(S.name like CONCAT('%', #{keyword}, '%')
+					or F.name like CONCAT('%', #{keyword}, '%')
+					or S.address like CONCAT('%', #{keyword}, '%'))
+				</if>
+				
+				<if test="xStart != null">
+					and 
+					(#{xStart} &lt; S.longitude) and (S.longitude &lt; #{xEnd}) and
+					(#{yStart} &lt; S.latitude) and (S.latitude &lt; #{yEnd})
+				</if>
+			</where>
+		)
+		GROUP BY p.id
+		order by p.liked_count desc
+		limit 3
+	</select>
+	
+	
 </mapper>
