@@ -15,7 +15,7 @@
 	    <result column="storeId" property="storeId"/>
 	    <result column="isBookmarked" property="isBookmarked"/>
 	    <result column="isLiked" property="isLiked"/>
-	    <result column="liked_count" property="likedCount"/>
+	    <result column="likedCount" property="likedCount"/>
 	    
 	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
          			select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
@@ -39,7 +39,7 @@
 				R.rating		as rating,
 				if(B.id, 'y', 'n')	as isBookmarked,
 				if(L.id, 'y', 'n')	as isLiked,
-				R.liked_count	
+				R.liked_count as likedCount	
 				
 			from REVIEWS R
 			join USERS U on R.customer_id = U.id

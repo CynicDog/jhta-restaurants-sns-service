@@ -200,7 +200,8 @@
 						
 						<div class="card-body pt-1 ps-1" >
 							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
-							<i class="bi \${like} fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i>
+							<i class="bi \${like} fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i> 
+							<span class="text fs-6 fw-lighter">\${feed.likedCount}</span>
 							<div class="border d-flex justify-content-between mt-2" >
 								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
 									<div class="col ms-1">
