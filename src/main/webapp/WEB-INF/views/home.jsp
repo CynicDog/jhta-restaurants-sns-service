@@ -26,7 +26,6 @@
 	</style>
 </head>
 <body>
-
 <%@ include file="common/navbar.jsp"%>
 <div class="wrap">
 	<div class="container-fluid">
@@ -62,14 +61,25 @@
 	                        <a class="nav-link my-3 text-secondary" href="/user/logout">로그아웃</a>
 	                    </sec:authorize>
 	                    <sec:authorize access="isAnonymous()">
-    			           	<a class="nav-link my-3 text-secondary" href="/user/login">로그인</a>
-    			           	<a class="nav-link my-3 text-secondary" href="/customer/signup">회원가입(일반)</a>
-    			           	<a class="nav-link my-3 text-secondary" href="/owner/signup">회원가입(사장님)</a>
+    			           	<a class="nav-link my-3 text-secondary" href="/user/login">로그인</a>  
+    			           	<a class="nav-link my-3 text-secondary" id="signupPopover-side" class="btn btn-secondary" 
+    			           	   tabindex="0" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right"
+    			           	   data-bs-html="true" data-bs-trigger="focus" data-bs-content="
+	                           <div class='fw-light'>
+	                               <div class='row text-center mx-1'>
+	                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/customer/signup'>손님 회원가입</a>
+	                               </div>
+	                               <div class='row text-center mx-1'>
+	                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/owner/signup'>사장님 회원가입</a>
+	                               </div>
+	                           </div>
+                           " style="cursor:pointer;">회원가입</a>
 	                        <a class="nav-link my-3 text-secondary" href="/contents">컨텐츠</a>
 	                    </sec:authorize>
 	                </nav>
 	            </nav>
 			</div>
+			<script>new bootstrap.Popover(document.querySelector('#signupPopover-side'))</script>
 			
 			<div class="col-4 mb-3 me-3" id="home-content"></div>
 			
