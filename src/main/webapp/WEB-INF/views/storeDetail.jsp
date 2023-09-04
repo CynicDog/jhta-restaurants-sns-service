@@ -51,11 +51,11 @@
                         <div class="card-body d-flex flex-column align-items-start">
                             <div class="d-flex align-items-center mb-2">
                                 <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
-                                <div class="ml-2">
-                                    <span style="font-size: medium; font-weight: bold;">정손님</span>
+                                <div class="ml-2" >
+                                    <span style="font-size: medium; font-weight: bold;" id="modal-review-nickname">${datum.nickname }</span>
                                 </div>
-                                <div class="p-2 ml-auto">
-                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill">맛있어요!</span>
+                                <div class="p-2 ml-auto" >
+                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill" id="modal-review-rating">${datum.rating }</span>
                                 </div>
                             </div>         
 							<div class="review" id="modal-review-content">  </div>
@@ -160,9 +160,8 @@
 				        </button>
 				    </div>
 		            <div id="review-list">
-		                <div id="reviewOutputArea">
-		                </div>
-		            </div>
+		                <div id="reviewOutputArea"></div>
+		            </div>    
 				</div>
             </div>
             <div class="col-md-4" style="position: relative;">
@@ -171,31 +170,31 @@
 		                <div class="p-4">
 		                <div class="row">
 		                	<c:forEach var="closestStore" items="${closestStores }">
-		                    <div class="mb-3">
-		                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
-		                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
-		                            <div class="d-flex align-items-start">
-		                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id }'">
-		                                <div class="ml-3">
-		                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
-		                                    	${closestStore.name } 
-		                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">${closestStore.averageRating }</span>
-		                                    </h5>
-		                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
-		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
-		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>
-		                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>전화번호:</strong> ${closestStore.phone } </span>
-		                                    </p>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div>
+			                    <div class="mb-3">
+			                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
+			                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
+			                            <div class="d-flex align-items-start">
+			                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id }'">
+			                                <div class="ml-3">
+			                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
+			                                    	${closestStore.name } 
+			                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">${closestStore.averageRating }</span>
+			                                    </h5>
+			                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
+			                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
+			                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>가게주소:</strong> ${closestStore.address }</span>
+			                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>전화번호:</strong> ${closestStore.phone } </span>
+			                                    </p>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
 		                	</c:forEach>
-		                    <!-- <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="..."> -->
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                </div>
 		            </div>
 	            </div>
@@ -241,11 +240,16 @@
 
           }
         } else {
-           // 로그인되지 않은 경우, 로그인 페이지 열기
-              alert("로그인이 필요합니다");
+            // 로그인되지 않은 경우, 로그인 페이지 열기
+            alert("로그인이 필요합니다");
             window.location.href = "/user/login?error=anonymous";
         }
     });
+    
+    $("#review-list").on('click', '[id^="review-popover-"]', function(){
+        	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    		const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+    })
     
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
 
@@ -274,76 +278,78 @@
 				if(datum.isLiked==='n'){ like = 'bi-heart';}
 				console.info(like);
 				
-                reviewOutputArea.innerHTML += `
-                	<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-2">
-                                    <div class="text-center card-title my-1">
-                                        <div class="ratio ratio-1x1">
-                                            <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-                                        </div>
-                                        <span style="font-size: medium; font-weight: bold;">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
-                                    </div>
-                                    <div class="text-center card-title my-1">
-                                        <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null? '' : datum.reviewAvg.toFixed(1) }</span>
-                                    </div>
-                                </div>
-                                <div class="col-10">
-                                    <div class="row mb-2">
-                                        <div class="col-10" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
-                                            <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-                                            <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
-                                        </div>
-                                        <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
-                                        	<span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4">
-                                            \${(() => {
-                                                switch (datum.rating) {
-                                                case 5:
-                                                    return '맛있어요';
-                                                case 3:
-                                                    return '괜찮아요';
-                                                case 1:
-                                                    return '별로에요';
-                                                default:
-                                                    return datum.rating;
-                                                 }
-                                            })()}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
-                                            </button>
-                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                            </button>
-                                            <span class="float-end">
-                                            <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm text-danger">
-                                                    <i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="row" id="cardAndTextarea" style="display: none;">
-							        <div class="col-12">
-							            <div class="card">
-							                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-							                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
-							                    <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
-							                </div>
-							            </div>
-							        </div>
-							    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				reviewOutputArea.innerHTML += `
+					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
+					    <div class="card-body">
+					        <div class="row">
+					            <div class="col-2">
+					                <div class="text-center card-title my-1">
+					                    <div class="ratio ratio-1x1">
+					                        <a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
+					                            <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" id="review-popover-\${datum.id}" class="img-thumbnail rounded-circle" alt="...">
+					                        </a>
+					                    </div>
+					                    <span style="font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
+					                </div>
+					                <div class="text-center card-title my-1">
+					                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null ? '' : datum.reviewAvg.toFixed(1) }</span>
+					                </div>
+					            </div>
+					            <div class="col-10">
+					                <div class="row mb-2">
+					                    <div class="col-10" style="cursor: pointer;">
+					                        <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
+					                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
+					                    </div>
+					                    <div class="col-2 text-end" onclick="openReviewModal(this, \${datum.id})" style="cursor: pointer;">
+					                        <span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4" id="review-rating-\${datum.id}">
+					                            \${(() => {
+					                                switch (datum.rating) {
+					                                case 5:
+					                                    return '맛있어요';
+					                                case 3:
+					                                    return '괜찮아요';
+					                                case 1:
+					                                    return '별로에요';
+					                                default:
+					                                    return datum.rating;
+					                                }
+					                            })()}
+					                        </span>
+					                    </div>
+					                </div>
+					                <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
+					                <div class="row">
+					                    <div class="col">
+					                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+					                            <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+					                        </button>
+					                        <button type="button" class="btn btn-light btn-sm" style="color: #838383">
+					                            <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+					                        </button>
+					                        <span class="float-end">
+					                            <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
+					                            <button type="button" class="btn btn-light btn-sm text-danger">
+					                                <i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+					                            </button>
+					                        </span>
+					                    </div>
+					                </div>
+					                <div class="row" id="cardAndTextarea" style="display: none;">
+					                    <div class="col-12">
+					                        <div class="card">
+					                            <div class="card-body d-flex flex-row justify-content-between align-items-start">
+					                                <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
+					                                <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
+					                            </div>
+					                        </div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					</div>
+					
                     `
                     const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
                     if (datum.reviewPictures) {
@@ -358,8 +364,167 @@
             isReviewsFetching = false;
         }
 	
+ 	// 모달과 이미지 요소를 가져옴
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("modalImg");
+    var images = document.querySelectorAll("#review-img-thumbnail .img-thumbnail");
+    console.log("사진갯수", images.length)
+    var currentIndex; // 현재 이미지의 인덱스를 저장하는 변수
 
-    // initial fetching
+    // 모달을 열 때 호출되는 함수
+    function openModal(image) {
+        modal.style.display = "block"; // 모달을 보이게 함
+        modalImg.src = image.src; // 모달 이미지 요소의 소스를 클릭한 이미지의 소스로 설정
+
+        // 클릭한 이미지의 데이터 속성에서 리뷰 ID를 가져옴
+        let reviewId = image.getAttribute("data-review-id");
+        // 해당 리뷰 ID에 해당하는 리뷰 내용을 가져와 모달 내용에 설정
+        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
+        document.getElementById("modal-review-content").textContent = reviewContent;
+
+        // 클릭한 이미지의 인덱스를 현재 인덱스로 설정하고, 네비게이션 버튼 업데이트
+        currentIndex = Array.from(images).indexOf(image);
+        updateNavButtons();
+        
+     	// 리뷰 작성자의 닉네임 가져오기
+        let reviewNickname = document.getElementById("review-nickname-" + reviewId).textContent;
+        document.getElementById("modal-review-nickname").textContent = reviewNickname;
+
+        // 리뷰 작성자의 rating 가져오기
+        let ratingText = document.getElementById("review-rating-" + reviewId).textContent.trim();
+        document.getElementById("modal-review-rating").textContent = ratingText;
+    }
+
+    // 모달을 닫을 때 호출되는 함수
+    function closeModal() {
+        modal.style.display = "none"; // 모달을 숨김
+    }
+
+    // 이미지 변경 함수 (좌우 버튼 클릭 시 호출)
+    function changeImage(n) {
+        currentIndex += n; // 현재 인덱스에 n을 더해 다음 이미지 인덱스 설정
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1; // 처음 이미지로 돌아감
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0; // 마지막 이미지로 돌아감
+        }
+        modalImg.src = images[currentIndex].src; // 모달 이미지 요소의 소스를 변경된 이미지로 설정
+
+        // 이미지 변경할 때 리뷰 내용 업데이트
+        let reviewId = images[currentIndex].getAttribute("data-review-id");
+        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
+        document.getElementById("modal-review-content").textContent = reviewContent;
+        
+    	// 리뷰 작성자의 닉네임 가져오기
+        let reviewNickname = document.getElementById("review-nickname-" + reviewId).textContent;
+        document.getElementById("modal-review-nickname").textContent = reviewNickname;
+
+        // 리뷰 작성자의 rating 가져오기
+        let ratingText = document.getElementById("review-rating-" + reviewId).textContent.trim();
+
+        document.getElementById("modal-review-rating").textContent = ratingText;
+
+        // 네비게이션 버튼 업데이트
+        updateNavButtons();
+    }
+
+    // 네비게이션 버튼 업데이트 함수
+    function updateNavButtons() {
+        var prevButton = document.getElementById("prevButton");
+        var nextButton = document.getElementById("nextButton");
+        if (images.length <= 1) {
+            // 이미지가 1장 이하면 네비게이션 버튼을 숨김
+            prevButton.style.display = "none";
+            nextButton.style.display = "none";
+        } else {
+            // 이미지가 2장 이상이면 네비게이션 버튼을 표시
+            prevButton.style.display = "block";
+            nextButton.style.display = "block";
+        }
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.keyCode === 27) {
+            closeModal(); 
+        } else if (event.keyCode === 37) {
+            changeImage(-1); 
+        } else if (event.keyCode === 39) {
+            changeImage(1); 
+        }
+    });
+
+
+    
+    // localStorage에 가게 id저장
+    let store_id = `${param.id}`
+    if (store_id) {
+
+        let value = localStorage.getItem("store_history");
+        let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
+
+        if (store_history != null) {
+            let exist = store_history.includes(store_id);
+
+            if (exist) {
+                let findIndex = store_history.indexOf(store_id);
+                store_history.splice(findIndex, 1);
+            }
+            store_history.unshift(store_id);
+        } else {
+            store_history = [];
+            store_history.unshift(store_id);
+        }
+        value = JSON.stringify(store_history);
+        localStorage.setItem("store_history", value);
+
+    }
+
+    const daysArea = document.getElementById('daysArea')
+    const daysMap = {
+        Mon: false,
+        Tue: false,
+        Wed: false,
+        Thu: false,
+        Fri: false,
+        Sat: false,
+        Sun: false
+    }
+
+    const days = fetch(`/store/open-times?id=\${store_id}`, {
+        method: "GET"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => {
+            data.map(datum => {
+                daysArea.innerHTML += `
+    	            <div>
+    	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
+    	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
+    	            </div>
+    	        `;
+                daysMap[datum.day] = true;
+                return datum;
+            });
+        })
+        .then(data => {
+            Object.keys(daysMap)
+                .filter(day => !daysMap[day])
+                .forEach(daysOff => {
+                    console.log(daysOff);
+                    daysArea.innerHTML += `
+    	                <div>
+    	                    <span class="d-inline-block" style="width: 50px;"> \${daysOff}</span>
+    	                    <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"> 쉬는날</span>
+    	                </div>
+    	            `;
+                });
+        });
+	
+	// initial fetching
     fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
 
     document.getElementById('btn-review-all').addEventListener('click', function() {
@@ -581,167 +746,6 @@
             $(this).addClass('active').css('color', '#ff792a'); // 선택한 버튼의 텍스트 색 변경
         });
     });
-
- // 모달과 이미지 요소를 가져옴
-    var modal = document.getElementById("myModal");
-    var modalImg = document.getElementById("modalImg");
-    var images = document.querySelectorAll("#review-img-thumbnail .img-thumbnail");
-    console.log("사진갯수", images.length)
-    var currentIndex; // 현재 이미지의 인덱스를 저장하는 변수
-
-    // 모달을 열 때 호출되는 함수
-    function openModal(image) {
-        modal.style.display = "block"; // 모달을 보이게 함
-        modalImg.src = image.src; // 모달 이미지 요소의 소스를 클릭한 이미지의 소스로 설정
-
-        // 클릭한 이미지의 데이터 속성에서 리뷰 ID를 가져옴
-        let reviewId = image.getAttribute("data-review-id");
-        // 해당 리뷰 ID에 해당하는 리뷰 내용을 가져와 모달 내용에 설정
-        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
-        document.getElementById("modal-review-content").textContent = reviewContent;
-
-        // 클릭한 이미지의 인덱스를 현재 인덱스로 설정하고, 네비게이션 버튼 업데이트
-        currentIndex = Array.from(images).indexOf(image);
-        updateNavButtons();
-    }
-
-    // 모달을 닫을 때 호출되는 함수
-    function closeModal() {
-        modal.style.display = "none"; // 모달을 숨김
-    }
-
-    // 이미지 변경 함수 (좌우 버튼 클릭 시 호출)
-    function changeImage(n) {
-        currentIndex += n; // 현재 인덱스에 n을 더해 다음 이미지 인덱스 설정
-        if (currentIndex < 0) {
-            currentIndex = images.length - 1; // 처음 이미지로 돌아감
-        } else if (currentIndex >= images.length) {
-            currentIndex = 0; // 마지막 이미지로 돌아감
-        }
-        modalImg.src = images[currentIndex].src; // 모달 이미지 요소의 소스를 변경된 이미지로 설정
-
-        // 이미지 변경할 때 리뷰 내용 업데이트
-        let reviewId = images[currentIndex].getAttribute("data-review-id");
-        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
-        document.getElementById("modal-review-content").textContent = reviewContent;
-
-        // 네비게이션 버튼 업데이트
-        updateNavButtons();
-    }
-
-    // 네비게이션 버튼 업데이트 함수
-    function updateNavButtons() {
-        var prevButton = document.getElementById("prevButton");
-        var nextButton = document.getElementById("nextButton");
-        if (images.length <= 1) {
-            // 이미지가 1장 이하면 네비게이션 버튼을 숨김
-            prevButton.style.display = "none";
-            nextButton.style.display = "none";
-        } else {
-            // 이미지가 2장 이상이면 네비게이션 버튼을 표시
-            prevButton.style.display = "block";
-            nextButton.style.display = "block";
-        }
-    }
-
-    document.addEventListener("keydown", function (event) {
-        if (event.keyCode === 27) {
-            closeModal(); 
-        } else if (event.keyCode === 37) {
-            changeImage(-1); 
-        } else if (event.keyCode === 39) {
-            changeImage(1); 
-        }
-    });
-
-
-
-    /* const commentButton = document.getElementById('comment');
-    const cardAndTextarea = document.getElementById('cardAndTextarea');
-    const ownerComment = document.getElementById('ownerComment');
-
-    // '답글' 버튼에 클릭 이벤트 리스너 추가
-    commentButton.addEventListener('click', () => {
-        cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
-        ownerComment.style.display = 'none';     // 리뷰 답글 영역 숨김
-    });
-
-    const submitButton = document.getElementById('button-addon2');
-
-    // '리뷰 작성' 버튼에 클릭 이벤트 리스너 추가
-    submitButton.addEventListener('click', () => {
-        cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
-        ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
-    }); */
-    
-    // localStorage에 가게 id저장
-    let store_id = `${param.id}`
-    if (store_id) {
-
-        let value = localStorage.getItem("store_history");
-        let store_history = JSON.parse(value); //  JSON 형식의 문자열을 JavaScript 객체로 변환하는 메서드입니다.
-
-        if (store_history != null) {
-            let exist = store_history.includes(store_id);
-
-            if (exist) {
-                let findIndex = store_history.indexOf(store_id);
-                store_history.splice(findIndex, 1);
-            }
-            store_history.unshift(store_id);
-        } else {
-            store_history = [];
-            store_history.unshift(store_id);
-        }
-        value = JSON.stringify(store_history);
-        localStorage.setItem("store_history", value);
-
-    }
-
-    const daysArea = document.getElementById('daysArea')
-    const daysMap = {
-        Mon: false,
-        Tue: false,
-        Wed: false,
-        Thu: false,
-        Fri: false,
-        Sat: false,
-        Sun: false
-    }
-
-    const days = fetch(`/store/open-times?id=\${store_id}`, {
-        method: "GET"
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then(data => {
-            data.map(datum => {
-                daysArea.innerHTML += `
-    	            <div>
-    	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
-    	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
-    	            </div>
-    	        `;
-                daysMap[datum.day] = true;
-                return datum;
-            });
-        })
-        .then(data => {
-            Object.keys(daysMap)
-                .filter(day => !daysMap[day])
-                .forEach(daysOff => {
-                    console.log(daysOff);
-                    daysArea.innerHTML += `
-    	                <div>
-    	                    <span class="d-inline-block" style="width: 50px;"> \${daysOff}</span>
-    	                    <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"> 쉬는날</span>
-    	                </div>
-    	            `;
-                });
-        });
 
 </script>
 </body>
