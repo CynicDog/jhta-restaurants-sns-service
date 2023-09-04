@@ -38,7 +38,8 @@ public class UserController {
             "/user/check-username",
             "/user/check-nickname",
             "/user/check-email",
-            "/user/unique-phone"
+            "/user/unique-phone",
+            "/user/login"
     };
 
     @ResponseBody

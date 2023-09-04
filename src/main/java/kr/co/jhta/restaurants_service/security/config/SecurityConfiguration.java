@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                         response.sendRedirect("/user/login?error=anonymous");
                     }));
                     config.accessDeniedHandler(((request, response, accessDeniedException) -> {
-                        response.sendRedirect("user/login?error=denied");
+                        response.sendRedirect("/user/login?error=denied");
                     }));
                 })
 
