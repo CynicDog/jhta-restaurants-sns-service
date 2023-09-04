@@ -138,7 +138,7 @@
 			//like- fill -> blank
 			if ($(this).hasClass('bi-heart-fill')) {
 					$(this).removeClass('bi-heart-fill').addClass('bi-heart')
-					$.getJSON('/like/delete', {reviewId : reviewId});
+					$.getJSON('/like/delet    e', {reviewId : reviewId});
 			//like- blank -> fill		
 			} else {
 				$(this).removeClass('bi-heart').addClass('bi-heart-fill')
