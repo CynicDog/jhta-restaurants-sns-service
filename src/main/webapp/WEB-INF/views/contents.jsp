@@ -75,7 +75,14 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<strong >${recentPostdata.userName }</strong>
+							<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='user/details?id=${recentPostdata.customerId}'"><strong >${recentPostdata.userName }</strong></span>
+							<sec:authorize access="isAuthenticated()">
+								<sec:authentication property="principal.user.id" var="loggedInUserId" />
+								<c:if test="${recentPostdata.customerId ne loggedInUserId}">
+										<span id="followRequestButton-${recentPostdata.id }" 
+		                                     	     class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentPostdata.customerId }">FOLLOW</span>
+								</c:if>
+							</sec:authorize>
 						</div>
 						<div class="col text-end">
 							<input type="hidden" id="dateInput-${recentPostdata.id }" type="text" value="${sysYear }" >
@@ -113,7 +120,11 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<strong >${followerPostData.userName }</strong>
+								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${followerPostData.userName }</strong></span>
+								<sec:authorize access="isAuthenticated()">
+									<span id="followRequestButton-${followerPostData.id }" 
+	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${followerPostData.customerId }">Follow</span>
+								</sec:authorize>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
@@ -167,6 +178,10 @@
 						<div class="row">
 							<div class="col">
 								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentReviewData.userName }</strong></span>
+								<sec:authorize access="isAuthenticated()">
+									<span id="followRequestButton-${recentReviewData.id }" 
+	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentReviewData.customerId }">Follow</span>
+								</sec:authorize>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentReviewData.id }" type="text" value="${sysYear }" >
@@ -219,6 +234,10 @@
 						<div class="row">
 							<div class="col">
 								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentFollowerReivewData.userName }</strong></span>
+								<sec:authorize access="isAuthenticated()">
+									<span id="followRequestButton-${recentFollowerReivewData.id }" 
+	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentFollowerReivewData.customerId }">Follow</span>
+								</sec:authorize>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
@@ -251,7 +270,16 @@
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
+	<div id="messagingToast" class="toast align-items-center text-bg-primary border-0 position-fixed bottom-0 end-0" role="alert"
+         aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>	
 </div>
 <script type="text/javascript">
 	function timeForToday(value) {
@@ -282,6 +310,33 @@
 	    let elapsed = timeForToday(value);
 	    $(input).next().text(elapsed);
 	})
+	
+	addEventListener('click', function (event) {
+        if (event.target.classList.contains('userFollow')) {
+            const button = event.target
+            const userId = button.getAttribute('data-user-id')
+
+            fetch(`/user/follow?recipientId=\${userId}`, {
+	            method: "POST"
+	        }).then(response => {
+	            if (response.ok) {
+	                showMessagingToast("Successfully done!");
+	            } else {
+	                showMessagingToast("Already requested.");
+	            }
+	        })
+        }
+    })
+	
+    function showMessagingToast(message) {
+        const messagingToast = document.getElementById('messagingToast');
+        const toastBody = messagingToast.querySelector('.toast-body');
+
+        toastBody.textContent = message;
+
+        const messagingToastBootstrap = bootstrap.Toast.getOrCreateInstance(messagingToast);
+        messagingToastBootstrap.show();
+    }
 </script>
 </body>
 </html>
