@@ -154,7 +154,7 @@
                     }).toString()
                 }).then(response => {
                     if (response.ok) {
-                        window.location.href = "/"
+                        window.history.back();
                     } else {
                         loginSpinner.style.display = "none";
                         buttonMessage.textContent = "login";
