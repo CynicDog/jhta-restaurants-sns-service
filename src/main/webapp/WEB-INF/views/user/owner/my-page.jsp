@@ -31,7 +31,7 @@
                                 <div id="userIcon" class="mx-2 my-1">
                                     <img type="button" id="userImage"
                                          class="rounded-circle shadow-sm object-fit-cover mx-1"
-                                         style="width: 40px; height: auto;" onclick="handleImageClick()"/>
+                                         style="width: 40px; height: 40px;" onclick="handleImageClick()"/>
                                     <input type="file" id="fileInput" style="display: none" accept="image/*"
                                            onchange="handleFileSelect()">
                                 </div>
