@@ -98,7 +98,7 @@
 									<div class="row my-3">
 										<div class="col-2">
 											<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-												<img id="userImage" src="/images/user/png/${comment.customer.username}" alt="/images/user/png/user-default-image.png" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;"/>
+												<img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;"/>
 											</a>
 											<div class="text-center card-title my-1">
 												<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
