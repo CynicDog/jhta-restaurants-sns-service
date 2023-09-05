@@ -26,4 +26,11 @@
 		set liked_count = liked_count - 1
 		where id = #{value}
 	</update>
+	
+	<select id="getLikedCount" resultType="int">
+		select liked_count
+		from REVIEWS
+		where id = #{value}
+	</select>
+	
 </mapper>
