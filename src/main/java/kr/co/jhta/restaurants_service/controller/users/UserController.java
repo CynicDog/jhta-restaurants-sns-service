@@ -34,6 +34,14 @@ public class UserController {
         this.reviewService = reviewService;
     }
 
+    public static String[] PUBLIC_URLS = {
+            "/user/check-username",
+            "/user/check-nickname",
+            "/user/check-email",
+            "/user/unique-phone",
+            "/user/login"
+    };
+
     @ResponseBody
     @GetMapping("/check-username")
     public ResponseEntity isUsernameUnique(@RequestParam("username") String username) {

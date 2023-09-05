@@ -623,7 +623,7 @@
                 contentOutputArea.innerHTML += `
                         <div class="bg-light rounded-3 p-3 my-4 shadow-sm">
                             <div class="row d-flex align-items-center justify-content-center">
-                                <div class="col-lg-10">
+                                <div class="col-lg-9">
                                     <span type="button" class="fs-3 fw-lighter storeDetailsEntry" data-store-id="\${datum.store.id}">
                                         \${datum.store.name}
                                     </span>
@@ -631,7 +631,7 @@
                                         \${datum.store.address}
                                     </span>
                                 </div>
-                                <div class="col-lg-2">
+                                <div class="col-lg-3">
                                     <div class="text-end">
                                         <span class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill mx-1">
                                             \${datum.store.category}

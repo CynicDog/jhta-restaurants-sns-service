@@ -2,6 +2,7 @@ package kr.co.jhta.restaurants_service.security.config;
 
 import kr.co.jhta.restaurants_service.controller.users.CustomerController;
 import kr.co.jhta.restaurants_service.controller.users.OwnerController;
+import kr.co.jhta.restaurants_service.controller.users.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,13 +29,16 @@ public class SecurityConfiguration {
 
                 .authorizeRequests(urlRegistry -> {
 
+                    // further authorization specification needed
                     urlRegistry.antMatchers(CustomerController.PUBLIC_URLS).permitAll();
                     urlRegistry.antMatchers("/customer/**").authenticated();
 
                     urlRegistry.antMatchers(OwnerController.PUBLIC_URLS).permitAll();
-
-                    // further authorization specification needed
                     urlRegistry.antMatchers("/owner/**").authenticated();
+
+                    urlRegistry.antMatchers(UserController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/user/**").authenticated();
+
 
                     urlRegistry.anyRequest().permitAll();
                 })
@@ -60,7 +64,7 @@ public class SecurityConfiguration {
                         response.sendRedirect("/user/login?error=anonymous");
                     }));
                     config.accessDeniedHandler(((request, response, accessDeniedException) -> {
-                        response.sendRedirect("user/login?error=denied");
+                        response.sendRedirect("/user/login?error=denied");
                     }));
                 })
 

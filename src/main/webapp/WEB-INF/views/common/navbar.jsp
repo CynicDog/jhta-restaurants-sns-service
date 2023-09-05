@@ -17,6 +17,7 @@
         padding-top: 70px;
         /*padding-bottom: 100px;*/
     }
+    
 </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -32,7 +33,7 @@
 				<ul class="nav nav-pills mb-3" id="bookmarkTab" role="tablist">
 					<li class="nav-item"><a class="nav-link active"
 						id="history-tab" data-toggle="tab" href="#history-tab-content" role="tab"
-						aria-controls="history-tab" aria-selected="true">최근 본 맛집</a></li>
+						aria-controls="history-tab" aria-selected="true" >최근 본 맛집</a></li>
 					<li class="nav-item"><a class="nav-link" id="bookmark-tab"
 						data-toggle="tab" href="#bookmark" role="tab"
 						aria-controls="bookmark-tab" aria-selected="false">찜한 맛집</a></li>
@@ -63,7 +64,7 @@
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <form class="w-25 me-3" id="form-navbar-search" action="/store/search">
+        <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
             <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
         </form>
         <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">

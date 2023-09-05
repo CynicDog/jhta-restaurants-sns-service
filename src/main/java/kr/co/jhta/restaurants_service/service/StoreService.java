@@ -83,7 +83,6 @@ public class StoreService {
 		result.setPagination(pagination);
 		result.setStores(stores);;
 
-
 		return result;
 	}
 
