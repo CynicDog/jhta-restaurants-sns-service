@@ -492,9 +492,6 @@
                                 <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
                             </div>
-                            <div class="text-end m-2">
-                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
-                            </div>
                         </div>
                     `;
                     postsLoadingSpinner.style.display = 'none'
@@ -570,9 +567,6 @@
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${truncatedContent}
-                            </div>
-                            <div class="text-end m-2">
-                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
                             </div>
                         </div>
                     `;
