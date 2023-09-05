@@ -3,6 +3,7 @@ package kr.co.jhta.restaurants_service.dto;
 import java.util.Date;
 import java.util.List;
 
+import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import kr.co.jhta.restaurants_service.vo.user.User;
@@ -36,6 +37,7 @@ public class ReviewDto {
 
 	private List<ReviewPicture> reviewPictures;
 	private List<ReviewKeyword> reviewKeywords;
+	private List<ReviewComment> reviewComments;
 	
 //	public boolean isTaste() {
 //		return reviewKeywords

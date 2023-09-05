@@ -21,6 +21,7 @@ public class ReviewDetailDto {
 	private double storeReviewAvg;
 	private List<Review> allReviewsByStoreId;
 	private List<ReviewPicture> reviewPicturesByReviewId;
+	private List<ReviewCommentDto> reviewCommentsByReviewId;
 	
 	private int reviewCount;
 	private int bookmarkCount;
