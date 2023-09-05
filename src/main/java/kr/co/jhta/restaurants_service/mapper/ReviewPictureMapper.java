@@ -12,5 +12,6 @@ import org.apache.ibatis.annotations.Param;
 public interface ReviewPictureMapper {
 
 	void insertReveiwPicture(ReviewPicture reviewPicture);
+	void deleteReviewPictures(int reviewId);
 	List<ReviewPicture> getReviewPicturesByReviewId(int reviewId);
 }

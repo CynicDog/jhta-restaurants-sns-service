@@ -12,5 +12,6 @@ import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
 public interface ReviewKeywordMapper {
 
 	void insertReveiwKeyword(ReviewKeyword reviewKeyword);
+	void deleteReviewKeywords(int reviewId);
 	List<ReviewKeyword> getReviewKeywordsByReviewId(int reviewId);
 }

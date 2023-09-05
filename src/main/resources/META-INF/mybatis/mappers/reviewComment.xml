@@ -34,7 +34,9 @@
 			a.review_avg		as reviewAvg,
 			u.full_name			as username, 
 			u.nickname			as nickname, 
-			u.profile_picture_name as profilePictureName 
+			u.profile_picture_name as profilePictureName,
+			u.id				as userId,
+			c.review_id         as reviewId
 		from
 			REVIEW_COMMENTS c
 		join USERS u ON c.owner_id = u.id
@@ -55,4 +57,12 @@
 		where
 			id = #{id}
 	</delete>
+	
+	<delete id="deleteReviewCommentByReviewId" parameterType="int">
+		delete from 
+			REVIEW_COMMENTS
+		where
+			review_id = #{value};
+	</delete>
+	
 </mapper>

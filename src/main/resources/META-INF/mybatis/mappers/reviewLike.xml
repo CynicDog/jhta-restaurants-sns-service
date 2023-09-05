@@ -7,8 +7,7 @@
 		values
 			(#{customerId},#{reviewId})
 	</insert>
-	
-	
+
 	<delete id="deleteLike" parameterType="int">
 		delete from REVIEW_LIKES
 		where 
@@ -27,6 +26,12 @@
 		where id = #{value}
 	</update>
 	
+	<delete id="deleteLikeByReviewId" parameterType="int">
+		delete from REVIEW_LIKES
+		where 
+			review_id = #{value}
+	</delete>
+
 	<select id="getLikedCount" resultType="int">
 		select liked_count
 		from REVIEWS
