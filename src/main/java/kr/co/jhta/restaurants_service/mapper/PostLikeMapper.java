@@ -15,4 +15,6 @@ public interface PostLikeMapper {
 	void cancelLike(int postId);
 
 	PostLikeDto selectPostLikeByPostIdAndCustomerId(int postId, int customerId);
+	
+	void deletePostLikeByPostId(int postId);
 }

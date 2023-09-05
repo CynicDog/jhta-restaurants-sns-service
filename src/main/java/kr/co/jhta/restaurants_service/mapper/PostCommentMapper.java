@@ -10,5 +10,7 @@ import kr.co.jhta.restaurants_service.vo.post.PostComment;
 public interface PostCommentMapper {
 
 	void insertComment(PostComment postComment);
+	void deleteComment(int commentId);
 	List<PostComment> getCommentsByPostId(int postId);
+	void deleteCommentsByPostId(int postId);
 }
