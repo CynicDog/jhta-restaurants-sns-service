@@ -136,28 +136,13 @@
 		(#{title}, #{subTitle}, #{customer.id}, #{createDate}, #{updateDate})
 	</insert>
 
-	<update id="updatePost" parameterType="int">
-		update
-            posts
-        set
-            title = #{title},
-            sub_title = #{subTitle},
-            update_date = #{updateDate},
-            report_count = #{reportCount},
-            disabled = #{disabled},
-            blocked = #{blocked},
-            update_date = #{updateDate}
-        where
-            id = #{id}
-	</update>
-	
 	<delete id="deletePost" parameterType="int">
 		delete from 
 			posts
 		where
 			id = #{id}
 	</delete>
-	
+
 	<select id="getPostsByStoreSearch" parameterType="map" resultType="PostContentsDto">
 		SELECT 
 			p.id as id, 
@@ -193,6 +178,5 @@
 		order by p.liked_count desc
 		limit 3
 	</select>
-	
 	
 </mapper>
