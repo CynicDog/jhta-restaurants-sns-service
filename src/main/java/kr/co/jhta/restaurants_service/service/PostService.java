@@ -201,7 +201,8 @@ public class PostService {
 	public void deleteLike(int customerId, int postId) {
 		postLikeMapper.deleteLike(customerId,postId);
 		postLikeMapper.cancelLike(postId);
-
+	}
+	
 	public List<PostContentsDto> getPostsByStoreSearch(SearchParamCommand searchParam) {
 		
 	    Map<String, Object> paramMap = new HashMap<>();
