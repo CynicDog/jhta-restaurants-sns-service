@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Param;
 public interface ReviewMapper {
 
 	void insertReview(Review review);
-	void deleteReview(int reviewId);
+	void deleteReview(int reviewId, int customerId);
 	Review getReviewById(int id);
 	Review getReviewByCustomerId(int customerId);
 	Review getReviewByStoreId(int storeId);

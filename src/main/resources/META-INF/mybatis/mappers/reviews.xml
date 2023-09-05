@@ -333,7 +333,7 @@
 		delete from 
 			reviews
 		where
-			id = #{id}
+			id = #{id} and customerId = #{customerId}
 	</delete>
   
 </mapper>
