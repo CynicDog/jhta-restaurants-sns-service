@@ -15,32 +15,33 @@
 	    <result column="storeId" property="storeId"/>
 	    <result column="isBookmarked" property="isBookmarked"/>
 	    <result column="isLiked" property="isLiked"/>
-	    <result column="liked_count" property="likedCount"/>
+	    <result column="likedCount" property="likedCount"/>
 	    
 	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
          			select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
 	</resultMap>
 	
-	<select id="getHomeFeedsByFollowerId" resultMap="HomeResultByFollowMap">
+	<select id="getMyFeedsByFollowerId" resultMap="HomeResultByFollowMap">
 		select 
 			*,
-			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
+			ROW_NUMBER() OVER (ORDER BY priority asc, createDate DESC) as id
+			
 		from
 			(select
 				R.id			as reviewId,
 				U.username		as username, 
 				U.id			as userId,
 				content			as content,
-				R.create_date	as createDate,
 				S.name			as storeName,
 				S.id			as storeId,
 				S.category		as category,
 				S.address		as address,
 				R.rating		as rating,
+				R.create_date	as createDate,
 				if(B.id, 'y', 'n')	as isBookmarked,
 				if(L.id, 'y', 'n')	as isLiked,
-				R.liked_count	
-				
+				R.liked_count as likedCount,
+				1 as priority	
 			from REVIEWS R
 			join USERS U on R.customer_id = U.id
 			join STORES S on R.store_id = S.id
@@ -48,7 +49,29 @@
 			left join BOOKMARKS B on S.id = B.store_id and B.customer_id  = #{userId}
 			left join REVIEW_LIKES L on R.id = L.review_id and #{userId} = L.customer_id
 			
-			) as subquery
+			union
+			
+			select
+				R.id			as reviewId,
+				U.username		as username, 
+				U.id			as userId,
+				R.content		as content,
+				S.name			as storeName,
+				S.id			as storeId,
+				S.category		as category,
+				S.address		as address,
+				R.rating		as rating,
+				R.create_date	as createDate,
+				if(B.id, 'y', 'n')	as isBookmarked,
+				if(L.id, 'y', 'n')	as isLiked,
+				R.liked_count as likedCount,
+				2 as priority
+			from REVIEWS R
+			join USERS U on R.customer_id = U.id
+			join STORES S on R.store_id = S.id
+			left join BOOKMARKS B on S.id = B.store_id and B.customer_id  = #{userId}
+			left join REVIEW_LIKES L on R.id = L.review_id and #{userId} = L.customer_id
+			) subquery	
 		limit #{begin}, #{limit}
 	</select>
 	
@@ -82,19 +105,12 @@
 				S.address		as address,
 				R.rating		as rating,
 				R.create_date	as createDate,
-				IFNULL(L.like_cnt,0)	as likedCount
+				R.liked_count as likedCount	
 				
 			from REVIEWS R
 			join USERS U on R.customer_id = U.id
 			join STORES S on R.store_id = S.id
-			left join 
-	       	   (select
-	       	   		id, 
-	        	 	review_id, 
-	        	 	COUNT(customer_id) as like_cnt
-		        from REVIEW_LIKES
-		        group by review_id
-	           ) L on R.id = L.review_id
+
 			) as subquery
 		limit #{begin}, #{limit}
 	</select>
@@ -119,7 +135,7 @@
 			USERS u on p.customer_id = u.id
 	    join
 	    	(select 
-	    		p.id,  (select pd.picture_file  from POST_DATA pd where pd.post_id = p.id LIMIT 1 offset 0) filename 
+	    		p.id,  (select pd.picture_file  from POST_DATA pd where pd.post_id = p.id LIMIT 1) filename 
 			 from 
 				POSTS p) D on p.id = D.id
 		order by likedCount desc		

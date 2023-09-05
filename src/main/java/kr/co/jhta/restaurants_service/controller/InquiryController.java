@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.jhta.restaurants_service.dto.InquiryList;
+import kr.co.jhta.restaurants_service.service.inquiryService;
+import kr.co.jhta.restaurants_service.vo.inquiry.Inquiry;
+import kr.co.jhta.restaurants_service.vo.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +32,8 @@ public class InquiryController {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("rows", rows);
 		param.put("page", page);
-//		InquiryList inquiryList = boardServic e.getBoards(param);
-//	
-//		model.addAttribute("result", boardList);
+		InquiryList inquiryList = inquiryService.getBoards(param);
+		model.addAttribute("result", inquiryList);
 		
 		return "/inquiry/list";
 	}
@@ -47,21 +49,21 @@ public class InquiryController {
 		return "inquiry/detail";
 	}
 	
-//	@PostMapping("/post")
-//	public String register(String title, String content, Model model,@AuthenticationPrincipal User user) {
-//		Board board = Board.builder()
-//							.title(title)
-//							.content(content)
-//							.user(user)
-//							.build();
-//		boardService.createBoard(board);
-//		
-//		model.addAttribute("title",title);
-//		model.addAttribute("content",content);
-//		
-//		return "redirect:/inquiry/list";
-//
-//	}
+	@PostMapping("/post")
+	public String register(String title, String content, Model model,@AuthenticationPrincipal User user) {
+		Inquiry inquiry = Inquiry.builder()
+							.title(title)
+							.content(content)
+							.user(user)
+							.build();
+		inquiryService.createBoard(inquiry);
+		
+		model.addAttribute("title",title);
+		model.addAttribute("content",content);
+		
+		return "redirect:/inquiry/list";
+
+	}
 //	
 //	@GetMapping("/modify")
 //	public String modifyForm(int no, Model model) {
@@ -79,14 +81,14 @@ public class InquiryController {
 //		return "redirect:/board/list";
 //	}
 //	
-//	@GetMapping("/delete")
-//	public String delete(int no) {
-//		
-//		Board board = boardService.getBoardByNo(no);
-//		board.setDeleted("y");
-//		boardService.updateBoard(board);
-//		return "redirect:/board/list";
-//
-//	}
+	@GetMapping("/delete")
+	public String delete(int no) {
+		
+		Inquiry inquiry = inquiryService.getBoardByNo(no);
+		inquiry.setDisabled("y");
+		inquiryService.updateBoard(inquiry);
+		return "redirect:/board/list";
+
+	}
 
 }
