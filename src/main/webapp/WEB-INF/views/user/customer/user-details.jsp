@@ -28,7 +28,13 @@
                 <div class="card shadow-sm border border-0 my-3">
                     <div class="fw-lighter m-3 p-1">
                         <div class="row">
-                            <div class="col fs-4">About Me</div>
+                            <div class="col fs-4 d-flex my-2">
+                                <div class="my-2">About Me</div>
+                                <div id="userIcon" class="mx-2 my-1">
+                                    <img id="userImage" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: auto;" onclick="handleImageClick()"/>
+                                    <input type="file" id="fileInput" style="display: none" accept="image/*" onchange="handleFileSelect()">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col text-end">
@@ -893,6 +899,28 @@
                 document.getElementById('reviewsCount').textContent = data;
             })
     }
+
+    function fetchUserImage() {
+        const userImage = document.getElementById('userImage');
+        const userImageSrc = "/images/user/png/${customer.username}"
+
+        fetch(userImageSrc)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    // Default image
+                    userImage.src = '/images/user/png/user-default-image.png';
+                }
+            })
+            .then(imageBlob => {
+                return URL.createObjectURL(imageBlob);
+            })
+            .then(imageUrl => {
+                userImage.src = imageUrl;
+            })
+    }
+    fetchUserImage();
 
 </script>
 </html>
