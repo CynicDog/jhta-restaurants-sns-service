@@ -182,6 +182,7 @@
 				$.post('/user/follow',{recipientId : writerId}, function(){
 					$btn.addClass("active");
 					$btn.text("요청됨");
+					$btn.prop('disabled',true);
 				});
 	    	}
 
@@ -207,11 +208,11 @@
 				
 				//팔로우 여부에 따른 팔로우 버튼 표시
 				fetch(`/user/follow?id=\${feed.userId}`)
-				.then(response => {
+				.then(response => { // 응답처리 콜백 메서드 등록
 					if (response.ok) {
 						return response.text();
 					}
-				}).then(text => {
+				}).then(text => {//콜백 메서드 등록
 					if (text=== 'NO') {
 						followButton = `
 							<button id="button-follow-\${feed.id}" class="btn btn-primary" feed-id="\${feed.id}" data-writer-id="\${feed.userId}" >
