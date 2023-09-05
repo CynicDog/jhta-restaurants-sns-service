@@ -303,7 +303,6 @@
         </div>
     </div>
 </div>
-</body>
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -429,11 +428,11 @@
                         'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                     followersOutputArea.innerHTML += `
-                        <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -491,11 +490,11 @@
                         'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                     followingsOutputArea.innerHTML += `
-                        <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -987,4 +986,5 @@
 
 
 </script>
+</body>
 </html>
