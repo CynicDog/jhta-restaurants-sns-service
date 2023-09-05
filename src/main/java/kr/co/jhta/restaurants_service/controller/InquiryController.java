@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InquiryController {
 	
+	private final inquiryService inquiryService;
+	
 	@GetMapping("/list")
 	public String boardForm(
 			@RequestParam(name="rows", required = false, defaultValue = "10") int rows,

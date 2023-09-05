@@ -12,5 +12,7 @@ public interface ReviewLikeMapper {
 	void addLike(int reviewId);
 	
 	void cancelLike(int reviewId);
+	
+	int getLikedCount(int reviewId);
 
 }

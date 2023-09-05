@@ -15,14 +15,18 @@ public class ReviewLikeService {
 	private final ReviewLikeMapper reviewLikeMapper;
 
 
-	public void insertLike(int customerId, int reviewId) {
+	public int insertLike(int customerId, int reviewId) {
 		reviewLikeMapper.insertLike(customerId,reviewId);
 		reviewLikeMapper.addLike(reviewId);
+		
+		return reviewLikeMapper.getLikedCount(reviewId);
 	}
 
-	public void deleteLike(int customerId, int reviewId) {
+	public int deleteLike(int customerId, int reviewId) {
 		reviewLikeMapper.deleteLike(customerId,reviewId);
 		reviewLikeMapper.cancelLike(reviewId);
+		
+		return reviewLikeMapper.getLikedCount(reviewId);
 	}
 
 }
