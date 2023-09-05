@@ -190,6 +190,7 @@
 			                        </div>
 			                    </div>
 		                	</c:forEach>
+		                	<h5 style="color: #ff792a;"><strong>리뷰 남긴 팔로워</strong></h5>
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
@@ -327,6 +328,7 @@
 
             data.forEach(datum => {
             	
+            	/* let images = null; */
 				let like;
 				if(datum.isLiked==='y'){ like = 'bi-heart-fill';}
 				if(datum.isLiked==='n'){ like = 'bi-heart';}
@@ -355,7 +357,7 @@
 					                        <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
 					                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
 					                    </div>
-					                    <div class="col-2 text-end" onclick="openReviewModal(this, \${datum.id})" style="cursor: pointer;">
+					                    <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
 					                        <span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4" id="review-rating-\${datum.id}">
 					                            \${(() => {
 					                                switch (datum.rating) {
@@ -413,13 +415,11 @@
                     </div>
                     <div>
 	                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	                        <div class="modal-dialog">
-	                            <div class="modal-content">
-	                            	<img class="modalImg-\${datum.id}"></img>
-	                        	</div>
-	                		</div>
-                    	</div>
-                	</div>
+	                        <div class="modal-dialog d-flex justify-content-center align-items-center" style="height: 100vh;">
+                                <img class="modalImg-\${datum.id}" style="max-width: 170%; max-height: 70vh;"></img>
+	                        </div>
+	                    </div>
+	                </div>
                     `
                     const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
                     if (datum.reviewPictures) {
@@ -430,43 +430,46 @@
 	                    })
 	                 }
                     
-                     images = document.querySelectorAll(`.review-img-\${datum.id}`)
-                     document.querySelector(`.modalImg-\${datum.id}`).src = images[0].src;
+                     let modalImages = document.querySelectorAll(`.review-img-\${datum.id}`)
+                     document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[0].src;
 
                      let currentIndex = 0;
 
-                     function changeReviewImages(n) {
+                     /* function changeReviewImages(n) {
                          currentIndex += n;
                          if (currentIndex <0) {
-                             currentIndex = images.length - 1;
-                         } else if (currentIndex >= images.length) {
+                             currentIndex = modalImages.length - 1;
+                         } else if (currentIndex >= modalImages.length) {
                              currentIndex = 0; // 마지막 이미지로 돌아감
                          }
-                         document.querySelector(`.modalImg-\${datum.id}`).src = images[currentIndex].src;
+                         document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[currentIndex].src;
+                         console.log(modalImages[currentIndex].src);
                      }
-
-                     document.addEventListener("keydown", function (event) {
+                     
+                	 document.addEventListener("keydown", function (event) {
                          if (event.keyCode === 37) {
                              changeReviewImages(-1);
                          } else if (event.keyCode === 39) {
                              changeReviewImages(1);
                          }
-                     });
+                     }); */
+
+                    
                     
                      const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
                      if (datum.reviewComments) {
                      	datum.reviewComments.forEach(Comment => {
                      		reviewCommentsOutputArea.innerHTML += `
                      	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
- 								<div class="row my-3">
- 									<div class="col-2">
- 										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
- 											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
- 										</a>
- 										<div class="text-center card-title my-1">
- 											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
- 										</div>
- 									</div>
+	 								<div class="row my-3">
+	 									<div class="col-2">
+	 										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="(닉네임) 평균별점" data-bs-content="Follow">
+	 											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+	 										</a>
+	 										<div class="text-center card-title my-1">
+	 											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
+	 										</div>
+	 									</div>
  										<div class="col-10 position-relative ">
  											<div class="row mb-2">
  												<div class="col-9 text-start">
@@ -480,22 +483,21 @@
  														<span>\${Comment.content}</span>
  													</div>
  												</div>
- 												<div class="col-3 d-flex justify-content-end align-items-center">
- 											    </div>
+ 												<div class="col-3 d-flex justify-content-end align-items-center"></div>
  											</div>
  											<div class="row position-absolute" style="bottom:0;right:20px;">
  												<div class="col">
  													<span class="text-end">
- 														<button type="button" class="btn btn-light btn-sm" style="color: #838383">
- 															<i class="bi bi-trash3"></i>
- 															<span class="visually-hidden">삭제</span>
- 														</button>
- 													</span>
- 												</div>
- 											</div>
- 										</div>
- 								</div>	
-                     		
+ 													<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+ 														<i class="bi bi-trash3"></i>
+ 														<span class="visually-hidden">삭제</span>
+ 												   	</button>
+ 											   		</span>
+	 									    	</div>
+	 										</div>
+	 							        </div>
+	 							    </div>	
+	                    		</div>
                      		`
                      	})
                      }
@@ -505,8 +507,9 @@
              isReviewsFetching = false;
          }
  	
-	let isCurrentReviewPicturesShowing = false;
 
+	
+	let isCurrentReviewPicturesShowing = false;
 	
  	// 모달과 이미지 요소를 가져옴
     var modal = document.getElementById("myModal");
