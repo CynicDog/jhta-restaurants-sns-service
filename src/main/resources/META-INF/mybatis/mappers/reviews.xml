@@ -85,69 +85,7 @@
 		where store_id = #{value}
 		order by update_date desc;
 	</select>
-<!--	
-	<resultMap id="ReviewResultMap" type="kr.co.jhta.restaurants_service.dto.ReviewDto">
-	    <id column="id" property="id" />
-	    <result column="rating" property="rating" />
-	    <result column="content" property="content" />
-	    <result column="create_date" property="createDate" />
-	    <result column="update_date" property="updateDate" />
-	    <result column="liked_count" property="likedCount" />
-	    <result column="report_count" property="reportCount" />
-	    <result column="disabled" property="disabled" />
-	    <result column="blocked" property="blocked" />
-	    <result column="review_avg" property="reviewAvg" />
-	    <association property="customer" javaType="kr.co.jhta.restaurants_service.vo.user.User">
-	        <id column="customer_id" property="id" />
-	        <result column="nickname" property="nickname" />
-	        <result column="username" property="username" />
-	    </association>
-		<collection property="reviewPictures" javaType="kr.co.jhta.restaurants_service.vo.review.ReviewPicture">
-	        <id column="picture_id" property="id"/>
-	        <result column="picture_name" property="pictureName" />
-	    </collection>
-	    <collection property="reviewKeywords" javaType="kr.co.jhta.restaurants_service.vo.review.ReviewKeyword">
-	        <id column="review_keyword_id" property="id"/>
-	        <result column="keyword" property="keyword" /> 
-	    </collection> 
-    
-	</resultMap>
 	
-	<select id="getAllReviewsByStoreId" parameterType="int" resultMap="ReviewResultMap">
-			SELECT 
-	   		R.id,			
-		    R.rating,
-		    R.content,
-		    R.create_date,
-		    R.update_date,
-		    R.liked_count,
-		    R.report_count,
-		    R.disabled,
-		    R.blocked,
-		    R.store_id,
-		    R.customer_id,
-		    U.nickname,
-		    U.username,
-		    A.review_avg 
-			P.id AS picture_id,
-		    P.picture_name, 
-		    K.id AS review_keyword_id,
-		    K.keyword 
-		FROM USERS U
-		LEFT OUTER JOIN REVIEWS R ON U.id = R.customer_id
-		LEFT OUTER JOIN REVIEW_PICTURES P ON R.id = P.review_id 
-		LEFT OUTER JOIN REVIEW_KEYWORDS K ON R.id = K.review_id 
-		LEFT OUTER JOIN (
-		    SELECT 
-		        customer_id,
-		        AVG(rating) AS review_avg
-		    FROM REVIEWS
-		    GROUP BY customer_id
-		) A ON U.id = A.customer_id
-		WHERE R.store_id = #{value}
-		ORDER BY R.update_date DESC;
-	</select>
--->	
 	<select id="getReviewByStoreId" parameterType="int" resultType="Review">
 		select 
 			id,			
@@ -192,10 +130,12 @@
 		<result column="nickname" property="nickname" />
 		<result column="owner_Id" property="ownerId" />
 		<result column="isLiked" property="isLiked"/>
-		<collection property="reviewPictures" column="id" ofType="kr.co.jhta.restaurants_service.vo.review.ReviewPicture"
+		<collection property="reviewPictures" column="id" ofType="ReviewPicture"
 					select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
-		<collection property="reviewKeywords" column="id" ofType="kr.co.jhta.restaurants_service.vo.review.ReviewKeyword"
+		<collection property="reviewKeywords" column="id" ofType="ReviewKeyword"
 					select="kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper.getReviewKeywordsByReviewId"/>
+		<collection property="reviewComments" column="id" ofType="ReviewCommentDto"
+					select="kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper.getReviewCommentAndUserByReviewId"/>
 	</resultMap>
 
 	<select id="getReviewsPaginatedByStoreId" resultMap="ReviewResultMap">
@@ -371,10 +311,12 @@
 			r.customer_id,
 			u.username,
 			u.nickname,
-			s.owner_Id
+			s.owner_Id,
+			if(l.id, 'y', 'n')	as isLiked
 		FROM REVIEWS r
 		JOIN USERS u ON r.customer_id = u.id
 		JOIN STORES s ON r.store_id = s.id
+		LEFT JOIN REVIEW_LIKES l on r.id = l.review_id and #{customerId} = l.customer_id
 		JOIN (
 			SELECT
 			customer_id,

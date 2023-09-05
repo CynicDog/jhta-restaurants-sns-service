@@ -188,23 +188,77 @@ html, body {
 			</div>
 		</div>
 		<div class="h4 pb-2 mb-4 border-bottom border-secondary"></div>
-		<div class="row m-3">
-			<div class="card">
-  				<div class="card-body">
-	  				<div class="form-floating mb-3">
-					 <textarea class="form-control" id="floatingTextarea" readOnly="readOnly" style="height: 200px">답글입니다.</textarea>
-  					 <label for="floatingTextarea2">${review.review.store.name }</label>
+		<div class="row">
+			<div class="col-12" id="review-comment">
+					<form id="reviewCommentForm" method="post" action="register">
+					<div class="col-12  border-bottom my-3">
+						<input type="hidden" name="reviewId" value="${review.review.id}"/>
+						<input type="hidden" name="storeId" value="${review.review.store.id }"/>
+						<div class="form-floating text-start">
+							<p>댓글을 작성하세요</p>
+			     			<textarea placeholder="댓글을 작성하세요" class="form-control-plaintext" name="content" style="min-height:2rem"></textarea>
+		               	</div>
 					</div>
-    				<span class="float-end">
-						<button id="text-button" type="button" class="btn btn-lg" style="color: blue;">
-							<i class="bi bi-pencil-square"></i>
-						</button>
-					</span>
-  				</div>
+					<div class="row m-3">
+					<div class="col-8"></div>
+					<div class="col-4">
+   						<button id="button-add-comment" type="submit" class="btn btn-light float-end btn-lg" style="color: #838383">
+                       		<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
+                    	</button>
+					</div>
+					</div>
+					</form>
+		<c:forEach var="comment" items="${review.reviewCommentsByReviewId }" >
+			<div class="col-12 border-bottom my-3">
+			<div class="row my-3">
+				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #ff792a; font-size: 45px;"></i></div>
+				<div class="col-1">
+					<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+						<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+					</a>
+			<div class="text-center card-title my-1">
+				<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
 			</div>
-		</div>	
-<%@ include file="common/footer.jsp"%>
+				</div>
+				<div class="col-10 position-relative">
+				<div class="row mb-2">
+					<div class="col-9 text-start">
+					<div class="card-text text-muted" style="font-size: small; ">  
+						<span><fmt:formatDate value="${comment.createDate }" pattern="yyyy-M-d" /></span>
+					</div>
+					<div class="card-text">
+						<span> 
+							<c:choose>
+								<c:when test="${not empty comment.nickname }">${comment.nickname }</c:when>
+								<c:otherwise>${comment.username }</c:otherwise>
+							</c:choose>
+						</span>
+					</div>
+					<div class="card-text">
+						<span>${comment.content}</span>
+					</div>
+					</div>
+					<div class="col-3 d-flex justify-content-end align-items-center">
+					</div>
+				</div>
+				<div class="row position-absolute" style="bottom:0;right:20px;">
+					<div class="col">
+						<span class="text-end">
+							<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+								<i class="bi bi-trash3"></i>
+								<span class="visually-hidden">삭제</span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			</div>	
+			</div>
+		</c:forEach>		
+			</div>
+		</div>
 </div>
+<%@ include file="common/footer.jsp"%>
 </div>
 <script>
 
@@ -278,71 +332,6 @@ $(document).ready(function () {
     }
 });
 
-
-/* 
-$(document).ready(function () {
-    $('#reportForm').submit(function (e) {
-        e.preventDefault(); // 기존 폼 제출 방지
-        $.ajax({
-            type: 'POST',
-            url: 'review/reviewReport',
-            data: $('#reportForm').serialize(),
-            success: function(data) {
-                console.log("신고 완료");
-                $('#reportModal').modal('hide');
-                
-                // 리디렉션 처리
-                window.location.href = data; // 리디렉션 경로로 이동
-            },
-            error: function() {
-                console.log("오류 발생");
-            }
-        });
-    });
-});
- */
-
-/*
-	var modal = document.getElementById("Modal");
-	var modalImg = document.getElementById("modalImg");
-	var images = document.getElementsByClassName("img-thumbnail");
-	var currentIndex;
-	
-	function openModal(image) {
-	    modal.style.display = "block";
-	    modalImg.src = image.src;
-	    currentIndex = Array.from(images).indexOf(image);
-	    updateNavButtons();
-	}
-	
-	function closeModal() {
-	    modal.style.display = "none";
-	}
-
-	
-	function changeImage(n) {
-	    currentIndex += n;
-	    if (currentIndex < 0) {
-	        currentIndex = images.length - 1;
-	    } else if (currentIndex >= images.length) {
-	        currentIndex = 0;
-	    }
-	    modalImg.src = images[currentIndex].src;
-	    updateNavButtons();
-	}
-	
-	function updateNavButtons() {
-	    var prevButton = document.getElementById("prevButton");
-	    var nextButton = document.getElementById("nextButton");
-	    if (images.length <= 1) {
-	        prevButton.style.display = "none";
-	        nextButton.style.display = "none";
-	    } else {
-	        prevButton.style.display = "block";
-	        nextButton.style.display = "block";
-	    }
-	}
-*/
 </script>
 </body>
 </html>

@@ -1,9 +1,7 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.util.Date;
-import java.util.List;
-
-
+import java.util.List;import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
@@ -21,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommentCommand;
-
+import kr.co.jhta.restaurants_service.dto.ReviewCommentDto;
 import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
@@ -134,10 +132,13 @@ public class ReviewService {
 		
 		List<ReviewPicture> reviewPictures = reviewPictureMapper.getReviewPicturesByReviewId(ReviewId);
 		
+		List<ReviewCommentDto> reviewComments = reviewCommentMapper.getReviewCommentAndUserByReviewId(ReviewId);
+		
 		dto.setReview(review);
 		dto.setReviewKeywords(reviewKeyword);
 		dto.setReviewRatingByCustomerId(reviewRatingByCustomerId);
 		dto.setReviewPicturesByReviewId(reviewPictures);
+		dto.setReviewCommentsByReviewId(reviewComments);
 
 		return dto;
 	}
