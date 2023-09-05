@@ -396,83 +396,117 @@
                                         </div>
                                     </div>
                                     <div class="row">
-							        <div class="col-12">
-							            <div class="card"id="cardAndTextarea-\${datum.id}" id-index="\${datum.id}" style="display: none;">
-							                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-							                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea" name="content"></textarea>
-							                    <button class="btn btn-outline-secondary submit-reply-button " type="submit" id="button-addon2-\${datum.id}" ><i class="bi bi-pencil"></i></button>
-							                </div>
-							            </div>
-							            <div class="col-12" id="reviewCommentsOutputArea-\${datum.id}" style="display: none;">
-										
-									</div>
-							        </div>
+								        <div class="col-12">
+								            <div class="card"id="cardAndTextarea-\${datum.id}" id-index="\${datum.id}" style="display: none;">
+								                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+								                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea" name="content"></textarea>
+								                    <button class="btn btn-outline-secondary submit-reply-button " type="submit" id="button-addon2-\${datum.id}" ><i class="bi bi-pencil"></i></button>
+								                </div>
+								            </div>
+								            <div class="col-12" id="reviewCommentsOutputArea-\${datum.id}" style="display: none;"></div>
+								        </div>
 							    	</div>
 							    	</form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div>
+	                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	                        <div class="modal-dialog">
+	                            <div class="modal-content">
+	                            	<img class="modalImg-\${datum.id}"></img>
+	                        	</div>
+	                		</div>
+                    	</div>
+                	</div>
                     `
                     const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
                     if (datum.reviewPictures) {
 	                    datum.reviewPictures.forEach(picture => {
 	                        picturesOutputArea.innerHTML += `
-	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail" style="height: 120px; width: 120px">
+	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail review-img-\${datum.id}" style="height: 120px; width: 120px" data-bs-toggle="modal" data-bs-target="#exampleModal-\${datum.id}">
 	                        `
 	                    })
 	                 }
-                    const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
-                    if (datum.reviewComments) {
-                    	datum.reviewComments.forEach(Comment => {
-                    		reviewCommentsOutputArea.innerHTML += `
-                    	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
-								<div class="row my-3">
-									<div class="col-2">
-										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
-										</a>
-										<div class="text-center card-title my-1">
-											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
-										</div>
-									</div>
-										<div class="col-10 position-relative ">
-											<div class="row mb-2">
-												<div class="col-9 text-start">
-													<div class="card-text text-muted" style="font-size: small; ">  
-														<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
-													</div>
-													<div class="card-text">
-														<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
-													</div>
-													<div class="card-text">
-														<span>\${Comment.content}</span>
-													</div>
-												</div>
-												<div class="col-3 d-flex justify-content-end align-items-center">
-											    </div>
-											</div>
-											<div class="row position-absolute" style="bottom:0;right:20px;">
-												<div class="col">
-													<span class="text-end">
-														<button type="button" class="btn btn-light btn-sm" style="color: #838383">
-															<i class="bi bi-trash3"></i>
-															<span class="visually-hidden">삭제</span>
-														</button>
-													</span>
-												</div>
-											</div>
-										</div>
-								</div>	
-                    		
-                    		`
-                    	})
-                    }
                     
-            	})
-            })
-            isReviewsFetching = false;
-        }
+                     images = document.querySelectorAll(`.review-img-\${datum.id}`)
+                     document.querySelector(`.modalImg-\${datum.id}`).src = images[0].src;
+
+                     let currentIndex = 0;
+
+                     function changeReviewImages(n) {
+                         currentIndex += n;
+                         if (currentIndex <0) {
+                             currentIndex = images.length - 1;
+                         } else if (currentIndex >= images.length) {
+                             currentIndex = 0; // 마지막 이미지로 돌아감
+                         }
+                         document.querySelector(`.modalImg-\${datum.id}`).src = images[currentIndex].src;
+                     }
+
+                     document.addEventListener("keydown", function (event) {
+                         if (event.keyCode === 37) {
+                             changeReviewImages(-1);
+                         } else if (event.keyCode === 39) {
+                             changeReviewImages(1);
+                         }
+                     });
+                    
+                     const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
+                     if (datum.reviewComments) {
+                     	datum.reviewComments.forEach(Comment => {
+                     		reviewCommentsOutputArea.innerHTML += `
+                     	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
+ 								<div class="row my-3">
+ 									<div class="col-2">
+ 										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+ 											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+ 										</a>
+ 										<div class="text-center card-title my-1">
+ 											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
+ 										</div>
+ 									</div>
+ 										<div class="col-10 position-relative ">
+ 											<div class="row mb-2">
+ 												<div class="col-9 text-start">
+ 													<div class="card-text text-muted" style="font-size: small; ">  
+ 														<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
+ 													</div>
+ 													<div class="card-text">
+ 														<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
+ 													</div>
+ 													<div class="card-text">
+ 														<span>\${Comment.content}</span>
+ 													</div>
+ 												</div>
+ 												<div class="col-3 d-flex justify-content-end align-items-center">
+ 											    </div>
+ 											</div>
+ 											<div class="row position-absolute" style="bottom:0;right:20px;">
+ 												<div class="col">
+ 													<span class="text-end">
+ 														<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+ 															<i class="bi bi-trash3"></i>
+ 															<span class="visually-hidden">삭제</span>
+ 														</button>
+ 													</span>
+ 												</div>
+ 											</div>
+ 										</div>
+ 								</div>	
+                     		
+                     		`
+                     	})
+                     }
+                     
+             	})
+             })
+             isReviewsFetching = false;
+         }
+ 	
+	let isCurrentReviewPicturesShowing = false;
+
 	
  	// 모달과 이미지 요소를 가져옴
     var modal = document.getElementById("myModal");
@@ -483,6 +517,7 @@
 
     // 모달을 열 때 호출되는 함수
     function openModal(image) {
+    	isCurrentReviewPicturesShowing = true;
         modal.style.display = "block"; // 모달을 보이게 함
         modalImg.src = image.src; // 모달 이미지 요소의 소스를 클릭한 이미지의 소스로 설정
 
@@ -507,19 +542,21 @@
 
     // 모달을 닫을 때 호출되는 함수
     function closeModal() {
+    	isCurrentReviewPicturesShowing = false;
         modal.style.display = "none"; // 모달을 숨김
     }
 
     // 이미지 변경 함수 (좌우 버튼 클릭 시 호출)
     function changeImage(n) {
-        currentIndex += n; // 현재 인덱스에 n을 더해 다음 이미지 인덱스 설정
-        if (currentIndex < 0) {
-            currentIndex = images.length - 1; // 처음 이미지로 돌아감
-        } else if (currentIndex >= images.length) {
-            currentIndex = 0; // 마지막 이미지로 돌아감
-        }
-        modalImg.src = images[currentIndex].src; // 모달 이미지 요소의 소스를 변경된 이미지로 설정
-
+        if (isCurrentReviewPicturesShowing) {
+            currentIndex += n; // 현재 인덱스에 n을 더해 다음 이미지 인덱스 설정
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1; // 처음 이미지로 돌아감
+            } else if (currentIndex >= images.length) {
+                currentIndex = 0; // 마지막 이미지로 돌아감
+            }
+            modalImg.src = images[currentIndex].src; // 모달 이미지 요소의 소스를 변경된 이미지로 설정
+            
         // 이미지 변경할 때 리뷰 내용 업데이트
         let reviewId = images[currentIndex].getAttribute("data-review-id");
         let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
@@ -536,6 +573,7 @@
 
         // 네비게이션 버튼 업데이트
         updateNavButtons();
+    	}
     }
 
     // 네비게이션 버튼 업데이트 함수
@@ -814,7 +852,7 @@
         } else {
             $(this).removeClass('bi-star').addClass('bi-star-fill')
         }
-    })
+    });
 
     $('.bi-heart').click(function () {
         if ($(this).hasClass('bi-heart-fill')) {

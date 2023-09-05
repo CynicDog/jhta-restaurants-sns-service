@@ -250,7 +250,7 @@ public class ReviewService {
 		return reviewPictureRepository.findByUserIdOrderByCreateDateDesc(customerId, PageRequest.of(page, limit));
     }
     
-    public void deletedReview(int reviewId) {
-    	reviewMapper.deleteReview(reviewId);
+    public void deletedReview(int reviewId, int customerId) {
+    	reviewMapper.deleteReview(reviewId, customerId);
     }
 }
