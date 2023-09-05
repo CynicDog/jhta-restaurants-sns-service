@@ -89,7 +89,7 @@ public class UserController {
     @ResponseBody
     @PostMapping("/follow")
     public ResponseEntity followPost(@RequestParam("recipientId") int recipientId,
-                                 @AuthenticationPrincipal SecurityUser securityUser) {
+                                     @AuthenticationPrincipal SecurityUser securityUser) {
 
         if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
             return ResponseEntity.ok().build();

@@ -26,7 +26,13 @@
                 <div class="card shadow-sm border border-0 my-3">
                     <div class="fw-lighter m-3 p-1">
                         <div class="row">
-                            <div class="col-8 fs-4">About Me</div>
+                            <div class="col fs-4 d-flex my-2">
+                                <div class="my-2">About Me</div>
+                                <div id="userIcon" class="mx-2 my-1">
+                                    <img id="userImage" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;" onclick="handleImageClick()"/>
+                                    <input type="file" id="fileInput" style="display: none" accept="image/*" onchange="handleFileSelect()">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -64,19 +70,27 @@
                             <div class="col-4 d-flex justify-content-end">
                             </div>
                         </div>
-                        <div class="row my-2">
-                            <div class="col text-end">
-                                <div id="followersToastButton" type="button"
-                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                    followers
-                                    <span id="followersCount"
-                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                        <div class="row my-4">
+                            <div class="col-md-3">
+                                <div class="text-start">
+                                    <span id="followRequestButton" type="button"
+                                          class="badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill">Follow</span>
                                 </div>
-                                <div id="followingsToastButton" type="button"
-                                     class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-2">
-                                    followings
-                                    <span id="followingsCount"
-                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="text-end">
+                                    <div id="followersToastButton" type="button"
+                                         class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-1">
+                                        followers
+                                        <span id="followersCount"
+                                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                    </div>
+                                    <div id="followingsToastButton" type="button"
+                                         class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill position-relative mx-1">
+                                        followings
+                                        <span id="followingsCount"
+                                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,6 +222,18 @@
     let pageOnFollowing = 0
     let isFollowingFetching = false;
     let isFollowingLast = false;
+
+    document.getElementById('followRequestButton').addEventListener('click', function () {
+        fetch(`/user/follow?recipientId=\${userId}`, {
+            method: "POST"
+        }).then(response => {
+            if (response.ok) {
+                showMessagingToast("Successfully done!");
+            } else {
+                showMessagingToast("Already requested.");
+            }
+        })
+    })
 
     const getFollowers = page => {
         return fetch(`/user/followers?page=\${page}&limit=7&id=\${userId}`).then(response => response.json());
@@ -577,5 +603,27 @@
         const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
         successfulToastBootstrap.show();
     }
+
+    function fetchUserImage() {
+        const userImage = document.getElementById('userImage');
+        const userImageSrc = "/images/user/png/${owner.username}"
+
+        fetch(userImageSrc)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    // Default image
+                    userImage.src = '/images/user/png/user-default-image.png';
+                }
+            })
+            .then(imageBlob => {
+                return URL.createObjectURL(imageBlob);
+            })
+            .then(imageUrl => {
+                userImage.src = imageUrl;
+            })
+    }
+    fetchUserImage();
 </script>
 </html>

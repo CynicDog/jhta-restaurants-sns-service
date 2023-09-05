@@ -246,10 +246,64 @@
         }
     });
     
+
+    $("#review-list").on('click', '[id^="button-add-comment-"]', function () {
+        if (${pageContext.request.userPrincipal != null}) {
+
+            const reviewId = $(this).attr('id-index');
+            const commentAddButton = document.getElementById("button-add-comment-" + reviewId);
+            const cardAndTextarea = document.getElementById('cardAndTextarea-' + reviewId);
+            const submitButton = document.getElementById('button-addon2-' + reviewId);
+			
+            if ($(cardAndTextarea).css("display") == 'block') {
+                cardAndTextarea.style.display = 'none';
+                $(submitButton).prop("disabled", true)
+            } else {
+                cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
+                $(submitButton).prop("disabled", true);
+
+                submitButton.addEventListener('click', () => {
+                    cardAndTextarea.style.display = 'none';
+                });
+            }
+
+        } else {
+            // 로그인되지 않은 경우, 로그인 페이지 열기
+            alert("로그인이 필요합니다");
+            window.location.href = "/user/login?error=anonymous";
+        }
+    });
+    
+    $("#review-list").on('click', '[id^="button-view-comment-"]', function () {
+        const reviewId = $(this).attr('id-index');
+        const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + reviewId);
+        const commentViewButton = document.getElementById("button-view-comment-" + reviewId);
+
+        if (reviewCommentsOutputArea.style.display === 'block') {
+            reviewCommentsOutputArea.style.display = 'none';
+        } else {
+            reviewCommentsOutputArea.style.display = 'block';
+        }
+    });
+
+    $("#review-list").on("input", '[id^="replyTextarea"]', function() {
+    	
+        // textarea 내용 가져오기
+        let textareaContent = $(this).val().trim();
+        
+        // 리뷰 올리기 버튼 활성화/비활성화
+        if (textareaContent === "") {
+            $("button.btn-outline-secondary").prop("disabled", true);
+        } else {
+            $("button.btn-outline-secondary").prop("disabled", false);
+        }
+    });
+
     $("#review-list").on('click', '[id^="review-popover-"]', function(){
         	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
     		const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     })
+
     
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
 
@@ -286,7 +340,9 @@
                                 <div class="col-2">
                                     <div class="text-center card-title my-1">
                                         <div class="ratio ratio-1x1">
-                                            <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+                                            <a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
+					                                      <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" id="review-popover-\${datum.id}" class="img-thumbnail rounded-circle" alt="...">
+					                                  </a>
                                         </div>
                                         <span style="font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
                                     </div>
@@ -316,45 +372,41 @@
                                             })()}
                                             </span>
                                         </div>
-                                    </div>
+                                    </div>                                   
                                     <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
+                                    <form action="/review/register" method="post" id="reviewCommentForm">
+                                    <input type="hidden" name="reviewId" value="\${datum.id }"/>
+                                   	<input type="hidden" name="storeId" value="${param.id }"/>
                                     <div class="row">
-                                        <div class="col">
-                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">수정</span>
+                                        <div class="col" id="review-comment">
+                                            <span class="float-end">
+                                            <button type="button" class="btn btn-light btn-sm text-danger">
+                                          		<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                           	</button>
+                                            <button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light">
+                                              <i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
+                                            </button>  
+                                            <button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
                                             </button>
                                             <button type="button" class="btn btn-light btn-sm" style="color: #838383">
                                                 <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
                                             </button>
-                                            <span class="float-end">
-                                            <button id="comment" type="button" class="btn btn-light"><span>답글</span></button>
-                                                </button>
-                                                <button type="button" class="btn btn-light btn-sm text-danger">
-                                                    <i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-                                                </button>
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="row" id="cardAndTextarea" style="display: none;">
-							        <div class="col-12">
-							            <div class="card">
-							                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-							                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea"></textarea>
-							                    <button class="btn btn-outline-secondary submit-reply-button" type="button" id="button-addon2"><i class="bi bi-pencil"></i></button>
-							                </div>
-							            </div>
-							        </div>
-							    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            	<div class="modal-content">
-                                	<img class="modalImg-\${datum.id}">
-                                	</img>
+                                    <div class="row">
+                                      <div class="col-12">
+                                          <div class="card"id="cardAndTextarea-\${datum.id}" id-index="\${datum.id}" style="display: none;">
+                                              <div class="card-body d-flex flex-row justify-content-between align-items-start">
+                                                  <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea" name="content"></textarea>
+                                                  <button class="btn btn-outline-secondary submit-reply-button " type="submit" id="button-addon2-\${datum.id}" ><i class="bi bi-pencil"></i></button>
+                                              </div>
+                                          </div>
+                                          <div class="col-12" id="reviewCommentsOutputArea-\${datum.id}" style="display: none;"></div>
+                                      </div>
+                                    </div>
+                                 </form>
                                 </div>
                             </div>
                         </div>
@@ -391,7 +443,52 @@
                         changeReviewImages(1);
                     }
                 });
-
+                    const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
+                    if (datum.reviewComments) {
+                    	datum.reviewComments.forEach(Comment => {
+                    		reviewCommentsOutputArea.innerHTML += `
+                    	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
+								<div class="row my-3">
+									<div class="col-2">
+										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
+											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+										</a>
+										<div class="text-center card-title my-1">
+											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
+										</div>
+									</div>
+										<div class="col-10 position-relative ">
+											<div class="row mb-2">
+												<div class="col-9 text-start">
+													<div class="card-text text-muted" style="font-size: small; ">  
+														<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
+													</div>
+													<div class="card-text">
+														<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
+													</div>
+													<div class="card-text">
+														<span>\${Comment.content}</span>
+													</div>
+												</div>
+												<div class="col-3 d-flex justify-content-end align-items-center">
+											    </div>
+											</div>
+											<div class="row position-absolute" style="bottom:0;right:20px;">
+												<div class="col">
+													<span class="text-end">
+														<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+															<i class="bi bi-trash3"></i>
+															<span class="visually-hidden">삭제</span>
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+								</div>	
+                    		
+                    		`
+                    	})
+                    }                  
             })
         })
         isReviewsFetching = false;
@@ -618,25 +715,6 @@
                 fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
             }
         }
-        
-        
-    	const commentButton = document.getElementById('comment');
-    	const cardAndTextarea = document.getElementById('cardAndTextarea');
-    	const ownerComment = document.getElementById('ownerComment');
-
-    	// '답글' 버튼에 클릭 이벤트 리스너 추가
-    	commentButton.addEventListener('click', () => {
-    	    cardAndTextarea.style.display = 'block'; // 답글 작성 영역 보임
-    	    ownerComment.style.display = 'none';     // 리뷰 답글 영역 숨김
-    	});
-
-    	const submitButton = document.getElementById('button-addon2');
-
-    	// '리뷰 작성' 버튼에 클릭 이벤트 리스너 추가
-    	submitButton.addEventListener('click', () => {
-    	    cardAndTextarea.style.display = 'none'; // 답글 작성 영역 숨김
-    	    ownerComment.style.display = 'block';   // 리뷰 답글 영역 보임
-    	});
 
     }
     
