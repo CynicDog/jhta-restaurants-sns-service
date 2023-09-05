@@ -164,7 +164,7 @@
 	
 	function getFeed() {
 		isFeedsFetching = true;
-		const url = isLogin ? '/feed' : '/anofeed'; 
+		const url = isLogin ? '/feed' : '/allfeed'; 
 		
 		$.getJSON(url ,{page : pageOnFeed, limit:5}, function(result) {
 			

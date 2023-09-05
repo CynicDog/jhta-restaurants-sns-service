@@ -20,11 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeService {
 	private final HomeMapper homeMapper;
 	
-	public List<HomeFeed> getFeeds(int page, int limit, int userId) {
+	public List<HomeFeed> getMyFeeds(int page, int limit, int userId) {
 		
 		int begin = (page - 1) * limit;
 		
-		List<HomeFeed> result = homeMapper.getHomeFeedsByFollowerId(begin, limit, userId);
+		List<HomeFeed> result = homeMapper.getMyFeedsByFollowerId(begin, limit, userId);
 		
 		return result;
 	}
