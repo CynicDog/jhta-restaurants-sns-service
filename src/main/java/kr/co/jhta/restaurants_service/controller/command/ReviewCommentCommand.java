@@ -8,5 +8,7 @@ import lombok.Setter;
 public class ReviewCommentCommand {
 
 	private String content;
-	private int reviewId;
+	private Integer reviewId;
+	private Integer storeId;
+
 }

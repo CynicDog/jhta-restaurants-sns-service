@@ -24,4 +24,35 @@
 			REVIEW_COMMENTS
 		where review_id = #{value}		
 	</select>
+	
+	<select id="getReviewCommentAndUserByReviewId" parameterType="int" resultType="ReviewCommentDto">
+		select
+			c.id				as id,
+			c.content			as content,
+			c.create_date		as createDate,
+			c.update_date		as updateDate,
+			a.review_avg		as reviewAvg,
+			u.full_name			as username, 
+			u.nickname			as nickname, 
+			u.profile_picture_name as profilePictureName 
+		from
+			REVIEW_COMMENTS c
+		join USERS u ON c.owner_id = u.id
+		join (
+			select
+			customer_id,
+			AVG(rating) AS review_avg
+			FROM REVIEWS
+			GROUP BY customer_id
+		) a ON u.id = a.customer_id
+		where review_id = #{value}	
+		ORDER BY c.create_date DESC	
+	</select>
+	
+	<delete id="deleteReviewComment" parameterType="int">
+		delete from 
+			REVIEW_COMMENTS
+		where
+			id = #{id}
+	</delete>
 </mapper>

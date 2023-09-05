@@ -23,86 +23,81 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8dc99e5108c8ac0f59f4315f77a45f84"></script>
 </head>
 <body>
-	<%@ include file="common/navbar.jsp"%>
-	<div class="wrap">
-		<div class="container-fluid text-center" style = "padding-left:100px; padding-right:100px;" >
-			<div class="row my-3 d-flex justify-content-between">
-				<div class="col-8 ">
-					<div class="d-flex justify-content-between mb-3">
-						<a class="title btn fs-4" href="/store/search">맛집 검색결과</a>
-						<select class="form-select me-3" style="width: 150px;" name="sort">
-							<option value="rating">평점 순</option>
-							<option value="bookmark">즐겨찾기 순</option>
-							<option value="review">리뷰 많은 순</option>
-						</select>
-					</div>
-					<div class="row mb-3">
-						<div class="col-12 mb-2" style="text-align: left;">
-							<a id="" class="cat btn active" role="button" href="search">전체</a>
-							<a id="KOREAN" class="cat btn" role="button" href="search?category=KOREAN">한식</a>
-							<a id="CHINESE" class="cat btn" role="button" href="search?category=CHINESE">중식</a>
-							<a id="JAPANESE" class="cat btn" role="button" href="search?category=JAPANESE">일식</a>
-							<a id="CHICKEN" class="cat btn" role="button" href="search?category=CHICKEN">치킨</a>
-							<a id="PIZZA" class="cat btn" role="button" href="search?category=PIZZA">피자</a> 
-							<a id="FASTFOOD" class="cat btn" role="button" href="search?category=FASTFOOD">패스트푸드</a>
-							<a id="WESTERN" class="cat btn" role="button" href="search?category=WESTERN">양식</a> 
-							<a id="ITALIAN" class="cat btn" role="button" href="search?category=ITALIAN">이탈리안</a>
-							<a id="ASIAN" class="cat btn" role="button" href="search?category=ASIAN">아시안</a> 
-							<a id="SNACK" class="cat btn" role="button" href="search?category=SNACK">분식</a>
-							<a id="CAFE" class="cat btn" role="button" href="search?category=CAFE">카페</a> 
-							<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div class="col-12 ">
-							<div id="storeLoadingSpinner" class="spinner-border text-primary"
-								role="status" style="margin: 0 auto; margin-top: 150px;">
-								<span class="visually-hidden" style="display: none;">Loading...</span>
-							</div>
-							<div id="div-stores" class="row mb-3"></div>
-						</div>
-					</div>
-					<div class="row mb-3">
-						<div id = "div-pagination" class="col-12">
-								<nav>
-									<ul class="pagination justify-content-center">
-										<li id = "prepage" class="page-item page-move">
-											<a id = "prepage-link" href="" class="page-link" >이전</a>
-										</li>
-										<li id = "nextpage" class="page-item page-move">
-											<a id = "nextpage-link" href="" class="page-link" >다음</a>
-										</li>
-									</ul>
-								</nav>
-						</div>
+<%@ include file="common/navbar.jsp"%>
+<div class="wrap">
+	<div class="container-fluid text-center" style = "padding-left:100px; padding-right:100px;" >
+		<div class="row my-3 d-flex justify-content-between">
+			<div class="col-8 ">
+				<div class="d-flex justify-content-between mb-3">
+					<a class="title btn fs-4" href="/store/search">맛집 검색결과</a>
+					<select class="form-select me-3" style="width: 150px;" name="sort">
+						<option value="rating">평점 순</option>
+						<option value="bookmark">즐겨찾기 순</option>
+						<option value="review">리뷰 많은 순</option>
+					</select>
+				</div>
+				<div class="row mb-3">
+					<div class="col-12 mb-2" style="text-align: left;">
+						<a id="" class="cat btn active" role="button" href="search">전체</a>
+						<a id="KOREAN" class="cat btn" role="button" href="search?category=KOREAN">한식</a>
+						<a id="CHINESE" class="cat btn" role="button" href="search?category=CHINESE">중식</a>
+						<a id="JAPANESE" class="cat btn" role="button" href="search?category=JAPANESE">일식</a>
+						<a id="CHICKEN" class="cat btn" role="button" href="search?category=CHICKEN">치킨</a>
+						<a id="PIZZA" class="cat btn" role="button" href="search?category=PIZZA">피자</a> 
+						<a id="FASTFOOD" class="cat btn" role="button" href="search?category=FASTFOOD">패스트푸드</a>
+						<a id="WESTERN" class="cat btn" role="button" href="search?category=WESTERN">양식</a> 
+						<a id="ITALIAN" class="cat btn" role="button" href="search?category=ITALIAN">이탈리안</a>
+						<a id="ASIAN" class="cat btn" role="button" href="search?category=ASIAN">아시안</a> 
+						<a id="SNACK" class="cat btn" role="button" href="search?category=SNACK">분식</a>
+						<a id="CAFE" class="cat btn" role="button" href="search?category=CAFE">카페</a> 
+						<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
 					</div>
 				</div>
-				<div class="col-3 right-sidebar bg-body-tertiary">
-					
-					<div class="my-3" style="position:sticky; top: 100px;">
-						<!-- 지도 -->
-						<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
-						
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
-							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
-							<div class="card-img-overlay d-flex justify-content-center align-items-center">
-								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-							</div>
+				<div class="row mb-3">
+					<div class="col-12 ">
+						<div id="storeLoadingSpinner" class="spinner-border text-primary"
+							role="status" style="margin: 0 auto; margin-top: 150px;">
+							<span class="visually-hidden" style="display: none;">Loading...</span>
 						</div>
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post'" style="cursor: pointer;">
-							<img src="/resources/image/cafe1.jpg" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
-							<div class="card-img-overlay d-flex justify-content-center align-items-center">
-								<p class="fs-3"><strong>관련 콘텐츠</strong></p>
-							</div>
-						</div>
+						<div id="div-stores" class="row mb-3"></div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<div id = "div-pagination" class="col-12">
+							<nav>
+								<ul class="pagination justify-content-center">
+									<li id = "prepage" class="page-item page-move">
+										<a id = "prepage-link" href="" class="page-link" >이전</a>
+									</li>
+									<li id = "nextpage" class="page-item page-move">
+										<a id = "nextpage-link" href="" class="page-link" >다음</a>
+									</li>
+								</ul>
+							</nav>
 					</div>
 				</div>
 			</div>
+			<div class="col-3 right-sidebar bg-body-tertiary">
+				
+				<div class="my-3" style="position:sticky; top: 100px;">
+					<!-- 지도 -->
+					<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
+					<c:forEach var="post" items="${postList }">
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=${post.id}'" style="cursor: pointer;">
+							<img src="/images/post/jpeg/${post.pictureFile }" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex flex-column align-items-center">
+								<p class="fs-5 my-0"><strong>${post.title }</strong></p>
+								<p class="fs-5">${post.subTitle }</p>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
-		<%@ include file="common/footer.jsp"%>
 	</div>
+<%@ include file="common/footer.jsp"%>
+</div>
 	<script type="text/javascript">
 		let sortValue = "rating"; 
 		let pageValue = 1; 

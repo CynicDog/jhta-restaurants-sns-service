@@ -100,6 +100,14 @@ public class ReviewController {
 			
 			return "redirect:/store/detail?id=" + storeId;
 		}
+	
+//		@PostMapping("/register")
+//		@ResponseBody
+//		public ResponseEntity<String> reviewCommentRegister(ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
+//		    reviewService.createReviewComment(form, securityUser);
+//		    return ResponseEntity.ok().body("/store/detail?id=" + form.getStoreId()); // 리디렉션 경로 반환
+//		}	
+	
 		
 	@GetMapping("/detail")
 	public String reviewDetail(Model model, @RequestParam("id") int reviewId) {

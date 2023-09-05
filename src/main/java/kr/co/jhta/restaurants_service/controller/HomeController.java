@@ -43,7 +43,6 @@ public class HomeController {
 
 	@GetMapping
 	public String home(Model model) {
-		
 		List<HomePostDto> postList = postService.getPostsOrderByLike();
 		model.addAttribute("postList", postList);
 		return "home";
@@ -52,11 +51,11 @@ public class HomeController {
 	@GetMapping("/feed")
 	@ResponseBody
 	public List<HomeFeed> getHomeFeeds(int page, int limit, @AuthenticationPrincipal SecurityUser user){
-		List<HomeFeed> result = homeService.getFeeds(page, limit, user.getUser().getId());
+		List<HomeFeed> result = homeService.getMyFeeds(page, limit, user.getUser().getId());
 		return result;
-  }
+	}
 	
-	@GetMapping("/anofeed")
+	@GetMapping("/allfeed")
 	@ResponseBody
 	public List<HomeAnonymousFeed> getHomeFeedsAnonymous(int page, int limit){
 		return homeService.getAnonymousFeeds(page, limit);
