@@ -147,7 +147,10 @@
 			//like- fill -> blank
 			if ($like.hasClass('bi-heart-fill')) {
 					$like.removeClass('bi-heart-fill').addClass('bi-heart')
-					$.getJSON('/like/delete', {reviewId : reviewId});
+					$.getJSON('/like/delete', {reviewId : reviewId},function(result){
+						$("span[data-reviewId=" + reviewId + "]").text(result);
+					});
+					
 			//like- blank -> fill		
 			} else {
 				$like.removeClass('bi-heart').addClass('bi-heart-fill')
