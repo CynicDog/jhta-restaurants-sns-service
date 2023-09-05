@@ -11,7 +11,8 @@ import kr.co.jhta.restaurants_service.vo.review.ReviewComment;
 public interface ReviewCommentMapper {
 
 	void insertReviewComment(ReviewComment reviewComment);
-	void deleteReviewComment(int reviewId);
+	void deleteReviewComment(int reviewCommentId);
+	void deleteReviewCommentByReviewId(int reviewId);
 	List<ReviewComment> getReviewCommentByReviewId(int reviewId);
 	List<ReviewCommentDto> getReviewCommentAndUserByReviewId(int reviewId);
 }

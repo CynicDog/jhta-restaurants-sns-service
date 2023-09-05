@@ -244,10 +244,10 @@ html, body {
 				<div class="row position-absolute" style="bottom:0;right:20px;">
 					<div class="col">
 						<span class="text-end">
-							<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light btn-sm" style="color: #838383">
 								<i class="bi bi-trash3"></i>
 								<span class="visually-hidden">삭제</span>
-							</button>
+							</a>
 						</span>
 					</div>
 				</div>
@@ -261,7 +261,7 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
-
+	
 	// popover 생성
 	document.addEventListener("DOMContentLoaded", () => {
 		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
@@ -330,6 +330,16 @@ $(document).ready(function () {
     } else {
         $("#review-count").hide();
     }
+});
+
+$("#button-add-comment").click(function() {
+	 if (${userId != null}) {
+		 $("#reviewCommentForm").submit();
+       } else {
+           // 로그인되지 않은 경우, 로그인 페이지 열기
+           alert("로그인이 필요합니다");
+           window.location.href = "/user/login?error=anonymous";
+       }
 });
 
 </script>

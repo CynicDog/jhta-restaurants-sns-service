@@ -222,6 +222,7 @@
 </div>
 <script>
     const storeId = ${store.id};
+    const loginUserId = '${pageContext.request.userPrincipal != null ? pageContext.request.userPrincipal.principal.user.id : ''}';
     
     $("#review-list").on('click', '[id^="recommend-"]', function(){
         console.log("heart-clicked");
@@ -332,7 +333,7 @@
 				if(datum.isLiked==='n'){ like = 'bi-heart';}
 				console.info(like);
 				
-				reviewOutputArea.innerHTML += `
+				let text = `
 					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
 					    <div class="card-body">
 					        <div class="row">
@@ -374,24 +375,29 @@
 					                </div>
 
                                     <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
-                                    <form action="/review/register" method="post" id="reviewCommentForm">
+                                    <form action="/review/store/register" method="post" id="reviewCommentForm">
                                     <input type="hidden" name="reviewId" value="\${datum.id }"/>
                                    	<input type="hidden" name="storeId" value="${param.id }"/>
                                     <div class="row">
                                         <div class="col" id="review-comment">
                                             <span class="float-end">
-                                            <button type="button" class="btn btn-light btn-sm text-danger">
-                                          		<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-                                           	</button>
-                                            <button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light">
-                                            <i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
-                                            <button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                <i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
-                                            </button>
-                                            </button>
-                                            <button type="button" class="btn btn-light btn-sm" style="color: #838383">
-                                                <i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                            </button>
+                                            	<button type="button" class="btn btn-light btn-sm text-danger">
+                                          			<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                           		</button>
+                                            	<button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light">
+                                            		<i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
+	                                            </button>
+                                            	<button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                                	<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
+                                            	</button>`;
+                                   
+                                            if (loginUserId && parseInt(loginUserId) == datum.customerId) {
+            									text += `
+            										<a href="/review/del?storeId=\${storeId}&reviewId=\${datum.id}" class="btn btn-light btn-sm" style="color: #838383">
+                                                		<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+                                            		</a>`
+            								}
+            text += `
                                             </span>
                                         </div>
                                     </div>
@@ -421,6 +427,9 @@
                     	</div>
                 	</div>
                     `
+                    
+                    reviewOutputArea.innerHTML += text;
+                    
                     const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
                     if (datum.reviewPictures) {
 	                    datum.reviewPictures.forEach(picture => {
@@ -456,7 +465,8 @@
                      const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
                      if (datum.reviewComments) {
                      	datum.reviewComments.forEach(Comment => {
-                     		reviewCommentsOutputArea.innerHTML += `
+                     		
+                     		let commenttext = `
                      	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
  								<div class="row my-3">
  									<div class="col-2">
@@ -467,36 +477,40 @@
  											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
  										</div>
  									</div>
- 										<div class="col-10 position-relative ">
- 											<div class="row mb-2">
- 												<div class="col-9 text-start">
- 													<div class="card-text text-muted" style="font-size: small; ">  
- 														<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
- 													</div>
- 													<div class="card-text">
- 														<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
- 													</div>
- 													<div class="card-text">
- 														<span>\${Comment.content}</span>
- 													</div>
- 												</div>
- 												<div class="col-3 d-flex justify-content-end align-items-center">
- 											    </div>
- 											</div>
- 											<div class="row position-absolute" style="bottom:0;right:20px;">
- 												<div class="col">
- 													<span class="text-end">
- 														<button type="button" class="btn btn-light btn-sm" style="color: #838383">
- 															<i class="bi bi-trash3"></i>
- 															<span class="visually-hidden">삭제</span>
- 														</button>
- 													</span>
- 												</div>
- 											</div>
- 										</div>
- 								</div>	
-                     		
-                     		`
+									<div class="col-10 position-relative ">
+										<div class="row mb-2">
+											<div class="col-9 text-start">
+												<div class="card-text text-muted" style="font-size: small; ">  
+													<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
+												</div>
+												<div class="card-text">
+													<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
+												</div>
+												<div class="card-text">
+													<span>\${Comment.content}</span>
+												</div>
+											</div>
+											<div class="col-3 d-flex justify-content-end align-items-center">
+										    </div>
+										</div>`;
+									if (loginUserId && parseInt(loginUserId) == Comment.userId) {
+										commenttext += `	
+											<div class="row position-absolute" style="bottom:0;right:20px;">
+												<div class="col">
+													<span class="text-end">
+														<a href="/review/store/comment/del?storeId=\${storeId}&reviewId=\${datum.id}&reviewCommentId=\${Comment.id}" class="btn btn-light btn-sm" style="color: #838383">
+															<i class="bi bi-trash3"></i>
+															<span class="visually-hidden">삭제</span>
+														</a>
+													</span>
+												</div>
+											</div>`
+									}
+			commenttext += `				
+									</div>
+ 								</div>	`
+            
+                     		reviewCommentsOutputArea.innerHTML += commenttext;
                      	})
                      }
                      

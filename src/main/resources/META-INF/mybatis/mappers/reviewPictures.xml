@@ -19,5 +19,11 @@
 			review_id = #{value};
 	</select>
 
+  	<delete id="deleteReviewPictures" parameterType="int">
+		delete from 
+			REVIEW_PICTURES
+		where
+			review_id = #{value};
+	</delete>
 
 </mapper>
