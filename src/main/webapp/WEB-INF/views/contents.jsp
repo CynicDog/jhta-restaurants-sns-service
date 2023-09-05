@@ -76,13 +76,13 @@
 					<div class="row">
 						<div class="col">
 							<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='user/details?id=${recentPostdata.customerId}'"><strong >${recentPostdata.userName }</strong></span>
-							<sec:authorize access="isAuthenticated()">
+							<%-- <sec:authorize access="isAuthenticated()">
 								<sec:authentication property="principal.user.id" var="loggedInUserId" />
 								<c:if test="${recentPostdata.customerId ne loggedInUserId}">
 										<span id="followRequestButton-${recentPostdata.id }" 
 		                                     	     class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentPostdata.customerId }">FOLLOW</span>
 								</c:if>
-							</sec:authorize>
+							</sec:authorize> --%>
 						</div>
 						<div class="col text-end">
 							<input type="hidden" id="dateInput-${recentPostdata.id }" type="text" value="${sysYear }" >
@@ -120,11 +120,11 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${followerPostData.userName }</strong></span>
-								<sec:authorize access="isAuthenticated()">
+								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${followerPostData.customerId}'"><strong >${followerPostData.userName }</strong></span>
+								<%-- <sec:authorize access="isAuthenticated()">
 									<span id="followRequestButton-${followerPostData.id }" 
 	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${followerPostData.customerId }">Follow</span>
-								</sec:authorize>
+								</sec:authorize> --%>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
@@ -177,11 +177,11 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentReviewData.userName }</strong></span>
-								<sec:authorize access="isAuthenticated()">
+								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentReviewData.customerId}'"><strong >${recentReviewData.userName }</strong></span>
+								<%-- <sec:authorize access="isAuthenticated()">
 									<span id="followRequestButton-${recentReviewData.id }" 
 	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentReviewData.customerId }">Follow</span>
-								</sec:authorize>
+								</sec:authorize> --%>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentReviewData.id }" type="text" value="${sysYear }" >
@@ -233,11 +233,11 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<span class="badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill "><strong >${recentFollowerReivewData.userName }</strong></span>
-								<sec:authorize access="isAuthenticated()">
+								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentFollowerReivewData.customerId}'"><strong >${recentFollowerReivewData.userName }</strong></span>
+								<%-- <sec:authorize access="isAuthenticated()">
 									<span id="followRequestButton-${recentFollowerReivewData.id }" 
 	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentFollowerReivewData.customerId }">Follow</span>
-								</sec:authorize>
+								</sec:authorize> --%>
 							</div>
 							<div class="col text-end">
 								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
@@ -311,7 +311,7 @@
 	    $(input).next().text(elapsed);
 	})
 	
-	addEventListener('click', function (event) {
+	/* addEventListener('click', function (event) {
         if (event.target.classList.contains('userFollow')) {
             const button = event.target
             const userId = button.getAttribute('data-user-id')
@@ -336,39 +336,7 @@
 
         const messagingToastBootstrap = bootstrap.Toast.getOrCreateInstance(messagingToast);
         messagingToastBootstrap.show();
-    }
-
-	document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('userFollow')) {
-            const button = event.target;
-            const requestId = button.getAttribute('data-user-id')
-
-            fetch(`/user/requests-modify?requestId=\${requestId}`, {
-                method: "POST"
-            })
-                .then(response => response.text())
-                .then(status => {
-
-                    function getStatusClasses(status) {
-                        switch (status) {
-                            case 'PENDING':
-                                return 'badge bg-primary-subtle text-primary-emphasis rounded-pill my-1 requestStatusButton';
-                            case 'ACCEPTED':
-                                return 'badge bg-success-subtle text-success-emphasis rounded-pill my-1 requestStatusButton';
-                            case 'DECLINED':
-                                return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
-                            default:
-                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
-                        }
-                    }
-
-                    const newStatusClasses = getStatusClasses(status);
-
-                    button.textContent = status;
-                    button.className = newStatusClasses;
-                })
-        }
-    })
+    } */
 </script>
 </body>
 </html>

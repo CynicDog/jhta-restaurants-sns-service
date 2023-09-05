@@ -65,8 +65,8 @@
 		
 		<div class="row my-3 justify-content-center" style="width:1320px;">
 			<div class="col-11 text-end">
-				<div class="" style="bottom:0;right:0;">
-					<button class="btn btn-lg" name="showReviewsButton" style="bottom:0;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
+				<div style="bottom:0;right:0;">
+					<button class="btn btn-lg" name="showReviewsButton" style="bottom:0; font-size:22px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" data-store-id="${data.store.id}">
 						<i class="bi bi-chat-text"></i>
 						<span class="visually-hidden">댓글</span>
 					</button>
@@ -127,10 +127,6 @@
 													<div class="col">
 														<span class="text-end">
 															<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-													        <button type="button" class="btn btn-outline-secondary btn-sm">
-													            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
-													            <span class="visually-hidden">추천</span>
-													        </button>
 															<button type="button" class="btn btn-outline-danger btn-sm">
 																<i class="bi bi-trash3"></i>
 																<span class="visually-hidden">삭제</span>
@@ -148,14 +144,26 @@
 							</c:forEach>
 					  	</div>
 					</div>
-					<button type="button" class="btn btn-lg">
-			            <i id="recomened" class="bi bi-hand-thumbs-up" style="font-size: 15px;"></i>
+					<button type="button" class="btn btn-lg" >
+						<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.user.id" var="userId" />
+						</sec:authorize>
+			            <i id="heart" class="bi ${post.post.id eq post.postLikeDto.postId && userId eq post.postLikeDto.customerId ? 'bi-heart-fill' : 'bi-heart'}" data-post-id="${post.post.id }" style="font-size: 22px; color:#EB0000;"></i>
 			            <span class="visually-hidden">추천</span>
 			        </button>
 			        <button type="button" class="btn btn-lg">
-			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px; color:#EB0000"></i>
+			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 22px; color:#EB0000"></i>
 			            <span class="visually-hidden">신고</span>
 			        </button>
+			        <sec:authorize access="isAuthenticated()">
+		        		<sec:authentication property="principal.user.id" var="userId" />	
+			        	<c:if test="${userId eq post.post.customer.id }">
+					        <button type="button" class="btn btn-lg" style="font-size: 22px; color:#EB0000">
+								<i class="bi bi-trash3"></i>
+								<span class="visually-hidden">삭제</span>
+							</button>
+			        	</c:if>
+			        </sec:authorize>
 				</div>
 			</div>
 			
@@ -198,6 +206,29 @@
 	    } else {
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
 	        window.location.href = "/user/login";
+	    }
+	});
+	
+	$("#heart").click( function(){
+		
+	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
+	    if (${pageContext.request.userPrincipal != null}) {
+			//로그인 했을 때
+	    	let postId = $(this).attr('data-post-id');;
+			//like- fill -> blank
+			if ($(this).hasClass('bi-heart-fill')) {
+					$(this).removeClass('bi-heart-fill').addClass('bi-heart')
+					$.getJSON('/post/like/delete', {postId : postId});
+			//like- blank -> fill		
+			} else {
+				$(this).removeClass('bi-heart').addClass('bi-heart-fill')
+				$.getJSON('/post/like/insert', {postId : postId});
+
+			}
+	    } else {
+	       // 로그인되지 않은 경우, 로그인 페이지 열기
+	       	alert("로그인이 필요합니다");
+	        window.location.href = "/user/login?error=anonymous";
 	    }
 	});
 	
