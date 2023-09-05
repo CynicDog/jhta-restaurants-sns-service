@@ -667,7 +667,7 @@
                         case 'DECLINED':
                             return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                         default:
-                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1';
                     }
                 }
 
@@ -764,7 +764,7 @@
                             case 'DECLINED':
                                 return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                             default:
-                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 ';
                         }
                     }
 
