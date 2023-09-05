@@ -160,19 +160,12 @@ public class PostController {
 
         return "post/posting";
     }
-    
-    
 
-//    storage = StorageOptions.getDefaultInstance().getService();
-//    
-//    for (PostData postData : dto.getPostData()) {
-//    	String bucketName = "jhta-restaurant-service"; // GCS 버킷 이름
-//    	String imageFilename = postData.getPictureFile(); // 이미지 파일명
-//    	BlobId blobId = BlobId.of(bucketName, imageFilename);
-//    	
-//    	String imageUrl = storage.signUrl(blobId, 1L, TimeUnit.DAYS).toString();
-//    	postData.setImageUrl(imageUrl);
-//    }
+    @PostMapping("/detail/delete")
+    public String DeletePostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser) {
+    	
+    	return "redirect:/contents";
+    }
 
     @GetMapping("/allPosts")
     public String allPost() {
@@ -211,4 +204,16 @@ public class PostController {
         return "redirect:/post/detail?id=" + form.getPostId();
     }
     
+    @GetMapping("/like/insert")
+	@ResponseBody
+	public void insertLike(@AuthenticationPrincipal SecurityUser user, int postId) {
+		postService.insertLike(user.getUser().getId(), postId);
+	}
+	
+	@GetMapping("/like/delete")
+	@ResponseBody
+	public void deleteLike(@AuthenticationPrincipal SecurityUser user, int postId) {
+		postService.deleteLike(user.getUser().getId(), postId);
+	}
+	
 }

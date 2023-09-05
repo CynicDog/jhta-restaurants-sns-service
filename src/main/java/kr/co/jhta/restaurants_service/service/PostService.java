@@ -12,6 +12,7 @@ import kr.co.jhta.restaurants_service.dto.HomePostDto;
 import kr.co.jhta.restaurants_service.dto.PostContentsDto;
 import kr.co.jhta.restaurants_service.dto.PostDataDto;
 import kr.co.jhta.restaurants_service.dto.PostDto;
+import kr.co.jhta.restaurants_service.dto.PostLikeDto;
 import kr.co.jhta.restaurants_service.projection.Projection;
 import kr.co.jhta.restaurants_service.repository.FollowsRepository;
 import kr.co.jhta.restaurants_service.repository.PostDataRepository;
@@ -29,9 +30,11 @@ import kr.co.jhta.restaurants_service.mapper.BookmarkMapper;
 import kr.co.jhta.restaurants_service.mapper.HomeMapper;
 import kr.co.jhta.restaurants_service.mapper.PostCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.PostDataMapper;
+import kr.co.jhta.restaurants_service.mapper.PostLikeMapper;
 import kr.co.jhta.restaurants_service.vo.post.Post;
 import kr.co.jhta.restaurants_service.vo.post.PostComment;
 import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.post.PostLikes;
 import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,7 @@ public class PostService {
 	private final PostRepository postRepository;
 	private final FollowsRepository followsRepository;
 	private final PostDataRepository postDataRepository;
+	private final PostLikeMapper postLikeMapper;
 	
 	public List<PostContentsDto> getThreeRecentPosts(){
 		List<PostContentsDto> posts = postmapper.getRecentPostsThree();
@@ -107,10 +111,10 @@ public class PostService {
 				Bookmark bookmarks = bookmarkMapper.getBookmarkByStoreIdAndCustomerId(postData.getStoreId() ,securityUser.getUser().getId());
 				postData.setBookmark(bookmarks);
 			}
+			PostLikeDto likeDto = postLikeMapper.selectPostLikeByPostIdAndCustomerId(postId, securityUser.getUser().getId());
+			dto.setPostLikeDto(likeDto);
 		}
 		List<PostComment> postComments = postCommentMapper.getCommentsByPostId(postId);
-
-		
 
 		dto.setPost(post);
 		dto.setPostDatas(postDatas);
@@ -188,6 +192,17 @@ public class PostService {
 		return postDataRepository.findByUserIdOrderByCreateDateDesc(id, PageRequest.of(page, limit));
 	}
 
+
+	public void insertLike(int customerId, int postId) {
+		postLikeMapper.insertLike(customerId,postId);
+		postLikeMapper.addLike(postId);
+	}
+
+	public void deleteLike(int customerId, int postId) {
+		postLikeMapper.deleteLike(customerId,postId);
+		postLikeMapper.cancelLike(postId);
+	}
+	
 	public List<PostContentsDto> getPostsByStoreSearch(SearchParamCommand searchParam) {
 		
 	    Map<String, Object> paramMap = new HashMap<>();
@@ -199,6 +214,7 @@ public class PostService {
 	    paramMap.put("yEnd", searchParam.getYEnd());
 		
 		return postmapper.getPostsByStoreSearch(paramMap);
+
 	}
 	
 }

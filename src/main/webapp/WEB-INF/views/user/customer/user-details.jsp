@@ -28,7 +28,13 @@
                 <div class="card shadow-sm border border-0 my-3">
                     <div class="fw-lighter m-3 p-1">
                         <div class="row">
-                            <div class="col fs-4">About Me</div>
+                            <div class="col fs-4 d-flex my-2">
+                                <div class="my-2">About Me</div>
+                                <div id="userIcon" class="mx-2 my-1">
+                                    <img id="userImage" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;" onclick="handleImageClick()"/>
+                                    <input type="file" id="fileInput" style="display: none" accept="image/*" onchange="handleFileSelect()">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col text-end">
@@ -339,11 +345,11 @@
                         'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                     followersOutputArea.innerHTML += `
-                        <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -409,11 +415,11 @@
                         'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                     followingsOutputArea.innerHTML += `
-                        <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -485,9 +491,6 @@
                             <div class="p-3">
                                 <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
                                 \${datum.subTitle}
-                            </div>
-                            <div class="text-end m-2">
-                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
                             </div>
                         </div>
                     `;
@@ -564,9 +567,6 @@
                             <div class="p-3">
                                 <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
                                 \${truncatedContent}
-                            </div>
-                            <div class="text-end m-2">
-                                <i style="color: #cb444a" class="bi bi-trash m-2"></i>
                             </div>
                         </div>
                     `;
@@ -893,6 +893,28 @@
                 document.getElementById('reviewsCount').textContent = data;
             })
     }
+
+    function fetchUserImage() {
+        const userImage = document.getElementById('userImage');
+        const userImageSrc = "/images/user/png/${customer.username}"
+
+        fetch(userImageSrc)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    // Default image
+                    userImage.src = '/images/user/png/user-default-image.png';
+                }
+            })
+            .then(imageBlob => {
+                return URL.createObjectURL(imageBlob);
+            })
+            .then(imageUrl => {
+                userImage.src = imageUrl;
+            })
+    }
+    fetchUserImage();
 
 </script>
 </html>

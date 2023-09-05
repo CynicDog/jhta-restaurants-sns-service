@@ -26,7 +26,16 @@
                 <div class="card shadow-sm border border-0 my-3">
                     <div class="fw-lighter m-3 p-1">
                         <div class="row">
-                            <div class="col-8 fs-4">About Me</div>
+                            <div class="col fs-4 d-flex my-2">
+                                <div class="my-2">About Me</div>
+                                <div id="userIcon" class="mx-2 my-1">
+                                    <img type="button" id="userImage"
+                                         class="rounded-circle shadow-sm object-fit-cover mx-1"
+                                         style="width: 40px; height: 40px;" onclick="handleImageClick()"/>
+                                    <input type="file" id="fileInput" style="display: none" accept="image/*"
+                                           onchange="handleFileSelect()">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
@@ -244,8 +253,8 @@
     let isFollowingLast = false;
 
     const socialVisibilityInput = document.getElementById('socialVisibilityInput')
-    socialVisibilityInput.addEventListener('click', function() {
-        fetch(`/user/visibility`, { method: "POST" })
+    socialVisibilityInput.addEventListener('click', function () {
+        fetch(`/user/visibility`, {method: "POST"})
     })
 
     fetch('/user/visibility')
@@ -287,11 +296,11 @@
                     'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                 followersOutputArea.innerHTML += `
-                        <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -350,11 +359,11 @@
                     'badge bg-warning-subtle text-warning-emphasis rounded-pill';
 
                 followingsOutputArea.innerHTML += `
-                      <div class="shadow-sm border border-light rounded m-3">
+                        <div class="shadow-sm border border-light rounded-4 m-3">
                             <div class="p-3">
-                                <div class="fw-medium badge bg-primary-subtle text-primary-emphasis rounded-pill userDetailEntry" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
-                                <div class="fw-medium \${typeClass}">\${datum.type.toLowerCase()}</div>
-                                <div>\${datum.email}</div>
+                                <img type="button" id="userImage" src="/images/user/png/\${datum.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${datum.id}" style="width: 40px; height: 40px;"/>
+                                <div class="fw-medium badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill userDetailEntry mx-1" type="button" data-user-id="\${datum.id}"> \${datum.nickname}</div>
+                                <div class="fw-medium \${typeClass} mx-1">\${datum.type.toLowerCase()}</div>
                             </div>
                         </div>
                     `
@@ -434,7 +443,7 @@
                         case 'DECLINED':
                             return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                         default:
-                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                            return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1';
                     }
                 }
 
@@ -531,7 +540,7 @@
                             case 'DECLINED':
                                 return 'badge bg-danger-subtle text-danger-emphasis rounded-pill my-1 requestStatusButton';
                             default:
-                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1 requestStatusButton';
+                                return 'badge bg-warning-subtle text-warning-emphasis rounded-pill my-1';
                         }
                     }
 
@@ -682,7 +691,7 @@
         }
     })
 
-    addEventListener('click', function(event) {
+    addEventListener('click', function (event) {
         if (event.target.classList.contains('storeDetailsEntry')) {
             const button = event.target;
             const storeId = button.getAttribute('data-store-id')
@@ -746,5 +755,65 @@
         const successfulToastBootstrap = bootstrap.Toast.getOrCreateInstance(successfulToast);
         successfulToastBootstrap.show();
     }
+
+    function handleImageClick() {
+        document.getElementById('fileInput').click();
+    }
+
+    function handleFileSelect() {
+        const fileInput = document.getElementById('fileInput');
+        const userImage = document.getElementById('userImage');
+
+        // Check if a file is selected
+        if (fileInput.files && fileInput.files[0]) {
+            const selectedFile = fileInput.files[0];
+
+            // Create a FileReader to read the selected file
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Set the image source to the selected file
+                userImage.src = e.target.result;
+
+                sendFileToServer(selectedFile)
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    function sendFileToServer(file) {
+
+        const formData = new FormData();
+        formData.append('imageFile', file);
+
+        fetch(`/images/user/png`, {
+            method: "POST",
+            body: formData
+        })
+    }
+
+    function fetchUserImage() {
+        const userImage = document.getElementById('userImage');
+        const userImageSrc = "/images/user/png/${owner.username}"
+
+        fetch(userImageSrc)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();
+                } else {
+                    // Default image
+                    userImage.src = '/images/user/png/user-default-image.png';
+                }
+            })
+            .then(imageBlob => {
+                return URL.createObjectURL(imageBlob);
+            })
+            .then(imageUrl => {
+                userImage.src = imageUrl;
+            })
+    }
+    fetchUserImage();
+
 </script>
 </html>
