@@ -19,7 +19,7 @@ public interface PostMapper {
 	
 	void updatePost(int postId);
 	
-	void deletePost(int postId);
+	int deletePost(int postId);
 	
 	Post getPostById(int postId);
 	

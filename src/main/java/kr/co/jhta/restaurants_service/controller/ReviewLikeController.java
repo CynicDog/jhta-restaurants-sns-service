@@ -21,14 +21,15 @@ public class ReviewLikeController {
 	
 	@GetMapping("/insert")
 	@ResponseBody
-	public void insertLike(@AuthenticationPrincipal SecurityUser user, int reviewId) {
-		reviewLikeService.insertLike(user.getUser().getId(), reviewId);
+	public int insertLike(@AuthenticationPrincipal SecurityUser user, int reviewId) {
+		return reviewLikeService.insertLike(user.getUser().getId(), reviewId);
+		
 	}
 	
 	@GetMapping("/delete")
 	@ResponseBody
-	public void deleteLike(@AuthenticationPrincipal SecurityUser user, int reviewId) {
-		reviewLikeService.deleteLike(user.getUser().getId(), reviewId);
+	public int deleteLike(@AuthenticationPrincipal SecurityUser user, int reviewId) {
+		return reviewLikeService.deleteLike(user.getUser().getId(), reviewId);
 	}
 
 	

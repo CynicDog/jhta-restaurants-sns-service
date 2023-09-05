@@ -31,4 +31,11 @@
 		where 
 			review_id = #{value}
 	</delete>
+
+	<select id="getLikedCount" resultType="int">
+		select liked_count
+		from REVIEWS
+		where id = #{value}
+	</select>
+	
 </mapper>

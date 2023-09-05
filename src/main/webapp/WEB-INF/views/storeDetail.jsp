@@ -190,6 +190,7 @@
 			                        </div>
 			                    </div>
 		                	</c:forEach>
+		                	<h5 style="color: #ff792a;"><strong>리뷰 남긴 팔로워</strong></h5>
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
@@ -328,6 +329,7 @@
 
             data.forEach(datum => {
             	
+            	/* let images = null; */
 				let like;
 				if(datum.isLiked==='y'){ like = 'bi-heart-fill';}
 				if(datum.isLiked==='n'){ like = 'bi-heart';}
@@ -356,7 +358,7 @@
 					                        <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
 					                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
 					                    </div>
-					                    <div class="col-2 text-end" onclick="openReviewModal(this, \${datum.id})" style="cursor: pointer;">
+					                    <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
 					                        <span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4" id="review-rating-\${datum.id}">
 					                            \${(() => {
 					                                switch (datum.rating) {
@@ -419,13 +421,11 @@
                     </div>
                     <div>
 	                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	                        <div class="modal-dialog">
-	                            <div class="modal-content">
-	                            	<img class="modalImg-\${datum.id}"></img>
-	                        	</div>
-	                		</div>
-                    	</div>
-                	</div>
+	                        <div class="modal-dialog d-flex justify-content-center align-items-center" style="height: 100vh;">
+                                <img class="modalImg-\${datum.id}" style="max-width: 170%; max-height: 70vh;"></img>
+	                        </div>
+	                    </div>
+	                </div>
                     `
                     
                     reviewOutputArea.innerHTML += text;
@@ -439,28 +439,31 @@
 	                    })
 	                 }
                     
-                     images = document.querySelectorAll(`.review-img-\${datum.id}`)
-                     document.querySelector(`.modalImg-\${datum.id}`).src = images[0].src;
+                     let modalImages = document.querySelectorAll(`.review-img-\${datum.id}`)
+                     document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[0].src;
 
                      let currentIndex = 0;
 
-                     function changeReviewImages(n) {
+                     /* function changeReviewImages(n) {
                          currentIndex += n;
                          if (currentIndex <0) {
-                             currentIndex = images.length - 1;
-                         } else if (currentIndex >= images.length) {
+                             currentIndex = modalImages.length - 1;
+                         } else if (currentIndex >= modalImages.length) {
                              currentIndex = 0; // 마지막 이미지로 돌아감
                          }
-                         document.querySelector(`.modalImg-\${datum.id}`).src = images[currentIndex].src;
+                         document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[currentIndex].src;
+                         console.log(modalImages[currentIndex].src);
                      }
-
-                     document.addEventListener("keydown", function (event) {
+                     
+                	 document.addEventListener("keydown", function (event) {
                          if (event.keyCode === 37) {
                              changeReviewImages(-1);
                          } else if (event.keyCode === 39) {
                              changeReviewImages(1);
                          }
-                     });
+                     }); */
+
+                    
                     
                      const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
                      if (datum.reviewComments) {
@@ -511,6 +514,7 @@
  								</div>	`
             
                      		reviewCommentsOutputArea.innerHTML += commenttext;
+
                      	})
                      }
                      
@@ -519,8 +523,8 @@
              isReviewsFetching = false;
          }
  	
-	let isCurrentReviewPicturesShowing = false;
 
+	let isCurrentReviewPicturesShowing = false;
 	
  	// 모달과 이미지 요소를 가져옴
     var modal = document.getElementById("myModal");

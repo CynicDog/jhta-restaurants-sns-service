@@ -15,4 +15,6 @@ public interface ReviewLikeMapper {
 	
 	void deleteLikeByReviewId(int reviewId);
 
+	int getLikedCount(int reviewId);
+
 }
