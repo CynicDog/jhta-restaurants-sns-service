@@ -36,4 +36,12 @@
 		and	customer_id = #{customerId}
 	</select>
 	
+	<delete id="deletePostLikeByPostId" parameterType="int">
+		delete
+		from 
+			POST_LIKES
+		where
+			post_id = #{value}
+	</delete>
+	
 </mapper>

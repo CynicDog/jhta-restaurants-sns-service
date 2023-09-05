@@ -44,6 +44,7 @@ import kr.co.jhta.restaurants_service.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -161,10 +162,12 @@ public class PostController {
         return "post/posting";
     }
 
-    @PostMapping("/detail/delete")
-    public String DeletePostDetail(@RequestParam("id") int id, @AuthenticationPrincipal SecurityUser securityUser) {
+    @GetMapping("/detail/delete")
+    @ResponseBody
+    public void DeletePostDetail(@RequestParam("id") int id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal SecurityUser securityUser) {
     	
-    	return "redirect:/contents";
+    	postService.deletePost(id, securityUser);
+    	
     }
 
     @GetMapping("/allPosts")

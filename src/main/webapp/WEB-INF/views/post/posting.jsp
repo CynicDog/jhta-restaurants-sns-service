@@ -72,7 +72,7 @@
 					</button>
 					<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 					  	<div class="offcanvas-header">
-					    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">댓글</h5>
+					    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">Comment</h5>
 					    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					  	</div>
 					  	<div class="offcanvas-body">
@@ -97,48 +97,43 @@
 									
 									<div class="row my-3">
 										<div class="col-2">
-											<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-												<img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;"/>
-											</a>
-											<div class="text-center card-title my-1">
-												<span style="font-size: medium; font-weight: bold; color: #FFC107;">5.00</span>
-											</div>
+											<div class="d-flex justify-content-center align-items-center">
+										      <img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 50px; height: 50px;"/>
+										    </div>
 										</div>
 										
-											<div class="col-10 position-relative ">
-												<div class="row mb-2">
-													<div class="col-9 text-start">
-														<div class="card-text text-muted" style="font-size: small; ">  
-															<span>${comment.updateDate }</span>
-														</div>
-														<div class="card-text">
-															<span> ${comment.customer.fullName }</span>
-														</div>
-														<div class="card-text">
-															<span>${comment.content }</span>
-														</div>
-														
+										<div class="col-10">
+											<div class="row mb-2">
+												<div class="col text-start">
+													<div class="card-text text-muted" style="font-size: small; ">  
+														<span><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd HH시 mm분"></fmt:formatDate></span>
+													</div>
+													<div class="card-text">
+														<span> ${comment.customer.fullName }</span>
+													</div>
+													<div class="card-text" style="white-space: normal; word-wrap: break-word;">
+														<div>${comment.content }</div>
 													</div>
 													
-													<div class="col-3 d-flex justify-content-end align-items-center">
-												    </div>
 												</div>
-												<div class="row position-absolute" style="bottom:0;right:20px;">
-													<div class="col">
-														<span class="text-end">
-															<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-															<button type="button" class="btn btn-outline-danger btn-sm">
-																<i class="bi bi-trash3"></i>
-																<span class="visually-hidden">삭제</span>
-															</button>
-															<button type="button" class="btn btn-outline-danger btn-sm">
-													            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
-													            <span class="visually-hidden">신고</span>
-													        </button>
-														</span>
-													</div>
+												
+											</div>
+											<div class="row">
+												<div class="col">
+													<span class="text-end">
+														<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
+														<button type="button" class="btn btn-outline-danger btn-sm">
+															<i class="bi bi-trash3"></i>
+															<span class="visually-hidden">삭제</span>
+														</button>
+														<button type="button" class="btn btn-outline-danger btn-sm">
+												            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
+												            <span class="visually-hidden">신고</span>
+												        </button>
+													</span>
 												</div>
 											</div>
+										</div>
 									</div>	
 								</div>
 							</c:forEach>
@@ -158,12 +153,28 @@
 			        <sec:authorize access="isAuthenticated()">
 		        		<sec:authentication property="principal.user.id" var="userId" />	
 			        	<c:if test="${userId eq post.post.customer.id }">
-					        <button type="button" class="btn btn-lg" style="font-size: 22px; color:#EB0000">
+					        <button type="button" class="btn btn-lg delete-button" style="font-size: 22px; color:#EB0000" data-post-id="${post.post.id}">
 								<i class="bi bi-trash3"></i>
 								<span class="visually-hidden">삭제</span>
 							</button>
 			        	</c:if>
 			        </sec:authorize>
+			        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="confirmDeleteModalLabel">게시물 삭제 확인</h5>
+					      </div>
+					      <div class="modal-body text-start">
+					        게시물을 삭제하시겠습니까?
+					      </div>
+					      <div class="mb-2 me-2">
+					        <button type="button" class="btn btn-secondary" id="confirmCancel">Cancel</button>
+					        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				</div>
 			</div>
 			
@@ -232,6 +243,39 @@
 	    }
 	});
 	
+	
+ /*    $(".delete-button").click(function () {
+        let postId = $(this).data("post-id");
+
+        if (confirm("게시물을 삭제하시겠습니까?")) {
+            $.getJSON('/post/detail/delete', {id : postId});
+	        window.history.back();
+        }
+        
+    });
+     */
+    $(".delete-button").click(function () {
+    	  let postId = $(this).data("post-id");
+    	  // 모달 표시
+    	  $('#confirmDeleteModal').modal('show');
+    	  
+    	  // 확인 버튼 클릭 시
+    	  $('#confirmDelete').click(function() {
+    	    // 서버로 삭제 요청 보내기
+    	    $.getJSON('/post/detail/delete', {id : postId});
+    	      
+   	        window.history.back();
+    	      
+    	   
+    	    // 모달 닫기
+    	    $('#confirmDeleteModal').modal('hide');
+    	  });
+    	  
+    	  $('#confirmCancel').click(function(){
+    		$('#confirmDeleteModal').modal('hide');
+    	  })
+    	});
+  
 </script>
 </body>
 </html>

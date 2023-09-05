@@ -27,4 +27,12 @@
 		and A.customer_id = U.id
 	</select>
 	
+	<delete id="deleteCommentsByPostId">
+		delete 
+		from
+			POST_COMMENTS
+		where
+			post_id = #{value}
+	</delete>
+	
 </mapper>

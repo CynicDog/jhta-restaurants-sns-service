@@ -17,4 +17,5 @@ public interface PostDataMapper {
 	
 	Bookmark getBookmarkByStoreIdAndCustomerId(@Param("storeId") int storeId,
 			   									@Param("customerId") int customerId);
+	void deletePostDataByPostId(int postId);
 }
