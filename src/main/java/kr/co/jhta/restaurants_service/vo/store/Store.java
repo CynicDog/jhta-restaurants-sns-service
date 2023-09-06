@@ -60,6 +60,9 @@ public class Store {
     @Transient
     private double averageRating = 0.0;
     
+    @Transient
+    private String pictureName;
+    
     public Store() {
 
 

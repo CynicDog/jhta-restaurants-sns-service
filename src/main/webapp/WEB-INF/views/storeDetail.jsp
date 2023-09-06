@@ -174,7 +174,14 @@
 			                        <h5 style="color: #ff792a;"><strong>주변 맛집 추천</strong></h5>
 			                        <div class="card m-1" id="cardId" style="border-top: none; border-left: none; border-right: none; height: 120px;">
 			                            <div class="d-flex align-items-start">
-			                                <img src="https://mp-seoul-image-production-s3.mangoplate.com/1536664_1681452829189041.jpg?fit=around|120:120&crop=120:120;*,*&output-format=jpg&output-quality=80" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id }'">
+			                                <c:choose>
+							                    <c:when test="${not empty closestStore.pictureName}">
+							                        <img src="/images/review/jpeg/${closestStore.pictureName}" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id}'">
+							                    </c:when>
+							                    <c:otherwise>
+							                        <img src="https://www.technol.si/wp-content/uploads/2018/11/default-image1.jpg" class="card-img" style="width: 100px; height: 100px; cursor: pointer;" onclick="location.href='/store/detail?id=${closestStore.id}'">
+							                    </c:otherwise>
+							                </c:choose>
 			                                <div class="ml-3">
 			                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
 			                                    	${closestStore.name } 
@@ -190,12 +197,12 @@
 			                        </div>
 			                    </div>
 		                	</c:forEach>
-		                	<h5 style="color: #ff792a;"><strong>리뷰 남긴 팔로워</strong></h5>
+		                	<!-- <h5 style="color: #ff792a;"><strong>리뷰 남긴 팔로워</strong></h5>
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="..."> -->
 		                </div>
 		            </div>
 	            </div>
@@ -343,7 +350,7 @@
 					                <div class="text-center card-title my-1">
 					                    <div class="ratio ratio-1x1">
 					                        <a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
-					                            <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" id="review-popover-\${datum.id}" class="img-thumbnail rounded-circle" alt="...">
+					                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  id="review-popover-\${datum.id}" class="img-thumbnail rounded-circle" >
 					                        </a>
 					                    </div>
 					                    <span style="font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
@@ -421,7 +428,7 @@
                     </div>
                     <div>
 	                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	                        <div class="modal-dialog d-flex justify-content-center align-items-center" style="height: 100vh;">
+	                        <div class="modal-dialog d-flex justify-content-center align-items-center cursor: pointer;" style="height: 100vh;">
                                 <img class="modalImg-\${datum.id}" style="max-width: 170%; max-height: 70vh;"></img>
 	                        </div>
 	                    </div>
@@ -474,7 +481,7 @@
  								<div class="row my-3">
  									<div class="col-2">
  										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
- 											<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+ 										<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  class="img-thumbnail rounded-circle" >
  										</a>
  										<div class="text-center card-title my-1">
  											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
