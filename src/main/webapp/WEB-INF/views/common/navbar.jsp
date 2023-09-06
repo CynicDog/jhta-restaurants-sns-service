@@ -275,13 +275,14 @@
 				<div class="card history_card mb-3">
 					<div class="row g-0">
 						<div class="col-md-4">
-							<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+							<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
+							 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
 						</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-9">
-									<p class="card-title">\${store.name}</p>
+									<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
 									<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
 								</div>
 								<div class="col-3 star-container d-flex justify-content-center ">
@@ -319,13 +320,14 @@
 					<div class="card bookmark_card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-9">
-										<p class="card-title">\${store.name}</p>
+										<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
 										<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
 									</div>
 									<div class="col-3 star-container d-flex justify-content-center ">
