@@ -366,7 +366,7 @@
 					                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
 					                    </div>
 					                    <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
-					                        <span class="badge rounded-pill text-dark fw-light" style="background-color:#edcfb4" id="review-rating-\${datum.id}">
+					                        <span class="badge rounded-pill text-dark fw-light" style="background-color: rgba(255, 131, 7, 0.3);" id="review-rating-\${datum.id}">
 					                            \${(() => {
 					                                switch (datum.rating) {
 					                                case 5:
@@ -384,6 +384,7 @@
 					                </div>
 
                                     <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
+                                    <div class="d-flex flex-nowrap " id="reviewKeywordsOutputArea-\${datum.id}"></div>
                                     <form action="/review/store/register" method="post" id="reviewCommentForm">
                                     <input type="hidden" name="reviewId" value="\${datum.id }"/>
                                    	<input type="hidden" name="storeId" value="${param.id }"/>
@@ -471,6 +472,15 @@
                          }
                      }); 
 
+                	 
+                	 const reviewKeywordsOutputArea = document.getElementById('reviewKeywordsOutputArea-' + datum.id)
+                	 if(datum.reviewKeywords) {
+                		 datum.reviewKeywords.forEach(keyword => { 
+                			 reviewKeywordsOutputArea.innerHTML += `
+                			 <span class="badge badge-sm bg-warning-subtle border border-warning-subtle text-warning-emphasis badge-rounded-pill fw-lighter m-2 p-1">\${keyword.keyword}</span>
+                			 `
+                		 })
+                	 }
                     
                     
                      const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
