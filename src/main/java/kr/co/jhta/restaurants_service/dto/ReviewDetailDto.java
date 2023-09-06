@@ -52,5 +52,29 @@ public class ReviewDetailDto {
 	public boolean isKind() {
 		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#친절해요"));
 	}
+	
+	public boolean isMenu() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#메뉴가 다양해요"));
+	}
+	
+	public boolean isPrice() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#가격이 적당해요"));
+	}
+	
+	public boolean isSolo() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#혼밥하기 좋아요"));
+	}
+	
+	public boolean isSeat() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#좌석이 편안해요"));
+	}
+	
+	public boolean isView() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#뷰가 예뻐요"));
+	}
+	
+	public boolean isTakeout() {
+		return reviewKeywords.stream().map(item -> item.getKeyword()).anyMatch(item -> item.equals("#포장이 깔끔해요"));
+	}
 
 }

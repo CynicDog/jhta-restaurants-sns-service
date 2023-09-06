@@ -75,12 +75,18 @@
 	<div class="row">
 		<div class="btn-group m-2">
 			<span>
-				<button type="button" class="btn btn-food border-secondary rounded-pill text-secondary" data-keyword-type="1">#음식이 맛있어요</button>
+				<button type="button" class="btn btn-taste border-secondary rounded-pill text-secondary" data-keyword-type="1">#음식이 맛있어요</button>
 				<button type="button" class="btn btn-parking border-secondary rounded-pill text-secondary" data-keyword-type="2">#주차가 편해요</button>
 				<button type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="3">#매장이 청결해요</button>
-				<button type="button" class="btn btn-large border-secondary rounded-pill text-secondary" data-keyword-type="4">#매장이 넓어요</button>
+				<button type="button" class="btn btn-wide border-secondary rounded-pill text-secondary" data-keyword-type="4">#매장이 넓어요</button>
 				<button type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="5">#분위기가 좋아요</button>
 				<button type="button" class="btn btn-kind border-secondary rounded-pill text-secondary" data-keyword-type="6">#친절해요</button>
+				<button type="button" class="btn btn-menu border-secondary rounded-pill text-secondary" data-keyword-type="7">#메뉴가 다양해요</button>
+				<button type="button" class="btn btn-price border-secondary rounded-pill text-secondary" data-keyword-type="8">#가격이 적당해요</button>
+				<button type="button" class="btn btn-solo border-secondary rounded-pill text-secondary mt-2" data-keyword-type="9">#혼밥하기 좋아요</button>
+				<button type="button" class="btn btn-seat border-secondary rounded-pill text-secondary mt-2" data-keyword-type="10">#좌석이 편안해요</button>
+				<button type="button" class="btn btn-view border-secondary rounded-pill text-secondary mt-2" data-keyword-type="11">#뷰가 예뻐요</button>
+				<button type="button" class="btn btn-takeout border-secondary rounded-pill text-secondary mt-2" data-keyword-type="12">#포장이 깔끔해요</button>
 			</span>
 	        <input type="hidden" name="reviewKeyword" value="#음식이 맛있어요" disabled data-keyword-no="1"/>
 	        <input type="hidden" name="reviewKeyword" value="#주차가 편해요" disabled data-keyword-no="2"/>
@@ -88,6 +94,12 @@
 	        <input type="hidden" name="reviewKeyword" value="#매장이 넓어요" disabled data-keyword-no="4"/>
 	        <input type="hidden" name="reviewKeyword" value="#분위기가 좋아요" disabled data-keyword-no="5"/>
 	        <input type="hidden" name="reviewKeyword" value="#친절해요" disabled data-keyword-no="6"/>
+	        <input type="hidden" name="reviewKeyword" value="#메뉴가 다양해요" disabled data-keyword-no="7"/>
+	        <input type="hidden" name="reviewKeyword" value="#가격이 적당해요" disabled data-keyword-no="8"/>
+	        <input type="hidden" name="reviewKeyword" value="#혼밥하기 좋아요" disabled data-keyword-no="9"/>
+	        <input type="hidden" name="reviewKeyword" value="#좌석이 편안해요" disabled data-keyword-no="10"/>
+	        <input type="hidden" name="reviewKeyword" value="#뷰가 예뻐요" disabled data-keyword-no="11"/>
+	        <input type="hidden" name="reviewKeyword" value="#포장이 깔끔해요" disabled data-keyword-no="12"/>
 		</div>
 	</div>
 	<div class="row">
@@ -109,8 +121,8 @@
 			</div>
 		        <p style="position: relative; left: 30px;"><span id="image-count">0</span>/10</p>
 		    <div class="buttons">
-		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" onclick="goBack()">취소</button>
-		        <button id="btn-review-submit" type="submit" class="btn btn-outline-success" style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
+		        <button type="button" class="btn btn-light" style="border: 1px solid #7F7F7F; min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" onclick="goBack()" >취소</button>
+		        <button id="btn-review-submit" type="submit" class="btn btn-outline-success" disabled style="min-width: 140px; min-height: 50px; padding-left: 14px; padding-right: 14px; border-radius: 50px;" >리뷰 올리기</button>
 		    </div>
 		</div>
 	</div>
@@ -121,6 +133,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	let hasText = false;
+	let hasImage = false;
 	
 	let previewModal = new bootstrap.Modal("#previewModal");
 	
@@ -149,6 +164,7 @@ $(function() {
 	
 	// 이미지 필드의 이미지가 변경되면 
 	$(".photo-section").on("change", "#imageFile", function(event) {
+		
 		// 버튼과  이미지태그르 생성한다.
 		let content = `
 			<button type="button" class="btn position-relative">
@@ -172,13 +188,24 @@ $(function() {
 	    
 	    $(".photo-section").prepend($("#imageFile").attr("id", "").attr("name", "chooseFile"));
 	    $("label[for=imageFile]").after(`<input style="visibility: hidden" type="file" id="imageFile" accept="image/*" >`);
+	    
+		hasImage = true;
+		toggleSubmitButton()	    
 	});
+	
 	
 	$("textarea[name=content]").keyup(function() {
 		
 	    let maxLength = 2000; 
-	    let text = $(this).val(); 
-	    let totalLength = text.length;
+	    let totalLength = $("textarea[name=content]").val().trim().length
+	    
+	  //  console.log("글자수", totalLength)
+	    if (totalLength === 0) {
+	        hasText = false;
+	    } else {
+	       hasText = true;
+	    }
+	    toggleSubmitButton()
 	   
 	    if (totalLength > maxLength) {
 	        $(this).val("");
@@ -186,91 +213,154 @@ $(function() {
 	        $(this).val(sub);
 	        totalLength = 2000;
 	        text = '';
-	        
 	    }
-	        $("#text-count").text(totalLength)
+	    $("#text-count").text(totalLength)
 	});
 	
 	// 초기값이 0인 이미지 수를 나타내는 변수
     let imageCount = 0;
     const maxImageCount = 10;
 
-    $("#imageFile").on("change", function() {
+    $(".photo-section").on("change", function() {
 	    
     	// imageCount가 maxImageCount보다 작다면 이미지 카운트를 증가
         if (imageCount < maxImageCount) {
             imageCount++;
             // imageCount가 증가할 때 마다 텍스트 내용을 변경
             $("#image-count").text(imageCount);
-            
             // imageCount와 maxImageCount가 같다면 이미지 선택 버튼 비활성화
             if (imageCount === maxImageCount) {
                 $("#imageFile").prop("disabled", true); 
             }
         } 
-    	
     });
     
     $("#form-image").on('click', 'i.text-danger', function(event) {
     	event.stopImmediatePropagation()
+    	event.preventDefault()
     	
-    	$(this).parent().remove();
+    	let $btn = $(this).parent();
+    	let index = $btn.index();
+    	$btn.remove();
+    	
+    	$(".photo-section input[type=file]").eq(index).remove();
     	
     	// imageCount가 감소할 때 마다 텍스트 내용을 변경
     	 imageCount--;
          $("#image-count").text(imageCount);
          
       // imageCount가 maxImageCount보다 작다면 이미지 선택 버튼 활성화
-         if (imageCount < maxImageCount) { 
+         if (imageCount > 0) { 
          	$("#imageFile").prop("disabled", false);
          }
-    	
-    	event.preventDefault()
+      
+         if (imageCount=== 0) {
+ 			hasImage = false
+         } else {
+ 	        hasImage = true;
+ 	    }
+         toggleSubmitButton()
+     
     	return false;
     })
     
-    $("#textLength").on("input", function() {
-        // textarea 내용 가져오기
-        let textareaContent = $(this).val().trim();
-        
-        // 리뷰 올리기 버튼 활성화/비활성화
-        if (textareaContent === "") {
-            $("button.btn-outline-success").prop("disabled", true);
-        } else {
-            $("button.btn-outline-success").prop("disabled", false);
-        }
-    });
+    
+    function toggleSubmitButton() {
+    //	console.log("글자", hasText, "이미지", hasImage);
+    	if (hasText && hasImage) {
+    		$("#btn-review-submit").prop("disabled", false);
+    	} else {
+    		$("#btn-review-submit").prop("disabled", true);
+    	}
+    }
+	
 
     // 초기 상태에서 textarea의 내용 확인하여 버튼 상태 설정
     $("#textLength").trigger("input");
  
+    /*let selectedButtonCount = 0;
+    
     // 키워드 버튼 상태 설정 
-	$(".btn-food").click(function() {
+	$(".btn-taste").click(function() {
 		$(this).toggleClass("border-opacity-10 bage-rounded-pill text-bg-danger bg-opacity-75 fw-lighter fs-6 text-white");
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
+		
 	})
+	
 	$(".btn-parking").click(function() {
 		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-secondary bg-opacity-75 fw-lighter fs-6 text-white" )
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-clean").click(function() {
 		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-info bg-opacity-75 fw-lighter fs-6 text-white")
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
-	$(".btn-large").click(function() {
+	$(".btn-wide").click(function() {
 		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 ")
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	$(".btn-mood").click(function() {
 		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 ")
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
+	
 	$(".btn-kind").click(function() {
 		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
-		//$("input[name=reviewKeyword]").val($(this).attr("data-keyword-type"));
 	})
 	
+	$(".btn-menu").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})
+	.
 	
+	$(".btn-price").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})
+	
+	$(".btn-solo").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})
+	
+	$(".btn-seat").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})
+	
+	$(".btn-view").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})
+	
+	$(".btn-takeout").click(function() {
+		$(this).toggleClass("bage-rounded-pill border-opacity-10 text-bg-success bg-opacity-75 fw-lighter fs-6 text-white")
+	})*/
+	
+	// 버튼 클릭 이벤트 핸들러
+	const selectedButtons = []; // 선택된 버튼을 저장할 배열
+
+	function updateButtonState(button) {
+	    const index = selectedButtons.indexOf(button);
+
+	    if (index === -1) {
+	        if (selectedButtons.length >= 6) {
+	            // 이미 6개 이상의 버튼이 선택된 경우, 새로운 버튼 선택을 막음
+	            return;
+	        }
+	        // 새로운 버튼을 선택한 경우
+	        selectedButtons.push(button);
+	        $(button).toggleClass("bg-warning-subtle border border-warning-subtle text-warning-emphasis badge-rounded-pill fw-lighter fs-6 text-white");
+	    } else {
+	        // 이미 선택된 버튼을 다시 클릭한 경우
+	        selectedButtons.splice(index, 1);
+	        $(button).toggleClass("bg-warning-subtle border border-warning-subtle text-warning-emphasis badge-rounded-pill fw-lighter fs-6 text-white");
+	    }
+
+	    // 선택된 버튼이 6개 이상인 경우 나머지 버튼을 비활성화 처리
+	    if (selectedButtons.length >= 6) {
+	        $(".btn-group .btn").not(selectedButtons).prop("disabled", true);
+	    } else {
+	        $(".btn-group .btn").prop("disabled", false);
+	    }
+	}
+
+	$(".btn-group .btn").click(function() {
+	    updateButtonState(this);
+	});
+	
+
 	const reviewForm = document.getElementById('reviewForm');
 	const reviewKeywordInput = document.getElementById('reviewKeywordInput');
 
@@ -279,12 +369,11 @@ $(function() {
 	    const selectedButtons = document.querySelectorAll('.btn-group .btn.active');
 	    const selectedKeywordNos = Array.from(selectedButtons).map(button => button.getAttribute('data-keyword-type'));
 	    
-	    $("input[name=reviewKeyword]").prop("disabled", true);
-	    
-	    selectedKeywordNos.forEach(function(no) {
-	    	$("input[data-keyword-no="+no+"]").prop("disabled", false)
-	    })
-	    
+		    $("input[name=reviewKeyword]").prop("disabled", true);
+		    
+		    selectedKeywordNos.forEach(function(no) {
+		    	$("input[data-keyword-no="+no+"]").prop("disabled", false)
+		    })
 	}
 
 	// 버튼 클릭 이벤트 핸들러 추가
@@ -295,6 +384,7 @@ $(function() {
 	        updateReviewKeywords();
 	    });
 	});
+
 	
 /* 	$("#reviewForm").submit(function() {
 		document.getElementById("imageFile").files = files;
@@ -309,18 +399,7 @@ $(function() {
 	    window.history.back();
 	}
 	
-	// 이벤트 디바운싱을 적용한 취소 버튼 클릭 이벤트 처리
-	const cancelButton = document.getElementById('cancelButton');
-	let isCancelButtonClicked = false;
-	cancelButton.addEventListener('click', function () {
-	    if (!isCancelButtonClicked) {
-	        isCancelButtonClicked = true;
-	        goBack();
-	        setTimeout(() => {
-	            isCancelButtonClicked = false;
-	        }, 1000); // 1초 동안 이벤트를 막음
-	    }
-	});
+	
 </script>
 </body>
 </html>
