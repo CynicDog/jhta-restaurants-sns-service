@@ -297,7 +297,12 @@
 	</select>
 
 	<select id="getClosestStores" resultType="Store">
-		SELECT x.*, (select avg(rating) from REVIEWS r where r.store_id = x.id) averageRating
+		SELECT x.*, (select avg(rating) from REVIEWS r where r.store_id = x.id) averageRating,
+			(select rp.picture_name 
+			 from REVIEWS r2, REVIEW_PICTURES rp
+			 where r2.id = rp.review_id 
+			 and r2.store_id = x.id
+			 LIMIT 1) as pictureName
 		FROM (
 			SELECT
 				id 					AS id,
