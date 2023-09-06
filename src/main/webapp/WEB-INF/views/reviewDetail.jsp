@@ -35,8 +35,8 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
-							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}" data-bs-content="Follow">
+							<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
 						</a>
 					</div>
 					<div class="col-3">
@@ -214,7 +214,7 @@ html, body {
 				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #ff792a; font-size: 45px;"></i></div>
 				<div class="col-1">
 					<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-						<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
 					</a>
 			<div class="text-center card-title my-1">
 				<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
@@ -332,15 +332,6 @@ $(document).ready(function () {
     }
 });
 
-$("#button-add-comment").click(function() {
-	 if (${userId != null}) {
-		 $("#reviewCommentForm").submit();
-       } else {
-           // 로그인되지 않은 경우, 로그인 페이지 열기
-           alert("로그인이 필요합니다");
-           window.location.href = "/user/login?error=anonymous";
-       }
-});
 
 </script>
 </body>

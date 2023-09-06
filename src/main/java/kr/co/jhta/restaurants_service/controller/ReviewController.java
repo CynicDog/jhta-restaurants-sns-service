@@ -102,6 +102,7 @@ public class ReviewController {
 		}
 		
 		// 리뷰 답글 등록 요청 처리
+		@PreAuthorize("isAuthenticated()")
 		@PostMapping("/register")
 		public String reviewCommentRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
 			reviewService.createReviewComment(form, securityUser);
