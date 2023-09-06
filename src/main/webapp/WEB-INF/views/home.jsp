@@ -33,9 +33,9 @@
 			<div class= "col-12">
 				<div class="row border-bottom">
 					<div class="col-12">
-						<form action="/store/search" method="GET">
-							<div class="mx-auto my-5 search-bar input-group" style="width: 60%;" >
-								<input name="keyword" type="text"
+						<form action="/store/search" method="GET" id="form-search-keyword">
+							<div class="offset-3 my-5 search-bar input-group" style="width:45%;" >
+								<input name="keyword" type="text" id="field-keyword"
 									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
 									aria-label="Recipient's username" aria-describedby="button-addon2">
 								<div class="input-group-append"></div>
@@ -116,6 +116,18 @@
 	isLogin = ${pageContext.request.userPrincipal != null} ? true : false;
 	getFeed();
 	
+	// 검색 키워드 예외처리
+	$("#form-search-keyword").submit(function(event) {
+		let keyword = $("#field-keyword").val();
+		if (!keyword.trim()) {
+			$("#field-keyword").val("");
+			alert("검색어를 입력하세요");
+			//return false : 폼 제출 취소
+			return false;
+		}
+		return true;
+	})
+	
 	//Click Listener - bookmark star 
 	$("#home-content").on('click', '[id^="star-"]', function(){
 			//로그인 했을 때
@@ -168,7 +180,6 @@
 	
 	//Button Event Listener - Follow request
 	$("#home-content").on('click', '[id^="button-follow-"]', function(){
-		
 		let  $btn = $(this);
 	    if (isLogin) {
 	    	if($(this).hasClass('active')){
@@ -179,11 +190,16 @@
 				const writerId = $(this).attr('data-writer-id');
 	    		console.log("before postJSON");
 	    		
-				$.post('/user/follow',{recipientId : writerId}, function(){
+				$.post('/user/follow',{recipientId : writerId})
+				 .done(function(){
 					$btn.addClass("active");
 					$btn.text("요청됨");
 					$btn.prop('disabled',true);
-				});
+				})
+				 .fail(function() {
+					 alert("이미 팔로우 요청되었습니다.");
+				 })
+				;
 	    	}
 
 	    } else {
