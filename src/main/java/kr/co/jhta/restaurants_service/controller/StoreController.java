@@ -77,14 +77,16 @@ public class StoreController {
 	}
 
 	@GetMapping("/search")
-	public String search(SearchParamCommand searchParam,
-						 Model model) {
-
-		model.addAttribute("keyword",searchParam.getKeyword());
-		model.addAttribute("postList", postService.getPostsByStoreSearch(searchParam));
-		log.info("postList : ", postService.getPostsByStoreSearch(searchParam));
-		
+	public String search(@RequestParam(name="keyword", required = false, defaultValue="") String keyword, Model model) {
+		model.addAttribute("keyword",keyword);
 		return "search";
+	}
+	
+	@GetMapping("/posts")
+	@ResponseBody
+	public List<PostContentsDto> search(SearchParamCommand searchParam) {
+		
+		return postService.getPostsByStoreSearch(searchParam);
 	}
 	
 	@GetMapping("/bookmark")

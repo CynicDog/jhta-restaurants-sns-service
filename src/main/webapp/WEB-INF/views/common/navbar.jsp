@@ -185,8 +185,6 @@
 
 	//bookmark star click listener
 	$(".modal-body").on('click', '[id^="star-"]', function(){
-		
-		
 	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
 	    if (${pageContext.request.userPrincipal != null}) {
 
