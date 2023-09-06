@@ -56,7 +56,7 @@
 <body>
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
-	<div class="container border-top mt-3" >
+	<div class="container border-top mt-3 bg-light" >
 		<div class="row text-center border-bottom">
 			<div class="col-12 my-5">
 				<h2>Follower Review</h2>
@@ -123,6 +123,8 @@
 	
 	        data.forEach(datum => {
 	        	
+	        	fetchAndFindKeywords(datum.id)
+	        	
 	            document.getElementById('reviewsOutputArea').innerHTML += `
 	        					<div class="col-md-4 my-3">
 	        						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=\${datum.id}'" style=" cursor: pointer;">
@@ -136,7 +138,7 @@
 	        						</div>
 	        						<div class="row">
 	        							<div class="col">
-	        								<strong >\${datum.userName}</strong>
+	        								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=\${datum.customerId}'"><strong >\${datum.userName}</strong></span>
 	        							</div>
 	        							<div class="col text-end">
 	        								\${timeForToday(datum.createDate)}

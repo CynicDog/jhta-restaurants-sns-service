@@ -66,6 +66,10 @@
 	  background: #efefef;
 	}
 	
+	.zindex{
+		z-index: 0;
+	}
+	
 	</style>
     <title>Insert title here</title>
 </head>
@@ -74,7 +78,7 @@
 <div class="wrap">
     <div class="container">
         <form method="post" action="register">
-            <div class="row justify-content-center align-items-center mt-5">
+            <div class="row justify-content-center align-items-center mt-5 mb-3">
                 <div class="col-md-10">
                     <div class="card shadow p-3 mb-5 rounded">
                         <div class="fw-lighter m-4 p-2">
@@ -82,13 +86,13 @@
 		                </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <div class="form-floating">
+                                <div class="form-floating zindex">
                                     <input class="form-control-plaintext mb-4" placeholder="Leave a comment here"
                                            name="title"
                                            id="postTitle">
                                     <label for="postTitle">제목을 작성해 주세요!</label>
                                 </div>
-                                <div class="form-floating mb-5">
+                                <div class="form-floating mb-5 zindex">
                                     <input class="form-control-plaintext" placeholder="Leave a comment here"
                                            name="subTitle"
                                            id="postSubTitle">
@@ -97,7 +101,7 @@
                             </div>
 
                             <div class="col-md" id="box">
-                                <div id="post-index-0" class="card shadow p-3 mb-5 rounded">
+                                <div id="post-index-0" class="card p-3 mb-5 rounded">
                                     <div class="card-body justify-content-center align-items-center">
                                         <div class="row justify-content-center align-items-center">
                                             <div class="col-4">
@@ -118,14 +122,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div class="form-floating searchInput active" id=search-input name="searchInputName">
+                                                <div class="form-floating searchInput active zindex" id=search-input name="searchInputName">
                                                     <input type="text" id="storeNameInput" class="form-control-plaintext mb-4 storeNameInput"
                                                           name="storeName">
                                                     <input type="hidden" name="storeId" id="storeInput" class="storeIdInput">
 				                                    <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
                                                     <label for="storeInput">가게명을 작성해주세요 :)</label>
                                                 </div>
-                                                <div class="form-floating">
+                                                <div class="form-floating zindex">
 				                                    <textarea class="form-control-plaintext"
                                                               rows="10" cols="60"
                                                               name="content" style="min-height:10rem"></textarea>
@@ -144,7 +148,7 @@
                             </div>
 
                             <div class="col-md">
-                                <div class="card shadow p-3 mb-5 rounded">
+                                <div class="card p-3 mb-5 rounded">
                                     <div class="card-body">
                                         <div class="card-body text-center ">
                                             <a class="btn" id="btn-add-field">
@@ -237,7 +241,7 @@
 
             // 추가할 html 컨텐츠를 정의한다.
             let content = `
-            <div id="post-index-\${formIndex}" class="card shadow p-3 mb-5 rounded post-index">
+            <div id="post-index-\${formIndex}" class="card p-3 mb-5 rounded post-index">
                 <div class="card-body justify-content-center align-items-center">
                     <div class="row justify-content-center align-items-center">
                         <div class="col-4">
@@ -258,14 +262,14 @@
                             </div>
                         </div>
                         <div class="col-8">
-			            	<div class="form-floating" id="search-input-\${formIndex}" name="searchInputName">
+			            	<div class="form-floating zindex" id="search-input-\${formIndex}" name="searchInputName">
 					                <input type="text" id="storeNameInput-\${formIndex}" class="form-control-plaintext mb-4 storeNameInput-\${formIndex}"
 					                name="storeName">
 					          <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
 					          <input type="hidden" name="storeId" id="storeInput-\${formIndex}" class="storeIdInput">
 					          <label for="storeInput-\${formIndex}">가게명을 작성해주세요 :)</label>
 			            	</div>
-                            <div class="form-floating">
+                            <div class="form-floating zindex">
                                 <textarea class="form-control-plaintext"
                                           rows="10" cols="60"
                                           name="content" style="min-height:10rem"></textarea>
