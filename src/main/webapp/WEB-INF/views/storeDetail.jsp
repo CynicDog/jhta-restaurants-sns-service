@@ -33,42 +33,44 @@
                 <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" data-review-id="${recentReview.id }" id="review-img-${recentReview.id }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
         </div>
-        <div id="myModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
-            <span class="close" onclick="closeModal()" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
-            <div class=" d-flex justify-content-center align-items-center" style="height: 100%;">
-                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-                    <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
-                        &#10094;
-                    </button>
-                </div>
-                <div class="text-center" style="background-color: black; width: 80%;">
-				    <div class="fotorama" data-nav="thumbs">
-				        <img class="modal-content" id="modalImg" style="width: auto; height: auto; max-width: 100%; max-height: 80vh; margin: auto; display: block;">
-				    </div>
-				</div>
-                <div style="width: 400px;" class="2">
-                    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
-                        <div class="card-body d-flex flex-column align-items-start">
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
-                                <div class="ml-2" >
-                                    <span style="font-size: medium; font-weight: bold;" id="modal-review-nickname">${datum.nickname }</span>
-                                </div>
-                                <div class="p-2 ml-auto" >
-                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill" id="modal-review-rating">${datum.rating }</span>
-                                </div>
-                            </div>         
-							<div class="review" id="modal-review-content">  </div>
-                        </div>
-                    </div>
-                </div>
-                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-                    <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
-                        &#10095;
-                    </button>
-                </div>
-            </div>
-        </div>
+        <c:forEach var="recentReview" items="${recentReviews }" >
+	        <div id="myModal-${recentReview.id }" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); overflow: auto; z-index: 1000;">
+	            <span class="close" onclick="closeModal(${recentReview.id })" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
+	            <div class=" d-flex justify-content-center align-items-center" style="height: 100%;">
+	                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
+	                    <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+	                        &#10094;
+	                    </button>
+	                </div>
+	                <div class="text-center" style="background-color: black; width: 80%;">
+					    <div class="fotorama" data-nav="thumbs">
+					        <img class="modal-content" id="modalImg-${recentReview.id }" style="width: auto; height: auto; max-width: 100%; max-height: 80vh; margin: auto; display: block;">
+					    </div>
+					</div>
+	                <div style="width: 400px;" class="2">
+	                    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
+	                        <div class="card-body d-flex flex-column align-items-start">
+	                            <div class="d-flex align-items-center mb-2">
+	                                <img src="/images/user/png/${recentReview.customerName}"  onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
+	                                <div class="ml-2">
+	                                    <span style="font-size: medium; font-weight: bold;" id="modal-review-nickname">${recentReview.nickname }</span>
+	                                </div>
+	                                <div class="p-2 ml-auto">
+	                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill" id="modal-review-rating">${recentReview.rating }</span>
+	                                </div>
+	                            </div>         
+								<div class="review" id="modal-review-content"> ${recentReview.content } </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
+	                    <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+	                        &#10095;
+	                    </button>
+	                </div>
+	            </div>
+	        </div>
+        </c:forEach>
         <div class="row">
             <div class="col-md-8">
                 <div>
@@ -197,12 +199,12 @@
 			                        </div>
 			                    </div>
 		                	</c:forEach>
-		                	<!-- <h5 style="color: #ff792a;"><strong>리뷰 남긴 팔로워</strong></h5>
+		                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="..."> -->
+		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
 		                </div>
 		            </div>
 	            </div>
@@ -349,9 +351,7 @@
 					            <div class="col-2">
 					                <div class="text-center card-title my-1">
 					                    <div class="ratio ratio-1x1">
-					                        <a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
-					                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  id="review-popover-\${datum.id}" class="img-thumbnail rounded-circle" >
-					                        </a>
+					                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=\${datum.customerId}'" style="cursor: pointer;">
 					                    </div>
 					                    <span style="font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
 					                </div>
@@ -451,7 +451,8 @@
 
                      let currentIndex = 0;
 
-                     /* function changeReviewImages(n) {
+
+                     function changeReviewImages(n) {
                          currentIndex += n;
                          if (currentIndex <0) {
                              currentIndex = modalImages.length - 1;
@@ -459,7 +460,7 @@
                              currentIndex = 0; // 마지막 이미지로 돌아감
                          }
                          document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[currentIndex].src;
-                         console.log(modalImages[currentIndex].src);
+                         console.log(currentIndex + ":" + modalImages[currentIndex].src);
                      }
                      
                 	 document.addEventListener("keydown", function (event) {
@@ -468,7 +469,7 @@
                          } else if (event.keyCode === 39) {
                              changeReviewImages(1);
                          }
-                     }); */
+                     }); 
 
                     
                     
@@ -481,7 +482,7 @@
  								<div class="row my-3">
  									<div class="col-2">
  										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
- 										<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  class="img-thumbnail rounded-circle" >
+ 											<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  class="img-thumbnail rounded-circle" >
  										</a>
  										<div class="text-center card-title my-1">
  											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
@@ -534,8 +535,8 @@
 	let isCurrentReviewPicturesShowing = false;
 	
  	// 모달과 이미지 요소를 가져옴
-    var modal = document.getElementById("myModal");
-    var modalImg = document.getElementById("modalImg");
+    // var modal = document.getElementById("myModal");
+    
     var images = document.querySelectorAll("#review-img-thumbnail .img-thumbnail");
     console.log("사진갯수", images.length)
     var currentIndex; // 현재 이미지의 인덱스를 저장하는 변수
@@ -543,32 +544,43 @@
     // 모달을 열 때 호출되는 함수
     function openModal(image) {
     	isCurrentReviewPicturesShowing = true;
+        
+    	let reviewId = image.getAttribute("data-review-id");
+        
+ 		var modal = document.getElementById("myModal-" + reviewId);
+ 		var modalImg = document.getElementById("modalImg-" + reviewId);
         modal.style.display = "block"; // 모달을 보이게 함
         modalImg.src = image.src; // 모달 이미지 요소의 소스를 클릭한 이미지의 소스로 설정
 
         // 클릭한 이미지의 데이터 속성에서 리뷰 ID를 가져옴
-        let reviewId = image.getAttribute("data-review-id");
+ 
         // 해당 리뷰 ID에 해당하는 리뷰 내용을 가져와 모달 내용에 설정
-        let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
-        document.getElementById("modal-review-content").textContent = reviewContent;
+        // let reviewContent = document.getElementById("review-content-" + reviewId).textContent;
+        // document.getElementById("modal-review-content").textContent = reviewContent;
 
         // 클릭한 이미지의 인덱스를 현재 인덱스로 설정하고, 네비게이션 버튼 업데이트
-        currentIndex = Array.from(images).indexOf(image);
-        updateNavButtons();
+        // currentIndex = Array.from(images).indexOf(image);
+        // updateNavButtons();
         
      	// 리뷰 작성자의 닉네임 가져오기
-        let reviewNickname = document.getElementById("review-nickname-" + reviewId).textContent;
-        document.getElementById("modal-review-nickname").textContent = reviewNickname;
+        // let reviewNickname = document.getElementById("review-nickname-" + reviewId).textContent;
+        // document.getElementById("modal-review-nickname").textContent = reviewNickname;
 
         // 리뷰 작성자의 rating 가져오기
-        let ratingText = document.getElementById("review-rating-" + reviewId).textContent.trim();
-        document.getElementById("modal-review-rating").textContent = ratingText;
+        // let ratingText = document.getElementById("review-rating-" + reviewId).textContent.trim();
+        // document.getElementById("modal-review-rating").textContent = ratingText;
     }
 
     // 모달을 닫을 때 호출되는 함수
-    function closeModal() {
+    function closeModal(id) {
     	isCurrentReviewPicturesShowing = false;
-        modal.style.display = "none"; // 모달을 숨김
+    	// document.getElementById('myModal-' + id).style.display = "none"; // 모달을 숨김
+    	var elements = document.querySelectorAll('[id^="myModal"]');
+
+    	// Loop through the elements and set their display property to "none"
+    	for (var i = 0; i < elements.length; i++) {
+    	  elements[i].style.display = "none";
+    	}
     }
 
     // 이미지 변경 함수 (좌우 버튼 클릭 시 호출)
@@ -619,14 +631,13 @@
     document.addEventListener("keydown", function (event) {
         if (event.keyCode === 27) {
             closeModal(); 
-        } else if (event.keyCode === 37) {
-            changeImage(-1); 
+        } 
+          /* else if (event.keyCode === 37) {
+            openModal(image); 
         } else if (event.keyCode === 39) {
-            changeImage(1); 
-        }
+            openModal(1); 
+        } */
     });
-
-
     
     // localStorage에 가게 id저장
     let store_id = `${param.id}`
@@ -900,6 +911,7 @@
             $(this).addClass('active').css('color', '#ff792a'); // 선택한 버튼의 텍스트 색 변경
         });
     });
+    
 
 </script>
 </body>
