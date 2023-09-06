@@ -558,15 +558,37 @@
                 isReviewLast = data.last;
                 data.content.forEach(datum => {
 
+                    let typeClass = null;
+                    switch (datum.rating) {
+                        case 5:
+                            typeClass = 'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+                            break;
+                        case 3:
+                            typeClass = 'badge bg-light-subtle text-light-emphasis rounded-pill';
+                            break;
+                        case 1:
+                            typeClass = 'badge bg-dark-subtle text-dark-emphasis rounded-pill';
+                            break;
+                        default:
+                            typeClass = 'badge bg-light-subtle text-light-emphasis rounded-pill';
+                    }
+
                     const truncatedContent = (datum.content.split(' ').length > 30)
                         ? `\${datum.content.split(' ').slice(0, 50).join(' ')} (...)`
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
                         <div class="shadow-sm border border-light rounded m-3">
-                            <div class="p-3">
-                                <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
-                                \${truncatedContent}
+                            <div class="p-2" type="button">
+                                <div>
+                                    <span class="badge bg-success-subtle text-success-emphasis rounded-pill fw-light storeDetailsEntry" data-store-id="\${datum.store.id}">
+                                        \${datum.store.name}
+                                    </span>
+                                    <span class="\${typeClass} fw-light">\${ getRatingText(datum.rating) }
+                                </div>
+                                <p class="rounded-4 bg-body-tertiary mt-3 p-3 storeDetailsEntry" data-store-id="\${datum.store.id}">
+                                    \${truncatedContent}
+                                </p>
                             </div>
                         </div>
                     `;
@@ -892,6 +914,17 @@
             .then(data => {
                 document.getElementById('reviewsCount').textContent = data;
             })
+    }
+
+    function getRatingText(rating) {
+        switch (rating) {
+            case 5:
+                return '맛있어요 😋'
+            case 3:
+                return '괜찮아요 🙂'
+            case 1:
+                return '별로에요 🥲'
+        }
     }
 
     function fetchUserImage() {

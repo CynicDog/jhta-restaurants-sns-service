@@ -1,7 +1,9 @@
 package kr.co.jhta.restaurants_service.service;
 
 import java.util.Date;
-import java.util.List;import java.util.stream.Collector;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
@@ -47,7 +49,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 
 	@Autowired private ReviewMapper reviewMapper;
-	
+
 
 	@Autowired private ReviewPictureMapper reviewPictureMapper;
 
@@ -62,7 +64,7 @@ public class ReviewService {
 	@Autowired private ReviewRepository reviewRepository;
 
 	@Autowired private ReviewPictureRepository reviewPictureRepository;
-	
+
 	@Autowired private ReviewReportMapper reviewReportMapper;
 	
 	@Autowired private ReviewLikeMapper reviewLikeMapper;
@@ -90,7 +92,7 @@ public class ReviewService {
 				reviewKeywordMapper.insertReveiwKeyword(reviewKeyword);
 			}
 		}
-		
+
 		if (form.getChooseFile() != null) {
 			for (MultipartFile fileName : form.getChooseFile()) {
 				ReviewPicture reviewPicture = new ReviewPicture();
@@ -100,13 +102,13 @@ public class ReviewService {
 				reviewPicture.setCreateDate(new Date());
 				reviewPictureMapper.insertReveiwPicture(reviewPicture);
 			}
-		}		
+		}
 	}
 
 	// 새 리뷰 답글 등록하기
 	public void createReviewComment(ReviewCommentCommand form, SecurityUser securityUser) {
 		ReviewComment reviewComment = new ReviewComment();
-		
+
 		reviewComment.setContent(form.getContent());
 
 		Review review = reviewMapper.getReviewById(form.getReviewId());
@@ -132,11 +134,11 @@ public class ReviewService {
 
 		List<Review> allReviewByCustomerId = reviewMapper.getAllReviewsByCustomerId(review.getCustomer().getId());
 		Double reviewRatingByCustomerId = allReviewByCustomerId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
-		
+
 		List<ReviewPicture> reviewPictures = reviewPictureMapper.getReviewPicturesByReviewId(ReviewId);
-		
+
 		List<ReviewCommentDto> reviewComments = reviewCommentMapper.getReviewCommentAndUserByReviewId(ReviewId);
-		
+
 		dto.setReview(review);
 		dto.setReviewKeywords(reviewKeyword);
 		dto.setReviewRatingByCustomerId(reviewRatingByCustomerId);
@@ -145,21 +147,21 @@ public class ReviewService {
 
 		return dto;
 	}
-	
-	
+
+
 	public void createReviewReport(ReviewReportCommand form, SecurityUser securityUser) {
 		ReviewReport reviewReport = new ReviewReport();
-		
-		 // 문자열 값을 enum 값으로 변환
-	    ReviewReport.CATEGORY categoryEnum = ReviewReport.CATEGORY.valueOf(form.getCategory());
-	    reviewReport.setCategory(categoryEnum);
-	    reviewReport.setContent(form.getContent());
-	    reviewReport.setCreateDate(new Date());
+
+		// 문자열 값을 enum 값으로 변환
+		ReviewReport.CATEGORY categoryEnum = ReviewReport.CATEGORY.valueOf(form.getCategory());
+		reviewReport.setCategory(categoryEnum);
+		reviewReport.setContent(form.getContent());
+		reviewReport.setCreateDate(new Date());
 		reviewReport.setReporter(securityUser.getUser());
 		reviewReport.setReview(reviewMapper.getReviewById(form.getReviewId()));
-	    
-	    reviewReportMapper.insertReveiwReport(reviewReport);
-		
+
+		reviewReportMapper.insertReveiwReport(reviewReport);
+
 	}
 
 	public Page<Projection.Review> getNonBlockedReviewsByCustomerIdOrderByCreateDate(int customerId, Review.BLOCKED no, Integer page, Integer limit) {
@@ -173,24 +175,24 @@ public class ReviewService {
 		return reviewRepository.countByCustomerId(customerId);
 	}
 
-	
-	// 가게별 리뷰 평균 가져오기 
+
+	// 가게별 리뷰 평균 가져오기
 	public ReviewDetailDto getRatingAvgByStoreId(int storeId) {
 		ReviewDetailDto reviewDetailDto = new ReviewDetailDto();
-		
+
 		int reviewCount = storeMapper.getReviewCountByStoreId(storeId);
 		int bookmarkCount = storeMapper.getBookmarkCountByStoreId(storeId);
-		
-		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);	
+
+		List<Review> getAllReviewsByStoreId = reviewMapper.getAllReviewsByStoreId(storeId);
 		double storeReviewAvg = getAllReviewsByStoreId.stream().collect(Collectors.averagingDouble(rating -> rating.getRating()));
-		
+
 		reviewDetailDto.setStoreReviewAvg(storeReviewAvg);
 		reviewDetailDto.setReviewCount(reviewCount);
 		reviewDetailDto.setBookmarkCount(bookmarkCount);
-		
+
 		return reviewDetailDto;
 	}
-	
+
 
 	// 리뷰 rating가져오기
 	public ReviewSummaryDto getAllReviewRatingByStoreId(int storeId) {
@@ -215,37 +217,37 @@ public class ReviewService {
     }
     
     public List<ReviewContentsDto> getThreeRecentReview(){
-    	List<ReviewContentsDto> reviews = reviewMapper.getThreeRecentReivews();
-    	for(ReviewContentsDto review : reviews) {
-    		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
-    		review.setKeywords(reviewKeyword);
-    	}
-    	return reviews;
+		List<ReviewContentsDto> reviews = reviewMapper.getThreeRecentReivews();
+		for(ReviewContentsDto review : reviews) {
+			List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
+			review.setKeywords(reviewKeyword);
+		}
+		return reviews;
     }
     
     public List<ReviewContentsDto> getThreeFollowerReview(SecurityUser securityUser){
-    	List<ReviewContentsDto> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
-    	for(ReviewContentsDto review : reviews) {
-    		List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
-    		review.setKeywords(reviewKeyword);
-    	}
-    	return reviews;
+		List<ReviewContentsDto> reviews = reviewMapper.getThreeFollowerReivews(securityUser.getUser().getId());
+		for(ReviewContentsDto review : reviews) {
+			List<ReviewKeyword> reviewKeyword = reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId());
+			review.setKeywords(reviewKeyword);
+		}
+		return reviews;
     }
     
     public List<ReviewContentsDto> getAllReviewsPaginated(int page, int limit){
-    	int start = (page - 1) * limit;
-		
+		int start = (page - 1) * limit;
+
 		return reviewMapper.getAllReivewsPaginated(start, limit);
     }
     
     public List<ReviewContentsDto> getFollowerReviewsPaginated(int page, int limit, SecurityUser securityUser){
-    	int start = (page - 1) * limit;
-		
+		int start = (page - 1) * limit;
+
 		return reviewMapper.getFollowerReivewsPaginated(start, limit, securityUser.getUser().getId());
     }
     
     public List<ReviewKeyword> getReviewKeywords(int reviewId){
-    	return reviewKeywordMapper.getReviewKeywordsByReviewId(reviewId);
+		return reviewKeywordMapper.getReviewKeywordsByReviewId(reviewId);
     }
 
     public Page<ReviewPicture> getReviewPicturesByCustomerIdOrderByCreateDateDesc(int customerId, Integer page, Integer limit) {
@@ -254,6 +256,9 @@ public class ReviewService {
     }
     
     public void deletedReview(int reviewId) {
+
+		reviewMapper.deleteReview(reviewId);
+
    
     		reviewCommentMapper.deleteReviewCommentByReviewId(reviewId);
     		reviewKeywordMapper.deleteReviewKeywords(reviewId);
@@ -267,5 +272,25 @@ public class ReviewService {
     	
     	reviewCommentMapper.deleteReviewComment(reviewCommentId);
     	
+
     }
+
+	public List<String> getReviewKeywordsByUserId(Integer userId, Integer limit) {
+
+		List<Review> reviews = reviewMapper.getAllReviewsByCustomerId(userId);
+		List<ReviewKeyword> reviewKeywords = reviews.stream()
+				.flatMap(review -> reviewKeywordMapper.getReviewKeywordsByReviewId(review.getId()).stream())
+				.collect(Collectors.toList());
+
+		Map<String, Long> keywordFrequency = reviewKeywords.stream()
+				.collect(Collectors.groupingBy(ReviewKeyword::getKeyword, Collectors.counting()));
+
+		List<String> topKeywords = keywordFrequency.entrySet().stream()
+				.sorted((entry1, entry2) -> Long.compare(entry2.getValue(), entry1.getValue()))
+				.map(Map.Entry::getKey)
+				.limit(limit) // Limit to the top three keywords
+				.collect(Collectors.toList());
+
+		return topKeywords;
+	}
 }

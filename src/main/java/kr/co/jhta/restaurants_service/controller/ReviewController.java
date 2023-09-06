@@ -4,10 +4,9 @@ import java.io.IOException;
 
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,18 +28,11 @@ import kr.co.jhta.restaurants_service.controller.command.ReviewReportCommand;
 import kr.co.jhta.restaurants_service.controller.command.ReviewCommand;
 import kr.co.jhta.restaurants_service.dto.ReviewContentsDto;
 import kr.co.jhta.restaurants_service.dto.ReviewDetailDto;
-import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.service.ReviewService;
 import kr.co.jhta.restaurants_service.service.StoreService;
 //import kr.co.jhta.restaurants_service.dto.ReviewListDto;
-import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
-import kr.co.jhta.restaurants_service.service.ReviewService;
-import kr.co.jhta.restaurants_service.vo.post.Post;
-import kr.co.jhta.restaurants_service.vo.review.Review;
 import kr.co.jhta.restaurants_service.vo.review.ReviewKeyword;
-import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
-import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -197,6 +189,13 @@ public class ReviewController {
 	@GetMapping("/get/keywords")
 	public List<ReviewKeyword> getReviewsKeywords(@RequestParam("reviewId") Integer reviewId){
 		return reviewService.getReviewKeywords(reviewId);
+	}
+
+	@ResponseBody
+	@GetMapping("/keywords-by-user")
+	public List<String> reviewKeywordsByUser(@AuthenticationPrincipal SecurityUser securityUser,
+											 @RequestParam("id") Optional<Integer> userId) {
+		return reviewService.getReviewKeywordsByUserId(userId.orElse(securityUser.getUser().getId()), 4);
 	}
 
 }
