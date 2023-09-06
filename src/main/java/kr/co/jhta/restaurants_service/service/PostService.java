@@ -179,6 +179,7 @@ public class PostService {
 
 
 	public void insertPostComment(PostCommentCommand form, SecurityUser securityUser) throws IOException{
+		
 		PostComment postComment = new PostComment();
 		postComment.setContent(form.getContent());
 		
@@ -188,6 +189,13 @@ public class PostService {
 		
 		postCommentMapper.insertComment(postComment);
 		
+	}
+	
+	public boolean deletePostComment(int postId) {
+		
+		postCommentMapper.deleteComment(postId);
+		
+		return true;
 	}
 
     public long getPostsCountByCustomerId(Integer customerId) {

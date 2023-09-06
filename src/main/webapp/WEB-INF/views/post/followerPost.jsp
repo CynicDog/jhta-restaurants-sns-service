@@ -39,14 +39,14 @@
 		    left: 50%;
 		    transform: translate(-50%, -50%);
 		    text-align:center;
-		    font-size:22px;
+		    font-size:18px;
 		}
     </style>
     <title>Insert title here</title>
 </head>
 <body>
 <div class="wrap">
-    <div class="container border-top mt-3">
+    <div class="container border-top mt-3 bg-light">
         <div class="row text-center border-bottom">
             <div class="col-12 my-5">
                 <h2>Follower Post</h2>
@@ -96,7 +96,7 @@
             data.forEach(datum => {
                 document.getElementById('postsOutputArea').innerHTML += `
             					<div class="col-md-4 my-3">
-            						<div class="cards text-center text-light font-weight-bold" onclick="location.href='detail?id=\${datum.id}'" style=" cursor: pointer;">
+            						<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='detail?id=\${datum.id}'" style=" cursor: pointer;">
             							<img src="/images/post/jpeg/\${datum.pictureFile}" class="card-image" alt="...">
             							<div class="card-img-overlay">
 	            							<div class="title-text">
@@ -107,7 +107,7 @@
             						</div>
             						<div class="row">
             							<div class="col">
-            								<strong >\${datum.userName}</strong>
+            							<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=\${datum.customerId}'"><strong >\${datum.userName}</strong></span>
             							</div>
             							<div class="col text-end">
             								\${timeForToday(datum.createDate)}

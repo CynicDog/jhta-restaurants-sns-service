@@ -79,11 +79,10 @@
 							<div class="col-12 border-top  my-3"></div>
 								<sec:authorize access="isAuthenticated()">
 									<div class="col-12  border-bottom my-3">
-										<form id="postComment" method="post" action="/post/CommentRegister">
+										<form id="postComment" method="post" action="/post/commentRegister">
 											<input type="hidden" name="postId" value="${post.post.id }"/>
 											<sec:authentication property="principal.user.id" var="userId"/>
-											<div class="form-floating text-start">
-												<p>댓글을 작성하세요</p>
+											<div class="text-start">
 			                                    <textarea placeholder="댓글을 작성하세요" class="form-control-plaintext"
 			                                                          name="content" style="min-height:2rem"></textarea>
 		                                    </div> 
@@ -96,9 +95,9 @@
 								<div class="col-12  border-bottom my-3">
 									
 									<div class="row my-3">
-										<div class="col-2">
+										<div class="col-2 ">
 											<div class="d-flex justify-content-center align-items-center">
-										      <img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 50px; height: 50px;"/>
+										      <img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover ms-2 mt-2" style="width: 60px; height: 60px;"/>
 										    </div>
 										</div>
 										
@@ -106,10 +105,10 @@
 											<div class="row mb-2">
 												<div class="col text-start">
 													<div class="card-text text-muted" style="font-size: small; ">  
-														<span><fmt:formatDate value="${comment.updateDate }" pattern="yyyy-MM-dd HH시 mm분"></fmt:formatDate></span>
+														<span><fmt:formatDate value="${comment.updateDate }" pattern="yyyy/MM/dd HH:mm"></fmt:formatDate></span>
 													</div>
 													<div class="card-text">
-														<span> ${comment.customer.fullName }</span>
+														<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.customer.id}'"><strong >${comment.customer.username }</strong></span>
 													</div>
 													<div class="card-text" style="white-space: normal; word-wrap: break-word;">
 														<div>${comment.content }</div>
@@ -120,17 +119,21 @@
 											</div>
 											<div class="row">
 												<div class="col">
-													<span class="text-end">
-														<button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-														<button type="button" class="btn btn-outline-danger btn-sm">
-															<i class="bi bi-trash3"></i>
-															<span class="visually-hidden">삭제</span>
-														</button>
-														<button type="button" class="btn btn-outline-danger btn-sm">
-												            <i id="recomened" class="bi bi-flag-fill" style="font-size: 15px;"></i>
-												            <span class="visually-hidden">신고</span>
-												        </button>
-													</span>
+													<sec:authorize access="isAuthenticated()">
+															<c:if test="${userId eq comment.customer.id }">
+																<form id="postComment" method="post" action="/post/deleteComment">
+																<div class="text-end">
+																		<sec:authentication property="principal.user.id" var="userId" />
+																		<input type="hidden" name="postId" value="${post.post.id }"/>
+																		<input type="hidden" name="commentId" value="${comment.id }"/>
+																		<button type="button" class="btn deleteComment-button" style="color:#EB0000" onclick="confirmDelete('${comment.id }')" data-comment-id="${comment.id }">
+																			<i class="bi bi-trash3"></i>
+																			<span class="visually-hidden">삭제</span>
+																		</button>
+																</div>
+																</form>
+															</c:if>
+													</sec:authorize>
 												</div>
 											</div>
 										</div>
@@ -255,27 +258,47 @@
     });
      */
     $(".delete-button").click(function () {
-    	  let postId = $(this).data("post-id");
-    	  // 모달 표시
-    	  $('#confirmDeleteModal').modal('show');
-    	  
-    	  // 확인 버튼 클릭 시
-    	  $('#confirmDelete').click(function() {
-    	    // 서버로 삭제 요청 보내기
-    	    $.getJSON('/post/detail/delete', {id : postId});
-    	      
-   	        window.history.back();
-    	      
-    	   
-    	    // 모달 닫기
-    	    $('#confirmDeleteModal').modal('hide');
-    	  });
-    	  
-    	  $('#confirmCancel').click(function(){
-    		$('#confirmDeleteModal').modal('hide');
-    	  })
-    	});
+  		let postId = $(this).data("post-id");
+  		// 모달 표시
+  		$('#confirmDeleteModal').modal('show');
   
+		// 확인 버튼 클릭 시
+		$('#confirmDelete').click(function() {
+	    	// 서버로 삭제 요청 보내기
+	   		$.getJSON('/post/detail/delete', {id : postId});
+	      
+	       	window.history.back();
+	      
+	   
+	    	// 모달 닫기
+	    	$('#confirmDeleteModal').modal('hide');
+	  	});
+  
+	  	$('#confirmCancel').click(function(){
+			$('#confirmDeleteModal').modal('hide');
+	  	})
+	});
+     
+     
+     $(".deleteComment-button").click(function () {
+    	    let commentId = $(this).data("comment-id");
+    	  
+    	    // 모달 표시
+    	    $('#confirmDeleteModal').modal('show');
+    	    
+    	    // 확인 버튼 클릭 시
+    	    $('#confirmDelete').click(function() {
+    	        // 서버로 삭제 요청 보내기
+    	        $.getJSON('/post/deleteComment', {commentId : commentId});
+	            $('#confirmDeleteModal').modal('hide');
+	            window.location.reload();
+    	    });
+    	  
+    	    $('#confirmCancel').click(function(){
+    	        // 취소 버튼 클릭 시, 모달 닫기
+    	        $('#confirmDeleteModal').modal('hide');
+    	    })
+    	});
 </script>
 </body>
 </html>

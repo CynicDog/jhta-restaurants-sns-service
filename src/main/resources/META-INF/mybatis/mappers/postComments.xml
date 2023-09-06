@@ -35,4 +35,12 @@
 			post_id = #{value}
 	</delete>
 	
+	<delete id="deleteComment">
+		delete 
+		from
+			POST_COMMENTS
+		where
+			id = #{value}
+	</delete>
+	
 </mapper>
