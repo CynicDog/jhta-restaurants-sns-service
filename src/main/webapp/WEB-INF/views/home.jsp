@@ -210,7 +210,9 @@
 	});
 	
 	function getFeed() {
+		
 		isFeedsFetching = true;
+		console.log("----------------- getFeed", "isLogin", isLogin);
 		const url = isLogin ? '/feed' : '/allfeed'; 
 		
 		$.getJSON(url ,{page : pageOnFeed, limit:5}, function(result) {
@@ -219,6 +221,7 @@
 	            isFeedsLast = true;
 	        }
 			result.forEach(function(feed){
+				console.log("+++++ getFeed", "feed", feed.userId);
 				
 				let followButton = '';
 				

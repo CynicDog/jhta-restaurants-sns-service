@@ -79,6 +79,7 @@
 	    <id column="id" property="id" />
    	    <result column="username" property="username" />
 	    <result column="reviewId" property="reviewId" />
+	    <result column="userId" property="userId" />
 	    <result column="content" property="content" />
 	    <result column="storeName" property="storeName" />
 	    <result column="storeId" property="storeId" />
@@ -98,6 +99,7 @@
 			(select
 				R.id			as reviewId,
 				U.username		as username, 
+				U.id			as userId,
 				R.content		as content,
 				S.name			as storeName,
 				S.id			as storeId,
