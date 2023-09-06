@@ -52,13 +52,13 @@ html, body {
 
 							<c:choose>
 								<c:when test="${review.review.rating eq 5}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">맛있어요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color: rgba(255, 131, 7, 0.3);">맛있어요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 3}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">괜찮아요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color: rgba(255, 131, 7, 0.3);">괜찮아요</span>
 								</c:when>
 								<c:when test="${review.review.rating eq 1}">
-									 <span class="badge rounded-pill text-dark fs-6" style="background-color:#edcfb4">별로에요</span>
+									 <span class="badge rounded-pill text-dark fs-6" style="background-color: rgba(255, 131, 7, 0.3);">별로에요</span>
 								</c:when>
 							</c:choose>
 
