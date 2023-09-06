@@ -82,16 +82,7 @@
 				<div class="my-3" style="position:sticky; top: 100px;">
 					<!-- 지도 -->
 					<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
-					<c:forEach var="post" items="${postList }">
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=${post.id}'" style="cursor: pointer;">
-							<img src="/images/post/jpeg/${post.pictureFile }" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
-							<div class="card-img-overlay d-flex flex-column align-items-center">
-								<p class="fs-5 my-0"><strong>${post.title }</strong></p>
-								<p class="fs-5">${post.subTitle }</p>
-							</div>
-						</div>
-					</c:forEach>
+					<div id="postArea"></div>
 				</div>
 			</div>
 		</div>
@@ -112,6 +103,7 @@
 		let yEndValue;
 					
 		getResult();
+		getPost();
 		
 		function changePage(event,page){
 			event.preventDefault();
@@ -133,6 +125,7 @@
 			pageValue = 1;
 		
 			getResult();
+			getPost();
 		})
 		
 		// 이전/다음 페이지 버튼 눌렀을 때의 이벤트 등록
@@ -216,7 +209,6 @@
 					`;
 					// store 카드 추가 및 텍스트 내용 입력
 					$("#div-stores").append(content);
-					
 					$("#store-name-store.id").text(store.name);
 					$("#store-reviewAvg-store.id").text(store.reviewAvg);
 					$("#store-category-store.id").text(store.category);
@@ -285,6 +277,25 @@
 				drawMarker(points);
 				setInfoOverlay(storeNames,points);
 
+			})
+		}
+		
+		function getPost(){
+			$('#postArea').empty();
+			$.getJSON('/store/posts',{category:categoryValue, keyword:keywordValue, xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result){
+				result.forEach(function(post){
+					let content = `
+						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
+							<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
+							<div class="card-img-overlay d-flex flex-column align-items-center">
+								<p class="fs-5 my-0"><strong>\${post.title }</strong></p>
+								<p class="fs-5">\${post.subTitle }</p>
+							</div>
+						</div>
+					`
+					$("#postArea").append(content);
+				})
 			})
 		}
 			
@@ -364,7 +375,7 @@
 				//오버레이가 표시될 위치입니다 
 		   		var position = new kakao.maps.LatLng(swLatLng.getLat() + (0.05)*distance, center.getLng());  
 
-				var content = '<button type="button" id="search-button" class="btn btn-primary">이 지역 검색</button>';
+				var content = '<button type="button" id="map-search-button" class="btn btn-primary">이 지역 검색</button>';
 				
 				buttonOverlay = new kakao.maps.CustomOverlay({
 					   position: position,
@@ -374,7 +385,7 @@
 				buttonOverlay.setMap(map);
 				
 		        // 오버레이의 버튼에 이벤트를 추가
-		        let button = document.getElementById('search-button');
+		        let button = document.getElementById('map-search-button');
 		        button.addEventListener('click', searchByPosition);
 			
 		}
@@ -412,6 +423,7 @@
 		  pageValue = 1; 
 
 	      getResult();
+	      getPost();
           
         }
 

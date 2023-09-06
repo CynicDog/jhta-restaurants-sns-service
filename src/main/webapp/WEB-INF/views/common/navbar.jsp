@@ -65,7 +65,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
-            <input class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
+            <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
         </form>
         <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav px-4">
@@ -170,10 +170,21 @@
     </div>	
 </nav>
 <script>
+
+	// 검색 키워드 예외처리
+	$("#form-navbar-search").submit(function(event) {
+		let keyword = $("#field-navbar-search").val();
+		if (!keyword.trim()) {
+			$("#field-navbar-search").val("");
+			alert("검색어를 입력하세요");
+			//return false : 폼 제출 취소
+			return false;
+		}
+		return true;
+	})
+
 	//bookmark star click listener
 	$(".modal-body").on('click', '[id^="star-"]', function(){
-		
-		
 	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
 	    if (${pageContext.request.userPrincipal != null}) {
 
@@ -275,13 +286,14 @@
 				<div class="card history_card mb-3">
 					<div class="row g-0">
 						<div class="col-md-4">
-							<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+							<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
+							 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
 						</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<div class="row">
 								<div class="col-9">
-									<p class="card-title">\${store.name}</p>
+									<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
 									<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
 								</div>
 								<div class="col-3 star-container d-flex justify-content-center ">
@@ -319,13 +331,14 @@
 					<div class="card bookmark_card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="...">
+								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-9">
-										<p class="card-title">\${store.name}</p>
+										<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
 										<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
 									</div>
 									<div class="col-3 star-container d-flex justify-content-center ">

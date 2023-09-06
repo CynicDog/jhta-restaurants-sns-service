@@ -212,7 +212,6 @@
 	function getFeed() {
 		
 		isFeedsFetching = true;
-		console.log("----------------- getFeed", "isLogin", isLogin);
 		const url = isLogin ? '/feed' : '/allfeed'; 
 		
 		$.getJSON(url ,{page : pageOnFeed, limit:5}, function(result) {
@@ -221,8 +220,6 @@
 	            isFeedsLast = true;
 	        }
 			result.forEach(function(feed){
-				console.log("+++++ getFeed", "feed", feed.userId);
-				
 				let followButton = '';
 				
 				//팔로우 여부에 따른 팔로우 버튼 표시
