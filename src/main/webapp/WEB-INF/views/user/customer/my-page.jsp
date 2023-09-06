@@ -83,17 +83,12 @@
                         </div>
                         <div class="row mx-2">
                             <div class="col-sm-4 my-1 fw-lighter">
-                                <label for="preference" class="col-sm-2 col-form-label"><span
+                                <label for="preferenceOutputArea" class="col-sm-2 col-form-label"><span
                                         style="white-space: nowrap">Preference</span></label>
                             </div>
                             <div class="col-sm-8 my-1">
-                                <div class="form-control-plaintext" id="preference">
-                                <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
-                                    #청결해요
-                                </span>
-                                    <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
-                                    #주차가 편해요
-                                </span>
+                                <div id="preferenceOutputArea" class="form-control-plaintext">
+
                                 </div>
                             </div>
                         </div>
@@ -562,8 +557,12 @@
                     postOutputArea.innerHTML += `
                         <div class="shadow-sm border border-light rounded m-3">
                             <div class="p-3">
-                                <div class="fw-medium postDetailEntry" type="button" data-post-id="\${datum.id}"> \${datum.title}</div>
-                                \${datum.subTitle}
+                                <div class="rounded-4 bg-light fw-lighter p-2 postDetailEntry" type="button" data-post-id="\${datum.id}">
+                                    \${datum.title}
+                                </div>
+                                <div class="fw-light my-1 p-2 ">
+                                    \${datum.subTitle}
+                                </div>
                             </div>
                         </div>
                     `;
@@ -603,15 +602,37 @@
                 isReviewLast = data.last;
                 data.content.forEach(datum => {
 
+                    let typeClass = null;
+                    switch (datum.rating) {
+                        case 5:
+                            typeClass = 'badge bg-warning-subtle text-warning-emphasis rounded-pill';
+                            break;
+                        case 3:
+                            typeClass = 'badge bg-light-subtle text-light-emphasis rounded-pill';
+                            break;
+                        case 1:
+                            typeClass = 'badge bg-dark-subtle text-dark-emphasis rounded-pill';
+                            break;
+                        default:
+                            typeClass = 'badge bg-light-subtle text-light-emphasis rounded-pill';
+                    }
+
                     const truncatedContent = (datum.content.split(' ').length > 30)
                         ? `\${datum.content.split(' ').slice(0, 50).join(' ')} (...)`
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
                         <div class="shadow-sm border border-light rounded m-3">
-                            <div class="p-3">
-                                <div class="fw-medium storeDetailsEntry" type="button" data-store-id=\${datum.store.id}> \${datum.store.name} (\${datum.rating}) </div>
-                                \${truncatedContent}
+                            <div class="p-2" type="button">
+                                <div>
+                                    <span class="badge bg-success-subtle text-success-emphasis rounded-pill fw-light storeDetailsEntry" data-store-id="\${datum.store.id}">
+                                        \${datum.store.name}
+                                    </span>
+                                    <span class="\${typeClass} fw-light">\${ getRatingText(datum.rating) }
+                                </div>
+                                <p class="rounded-4 bg-body-tertiary mt-3 p-3 storeDetailsEntry" data-store-id="\${datum.store.id}">
+                                    \${truncatedContent}
+                                </p>
                             </div>
                         </div>
                     `;
@@ -907,6 +928,23 @@
         }
     }
 
+    const getReviewKeywords = fetch(`/review/keywords-by-user`).then(response => response.json())
+    function fetchAndRenderReviewKeywords() {
+
+        getReviewKeywords.then(data => {
+            if (data.length > 0) {
+                data.forEach(datum => {
+                    document.getElementById('preferenceOutputArea').innerHTML += `
+                        <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
+                            \${datum}
+                        </span>
+                    `
+                })
+            }
+        })
+    }
+    fetchAndRenderReviewKeywords();
+
     const updateFollowersCount = () => {
         fetch(`/user/followers-count`)
             .then(response => response.text())
@@ -960,6 +998,17 @@
             method: "POST",
             body: formData
         })
+    }
+
+    function getRatingText(rating) {
+        switch (rating) {
+            case 5:
+                return '맛있어요 😋'
+            case 3:
+                return '괜찮아요 🙂'
+            case 1:
+                return '별로에요 🥲'
+        }
     }
 
     function fetchUserImage() {
