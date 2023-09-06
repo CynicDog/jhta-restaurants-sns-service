@@ -17,6 +17,7 @@ public class HomeAnonymousFeed {
 	private int id;
 	private String username;
 	private String storeName;
+	private int userId;
 	private Integer storeId;
 	private String category;
 	private String address;
