@@ -13,22 +13,22 @@ public class inquiryService {
 	@Autowired
 	private InquiryMapper inquiryMapper;
 
-	public static InquiryList getBoards(Map<String, Object> param) {
+	public InquiryList getBoards(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static void createBoard(Inquiry inquiry) {
-		// TODO Auto-generated method stub
+	public void createBoard(Inquiry inquiry) {
+		inquiryMapper.createBoard(inquiry);
 		
 	}
 
-	public static Inquiry getBoardByNo(int no) {
+	public Inquiry getBoardByNo(int no) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public static void updateBoard(Inquiry inquiry) {
+	public void updateBoard(Inquiry inquiry) {
 		// TODO Auto-generated method stub
 		
 	}

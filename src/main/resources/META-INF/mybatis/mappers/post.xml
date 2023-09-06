@@ -137,10 +137,11 @@
 	</insert>
 
 	<delete id="deletePost" parameterType="int">
-		delete from 
-			posts
+		delete 
+		from 
+			POSTS
 		where
-			id = #{id}
+			id = #{value}
 	</delete>
 
 	<select id="getPostsByStoreSearch" parameterType="map" resultType="PostContentsDto">

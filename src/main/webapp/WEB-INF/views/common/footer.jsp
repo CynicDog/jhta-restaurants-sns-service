@@ -27,7 +27,7 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="inquiry/list">문의하기</a>
+                        <a class="nav-link" href="/inquiry/list">문의하기</a>
                     </li>
                     <!-- Add more navigation links here -->
                 </ul>

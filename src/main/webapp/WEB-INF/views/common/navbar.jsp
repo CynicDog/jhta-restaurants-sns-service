@@ -124,7 +124,9 @@
                                    </div>
                                </div>
                                "
-                            ><i class="bi bi-person-circle fs-4" style="color:#838383;"></i></a>
+                            ><img type="button" id="userImage-nav" src="/images/user/png/<sec:authentication property="principal.username" />"
+									 class="rounded-circle shadow-sm object-fit-cover userDetailEntry border" 
+									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 34px; height: 34px;"/></a>
                         </li>
                         <script>
                             new bootstrap.Popover(document.querySelector('#signupPopover'))
@@ -154,7 +156,9 @@
                                    </div>
                                </div>
                                "
-                            ><i class="bi bi-person-circle fs-4" style="color:#838383;"></i></a>
+                            ><img type="button" id="userImage-nav" src="/images/user/png/<sec:authentication property="principal.username" />"
+									 class="rounded-circle shadow-sm object-fit-cover userDetailEntry border"
+									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 34px; height: 34px;"/></a>
                         </li>
                         <script>
                             new bootstrap.Popover(document.querySelector('#signupPopover'))
@@ -168,6 +172,7 @@
 <script>
 	//bookmark star click listener
 	$(".modal-body").on('click', '[id^="star-"]', function(){
+		
 		
 	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
 	    if (${pageContext.request.userPrincipal != null}) {

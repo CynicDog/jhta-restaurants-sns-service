@@ -86,19 +86,22 @@ public class ReviewController {
 		return "redirect:/store/detail?id=" + form.getStoreId();
 	}
 	// 리뷰 답글 등록 요청 처리
-		@PostMapping("/register")
-		public String reviewCommentRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
+		@PostMapping("/store/register")
+		public String reviewCommentStoreRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
 			reviewService.createReviewComment(form, securityUser);
 			
 			return "redirect:/store/detail?id=" + storeId;
 		}
-	
-//		@PostMapping("/register")
-//		@ResponseBody
-//		public ResponseEntity<String> reviewCommentRegister(ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
-//		    reviewService.createReviewComment(form, securityUser);
-//		    return ResponseEntity.ok().body("/store/detail?id=" + form.getStoreId()); // 리디렉션 경로 반환
-//		}	
+		
+		// 리뷰 답글 등록 요청 처리
+		@PreAuthorize("isAuthenticated()")
+		@PostMapping("/register")
+		public String reviewCommentRegister(int storeId, ReviewCommentCommand form, @AuthenticationPrincipal SecurityUser securityUser) {
+			reviewService.createReviewComment(form, securityUser);
+			
+			return "redirect:/review/detail?id=" + form.getReviewId();
+		}
+
 	
 		
 	@GetMapping("/detail")
@@ -108,6 +111,33 @@ public class ReviewController {
 		model.addAttribute("review", dto);
 		
 		return "reviewDetail";
+	}
+	
+	@GetMapping("/del")
+	public String deleteReview(@RequestParam("storeId") int storeId, 
+			@RequestParam("reviewId") int reviewId) {
+		
+		reviewService.deletedReview(reviewId);
+		
+		return "redirect:/store/detail?id=" + storeId;
+		
+	}
+	
+	@GetMapping("store/comment/del")
+	public String deleteReviewStoreComment(@RequestParam("storeId") int storeId, 
+			@RequestParam("reviewId") int reviewId, @RequestParam("reviewCommentId") int reviewCommentId) {
+		
+		reviewService.deletedReviewComment(reviewCommentId);
+		
+		return "redirect:/store/detail?id=" + storeId;
+	}
+	
+	@GetMapping("/comment/del")
+	public String deleteReviewComment(@RequestParam("reviewId") int reviewId, @RequestParam("reviewCommentId") int reviewCommentId) {
+		
+		reviewService.deletedReviewComment(reviewCommentId);
+		
+		return "redirect:/review/detail?id=" + reviewId;
 	}
 	
 	@PostMapping("/reviewReport")

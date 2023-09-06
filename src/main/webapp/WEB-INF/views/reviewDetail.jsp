@@ -35,8 +35,8 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}(회원등급)" data-bs-content="Follow">
-							<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}" data-bs-content="Follow">
+							<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
 						</a>
 					</div>
 					<div class="col-3">
@@ -214,7 +214,7 @@ html, body {
 				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #ff792a; font-size: 45px;"></i></div>
 				<div class="col-1">
 					<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-						<img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&amp;type=sc960_832" class="img-thumbnail rounded-circle" alt="...">
+						<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
 					</a>
 			<div class="text-center card-title my-1">
 				<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
@@ -244,10 +244,10 @@ html, body {
 				<div class="row position-absolute" style="bottom:0;right:20px;">
 					<div class="col">
 						<span class="text-end">
-							<button type="button" class="btn btn-light btn-sm" style="color: #838383">
+							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light btn-sm" style="color: #838383">
 								<i class="bi bi-trash3"></i>
 								<span class="visually-hidden">삭제</span>
-							</button>
+							</a>
 						</span>
 					</div>
 				</div>
@@ -261,7 +261,7 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
-
+	
 	// popover 생성
 	document.addEventListener("DOMContentLoaded", () => {
 		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
@@ -331,6 +331,7 @@ $(document).ready(function () {
         $("#review-count").hide();
     }
 });
+
 
 </script>
 </body>

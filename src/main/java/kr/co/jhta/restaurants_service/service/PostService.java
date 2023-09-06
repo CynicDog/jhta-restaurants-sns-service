@@ -123,6 +123,27 @@ public class PostService {
 		return dto;
 	}
 	
+	public boolean deletePost(int postId, SecurityUser securityUser) {
+		Post post = postmapper.getPostById(postId);
+		
+		if (post == null) {
+			return false;
+		}
+		
+		if (post.getCustomer().getId() != securityUser.getUser().getId()) {
+			return false;
+		}
+		
+		postLikeMapper.deletePostLikeByPostId(postId);
+		postCommentMapper.deleteCommentsByPostId(postId);
+		postDataMapper.deletePostDataByPostId(postId);
+	    
+	    postmapper.deletePost(postId);
+	    
+	    return true;
+		
+	}
+	
 	public Object changeBookmark(int storeId, String job, SecurityUser securityUser) {
 		
 	    Map<String, Object> paramMap = new HashMap<>();

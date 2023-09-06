@@ -33,9 +33,9 @@
 			<div class= "col-12">
 				<div class="row border-bottom">
 					<div class="col-12">
-						<form action="/store/search" method="GET">
-							<div class="mx-auto my-5 search-bar input-group" style="width: 60%;" >
-								<input name="keyword" type="text"
+						<form action="/store/search" method="GET" id="form-search-keyword">
+							<div class="offset-3 my-5 search-bar input-group" style="width:45%;" >
+								<input name="keyword" type="text" id="field-keyword"
 									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
 									aria-label="Recipient's username" aria-describedby="button-addon2">
 								<div class="input-group-append"></div>
@@ -116,6 +116,18 @@
 	isLogin = ${pageContext.request.userPrincipal != null} ? true : false;
 	getFeed();
 	
+	// 검색 키워드 예외처리
+	$("#form-search-keyword").submit(function(event) {
+		let keyword = $("#field-keyword").val();
+		if (!keyword.trim()) {
+			$("#field-keyword").val("");
+			alert("검색어를 입력하세요");
+			//return false : 폼 제출 취소
+			return false;
+		}
+		return true;
+	})
+	
 	//Click Listener - bookmark star 
 	$("#home-content").on('click', '[id^="star-"]', function(){
 			//로그인 했을 때
@@ -140,21 +152,56 @@
 	
 	//Click Listener - Review Like 
 	$("#home-content").on('click', '[id^="like-"]', function(){
-		
-	    // Spring Security에서 제공하는 principal을 사용하여 로그인 상태 확인
 	    if (isLogin) {
+	    	const $like = $(this);
 			//로그인 했을 때
-	    	let reviewId = $(this).attr('review-id');
+	    	let reviewId = $like.attr('data-reviewId');
 			//like- fill -> blank
-			if ($(this).hasClass('bi-heart-fill')) {
-					$(this).removeClass('bi-heart-fill').addClass('bi-heart')
-					$.getJSON('/like/delet    e', {reviewId : reviewId});
+			if ($like.hasClass('bi-heart-fill')) {
+					$like.removeClass('bi-heart-fill').addClass('bi-heart')
+					$.getJSON('/like/delete', {reviewId : reviewId},function(result){
+						$("span[data-reviewId=" + reviewId + "]").text(result);
+					});
+					
 			//like- blank -> fill		
 			} else {
-				$(this).removeClass('bi-heart').addClass('bi-heart-fill')
-				$.getJSON('/like/insert', {reviewId : reviewId});
+				$like.removeClass('bi-heart').addClass('bi-heart-fill')
+				$.getJSON('/like/insert', {reviewId : reviewId}, function(result){
+					$("span[data-reviewId=" + reviewId + "]").text(result);
+				});
 
 			}
+	    } else {
+	       // 로그인되지 않은 경우, 로그인 페이지 열기
+	       	alert("로그인이 필요합니다");
+	        window.location.href = "/user/login?error=anonymous";
+	    }
+	});
+	
+	//Button Event Listener - Follow request
+	$("#home-content").on('click', '[id^="button-follow-"]', function(){
+		let  $btn = $(this);
+	    if (isLogin) {
+	    	if($(this).hasClass('active')){
+	    		$(this).removeClass('active');
+	    		$(this).text("팔로우");
+	    		
+	    	}else{//팔로우 요청 
+				const writerId = $(this).attr('data-writer-id');
+	    		console.log("before postJSON");
+	    		
+				$.post('/user/follow',{recipientId : writerId})
+				 .done(function(){
+					$btn.addClass("active");
+					$btn.text("요청됨");
+					$btn.prop('disabled',true);
+				})
+				 .fail(function() {
+					 alert("이미 팔로우 요청되었습니다.");
+				 })
+				;
+	    	}
+
 	    } else {
 	       // 로그인되지 않은 경우, 로그인 페이지 열기
 	       	alert("로그인이 필요합니다");
@@ -171,52 +218,75 @@
 	        if (result.length < 5) {
 	            isFeedsLast = true;
 	        }
-			
 			result.forEach(function(feed){
-				let star = feed.isBookmarked==='y' ? 'bi-star-fill' : 'bi-star';
-				let like = feed.isLiked==='y' ? 'bi-heart-fill' : 'bi-heart';
 				
-				let content = `
-					<div id=home-content-header class="d-flex justify-content-between mb-2" >
-						<div id="home-feed-writer" class="">
-							<div class="d-flex justify-content-start">
-								<span class="me-2 fw-bold">\${feed.username} </span>
-								\${generateRating(feed.rating)}
-							</div>					
+				let followButton = '';
+				
+				//팔로우 여부에 따른 팔로우 버튼 표시
+				fetch(`/user/follow?id=\${feed.userId}`)
+				.then(response => { // 응답처리 콜백 메서드 등록
+					if (response.ok) {
+						return response.text();
+					}
+				}).then(text => {//콜백 메서드 등록
+					if (text=== 'NO') {
+						followButton = `
+							<button id="button-follow-\${feed.id}" class="btn btn-primary" feed-id="\${feed.id}" data-writer-id="\${feed.userId}" >
+								팔로우
+							</button>
+						`
+					} else {
+						// do nothing 
+					}
+					
+					let star = feed.isBookmarked==='y' ? 'bi-star-fill' : 'bi-star';
+					let like = feed.isLiked==='y' ? 'bi-heart-fill' : 'bi-heart';
+					
+					let content = `
+						<div id=home-content-header class="d-flex justify-content-between mb-2" >
+							<div id="home-feed-writer">
+									<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
+									 class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${feed.userId}" 
+									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
+									
+									 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
+									\${generateRating(feed.rating)}
+							</div>
+							<div id="followButtonArea">
+								\${followButton}
+							</div>	
 						</div>
-						<div id="home-feed-follow" class="">
-						</div>
-					</div>
-					<div id="store-card" index-id ="" class="card mb-5" style="border: none;">
-						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
-						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
-						 	\${generateIndicator(feed.reviewPictures,feed)}
-						  </div>
-						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
-							\${generatePicture(feed.reviewPictures,feed)}
-						  </div>
-						  \${generateControlButton(feed.reviewPictures,feed)}
-						</div>
-						
-						<div class="card-body pt-1 ps-1" >
-							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
-							<i class="bi \${like} fs-4" id="like-\${feed.id}" review-id="\${feed.reviewId}" style="cursor: pointer; color: red;"></i> 
-							<span class="text fs-6 fw-lighter">\${feed.likedCount}</span>
-							<div class="border d-flex justify-content-between mt-2" >
-								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
-									<div class="col ms-1">
-							           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
-							           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
+						<div id="store-card" class="card mb-5" style="border: none;">
+							<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
+							  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
+							 	\${generateIndicator(feed.reviewPictures,feed)}
+							  </div>
+							  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
+								\${generatePicture(feed.reviewPictures,feed)}
+							  </div>
+							  \${generateControlButton(feed.reviewPictures,feed)}
+							</div>
+							
+							<div class="card-body pt-1 ps-1" >
+								<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
+								<i class="bi \${like} fs-4" id="like-\${feed.id}" data-reviewId="\${feed.reviewId}" style="cursor: pointer; color: red;"></i> 
+								<span class="text fs-6 fw-lighter" data-reviewId="\${feed.reviewId}">\${feed.likedCount}</span>
+								<div class="border d-flex justify-content-between mt-2" >
+									<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
+										<div class="col ms-1">
+								           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
+								           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
+										</div>
 									</div>
-								</div>
-								<div class="d-flex align-items-center px-2">
-									<i class="bi \${star} fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
-								</div>
-							</div>		
+									<div class="d-flex align-items-center px-2">
+										<i class="bi \${star} fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
+									</div>
+								</div>		
+							</div>
 						</div>
-					</div>
-			`;
-				$("#home-content").append(content);
+				`;
+					$("#home-content").append(content);
+				});
 			});
 		});
 		isFeedsFetching = false;
@@ -305,6 +375,20 @@
 		return buttons;
 	}
 	
+	function generateFollowButton(isFollowed, feedId){
+		let html=""
+		if('n'== isFollowed){// when not following yet
+			const button = `
+				<button id="button-follow-\${feed.id}" class="btn btn-primary" data-writer-id="\${feed.userId}">
+				팔로우
+			</button>
+			`
+		}else{
+			// don't generate button
+		}
+		html+= button;
+		return html;
+	}
 	
     window.onscroll = function () {
         if ((window.innerHeight + window.scrollY +1) >= document.body.offsetHeight) {

@@ -30,6 +30,7 @@ import kr.co.jhta.restaurants_service.dto.ReviewDto;
 import kr.co.jhta.restaurants_service.dto.ReviewSummaryDto;
 import kr.co.jhta.restaurants_service.mapper.ReviewCommentMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewKeywordMapper;
+import kr.co.jhta.restaurants_service.mapper.ReviewLikeMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper;
 import kr.co.jhta.restaurants_service.mapper.ReviewReportMapper;
@@ -65,6 +66,8 @@ public class ReviewService {
 	@Autowired private ReviewPictureRepository reviewPictureRepository;
 
 	@Autowired private ReviewReportMapper reviewReportMapper;
+	
+	@Autowired private ReviewLikeMapper reviewLikeMapper;
 
 	private final Logger logger = Logger.getLogger(PostService.class);
 
@@ -253,7 +256,23 @@ public class ReviewService {
     }
     
     public void deletedReview(int reviewId) {
+
 		reviewMapper.deleteReview(reviewId);
+
+   
+    		reviewCommentMapper.deleteReviewCommentByReviewId(reviewId);
+    		reviewKeywordMapper.deleteReviewKeywords(reviewId);
+    		reviewPictureMapper.deleteReviewPictures(reviewId);
+    		reviewLikeMapper.deleteLikeByReviewId(reviewId);
+    		reviewMapper.deleteReview(reviewId);
+    	
+    }
+    
+    public void deletedReviewComment(int reviewCommentId) {
+    	
+    	reviewCommentMapper.deleteReviewComment(reviewCommentId);
+    	
+
     }
 
 	public List<String> getReviewKeywordsByUserId(Integer userId, Integer limit) {

@@ -331,9 +331,9 @@
   
   	<delete id="deleteReview" parameterType="int">
 		delete from 
-			reviews
+			REVIEWS
 		where
-			id = #{id}
+			id = #{value}
 	</delete>
   
 </mapper>
