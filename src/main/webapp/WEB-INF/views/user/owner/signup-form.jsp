@@ -365,7 +365,7 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            window.location.href = "/user/login"
+                            window.location.href = "/"
                         } else {
                             // TODO: handle signup error
                         }
