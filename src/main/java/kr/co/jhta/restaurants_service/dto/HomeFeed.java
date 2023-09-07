@@ -1,6 +1,7 @@
 package kr.co.jhta.restaurants_service.dto;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.type.Alias;
@@ -25,7 +26,7 @@ public class HomeFeed {
 	private String address;
 	private String content;
 	private List<ReviewPicture> reviewPictures;
-	private String createDate;
+	private Date createDate;
 	private Integer reviewId;
 	private Integer rating;
 	private String isBookmarked;

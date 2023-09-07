@@ -93,7 +93,7 @@
 								<p class="text-secondary" >${post.subTitle}</p>
 							</div>
 							<div class="col-3">
-								<img src="/images/post/png/${post.pictureFile}" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
+								<img src="/images/post/png/${post.pictureFile}" onerror="this.onerror=null; this.src='/images/review/jpeg/default.jpeg';" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
 							</div>
 						</div>
 					</div>
@@ -245,12 +245,13 @@
 					let content = `
 						<div id=home-content-header class="d-flex justify-content-between mb-2" >
 							<div id="home-feed-writer">
-									<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
-									 class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${feed.userId}" 
-									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
-									
-									 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
-									\${generateRating(feed.rating)}
+								<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
+								 class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${feed.userId}" 
+								 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
+								
+								 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
+								\${generateRating(feed.rating)}
+								<span class="text-secondary ms-1" id="dateValue-\${feed.id }">\${timeForToday(feed.createDate)} </span]>
 							</div>
 							<div id="followButtonArea">
 								\${followButton}
@@ -375,21 +376,6 @@
 		return buttons;
 	}
 	
-	function generateFollowButton(isFollowed, feedId){
-		let html=""
-		if('n'== isFollowed){// when not following yet
-			const button = `
-				<button id="button-follow-\${feed.id}" class="btn btn-primary" data-writer-id="\${feed.userId}">
-				팔로우
-			</button>
-			`
-		}else{
-			// don't generate button
-		}
-		html+= button;
-		return html;
-	}
-	
     window.onscroll = function () {
         if ((window.innerHeight + window.scrollY +1) >= document.body.offsetHeight) {
 
@@ -402,6 +388,30 @@
             }
         }
     }
+    
+	function timeForToday(value) {
+		console.log("timeforToday");
+	    const today = new Date();
+	    const timeValue = new Date(value);
+	    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+	
+	    if (betweenTime < 1) return '방금전';
+	    if (betweenTime < 60) {
+	        return `\${betweenTime}분전`;
+	    }
+	
+	    const betweenTimeHour = Math.floor(betweenTime / 60);
+	    if (betweenTimeHour < 24) {
+	        return `\${betweenTimeHour}시간전`;
+	    }
+	
+	    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+	    if (betweenTimeDay < 365) {
+	        return `\${betweenTimeDay}일전`;
+	    }
+	
+	    return `\${Math.floor(betweenTimeDay / 365)}년전`;
+	}
 
 </script>
 </body>
