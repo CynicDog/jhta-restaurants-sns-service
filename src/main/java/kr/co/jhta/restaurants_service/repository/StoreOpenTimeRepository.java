@@ -10,4 +10,5 @@ import java.util.List;
 public interface StoreOpenTimeRepository extends JpaRepository<StoreOpenTime, Integer> {
 
     List<StoreOpenTime> findStoreOpenTimeByStoreId(int storeId);
+    void deleteByStoreId(int storeId);
 }

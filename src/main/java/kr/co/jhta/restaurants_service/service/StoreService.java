@@ -9,12 +9,13 @@ import java.util.stream.Collectors;
 import kr.co.jhta.restaurants_service.controller.command.FoodCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreCommand;
 import kr.co.jhta.restaurants_service.controller.command.StoreOpenTimeCommand;
+import kr.co.jhta.restaurants_service.mapper.*;
 import kr.co.jhta.restaurants_service.projection.Projection;
-import kr.co.jhta.restaurants_service.repository.BookmarkRepository;
-import kr.co.jhta.restaurants_service.repository.FoodRepository;
-import kr.co.jhta.restaurants_service.repository.StoreOpenTimeRepository;
-import kr.co.jhta.restaurants_service.repository.StoreRepository;
+import kr.co.jhta.restaurants_service.repository.*;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
+import kr.co.jhta.restaurants_service.vo.post.PostData;
+import kr.co.jhta.restaurants_service.vo.review.Review;
+import kr.co.jhta.restaurants_service.vo.review.ReviewLikes;
 import kr.co.jhta.restaurants_service.vo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,10 +28,6 @@ import kr.co.jhta.restaurants_service.dto.StoreDetailDto;
 import kr.co.jhta.restaurants_service.dto.VisitedStore;
 import kr.co.jhta.restaurants_service.dto.BookmarkedStore;
 import kr.co.jhta.restaurants_service.dto.PagedStores;
-import kr.co.jhta.restaurants_service.mapper.FoodMapper;
-import kr.co.jhta.restaurants_service.mapper.ReviewMapper;
-import kr.co.jhta.restaurants_service.mapper.StoreMapper;
-import kr.co.jhta.restaurants_service.mapper.StoreOpenTimeMapper;
 import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Food;
 import kr.co.jhta.restaurants_service.vo.store.Store;
@@ -54,12 +51,18 @@ public class StoreService {
 	private final FoodRepository foodRepository;
 	private final StoreOpenTimeRepository storeOpenTimeRepository;
 	private final BookmarkRepository bookmarkRepository;
+	private final ReviewRepository reviewRepository;
+	private final ReviewLikeMapper reviewLikeMapper;
+	private final ReviewKeywordMapper reviewKeywordMapper;
+	private final ReviewPictureMapper reviewPictureMapper;
+	private final ReviewCommentMapper reviewCommentMapper;
+	private final PostDataRepository postDataRepository;
 
-	 public Store getStoreById(int storeId) { 
-		 Store store = storeMapper.getStoreById(storeId);
-		 return store;
-	 }
-	
+	public Store getStoreById(int storeId) {
+		Store store = storeMapper.getStoreById(storeId);
+		return store;
+	}
+
 	public List<Store> getAllStores() {
 		List<Store> stores = storeMapper.getAllStores();
 		return stores;
@@ -106,22 +109,22 @@ public class StoreService {
 					storeOpenTimeRepository.save(storeOpenTime);
 				});
 	}
-	
+
 	public StoreDetailDto getStoreDetail(int storeId, int userId) {
 		StoreDetailDto dto = new StoreDetailDto();
-		
+
 		Store store = storeMapper.getStoreById(storeId);
 		dto.setStore(store);
-		
+
 		List<Food> foods = foodMapper.getFoodsByStoreId(storeId);
 		dto.setFoods(foods);
-		
+
 		List<StoreOpenTime> openTimes = storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
 		dto.setOpenTimes(openTimes);
 
 		List<Store> closestStores = storeMapper.getClosestStores(store.getLatitude(), store.getLongitude(), storeId, 3);
 		dto.setClosestStores(closestStores);
-		
+
 		if (userId != 0) {
 			List<User> followers = storeMapper.getFollowerReviewedByStoreId(storeId, userId);
 			dto.setFollowers(followers);
@@ -151,40 +154,40 @@ public class StoreService {
 		}else {
 			stores = storeMapper.getVisitedStoresById(param);
 		}
-		
+
 		log.info("가게서비스 getVisitedStore 결과 stores : '{}'",stores);
 		return stores;
 	}
-	
+
 	public List<StoreOpenTime> getStoreOpenTimesById(int storeId) {
-		
+
 		return storeOpenTimeMapper.getStoreOpenTimesByStoreId(storeId);
 	}
 
 	public void updateReadCount(int storeId) {
 		Store store = storeMapper.getStoreById(storeId);
 		store.setReadCount(store.getReadCount() + 1);
-		
+
 		storeMapper.updateStore(store);
 
 	}
 
 	public Object changeBookmark(int storeId, String job, SecurityUser securityUser) {
-		
-	    Map<String, Object> paramMap = new HashMap<>();
-	    paramMap.put("storeId", storeId);
-	    paramMap.put("customerId", securityUser.getUser().getId());
 
-	    if ("Y".equals(job)) {
-	        // 북마크 추가 로직
-	        storeMapper.insertBookmark(paramMap);
-	    } else if ("N".equals(job)) {
-	        // 북마크 삭제 로직
-	        storeMapper.deleteBookmark(paramMap);
-	    }
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("storeId", storeId);
+		paramMap.put("customerId", securityUser.getUser().getId());
 
-	    // 변경된 북마크 상태를 반환
-	    return getUpdatedBookmarkStatus(storeId, securityUser);
+		if ("Y".equals(job)) {
+			// 북마크 추가 로직
+			storeMapper.insertBookmark(paramMap);
+		} else if ("N".equals(job)) {
+			// 북마크 삭제 로직
+			storeMapper.deleteBookmark(paramMap);
+		}
+
+		// 변경된 북마크 상태를 반환
+		return getUpdatedBookmarkStatus(storeId, securityUser);
 	}
 
 	private Object getUpdatedBookmarkStatus(int storeId, SecurityUser securityUser) {
@@ -194,10 +197,10 @@ public class StoreService {
 	public List<BookmarkedStore> getBookmarkedStoresByUserId(int id) {
 		return null;
 	}
-	
+
 	public Bookmark getBookmark(int storeId, int customerId) {
-	    Bookmark bookmark = storeMapper.getBookmarkByStoreIdAndCustomerId(storeId, customerId);
-	    return bookmark;
+		Bookmark bookmark = storeMapper.getBookmarkByStoreIdAndCustomerId(storeId, customerId);
+		return bookmark;
 	}
 
 
@@ -217,4 +220,32 @@ public class StoreService {
 					return  new StoreDetailDto(store, foods, storeOpenTimes, wishers);
 				}).collect(Collectors.toList());
 	}
+
+    public boolean deleteStoreById(int storeId) {
+
+		try {
+			Store store = storeRepository.findById(storeId).get();
+
+			List<Review> reviews = reviewRepository.findByStoreId(storeId);
+			reviews.forEach(review -> {
+				reviewLikeMapper.deleteLikeByReviewId(review.getId());
+				reviewKeywordMapper.deleteReviewKeywords(review.getId());
+				reviewPictureMapper.deleteReviewPictures(review.getId());
+				reviewCommentMapper.deleteReviewCommentByReviewId(review.getId());
+				reviewRepository.deleteById(review.getId());
+			});
+
+			postDataRepository.deleteByStoreId(storeId);
+			bookmarkRepository.deleteByStoreId(storeId);
+			storeOpenTimeRepository.deleteByStoreId(storeId);
+			foodRepository.deleteByStoreId(storeId);
+
+			storeRepository.delete(store);
+
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+    }
 }
