@@ -188,7 +188,7 @@
 					let content = `
 						<div class="col-5 mb-3 me-3 store card-zoom">
 							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
-								<img src="/images/review/png/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/default.jpeg';" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
+								<img src="/images/review/png/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">
 								<div class="col text-start mt-1">							

@@ -1,5 +1,7 @@
 package kr.co.jhta.restaurants_service.vo.inquiry;
 
+import org.apache.ibatis.type.Alias;
+
 import com.google.cloud.Date;
 
 import kr.co.jhta.restaurants_service.vo.user.User;
@@ -13,6 +15,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+@Alias("Inquiry")
 public class Inquiry {
 
 	private int id;

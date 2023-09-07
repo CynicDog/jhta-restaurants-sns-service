@@ -60,8 +60,11 @@ public class InquiryController {
 							.build();
 		inquiryService.createBoard(inquiry);
 		
+		System.out.println("user :" + user);
+		
 		model.addAttribute("title",title);
 		model.addAttribute("content",content);
+		model.addAttribute("username",user.getUsername());
 		
 		return "redirect:/inquiry/list";
 
