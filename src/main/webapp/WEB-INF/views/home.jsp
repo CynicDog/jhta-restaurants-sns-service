@@ -412,18 +412,6 @@
 	
 	    return `\${Math.floor(betweenTimeDay / 365)}년전`;
 	}
-	
-	function generateTime(){
-		$('[id^="dateInput-"]').each(function (index, input) { 
-		    let value = $(input).val();
-		    console.log("value : ", value);
-		    let elapsed = timeForToday(value);
-		    console.log("elapsed : ", elapsed);
-	
-		    $(input).next().text(elapsed);
-		})
-	}
-	
 
 </script>
 </body>
