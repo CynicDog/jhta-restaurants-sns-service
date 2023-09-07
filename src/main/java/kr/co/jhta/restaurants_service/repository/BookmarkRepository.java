@@ -10,4 +10,5 @@ import java.util.List;
 public interface BookmarkRepository extends JpaRepository<Bookmark, Integer> {
 
     List<Projection.Bookmark> findByStoreId(int storeId);
+    void deleteByStoreId(int storeId);
 }

@@ -639,6 +639,12 @@
                                         <span class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill mx-1">
                                             \${datum.store.category}
                                         </span>
+                                        <span
+                                            type="button"
+                                            class="badge bg-danger-subtle border border-danger-subtle text-danger-emphasis rounded-pill deleteStoreButton"
+                                            data-store-id=\${datum.store.id}>
+                                            delete
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -714,6 +720,21 @@
             }
         }
     }
+
+    document.addEventListener('click', function (event) {
+
+        if (event.target.classList.contains('deleteStoreButton')) {
+            const button = event.target;
+            const storeId = button.getAttribute('data-store-id')
+
+            fetch(`/store/delete?id=\${storeId}`, { method: "POST" })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                })
+        }
+    })
 
     const updateFollowersCount = () => {
         fetch(`/user/followers-count`)

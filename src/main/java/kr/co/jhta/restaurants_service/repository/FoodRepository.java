@@ -10,4 +10,5 @@ import java.util.List;
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
     List<Food> getFoodsByStoreId(int storeId);
+    void deleteByStoreId(int storeId);
 }
