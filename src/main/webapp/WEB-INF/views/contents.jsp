@@ -36,7 +36,7 @@
 	
 	.card-image {
 		width: 100%;
-		height: 200px;
+		height: 250px;
 		object-fit:cover;
 		filter: brightness(70%);
 	}
@@ -97,7 +97,7 @@
 		<sec:authorize access="isAuthenticated()">
 			<div class="row mt-3">
 				<div class="col">
-					<h4 class="my-3 text-secondary"><strong>Follower Post</strong></h4>
+					<h4 class="my-3 text-secondary"><strong>Following Post</strong></h4>
 				</div>
 				<div class="col text-end">
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/post/followerPosts'"> more</button>
@@ -105,34 +105,46 @@
 			</div>
 			<div class="row mb-3 border-bottom">
 				
-				<c:forEach var="followerPostData" items="${recentPostsOfFollower }" >
-					<c:set var="sysYear"><fmt:formatDate value="${followerPostData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
-					<div class="col-md-4 mb-4">
-						<div class="cards text-center text-light font-weight-bold" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
-							<img src="images/post/jpeg/${followerPostData.pictureFile}" class="card-image" alt="...">
-		
-							<div class="card-img-overlay">
-								<div class="title-text">
-									<strong>${followerPostData.title }</strong><br>
-									<div class="text-white" style="opacity:80%;">( ${followerPostData.subTitle } )</div>
+				<c:choose>
+					<c:when test="${recentPostsOfFollower.size() > 0 }">
+						<c:forEach var="followerPostData" items="${recentPostsOfFollower }" >
+							<c:set var="sysYear"><fmt:formatDate value="${followerPostData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
+							<div class="col-md-4 mb-4">
+								<div class="cards text-center text-light font-weight-bold" onclick="location.href='post/detail?id=${followerPostData.id}'" style=" cursor: pointer;">
+									<img src="images/post/jpeg/${followerPostData.pictureFile}" class="card-image" alt="...">
+				
+									<div class="card-img-overlay">
+										<div class="title-text">
+											<strong>${followerPostData.title }</strong><br>
+											<div class="text-white" style="opacity:80%;">( ${followerPostData.subTitle } )</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${followerPostData.customerId}'"><strong >${followerPostData.userName }</strong></span>
+										<%-- <sec:authorize access="isAuthenticated()">
+											<span id="followRequestButton-${followerPostData.id }" 
+			                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${followerPostData.customerId }">Follow</span>
+										</sec:authorize> --%>
+									</div>
+									<div class="col text-end">
+										<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
+										<p class="text-end text-secondary" id="dateValue-${followerPostData.id }"></p>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${followerPostData.customerId}'"><strong >${followerPostData.userName }</strong></span>
-								<%-- <sec:authorize access="isAuthenticated()">
-									<span id="followRequestButton-${followerPostData.id }" 
-	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${followerPostData.customerId }">Follow</span>
-								</sec:authorize> --%>
-							</div>
-							<div class="col text-end">
-								<input type="hidden" id="dateInput-${followerPostData.id }" type="text" value="${sysYear }" >
-								<p class="text-end text-secondary" id="dateValue-${followerPostData.id }"></p>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="d-flex justify-content-center align-items-center"  style="height:200px;">
+							<div class="text-muted">
+								팔로우를 해보세요!
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:otherwise>
+				</c:choose>
+				
 				
 			</div>
 		</sec:authorize>
@@ -144,7 +156,7 @@
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/allReviews'"> more</button>
 				</div>
 			</div>
-			<div class="row mb-3 border-bottom">
+			<div class="row mb-3">
 				<c:forEach var="recentReviewData" items="${recentReviews }" >
 					<c:set var="sysYear"><fmt:formatDate value="${recentReviewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
 					<div class="col-md-4 mb-4">
@@ -192,86 +204,102 @@
 				</c:forEach>
 			</div>
 		<sec:authorize access="isAuthenticated()">
+			<div class="border-top"></div>
 			<div class="row mt-3">
 				<div class="col">
-					<h4 class="my-3 text-secondary"><strong>Follower Review</strong></h4>
+					<h4 class="my-3 text-secondary"><strong>Following Review</strong></h4>
 				</div>
 				<div class="col text-end">
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/followerReviews'"> more</button>
 				</div>
 			</div>
-			<div class="row mb-3 border-bottom">
-				<c:forEach var="recentFollowerReivewData" items="${recentFollowerReivews }" >
-					<c:set var="sysYear"><fmt:formatDate value="${recentFollowerReivewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
-					<div class="col-md-4 mb-4">
-						<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
-							<img src="/images/review/jpeg/${recentFollowerReivewData.pictureName }" class="card-image" alt="...">
-		
-							<div class="card-img-overlay">
-								<div class="title-text">
-									<strong>${recentFollowerReivewData.storeName }</strong><br>
-								</div>
-								<div class="keywords text-end">
-									<div>
-										<c:choose>
-											<c:when test="${recentFollowerReivewData.rating eq 5}">
-												 <span class="badge text-bg-success bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">맛있어요</span>
-											</c:when>
-											<c:when test="${recentFollowerReivewData.rating eq 3}">
-												 <span class="badge text-bg-warning bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">괜찮아요</span>
-											</c:when>
-											<c:when test="${recentFollowerReivewData.rating eq 1}">
-												 <span class="badge text-bg-danger bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">별로에요</span>
-											</c:when>
-										</c:choose>
+			<div class="row mb-3">
+				<c:choose>
+					<c:when test="${recentFollowerReivews.size() > 0 }">
+						<c:forEach var="recentFollowerReivewData" items="${recentFollowerReivews }" >
+							<c:set var="sysYear"><fmt:formatDate value="${recentFollowerReivewData.createDate}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set> 
+							<div class="col-md-4 mb-4">
+								<div class="cards text-center text-light font-weight-bold" onclick="location.href='/review/detail?id=${recentFollowerReivewData.id}'" style=" cursor: pointer;">
+									<img src="/images/review/jpeg/${recentFollowerReivewData.pictureName }" class="card-image" alt="...">
+				
+									<div class="card-img-overlay">
+										<div class="title-text">
+											<strong>${recentFollowerReivewData.storeName }</strong><br>
+										</div>
+										<div class="keywords text-end">
+											<div>
+												<c:choose>
+													<c:when test="${recentFollowerReivewData.rating eq 5}">
+														 <span class="badge text-bg-success bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">맛있어요</span>
+													</c:when>
+													<c:when test="${recentFollowerReivewData.rating eq 3}">
+														 <span class="badge text-bg-warning bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">괜찮아요</span>
+													</c:when>
+													<c:when test="${recentFollowerReivewData.rating eq 1}">
+														 <span class="badge text-bg-danger bg-opacity-50 fw-lighter m-1" style="background-color:#edcfb4">별로에요</span>
+													</c:when>
+												</c:choose>
+											</div>
+											<c:forEach var="keywordData" items="${recentFollowerReivewData.keywords }" >
+												<span class="badge text-bg-secondary bg-opacity-50 fw-lighter m-1">${keywordData.keyword}</span>
+											</c:forEach>
+											
+										</div>
 									</div>
-									<c:forEach var="keywordData" items="${recentFollowerReivewData.keywords }" >
-										<span class="badge text-bg-secondary bg-opacity-50 fw-lighter m-1">${keywordData.keyword}</span>
-									</c:forEach>
+								</div>
+								<div class="row">
+									<div class="col">
+										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentFollowerReivewData.customerId}'"><strong >${recentFollowerReivewData.userName }</strong></span>
+										<%-- <sec:authorize access="isAuthenticated()">
+											<span id="followRequestButton-${recentFollowerReivewData.id }" 
+			                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentFollowerReivewData.customerId }">Follow</span>
+										</sec:authorize> --%>
+									</div>
+									<div class="col text-end">
+										<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
+										<p class="text-end text-secondary" id="dateValue-${recentFollowerReivewData.id }"></p>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentFollowerReivewData.customerId}'"><strong >${recentFollowerReivewData.userName }</strong></span>
-								<%-- <sec:authorize access="isAuthenticated()">
-									<span id="followRequestButton-${recentFollowerReivewData.id }" 
-	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentFollowerReivewData.customerId }">Follow</span>
-								</sec:authorize> --%>
-							</div>
-							<div class="col text-end">
-								<input type="hidden" id="dateInput-${recentFollowerReivewData.id }" type="text" value="${sysYear }" >
-								<p class="text-end text-secondary" id="dateValue-${recentFollowerReivewData.id }"></p>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="d-flex justify-content-center align-items-center"  style="height:200px;">
+							<div class="text-muted">
+								팔로우를 해보세요!
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</sec:authorize>
 		
-		<div class="row mt-3">
+		<%-- <div class="row mt-3">
 			<div class="col">
-				<h4 class="my-3">인기 맛집</h4>
+				<h4 class="my-3">Popular Stores</h4>
 			</div>
 			<div class="col text-end">
 				<button type="button" class="btn btn-outline-secondary my-3"> more</button>
 			</div>
 		</div>
 		<div class="row mb-3 border-bottom">
-			<div class="col-md-4 mb-4">
-				<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
-					<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
-
-					<div class="card-img-overlay">
-						<div class="title-text">
-							<strong>${recentFollowerReivewData.store.name }</strong><br>
+			<c:forEach var="store" items="popularStores">
+				<div class="col-md-4 mb-4">
+					<div class="cards text-center text-light font-weight-bold shadow" onclick="location.href='post'" style=" cursor: pointer;">
+						<img src="../resources/image/cafe1.jpg" class="card-image" alt="...">
+	
+						<div class="card-img-overlay">
+							<div class="title-text">
+								<strong>${store.name }</strong><br>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</c:forEach>
+			
+		</div> --%>
 	</div>
-	<div id="messagingToast" class="toast align-items-center text-bg-primary border-0 position-fixed bottom-0 end-0" role="alert"
+	<!-- <div id="messagingToast" class="toast align-items-center text-bg-primary border-0 position-fixed bottom-0 end-0" role="alert"
          aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
             <div class="toast-body">
@@ -279,8 +307,9 @@
             <button type="button" class="btn-close btn-close-white me-2 m-auto"
                     data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-    </div>	
+    </div>	 -->
 </div>
+<%@ include file="common/footer.jsp" %>
 <script type="text/javascript">
 	function timeForToday(value) {
 	    const today = new Date();
