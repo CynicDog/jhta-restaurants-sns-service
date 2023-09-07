@@ -28,11 +28,16 @@
                 <div class="card shadow-sm border border-0 my-3">
                     <div class="fw-lighter m-3 p-1">
                         <div class="row">
-                            <div class="col fs-4 d-flex my-2">
+                            <div class="col-8 fs-4 my-2">
                                 <div class="my-2">About Me</div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-end">
                                 <div id="userIcon" class="mx-2 my-1">
-                                    <img type="button" id="userImage" class="rounded-circle shadow-sm object-fit-cover mx-1" style="width: 40px; height: 40px;" onclick="handleImageClick()"/>
-                                    <input type="file" id="fileInput" style="display: none" accept="image/*" onchange="handleFileSelect()">
+                                    <img type="button" id="userImage"
+                                         class="rounded-circle shadow-sm object-fit-cover mx-1"
+                                         style="width: 70px; height: 70px;" onclick="handleImageClick()"/>
+                                    <input type="file" id="fileInput" style="display: none" accept="image/*"
+                                           onchange="handleFileSelect()">
                                 </div>
                             </div>
                         </div>
