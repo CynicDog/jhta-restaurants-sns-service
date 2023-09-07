@@ -46,6 +46,16 @@ public class StoreController {
 	private final StoreService storeService;
 	private final ReviewService reviewService;
 	private final PostService postService;
+
+	public static String[] PUBLIC_URLS = {
+			"/store/detail",
+			"/store/stores",
+			"/store/search",
+			"/store/posts",
+			"/store/history",
+			"/store/open-times",
+			"/store/detail/reviews"
+	};
 	
 	@GetMapping("/stores")
 	@ResponseBody

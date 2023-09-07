@@ -60,6 +60,13 @@ public class PostController {
     private final ReviewService reviewService;
     private final Storage storage;
 
+    public static String[] PUBLIC_URLS = {
+            "/post/getStores",
+            "/post/detail",
+            "/post/allPost",
+            "/post/get/allPost"
+    };
+
     @GetMapping("")
     public String Post(int id, @AuthenticationPrincipal SecurityUser securityUser ,  Model model) {
 

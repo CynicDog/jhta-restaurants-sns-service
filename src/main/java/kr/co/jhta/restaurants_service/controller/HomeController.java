@@ -40,6 +40,11 @@ public class HomeController {
 	public final PostService postService;
 	public final ReviewService reviewService;
 	
+	public static String[] PUBLIC_URLS = {
+			"/",
+			"/contents",
+			"/allfeed"
+	};
 
 	@GetMapping
 	public String home(Model model) {
