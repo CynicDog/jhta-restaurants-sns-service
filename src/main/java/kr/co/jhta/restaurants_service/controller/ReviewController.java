@@ -49,7 +49,11 @@ public class ReviewController {
 	private final StoreService storeService;
 	
 	private final Storage storage;
-	
+
+	public static String[] PUBLIC_URLS = {
+			"/review/detail",
+			"/review/allReviews"
+	};
 
 	// 리뷰 등록화면
 	@PreAuthorize("isAuthenticated()")
@@ -62,7 +66,7 @@ public class ReviewController {
 		return "review";
 	}
 	
-	// 리뷰 등록 요청 처리 
+	// 리뷰 등록 요청 처리
 	@PostMapping
 	public String reviewRegister(ReviewCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
 	
@@ -114,9 +118,9 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/del")
-	public String deleteReview(@RequestParam("storeId") int storeId, 
+	public String deleteReview(@RequestParam("storeId") int storeId,
 			@RequestParam("reviewId") int reviewId) {
-		
+
 		reviewService.deletedReview(reviewId);
 		
 		return "redirect:/store/detail?id=" + storeId;

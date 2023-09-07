@@ -33,6 +33,12 @@ public class ImageController {
     @Autowired
     PostService postService;
 
+    public static String[] PUBLIC_URLS = {
+            "/images/user/**",
+            "/images/review/**",
+            "/images/post/**"
+    };
+
     @ResponseBody
     @GetMapping("/post/png/{imageName}")
     public ResponseEntity<byte[]> servePostPngImage(@PathVariable String imageName) throws IOException {
@@ -160,7 +166,7 @@ public class ImageController {
     }
 
     @ResponseBody
-    @PostMapping("/user/png")
+    @PostMapping("/user-post/png")
     public ResponseEntity uploadUserPngImage(MultipartFile imageFile, @AuthenticationPrincipal SecurityUser securityUser) {
 
         try {

@@ -1,5 +1,6 @@
 package kr.co.jhta.restaurants_service.security.config;
 
+import kr.co.jhta.restaurants_service.controller.*;
 import kr.co.jhta.restaurants_service.controller.users.CustomerController;
 import kr.co.jhta.restaurants_service.controller.users.OwnerController;
 import kr.co.jhta.restaurants_service.controller.users.UserController;
@@ -39,6 +40,24 @@ public class SecurityConfiguration {
                     urlRegistry.antMatchers(UserController.PUBLIC_URLS).permitAll();
                     urlRegistry.antMatchers("/user/**").authenticated();
 
+                    urlRegistry.antMatchers(StoreController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/store/**").authenticated();
+
+                    urlRegistry.antMatchers("/like/**").authenticated();
+
+                    urlRegistry.antMatchers(ReviewController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/review/**").authenticated();
+
+                    urlRegistry.antMatchers(PostController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/post/**").authenticated();
+
+                    urlRegistry.antMatchers(ImageController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/images/**").authenticated();
+
+                    urlRegistry.antMatchers(HomeController.PUBLIC_URLS).permitAll();
+                    urlRegistry.antMatchers("/feed").authenticated();
+
+                    urlRegistry.antMatchers("/bookmark/**").authenticated();
 
                     urlRegistry.anyRequest().permitAll();
                 })

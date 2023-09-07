@@ -994,7 +994,7 @@
         const formData = new FormData();
         formData.append('imageFile', file);
 
-        fetch(`/images/user/png`, {
+        fetch(`/images/user-post/png`, {
             method: "POST",
             body: formData
         })
