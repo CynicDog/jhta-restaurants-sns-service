@@ -140,7 +140,14 @@ public class StoreController {
 		storeService.updateReadCount(storeId);
 		reviewService.getAllReviewRatingByStoreId(storeId);
 
-        StoreDetailDto dto = storeService.getStoreDetail(storeId);
+		
+		StoreDetailDto dto = null;
+		if (user == null) {
+			dto = storeService.getStoreDetail(storeId, 0);			
+		} else {
+			dto = storeService.getStoreDetail(storeId, user.getUser().getId());
+		}
+        
         ReviewDetailDto reviewDetailDto = reviewService.getRatingAvgByStoreId(storeId);
         List<ReviewDto> recentReviews = reviewService.getReviewsPaginatedByStoreId(1, 5, storeId, "all", customerId);
 
@@ -151,6 +158,7 @@ public class StoreController {
         model.addAttribute("foods", dto.getFoods());
         model.addAttribute("storeOpenTimes", dto.getOpenTimes());
         model.addAttribute("storeAvg", reviewDetailDto);
+        model.addAttribute("follows", dto.getFollowers());
         model.addAttribute("closestStores", dto.getClosestStores());
 		model.addAttribute("recentReviews", recentReviews);
         // 모델에 리뷰 정보를 추가합니다.

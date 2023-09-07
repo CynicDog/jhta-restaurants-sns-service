@@ -336,6 +336,18 @@
 			LIMIT #{limit}
 		) x
 	</select>
+		
+	<select id="getFollowerReviewedByStoreId" resultType="Customer">
+		SELECT  u.id, 
+				u.username 
+		FROM REVIEWS r JOIN USERS u on r.customer_id = u.id  
+		WHERE r.store_id = #{storeId}
+		AND r.customer_id IN (SELECT f.follower_id  
+		                      FROM FOLLOWS f
+		                      where f.followed_id = #{customerId})
+		ORDER BY r.id DESC 
+		limit 5;
+	</select>
 
 	<select id="getBookmarkByStoreIdAndCustomerId" resultType="Bookmark">
 		select

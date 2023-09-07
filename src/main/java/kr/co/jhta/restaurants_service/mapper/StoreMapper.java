@@ -12,6 +12,7 @@ import kr.co.jhta.restaurants_service.dto.VisitedStore;
 import kr.co.jhta.restaurants_service.security.domain.SecurityUser;
 import kr.co.jhta.restaurants_service.vo.store.Bookmark;
 import kr.co.jhta.restaurants_service.vo.store.Store;
+import kr.co.jhta.restaurants_service.vo.user.User;
 
 @Mapper
 public interface StoreMapper {
@@ -53,4 +54,7 @@ public interface StoreMapper {
 								 @Param("longitude") double longitude,
 								 @Param("storeId") int storeId,
 								 @Param("limit") int limit);
+    
+    List<User> getFollowerReviewedByStoreId(@Param("storeId") int storeId,
+			   						        @Param("customerId") int customerId);
 }

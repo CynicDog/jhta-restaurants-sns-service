@@ -107,7 +107,7 @@ public class StoreService {
 				});
 	}
 	
-	public StoreDetailDto getStoreDetail(int storeId) {
+	public StoreDetailDto getStoreDetail(int storeId, int userId) {
 		StoreDetailDto dto = new StoreDetailDto();
 		
 		Store store = storeMapper.getStoreById(storeId);
@@ -122,6 +122,10 @@ public class StoreService {
 		List<Store> closestStores = storeMapper.getClosestStores(store.getLatitude(), store.getLongitude(), storeId, 3);
 		dto.setClosestStores(closestStores);
 		
+		if (userId != 0) {
+			List<User> followers = storeMapper.getFollowerReviewedByStoreId(storeId, userId);
+			dto.setFollowers(followers);
+		}
 		return dto;
 	}
 
