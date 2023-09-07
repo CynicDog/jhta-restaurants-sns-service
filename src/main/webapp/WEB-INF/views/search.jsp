@@ -39,18 +39,20 @@
 				<div class="row mb-3">
 					<div class="col-12 mb-2" style="text-align: left;">
 						<a id="" class="category btn active" role="button" href="search">전체</a>
-						<a id="KOREAN" class="category btn" role="button" >한식</a>
-						<a id="CHINESE" class="category btn" role="button" >중식</a>
-						<a id="JAPANESE" class="category btn" role="button" >일식</a>
-						<a id="CHICKEN" class="category btn" role="button" >치킨</a>
-						<a id="PIZZA" class="category btn" role="button" >피자</a> 
-						<a id="FASTFOOD" class="category btn" role="button" >패스트푸드</a>
-						<a id="WESTERN" class="category btn" role="button" >양식</a> 
-						<a id="ITALIAN" class="category btn" role="button" >이탈리안</a>
-						<a id="ASIAN" class="category btn" role="button" >아시안</a> 
-						<a id="SNACK" class="category btn" role="button" >분식</a>
-						<a id="CAFE" class="category btn" role="button" >카페</a> 
-						<a id="BAR" class="category btn" role="button" >바</a>
+						<a id="한식" class="category btn" role="button" >한식</a>
+						<a id="중식" class="category btn" role="button" >중식</a>
+						<a id="일식" class="category btn" role="button" >일식</a>
+						<a id="치킨" class="category btn" role="button" >치킨</a>
+						<a id="피자" class="category btn" role="button" >피자</a> 
+						<a id="버거" class="category btn" role="button" >버거</a>
+						<a id="돈까스" class="category btn" role="button" >돈까스</a>
+						<a id="양식" class="category btn" role="button" >양식</a> 
+						<a id="이탈리안" class="category btn" role="button" >이탈리안</a>
+						<a id="아시안" class="category btn" role="button" >아시안</a> 
+						<a id="분식" class="category btn" role="button" >분식</a>
+						<a id="카페" class="category btn" role="button" >카페</a> 
+						<a id="주점" class="category btn" role="button" >주점</a>
+						
 					</div>
 				</div>
 				<div class="row mb-3">

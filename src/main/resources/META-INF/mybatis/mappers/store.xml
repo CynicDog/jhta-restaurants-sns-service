@@ -75,7 +75,8 @@
 									and
 									(S.name like CONCAT('%', #{keyword}, '%')
 									or F.name like CONCAT('%', #{keyword}, '%')
-									or S.address like CONCAT('%', #{keyword}, '%'))
+									or S.address like CONCAT('%', #{keyword}, '%')
+									or S.category like CONCAT('%', #{keyword}, '%'))
 								</if>
 								
 								<if test="xStart != null">
