@@ -26,6 +26,7 @@
     align-items: center;
     padding: 10px;
 }
+
 </style>
 </head>
 <body>
@@ -73,34 +74,38 @@
 	    </div>
 	</div>
 	<div class="row">
+		<span class="m-2"><i class="bi bi-check-lg" style="color: #ff792a;"></i><a>  최대 6개까지 선택 가능합니다.</a></span>
 		<div class="btn-group m-2">
 			<span>
 				<button type="button" class="btn btn-taste border-secondary rounded-pill text-secondary" data-keyword-type="1">#음식이 맛있어요</button>
-				<button type="button" class="btn btn-parking border-secondary rounded-pill text-secondary" data-keyword-type="2">#주차가 편해요</button>
-				<button type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="3">#매장이 청결해요</button>
-				<button type="button" class="btn btn-wide border-secondary rounded-pill text-secondary" data-keyword-type="4">#매장이 넓어요</button>
-				<button type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="5">#분위기가 좋아요</button>
-				<button type="button" class="btn btn-kind border-secondary rounded-pill text-secondary" data-keyword-type="6">#친절해요</button>
-				<button type="button" class="btn btn-menu border-secondary rounded-pill text-secondary" data-keyword-type="7">#메뉴가 다양해요</button>
-				<button type="button" class="btn btn-price border-secondary rounded-pill text-secondary" data-keyword-type="8">#가격이 적당해요</button>
-				<button type="button" class="btn btn-solo border-secondary rounded-pill text-secondary mt-2" data-keyword-type="9">#혼밥하기 좋아요</button>
-				<button type="button" class="btn btn-seat border-secondary rounded-pill text-secondary mt-2" data-keyword-type="10">#좌석이 편안해요</button>
+				<button type="button" class="btn btn-clean border-secondary rounded-pill text-secondary" data-keyword-type="2">#매장이 청결해요</button>
+				<button type="button" class="btn btn-menu border-secondary rounded-pill text-secondary" data-keyword-type="3">#메뉴가 다양해요</button>
+				<button type="button" class="btn btn-price border-secondary rounded-pill text-secondary" data-keyword-type="4">#가격이 적당해요</button>
+				<button type="button" class="btn btn-seat border-secondary rounded-pill text-secondary" data-keyword-type="5">#좌석이 편안해요</button>
+				<button type="button" class="btn btn-takeout border-secondary rounded-pill text-secondary" data-keyword-type="6">#포장이 깔끔해요</button>
+				<button type="button" class="btn btn-mood border-secondary rounded-pill text-secondary" data-keyword-type="7">#분위기가 좋아요</button>
+				<button type="button" class="btn btn-solo border-secondary rounded-pill text-secondary" data-keyword-type="8">#혼밥하기 좋아요</button>
+				<button type="button" class="btn btn-parking border-secondary rounded-pill text-secondary mt-2" data-keyword-type="9">#주차가 편해요</button>
+				<button type="button" class="btn btn-wide border-secondary rounded-pill text-secondary mt-2" data-keyword-type="10">#매장이 넓어요</button>
 				<button type="button" class="btn btn-view border-secondary rounded-pill text-secondary mt-2" data-keyword-type="11">#뷰가 예뻐요</button>
-				<button type="button" class="btn btn-takeout border-secondary rounded-pill text-secondary mt-2" data-keyword-type="12">#포장이 깔끔해요</button>
+				<button type="button" class="btn btn-kind border-secondary rounded-pill text-secondary mt-2" data-keyword-type="12">#친절해요</button>
 			</span>
 	        <input type="hidden" name="reviewKeyword" value="#음식이 맛있어요" disabled data-keyword-no="1"/>
-	        <input type="hidden" name="reviewKeyword" value="#주차가 편해요" disabled data-keyword-no="2"/>
-	        <input type="hidden" name="reviewKeyword" value="#매장이 청결해요" disabled data-keyword-no="3"/>
-	        <input type="hidden" name="reviewKeyword" value="#매장이 넓어요" disabled data-keyword-no="4"/>
-	        <input type="hidden" name="reviewKeyword" value="#분위기가 좋아요" disabled data-keyword-no="5"/>
-	        <input type="hidden" name="reviewKeyword" value="#친절해요" disabled data-keyword-no="6"/>
-	        <input type="hidden" name="reviewKeyword" value="#메뉴가 다양해요" disabled data-keyword-no="7"/>
-	        <input type="hidden" name="reviewKeyword" value="#가격이 적당해요" disabled data-keyword-no="8"/>
-	        <input type="hidden" name="reviewKeyword" value="#혼밥하기 좋아요" disabled data-keyword-no="9"/>
-	        <input type="hidden" name="reviewKeyword" value="#좌석이 편안해요" disabled data-keyword-no="10"/>
+	        <input type="hidden" name="reviewKeyword" value="#매장이 청결해요" disabled data-keyword-no="2"/>
+	        <input type="hidden" name="reviewKeyword" value="#메뉴가 다양해요" disabled data-keyword-no="3"/>
+	        <input type="hidden" name="reviewKeyword" value="#가격이 적당해요" disabled data-keyword-no="4"/>
+	        <input type="hidden" name="reviewKeyword" value="#좌석이 편안해요" disabled data-keyword-no="5"/>
+	        <input type="hidden" name="reviewKeyword" value="#포장이 깔끔해요" disabled data-keyword-no="6"/>
+	        <input type="hidden" name="reviewKeyword" value="#분위기가 좋아요" disabled data-keyword-no="7"/>
+	        <input type="hidden" name="reviewKeyword" value="#혼밥하기 좋아요" disabled data-keyword-no="8"/>
+	        <input type="hidden" name="reviewKeyword" value="#주차가 편해요" disabled data-keyword-no="9"/>
+	        <input type="hidden" name="reviewKeyword" value="#매장이 넓어요" disabled data-keyword-no="10"/>
 	        <input type="hidden" name="reviewKeyword" value="#뷰가 예뻐요" disabled data-keyword-no="11"/>
-	        <input type="hidden" name="reviewKeyword" value="#포장이 깔끔해요" disabled data-keyword-no="12"/>
+	        <input type="hidden" name="reviewKeyword" value="#친절해요" disabled data-keyword-no="12"/>
 		</div>
+	</div>
+	<div class="row mx-4 mt-3">
+		<span><i class="bi bi-pin" style="font-size: 20px; color: #ff792a;"></i><a>  사진은 필수로 입력해 주세요 :)</a></span>
 	</div>
 	<div class="row">
 	    <div class="photo-section">
@@ -199,7 +204,7 @@ $(function() {
 	    let maxLength = 2000; 
 	    let totalLength = $("textarea[name=content]").val().trim().length
 	    
-	  //  console.log("글자수", totalLength)
+	    console.log("글자수", totalLength)
 	    if (totalLength === 0) {
 	        hasText = false;
 	    } else {

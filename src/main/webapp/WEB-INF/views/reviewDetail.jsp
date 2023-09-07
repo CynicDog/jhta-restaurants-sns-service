@@ -35,9 +35,7 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="${review.review.customer.fullName}" data-bs-content="Follow">
-							<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
-						</a>
+						<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=${review.review.customer.id}'" style="cursor: pointer;">
 					</div>
 					<div class="col-3">
 						<p class="mb-5 my-5" style="font-size:30px;"><strong>
@@ -161,24 +159,9 @@ html, body {
 				</div>
   			</div>
 			<div class="m-2">
-				<c:if test="${review.taste }">
-					<span class="badge text-bg-danger bg-opacity-75 fw-lighter fs-6 m-2 p-1">#음식이 맛있어요</span>
-				</c:if>
-				<c:if test="${review.parking }">
-					<span class="badge text-bg-secondary bg-opacity-75 fw-lighter fs-6 m-2 p-1">#주차가 편해요</span>
-				</c:if>
-				<c:if test="${review.clean }">
-					<span class="badge text-bg-info bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 청결해요</span>
-				</c:if>
-				<c:if test="${review.wide }">
-					<span class="badge text-bg-primary bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#매장이 넓어요</span>
-				</c:if>
-				<c:if test="${review.mood }">
-					<span class="badge text-bg-warning bg-opacity-75 text-white fw-lighter fs-6 m-2 p-1">#분위기가 좋아요</span>
-				</c:if>
-				<c:if test="${review.kind }">
-					<span class="badge text-bg-success bg-opacity-75 fw-lighter fs-6 m-2 p-1">#친절해요</span>
-				</c:if>
+			<c:forEach var="keyword" items="${review.reviewKeywords }">
+					<span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill fw-lighter fs-6 text-white m-2 p-1">${keyword.keyword }</span>
+			</c:forEach>
 				<span class="float-end">
 					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#reportModal" data-bs-whatever="@mdo">
 		          		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
@@ -196,7 +179,7 @@ html, body {
 						<input type="hidden" name="storeId" value="${review.review.store.id }"/>
 						<div class="form-floating text-start">
 							<p>댓글을 작성하세요</p>
-			     			<textarea placeholder="댓글을 작성하세요" class="form-control-plaintext" name="content" style="min-height:2rem"></textarea>
+			     			<textarea placeholder="댓글을 작성하세요" class="form-control-plaintext" id="comment-textarea" name="content" style="min-height:2rem"></textarea>
 		               	</div>
 					</div>
 					<div class="row m-3">
@@ -213,12 +196,10 @@ html, body {
 			<div class="row my-3">
 				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #ff792a; font-size: 45px;"></i></div>
 				<div class="col-1">
-					<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
-						<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" >
-					</a>
-			<div class="text-center card-title my-1">
-				<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
-			</div>
+					<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=${comment.userId}'" style="cursor: pointer;">
+					<div class="text-center card-title my-1">
+						<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
+					</div>
 				</div>
 				<div class="col-10 position-relative">
 				<div class="row mb-2">
@@ -229,8 +210,12 @@ html, body {
 					<div class="card-text">
 						<span> 
 							<c:choose>
-								<c:when test="${not empty comment.nickname }">${comment.nickname }</c:when>
-								<c:otherwise>${comment.username }</c:otherwise>
+								<c:when test="${not empty comment.nickname }">
+									<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.nickname }</strong></span>
+								</c:when>
+								<c:otherwise>
+									<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.username }</strong></span>
+								</c:otherwise>
 							</c:choose>
 						</span>
 					</div>
@@ -261,77 +246,78 @@ html, body {
 <%@ include file="common/footer.jsp"%>
 </div>
 <script>
+$(document).ready(function () {
+
+	// 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
+	let modal = new bootstrap.Modal("#Modal");
+	// 전체 이미지 갯수를 조회해서 대입한다.
+	let imgLength = $("#image-row .img-thumbnail").length;
+	// 현재 모달차에 표시되고 있는 이미지의 인덱스가 대입되는 변수다.
+	let currentImageIndex;
 	
-	// popover 생성
-	document.addEventListener("DOMContentLoaded", () => {
-		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-		const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-	})
+	// 이미지를 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다
+	$("#image-row .img-thumbnail").click(function() {
+		// 지금 클릭한 버튼의 인덱스값을 조회해서 currentImageIndex변수에 대입한다. <-- 모달창에서 현재 보고 있는 이미지를 인덱스를 알고 있어야지 이전/다음 버튼으로 이미지를 변경할 수 있음
+		currentImageIndex = parseInt($(this).attr("data-image-index"))
 	
-	
-	$("#text-button").click(function() {
-		$("#floatingTextarea").prop("readOnly", !$("#floatingTextarea").prop("readOnly"))
+		// 지금 클릭한 버튼의 이미지경로를 조회해서 변수에 대입한다.
+		let imagepath = $(this).attr("src");
+		// 조회된 이미지경로를 모달창의 이미지에 표시되게 한다.<img id="modalImg"> 이 엘리먼트에 src 속성으로 이미지경로로 지정한다.
+		$("#modalImg").attr("src", imagepath);
+		
+		modal.show();
 	});
 	
+	// 이전 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다
+	$("#prevButton").click(function() {
+		// 이전 버튼을 클릭했기 때문에 현재 이미지인덱스값을 1감소시킨다.
+		currentImageIndex--;
+		// 현재 이미지 인덱스값이 0보다 작아지면 맨 마지막번째 이미지의 인덱스값(전체 이미지 개수 - 1)을 저장한ㄷ
+		if (currentImageIndex < 0) {
+			currentImageIndex = imgLength - 1
+		}
+		// 위에서 계산한 이미지 인덱스에 해당하는 이미지 태그를 찾아서 그 이미지태그의 src 속성값을 조회한다.
+		let imagepath = $('#image-row .img-thumbnail').eq(currentImageIndex).attr("src");
+		// 위에서 조회한 이미지경로를 모달창의 img 태그에 설정한다.
+		$("#modalImg").attr("src", imagepath);
+	});
 	
-// 모달객체 생성한다. 스크립트로 show, hide 할 수 있다.
-let modal = new bootstrap.Modal("#Modal");
-// 전체 이미지 갯수를 조회해서 대입한다.
-let imgLength = $("#image-row .img-thumbnail").length;
-// 현재 모달차에 표시되고 있는 이미지의 인덱스가 대입되는 변수다.
-let currentImageIndex;
-
-// 이미지를 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다
-$("#image-row .img-thumbnail").click(function() {
-	// 지금 클릭한 버튼의 인덱스값을 조회해서 currentImageIndex변수에 대입한다. <-- 모달창에서 현재 보고 있는 이미지를 인덱스를 알고 있어야지 이전/다음 버튼으로 이미지를 변경할 수 있음
-	currentImageIndex = parseInt($(this).attr("data-image-index"))
-
-	// 지금 클릭한 버튼의 이미지경로를 조회해서 변수에 대입한다.
-	let imagepath = $(this).attr("src");
-	// 조회된 이미지경로를 모달창의 이미지에 표시되게 한다.<img id="modalImg"> 이 엘리먼트에 src 속성으로 이미지경로로 지정한다.
-	$("#modalImg").attr("src", imagepath);
+	// 다음 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다.
+	$("#nextButton").click(function() {
+		// 다음 버튼을 클릭했기 때문에 현재 이미지인덱스값을 1증가시킨다.
+		currentImageIndex++;
+		if (currentImageIndex > imgLength-1) {
+			currentImageIndex = 0;
+		}
+		let imagepath = $('#image-row .img-thumbnail').eq(currentImageIndex).attr("src");
+		$("#modalImg").attr("src", imagepath);
+	});
 	
-	modal.show();
-});
+	$("#span-close-modal").click(function() {
+		modal.hide();
+	});
+	
+	 var hiddenReviewCount = parseInt($("#hidden-review-count").text());
+	 if (hiddenReviewCount > 0) {
+	     $("#review-count").text("+" + hiddenReviewCount);
+	 } else {
+	     $("#review-count").hide();
+	 }
+	
+	
+	$("#comment-textarea").keyup(function() {
+			
+	    let totalContentLength = $(this).val().trim().length;
+	
+	    if (totalContentLength === 0) {
+	        $("#button-add-comment").attr("disabled", true);
+	    } else {
+	        $("#button-add-comment").attr("disabled", false);
+	    }
+	});
 
-// 이전 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다
-$("#prevButton").click(function() {
-	// 이전 버튼을 클릭했기 때문에 현재 이미지인덱스값을 1감소시킨다.
-	currentImageIndex--;
-	// 현재 이미지 인덱스값이 0보다 작아지면 맨 마지막번째 이미지의 인덱스값(전체 이미지 개수 - 1)을 저장한ㄷ
-	if (currentImageIndex < 0) {
-		currentImageIndex = imgLength - 1
-	}
-	// 위에서 계산한 이미지 인덱스에 해당하는 이미지 태그를 찾아서 그 이미지태그의 src 속성값을 조회한다.
-	let imagepath = $('#image-row .img-thumbnail').eq(currentImageIndex).attr("src");
-	// 위에서 조회한 이미지경로를 모달창의 img 태그에 설정한다.
-	$("#modalImg").attr("src", imagepath);
-});
 
-// 다음 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수를 등록한다.
-$("#nextButton").click(function() {
-	// 다음 버튼을 클릭했기 때문에 현재 이미지인덱스값을 1증가시킨다.
-	currentImageIndex++;
-	if (currentImageIndex > imgLength-1) {
-		currentImageIndex = 0;
-	}
-	let imagepath = $('#image-row .img-thumbnail').eq(currentImageIndex).attr("src");
-	$("#modalImg").attr("src", imagepath);
 });
-
-$("#span-close-modal").click(function() {
-	modal.hide();
-});
-
-$(document).ready(function () {
-    var hiddenReviewCount = parseInt($("#hidden-review-count").text());
-    if (hiddenReviewCount > 0) {
-        $("#review-count").text("+" + hiddenReviewCount);
-    } else {
-        $("#review-count").hide();
-    }
-});
-
 
 </script>
 </body>
