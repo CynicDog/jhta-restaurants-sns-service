@@ -17,5 +17,6 @@ public class BookmarkedStore {
 	private double reviewAvg;
 	private String category;
 	private User customer;
+	private String pictureName;
 
 }

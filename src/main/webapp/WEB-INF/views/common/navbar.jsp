@@ -284,8 +284,8 @@
 						<div class="card history_card mb-3">
 							<div class="row g-0">
 								<div class="col-md-4">
-									<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
-									 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
+									<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';"
+									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
 								</div>
 							<div class="col-md-8">
 								<div class="card-body">
@@ -328,8 +328,8 @@
 					<div class="card bookmark_card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
-								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
+								<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="img-fluid rounded-start" alt="..."
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">

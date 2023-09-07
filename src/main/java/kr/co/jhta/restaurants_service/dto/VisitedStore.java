@@ -14,6 +14,7 @@ import lombok.Setter;
 public class VisitedStore {
 	private int id;
 	private String name;
+	private String pictureName;
 	private double reviewAvg;
 	private String category;
 	private String isBookmarked;
