@@ -138,7 +138,7 @@
                                 <td>
                                     <c:forEach var="food" items="${foods}">
                                         <div class="col my-2">
-                                            <span class="food-name d-inline-block" style="width: 150px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+                                            <span class="food-name d-inline-block" style="width: 190px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
                                         </div>
                                     </c:forEach>
                                 </td>
@@ -185,7 +185,7 @@
 							                    </c:otherwise>
 							                </c:choose>
 			                                <div class="ml-3">
-			                                    <h5 class="card-title mt-0" style="margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
+			                                    <h5 class="card-title mt-0" style="white-space: nowrap; margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; display: flex; align-items: center; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
 			                                    	${closestStore.name } 
 			                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">${closestStore.averageRating }</span>
 			                                    </h5>
