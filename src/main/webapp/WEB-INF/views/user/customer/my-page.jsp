@@ -618,7 +618,7 @@
                     }
 
                     const truncatedContent = (datum.content.split(' ').length > 30)
-                        ? `\${datum.content.split(' ').slice(0, 50).join(' ')} (...)`
+                        ? `\${datum.content.split(' ').slice(0, 30).join(' ')} (...)`
                         : datum.content;
 
                     reviewsOutputArea.innerHTML += `
