@@ -575,12 +575,6 @@
 
             if (data.length === 0) {
                 storeLoadingSpinner.style.display = 'none'
-
-                contentOutputArea.innerHTML = `
-                    <div class="row text-center ">
-                        <div class="fw-lighter fs-5">No stores yet.</div>
-                    </div>
-                `
             }
 
             if (data.last) {
@@ -665,7 +659,7 @@
                             </div>
                         </div>
                 `
-                isStoreFetching = true;
+                isStoreFetching = false;
                 storeLoadingSpinner.style.display = 'none';
             })
         })
@@ -711,13 +705,12 @@
 
     window.onscroll = function () {
 
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
-
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 95.5) {
             if (isStoreFetching || isStoreLast) {
                 // do nothing
             } else {
-                pageOnPictureData += 1;
-                currentFetchingOption(pageOnPictureData);
+                pageOnStore += 1;
+                currentFetchingOption(pageOnStore);
             }
         }
     }
