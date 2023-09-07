@@ -149,13 +149,10 @@ public class StoreService {
 	public List<VisitedStore> getVisitedStore(Map<String,Object> param) {
 		List<VisitedStore> stores;
 		if(param.get("customerId")==null) {
-			log.info("param.get(\"customerId\") : " + param.get("customerId"));
 			stores = storeMapper.getVisitedStores(param);
 		}else {
 			stores = storeMapper.getVisitedStoresById(param);
 		}
-
-		log.info("가게서비스 getVisitedStore 결과 stores : '{}'",stores);
 		return stores;
 	}
 

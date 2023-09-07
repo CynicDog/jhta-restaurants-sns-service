@@ -245,75 +245,72 @@
            $("#historyLoadingSpinner").css("display", "block");
 		//방문한 가게 불러오기
 		let histories = JSON.parse(localStorage.getItem("store_history"));
-		let data = histories.map(function(storeId) {
-			return "id=" + storeId;
-		}).join("&");
-		console.log("data : ",data);
-		  
-		$("#history-tab-content").find(".history_card").remove();
-		
-		$.getJSON('/store/history',  data, function(stores) {
-			console.log("ajax getVisitedStores start");
 
-			// histories = [23, 10]
-			// stores = [{no:10, name:aa}, {no:23, name:bbb}]
-			histories.forEach(function(id, index) {
-				store = stores.find(function(store) {
-					return store.id == id;
-				})
-				store['index'] = index;
-			})
-			// stores = [{no:10, name:aa, index:1}, {no:23, name:bbb, index:0}]
+		if(histories!==null){
+			let data = histories.map(function(storeId) {
+				return "id=" + storeId;
+			}).join("&");
+			  
+			$("#history-tab-content").find(".history_card").remove();
+				$.getJSON('/store/history',  data, function(stores) {
 			
-			stores.sort(function(store1, store2) {
-				return store1.index - store2.index;
-			})
-			
-			// html 태그 생성
-			stores.forEach(function(store){
-			console.log("result stores : ", store.id);
-			let ynStar;
-			 
-			if(store.isBookmarked==='y'){
-				ynStar = 'bi-star-fill';
-			}
-		
-			if(store.isBookmarked==='n'){
-				ynStar = 'bi-star';
-			}
-			
-			let content = `
-				<div class="card history_card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
-							 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
-						</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<div class="row">
-								<div class="col-9">
-									<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
-									<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
+					// histories = [23, 10]
+					// stores = [{no:10, name:aa}, {no:23, name:bbb}]
+					histories.forEach(function(id, index) {
+						store = stores.find(function(store) {
+							return store.id == id;
+						})
+						store['index'] = index;
+					})
+					// stores = [{no:10, name:aa, index:1}, {no:23, name:bbb, index:0}]
+					
+					stores.sort(function(store1, store2) {
+						return store1.index - store2.index;
+					})
+					
+					// html 태그 생성
+					stores.forEach(function(store){
+					let ynStar;
+					 
+					if(store.isBookmarked==='y'){
+						ynStar = 'bi-star-fill';
+					}
+				
+					if(store.isBookmarked==='n'){
+						ynStar = 'bi-star';
+					}
+					
+					let content = `
+						<div class="card history_card mb-3">
+							<div class="row g-0">
+								<div class="col-md-4">
+									<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';"
+									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
 								</div>
-								<div class="col-3 star-container d-flex justify-content-center ">
-									<button class="btn" id="box-\${store.id}"> 
-										<i id="star-\${store.id}" index-id ="\${store.id}" class="bi \${ynStar}" style="color: gold; font-size: 25px;"></i>
-									</button>
+							<div class="col-md-8">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-9">
+											<p class="card-title" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">\${store.name}</p>
+											<p class="card-text"><small class="text-body-secondary">\${store.category}</small></p>
+										</div>
+										<div class="col-3 star-container d-flex justify-content-center ">
+											<button class="btn" id="box-\${store.id}"> 
+												<i id="star-\${store.id}" index-id ="\${store.id}" class="bi \${ynStar}" style="color: gold; font-size: 25px;"></i>
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			`;
-            $("#historyLoadingSpinner").css("display", "none");
-			$("#history-tab-content").append(content);
-
-			})
-		console.log("ajax getVisitedStores done");
-		})
-
+					`;
+					$("#history-tab-content").append(content);
+			
+					})
+				})
+		}
+        $("#historyLoadingSpinner").css("display", "none");
 	}
 	
 	function getBookmarkedStores() {
@@ -331,8 +328,8 @@
 					<div class="card bookmark_card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src="/resources/image/cafe1.jpg" class="img-fluid rounded-start" alt="..."
-								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer;">
+								<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="img-fluid rounded-start" alt="..."
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">

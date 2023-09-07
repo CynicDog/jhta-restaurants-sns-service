@@ -189,7 +189,11 @@
 			S.name 						as name,
 			S.category					as category,
 			review_avg					as reviewAvg,
-			if(B.id, 'y', 'n')			as isBookmarked
+			if(B.id, 'y', 'n')			as isBookmarked,
+			(SELECT RP.PICTURE_NAME 
+			 FROM REVIEW_PICTURES RP 
+			 JOIN REVIEWS R ON RP.review_id = R.id 
+			 WHERE S.id = R.store_id limit 1 offset 0) pictureName
 		from STORES S 
 			left join 
 	       	   (select 
@@ -213,7 +217,11 @@
 			S.name 						as name,
 			S.category					as category,
 			review_avg					as reviewAvg,
-			'n' 						as isBookmarked
+			'n' 						as isBookmarked,
+			(SELECT RP.PICTURE_NAME 
+			 FROM REVIEW_PICTURES RP 
+			 JOIN REVIEWS R ON RP.review_id = R.id 
+			 WHERE S.id = R.store_id limit 1 offset 0) pictureName
 		from STORES S 
 			left join 
 	       	   (select 
@@ -235,8 +243,11 @@
 			S.name 			as name,
 			S.category		as category,
 			review_avg		as reviewAvg,
-			B.customer_id	as "user.id"
-			
+			B.customer_id	as "user.id",
+			(SELECT RP.PICTURE_NAME 
+			 FROM REVIEW_PICTURES RP 
+			 JOIN REVIEWS R ON RP.review_id = R.id 
+			 WHERE S.id = R.store_id limit 1 offset 0) pictureName
 		from STORES S 
 			left join 
 	       	  BOOKMARKS B on S.id = B.store_id
