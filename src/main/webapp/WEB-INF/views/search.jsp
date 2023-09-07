@@ -38,19 +38,19 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-12 mb-2" style="text-align: left;">
-						<a id="" class="cat btn active" role="button" href="search">전체</a>
-						<a id="KOREAN" class="cat btn" role="button" href="search?category=KOREAN">한식</a>
-						<a id="CHINESE" class="cat btn" role="button" href="search?category=CHINESE">중식</a>
-						<a id="JAPANESE" class="cat btn" role="button" href="search?category=JAPANESE">일식</a>
-						<a id="CHICKEN" class="cat btn" role="button" href="search?category=CHICKEN">치킨</a>
-						<a id="PIZZA" class="cat btn" role="button" href="search?category=PIZZA">피자</a> 
-						<a id="FASTFOOD" class="cat btn" role="button" href="search?category=FASTFOOD">패스트푸드</a>
-						<a id="WESTERN" class="cat btn" role="button" href="search?category=WESTERN">양식</a> 
-						<a id="ITALIAN" class="cat btn" role="button" href="search?category=ITALIAN">이탈리안</a>
-						<a id="ASIAN" class="cat btn" role="button" href="search?category=ASIAN">아시안</a> 
-						<a id="SNACK" class="cat btn" role="button" href="search?category=SNACK">분식</a>
-						<a id="CAFE" class="cat btn" role="button" href="search?category=CAFE">카페</a> 
-						<a id="BAR" class="cat btn" role="button" href="search?category=BAR">바</a>
+						<a id="" class="category btn active" role="button" href="search">전체</a>
+						<a id="KOREAN" class="category btn" role="button" >한식</a>
+						<a id="CHINESE" class="category btn" role="button" >중식</a>
+						<a id="JAPANESE" class="category btn" role="button" >일식</a>
+						<a id="CHICKEN" class="category btn" role="button" >치킨</a>
+						<a id="PIZZA" class="category btn" role="button" >피자</a> 
+						<a id="FASTFOOD" class="category btn" role="button" >패스트푸드</a>
+						<a id="WESTERN" class="category btn" role="button" >양식</a> 
+						<a id="ITALIAN" class="category btn" role="button" >이탈리안</a>
+						<a id="ASIAN" class="category btn" role="button" >아시안</a> 
+						<a id="SNACK" class="category btn" role="button" >분식</a>
+						<a id="CAFE" class="category btn" role="button" >카페</a> 
+						<a id="BAR" class="category btn" role="button" >바</a>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -116,7 +116,7 @@
 		}
 		
 		//	카테고리 변경 이벤트 등록
-		$(".cat").click(function(event){
+		$(".category").click(function(event){
 			event.preventDefault();
 			$(this).siblings().removeClass('active');
 			$(this).addClass('active');
@@ -188,7 +188,7 @@
 					let content = `
 						<div class="col-5 mb-3 me-3 store card-zoom">
 							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
-								<img src="/images/review/png/\${store.pictureName}" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
+								<img src="/images/review/png/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/default.jpeg';" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
 							</div>
 							<div class="row">
 								<div class="col text-start mt-1">							

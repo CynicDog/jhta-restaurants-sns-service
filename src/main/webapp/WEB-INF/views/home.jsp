@@ -93,7 +93,7 @@
 								<p class="text-secondary" >${post.subTitle}</p>
 							</div>
 							<div class="col-3">
-								<img src="/images/post/png/${post.pictureFile}" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
+								<img src="/images/post/png/${post.pictureFile}" onerror="this.onerror=null; this.src='/images/review/jpeg/default.jpeg';" class="img-fluid rounded-end" alt="..." style="object-fit: cover; height:70px;">
 							</div>
 						</div>
 					</div>
