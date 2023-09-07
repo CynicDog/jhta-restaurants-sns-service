@@ -157,7 +157,7 @@
                                </div>
                                "
                             ><img type="button" id="userImage-nav" src="/images/user/png/<sec:authentication property="principal.username" />"
-									 class="rounded-circle shadow-sm object-fit-cover userDetailEntry border"
+									 class="rounded-circle shadow-sm object-fit-cover border"
 									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 34px; height: 34px;"/></a>
                         </li>
                         <script>
