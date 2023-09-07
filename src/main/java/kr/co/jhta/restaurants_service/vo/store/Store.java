@@ -74,7 +74,7 @@ public class Store {
     public Store(String category) {
         if (CATEGORY.valueOf(category) != null) {
             // String
-            this.category = CATEGORY.ASIAN.name();
+            this.category = category;
         }
     }
 
@@ -101,7 +101,7 @@ public class Store {
     }
 
     public enum CATEGORY {
-        KOREAN, JAPANESE, CHINESE, ASIAN, WESTERN, FASTFOOD, SNACK, CHICKEN,
-        BAR, ITALIAN, CAFE, PIZZA, MEXICAN, BRUNCH, PASTRY, GOURMET, BARBECUE
+
+        한식, 일식, 중식, 아시안, 양식, 패스트푸드, 스낵, 치킨, 바, 이탈리안, 카페, 피자, 멕시칸, 브런치, 페이스트리, 고멧, 바베큐
     }
 }
