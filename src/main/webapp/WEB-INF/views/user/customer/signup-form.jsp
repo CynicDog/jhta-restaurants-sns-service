@@ -533,7 +533,7 @@
                 body: JSON.stringify(formData)
             }).then(response => {
                 if (response.ok) {
-                    window.location.href = "/user/login"
+                    window.location.href = "/"
                 } else {
 
                     // clear and erase toasts
