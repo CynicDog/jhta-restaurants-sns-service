@@ -25,18 +25,4 @@ public class JhtaRestaurantsSnsServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(JhtaRestaurantsSnsServiceApplication.class, args);
     }
-
-    @Bean
-    public CommandLineRunner userJsonExample() {
-        return args -> {
-
-            UserDetails user = userService.loadUserByUsername("simon");
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            String userJson = objectMapper.writeValueAsString(user);
-
-            logger.info(userJson);
-        };
-    }
-
 }
