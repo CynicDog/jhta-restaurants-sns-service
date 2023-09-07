@@ -20,6 +20,7 @@ public class StoreDetailDto {
 	private List<StoreOpenTime> openTimes;
 	private List<Store> closestStores;
 	private List<User> wishers;
+	private List<User> followers;
 
 	public StoreDetailDto(Store store, List<Food> foods, List<StoreOpenTime> openTimes, List<User> wishers) {
 		this.store = store;

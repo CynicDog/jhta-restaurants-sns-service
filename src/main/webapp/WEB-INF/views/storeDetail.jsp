@@ -51,7 +51,7 @@
 	                    <div class="card" style="width:80%; height: 80vh; overflow: hidden;">
 	                        <div class="card-body d-flex flex-column align-items-start">
 	                            <div class="d-flex align-items-center mb-2">
-	                                <img src="/images/user/png/${recentReview.customerName}"  onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="...">
+	                                <img src="/images/user/png/${recentReview.customerName}"  onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle " style="width: 60px; height: 60px;" alt="..." onclick="location.href='/user/details?id=${recentReview.customerId}'">
 	                                <div class="ml-2">
 	                                    <span style="font-size: medium; font-weight: bold;" id="modal-review-nickname">${recentReview.nickname }</span>
 	                                </div>
@@ -200,11 +200,14 @@
 			                    </div>
 		                	</c:forEach>
 		                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
-		                    <img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn.crowdpic.net%2Fdetail-thumb%2Fthumb_d_4C89175D6281320DB40FF21CD5E71DC5.jpeg&type=sc960_832" class="img-thumbnail rounded-circle" style="width: 75px; height: 60px;" alt="...">
+		                	<c:forEach var="follow" items="${follows }">
+			                	<div>
+				                    <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
+			                	</div>
+			                	<div>
+				                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">${follow.username }</span> 
+			                	</div>    
+		                	</c:forEach>              
 		                </div>
 		            </div>
 	            </div>
