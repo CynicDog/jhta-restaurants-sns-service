@@ -7,6 +7,6 @@ import kr.co.jhta.restaurants_service.vo.inquiry.Inquiry;
 @Mapper
 public interface InquiryMapper {
 
-	void createBoard(Inquiry inquiry);
+	void insertInquiry(Inquiry inquiry);
 
 }

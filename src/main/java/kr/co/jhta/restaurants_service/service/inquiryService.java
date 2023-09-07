@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.co.jhta.restaurants_service.dto.InquiryList;
 import kr.co.jhta.restaurants_service.mapper.InquiryMapper;
@@ -19,7 +20,7 @@ public class inquiryService {
 	}
 
 	public void createBoard(Inquiry inquiry) {
-		inquiryMapper.createBoard(inquiry);
+		inquiryMapper.insertInquiry(inquiry);
 		
 	}
 
