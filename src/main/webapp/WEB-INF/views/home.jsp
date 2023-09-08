@@ -31,8 +31,8 @@
 	<div class="container-fluid">
 		<div class= "row d-flex justify-content-between mt-3">
 			<div class="col-2 ps-0">
-	            <nav id="home-left-navbar " class="h-100 flex-column align-items-stretch pe-4 border-end bg-light">
-	                <nav class="nav nav-pills flex-column fw-lighter ps-3">
+	            <nav id="home-left-navbar " class="h-100 flex-column align-items-stretch pe-4 border-end bg-light" >
+	                <nav class="nav nav-pills flex-column fw-lighter ps-3 " style="position:sticky; top: 60px;">
                         <sec:authorize access="isAuthenticated()">
 	                    	<sec:authorize access="hasRole('ROLE_OWNER')">
 		                    	<a class="nav-link my-3 text-secondary" href="/owner/my-page">마이페이지</a>
