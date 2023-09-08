@@ -32,7 +32,7 @@
 			c.create_date		as createDate,
 			c.update_date		as updateDate,
 			a.review_avg		as reviewAvg,
-			u.full_name			as username, 
+			u.username			as username, 
 			u.nickname			as nickname, 
 			u.profile_picture_name as profilePictureName,
 			u.id				as userId,
