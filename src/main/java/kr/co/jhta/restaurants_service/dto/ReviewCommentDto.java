@@ -29,5 +29,6 @@ public class ReviewCommentDto {
 	private String profilePictureName;
 	private int userId;
 	private int reviewId;
+	private long reviewCommentCount;
 
 }
