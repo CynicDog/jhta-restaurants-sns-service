@@ -290,10 +290,9 @@
 					let content = `
 						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
 							<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
-							<div class="card-img-overlay d-flex flex-column align-items-center">
-								<p class="fs-5 my-0"><strong>\${post.title }</strong></p>
-								<p class="fs-5">\${post.subTitle }</p>
+								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(60%);">
+							<div class="card-img-overlay d-flex justify-content-center align-items-center">
+								<p class="fs-5 my-0">\${post.title }</p>
 							</div>
 						</div>
 					`
