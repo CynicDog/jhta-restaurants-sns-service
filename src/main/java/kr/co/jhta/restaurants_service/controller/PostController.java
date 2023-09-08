@@ -101,7 +101,7 @@ public class PostController {
             String bucketName = "jhta-restaurants-sns-service";
             String objectName = "post/" + chooseFile.getOriginalFilename();
 
-            BlobId blobId = BlobId.of(bucketName, objectName);
+            BlobId blobId = BlobId.of(bucketName, objectName + UUID.randomUUID().toString());
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(chooseFile.getContentType()).build();
 
             Blob blob = storage.create(blobInfo, chooseFile.getBytes());
