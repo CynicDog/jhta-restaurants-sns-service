@@ -28,7 +28,7 @@
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
-        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer;" id="review-img-thumbnail">
+        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer; margin-top: 5px;" id="review-img-thumbnail">
             <c:forEach var="recentReview" items="${recentReviews}">
                 <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" data-review-id="${recentReview.id }" id="review-img-${recentReview.id }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
