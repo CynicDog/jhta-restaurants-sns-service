@@ -13,6 +13,10 @@
 	
 	<style type="text/css">
 	
+	.form-floating{
+		position: relative;
+		z-index:0;
+	}
 	
 	.searchInput .resultBox {
         padding: 0;
@@ -22,7 +26,7 @@
         position: absolute; /* 위치 변경 */
         top: 50px; /* 위치 변경 */
         left: 0; /* 위치 변경 */
-        z-index: 10; /* 위치 변경 */
+        z-index: 2; /* 위치 변경 */
     }
 	.resultBox {
         padding: 0;
@@ -32,7 +36,7 @@
         position: absolute; /* 위치 변경 */
         top: 50px; /* 위치 변경 */
         left: 0; /* 위치 변경 */
-        z-index: 10; /* 위치 변경 */
+        z-index: 2; /* 위치 변경 */
     }
 	
 	.searchInput.active .resultBox{
@@ -65,10 +69,11 @@
 	.resultBox li:hover{
 	  background: #efefef;
 	}
-	
-	.zindex{
-		z-index: 0;
+	navbar {
+		z-index:1;
 	}
+	
+	
 	
 	</style>
     <title>Insert title here</title>
@@ -122,17 +127,17 @@
                                                 </div>
                                             </div>
                                             <div class="col-8">
-                                                <div class="form-floating searchInput active zindex" id=search-input name="searchInputName">
+                                                <div class="form-floating searchInput active" id=search-input name="searchInputName" style="z-index:1;">
                                                     <input type="text" id="storeNameInput" class="form-control-plaintext mb-4 storeNameInput"
                                                           name="storeName">
                                                     <input type="hidden" name="storeId" id="storeInput" class="storeIdInput">
 				                                    <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
                                                     <label for="storeInput">가게명을 작성해주세요 :)</label>
                                                 </div>
-                                                <div class="form-floating zindex">
+                                                <div class="form-floating">
 				                                    <textarea class="form-control-plaintext"
                                                               rows="10" cols="60"
-                                                              name="content" style="min-height:10rem"></textarea>
+                                                              name="content" style="min-height:10rem; z-index:0;"></textarea>
                                                     <label for="storeIdInput">원하는 글을 작성해주세요</label>
                                                 </div>
                                                 <div class="row">
@@ -262,14 +267,14 @@
                             </div>
                         </div>
                         <div class="col-8">
-			            	<div class="form-floating zindex" id="search-input-\${formIndex}" name="searchInputName">
+			            	<div class="form-floating" id="search-input-\${formIndex}" name="searchInputName" style="z-index:1;">
 					                <input type="text" id="storeNameInput-\${formIndex}" class="form-control-plaintext mb-4 storeNameInput-\${formIndex}"
 					                name="storeName">
 					          <ul class="resultBox list-group"><!-- here list are inserted from javascript --></ul>
 					          <input type="hidden" name="storeId" id="storeInput-\${formIndex}" class="storeIdInput">
 					          <label for="storeInput-\${formIndex}">가게명을 작성해주세요 :)</label>
 			            	</div>
-                            <div class="form-floating zindex">
+                            <div class="form-floating">
                                 <textarea class="form-control-plaintext"
                                           rows="10" cols="60"
                                           name="content" style="min-height:10rem"></textarea>

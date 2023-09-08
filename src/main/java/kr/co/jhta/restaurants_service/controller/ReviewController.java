@@ -54,7 +54,9 @@ public class ReviewController {
 
 	public static String[] PUBLIC_URLS = {
 			"/review/detail",
-			"/review/allReviews"
+			"/review/allReviews",
+			"/review/get/allReview",
+			"/review/get/keywords"
 	};
 
 	// 리뷰 등록화면

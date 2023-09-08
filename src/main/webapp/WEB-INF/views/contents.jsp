@@ -44,6 +44,7 @@
 	.search-bar {
   		width: 800px;
 	}
+	
 </style>
 </head>
 <body>
