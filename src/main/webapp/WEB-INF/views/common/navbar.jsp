@@ -14,7 +14,7 @@
     .wrap {
         position: relative;
         /*min-height: 100%;*/
-        padding-top: 70px;
+        padding-top: 47px;
         /*padding-bottom: 100px;*/
     }
     
@@ -65,7 +65,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
-            <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
+            <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="지역, 식당 또는 음식" aria-label="Search" >
         </form>
         <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav px-4">
@@ -285,7 +285,7 @@
 							<div class="row g-0">
 								<div class="col-md-4">
 									<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';"
-									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
+									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%; width: 90px;">
 								</div>
 							<div class="col-md-8">
 								<div class="card-body">
@@ -329,7 +329,7 @@
 						<div class="row g-0">
 							<div class="col-md-4">
 								<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="img-fluid rounded-start" alt="..."
-								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%; width: 90px;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">

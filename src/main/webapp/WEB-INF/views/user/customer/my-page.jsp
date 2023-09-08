@@ -884,7 +884,11 @@
                         </div>
                     </div>
                 `
+
+                isPictureDataFetching = false;
+                picturesLoadingSpinner.style.display = 'none';
             })
+
         })
     }
 
