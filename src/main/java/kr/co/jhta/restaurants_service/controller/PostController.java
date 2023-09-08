@@ -63,18 +63,18 @@ public class PostController {
     public static String[] PUBLIC_URLS = {
             "/post/getStores",
             "/post/detail",
-            "/post/allPost",
+            "/post/allPosts",
             "/post/get/allPost"
     };
 
-    @GetMapping("")
-    public String Post(int id, @AuthenticationPrincipal SecurityUser securityUser ,  Model model) {
-
-        PostDto dto = postService.selectPost(id,securityUser);
-        model.addAttribute("post", dto);
-
-        return "post/posting";
-    }
+//    @GetMapping("")
+//    public String Post(int id, @AuthenticationPrincipal SecurityUser securityUser ,  Model model) {
+//
+//        PostDto dto = postService.selectPost(id,securityUser);
+//        model.addAttribute("post", dto);
+//
+//        return "post/posting";
+//    }
 
     @GetMapping("/register")
     public String RegFormFirst(Model model) {
