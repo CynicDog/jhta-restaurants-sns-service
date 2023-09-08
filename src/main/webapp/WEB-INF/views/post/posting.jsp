@@ -21,19 +21,24 @@
 			width: 270px;
 			height: 270px;
 			object-fit:cover;
-			filter: brightness(70%);
 		}
 		
 	</style>
 </head>
 <body>
 <%@ include file="../common/navbar.jsp" %>
-<div class="wrap"> 
-	<div class="container" style="width:1320px;">
+<div class="wrap mt-2"> 
+	<div class="container mt-2" style="width:1320px;">
 		<div class="row text-center border-top mt-3 bg-light border-bottom" style="width:1320px;">
 			<div class="col-12 my-5">
 				<h2><strong>${post.post.title}</strong></h2>
 				<h4 class="text-secondary">" ${post.post.subTitle} "</h4>
+			</div>
+			<div class="text-end">
+				<img type="button" id="userImage-nav" onclick="location.href='/user/details?id=${post.post.customer.id}'" src="/images/user/png/${post.post.customer.username }"
+									 class="rounded-circle shadow-sm object-fit-cover border mb-1 me-1" 
+									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 50px; height: 50px;"/><br>
+				<p class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill" onclick="location.href='user/details?id=${post.post.customer.id}'"><strong >${post.post.customer.username }</strong></p>
 			</div>
 		</div>
 	</div>
@@ -123,13 +128,13 @@
 															<c:if test="${userId eq comment.customer.id }">
 																<form id="postComment" method="post" action="/post/deleteComment">
 																<div class="text-end">
-																		<sec:authentication property="principal.user.id" var="userId" />
-																		<input type="hidden" name="postId" value="${post.post.id }"/>
-																		<input type="hidden" name="commentId" value="${comment.id }"/>
-																		<button type="button" class="btn deleteComment-button" style="color:#EB0000" onclick="confirmDelete('${comment.id }')" data-comment-id="${comment.id }">
-																			<i class="bi bi-trash3"></i>
-																			<span class="visually-hidden">삭제</span>
-																		</button>
+																	<sec:authentication property="principal.user.id" var="userId" />
+																	<input type="hidden" name="postId" value="${post.post.id }"/>
+																	<input type="hidden" name="commentId" value="${comment.id }"/>
+																	<button type="button" class="btn deleteComment-button" style="color:#EB0000" onclick="confirmDelete('${comment.id }')" data-comment-id="${comment.id }">
+																		<i class="bi bi-trash3"></i>
+																		<span class="visually-hidden">삭제</span>
+																	</button>
 																</div>
 																</form>
 															</c:if>
@@ -148,10 +153,6 @@
 						</sec:authorize>
 			            <i id="heart" class="bi ${post.post.id eq post.postLikeDto.postId && userId eq post.postLikeDto.customerId ? 'bi-heart-fill' : 'bi-heart'}" data-post-id="${post.post.id }" style="font-size: 22px; color:#EB0000;"></i>
 			            <span class="visually-hidden">추천</span>
-			        </button>
-			        <button type="button" class="btn btn-lg">
-			            <i id="recomened" class="bi bi-flag-fill" style="font-size: 22px; color:#EB0000"></i>
-			            <span class="visually-hidden">신고</span>
 			        </button>
 			        <sec:authorize access="isAuthenticated()">
 		        		<sec:authentication property="principal.user.id" var="userId" />	

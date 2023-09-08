@@ -45,6 +45,10 @@
   		width: 800px;
 	}
 	
+	h4{
+		color:#FF8200;
+	}
+	
 </style>
 </head>
 <body>
@@ -53,7 +57,7 @@
 	<div class="container">
 		<div class="row mt-3">
 			<div class="col">
-				<h4 class="my-3 text-secondary"><strong>Recent Post</strong></h4>
+				<h4 class="my-3"><strong>Recent Post</strong></h4>
 			</div>
 			<div class="col text-end">
 				<button type="button" class="btn text-muted my-3" onclick="location.href='/post/allPosts'"> more</button>
@@ -76,7 +80,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='user/details?id=${recentPostdata.customerId}'"><strong >${recentPostdata.userName }</strong></span>
+							<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill" onclick="location.href='user/details?id=${recentPostdata.customerId}'"><strong >${recentPostdata.userName }</strong></span>
 							<%-- <sec:authorize access="isAuthenticated()">
 								<sec:authentication property="principal.user.id" var="loggedInUserId" />
 								<c:if test="${recentPostdata.customerId ne loggedInUserId}">
@@ -98,7 +102,7 @@
 		<sec:authorize access="isAuthenticated()">
 			<div class="row mt-3">
 				<div class="col">
-					<h4 class="my-3 text-secondary"><strong>Following Post</strong></h4>
+					<h4 class="my-3"><strong>Following Post</strong></h4>
 				</div>
 				<div class="col text-end">
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/post/followerPosts'"> more</button>
@@ -123,7 +127,7 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${followerPostData.customerId}'"><strong >${followerPostData.userName }</strong></span>
+										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill " onclick="location.href='user/details?id=${followerPostData.customerId}'"><strong >${followerPostData.userName }</strong></span>
 										<%-- <sec:authorize access="isAuthenticated()">
 											<span id="followRequestButton-${followerPostData.id }" 
 			                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${followerPostData.customerId }">Follow</span>
@@ -151,7 +155,7 @@
 		</sec:authorize>
 			<div class="row mt-3">
 				<div class="col">
-					<h4 class="my-3 text-secondary"><strong>Recent Review</strong></h4>
+					<h4 class="my-3"><strong>Recent Review</strong></h4>
 				</div>
 				<div class="col text-end">
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/allReviews'"> more</button>
@@ -190,7 +194,7 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentReviewData.customerId}'"><strong >${recentReviewData.userName }</strong></span>
+								<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill " onclick="location.href='user/details?id=${recentReviewData.customerId}'"><strong >${recentReviewData.userName }</strong></span>
 								<%-- <sec:authorize access="isAuthenticated()">
 									<span id="followRequestButton-${recentReviewData.id }" 
 	                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentReviewData.customerId }">Follow</span>
@@ -208,7 +212,7 @@
 			<div class="border-top"></div>
 			<div class="row mt-3">
 				<div class="col">
-					<h4 class="my-3 text-secondary"><strong>Following Review</strong></h4>
+					<h4 class="my-3"><strong>Following Review</strong></h4>
 				</div>
 				<div class="col text-end">
 					<button type="button" class="btn text-muted my-3" onclick="location.href='/review/followerReviews'"> more</button>
@@ -250,7 +254,7 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill " onclick="location.href='user/details?id=${recentFollowerReivewData.customerId}'"><strong >${recentFollowerReivewData.userName }</strong></span>
+										<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill " onclick="location.href='user/details?id=${recentFollowerReivewData.customerId}'"><strong >${recentFollowerReivewData.userName }</strong></span>
 										<%-- <sec:authorize access="isAuthenticated()">
 											<span id="followRequestButton-${recentFollowerReivewData.id }" 
 			                                          class="btn userFollow badge bg-primary-subtle border border-primary-subtle text-primary-emphasis rounded-pill" data-user-id="${recentFollowerReivewData.customerId }">Follow</span>
