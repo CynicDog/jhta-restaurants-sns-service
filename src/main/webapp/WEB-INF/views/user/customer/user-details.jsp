@@ -741,6 +741,8 @@
                         </div>
                     </div>
                 `
+                picturesLoadingSpinner.style.display = 'none'
+                isPictureDataFetching = false;
             })
         })
     }
