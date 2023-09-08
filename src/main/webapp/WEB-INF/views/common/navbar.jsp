@@ -65,7 +65,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
-            <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="Search" aria-label="Search" >
+            <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="지역, 식당 또는 음식" aria-label="Search" >
         </form>
         <div class="collapse navbar-collapse my-1 d-flex justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav px-4">
