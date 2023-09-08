@@ -25,7 +25,7 @@
 <body>
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
-        <div class="col-md-6 col-sm-6">
+        <div class="col-6 col-md-8 col-sm-8">
             <div class="card shadow my-4 menu-input-group py-3">
                 <div class="row p-3">
                     <div class="col-4">

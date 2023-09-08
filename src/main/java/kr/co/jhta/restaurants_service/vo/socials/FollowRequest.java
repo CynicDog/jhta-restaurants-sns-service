@@ -38,6 +38,12 @@ public class FollowRequest {
         this.status = RequestStatus.PENDING;
     }
 
+    public FollowRequest(int senderId, int recipientId, RequestStatus status) {
+        this.senderId = senderId;
+        this.recipientId = recipientId;
+        this.status = status;
+    }
+
     public enum RequestStatus {
         PENDING, ACCEPTED, DECLINED, SENT
     }

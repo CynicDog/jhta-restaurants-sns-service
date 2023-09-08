@@ -144,6 +144,18 @@ public class SocialService {
 
         // if there's no request before
         if (!followRequestRepository.existsFollowRequestBySenderIdAndRecipientId(senderId, recipientId)) {
+
+            User recipient = userRepository.findUserById(recipientId).get();
+            if (recipient.getVisibility().equals(User.VISIBILITY.PUBLIC)) {
+
+                followRequestRepository.save(new FollowRequest(senderId, recipientId, FollowRequest.RequestStatus.ACCEPTED));
+
+                Follow follow = new Follow(new FollowCompositePrimaryKeys(senderId, recipientId));
+                followsRepository.save(follow);
+
+                return true;
+            }
+
             followRequestRepository.save(new FollowRequest(senderId, recipientId));
             return true;
         } else {
