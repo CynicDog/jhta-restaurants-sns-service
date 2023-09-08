@@ -29,10 +29,9 @@
 <%@ include file="common/navbar.jsp"%>
 <div class="wrap">
 	<div class="container-fluid">
-
 		<div class= "row d-flex justify-content-between mt-3">
-			<div class="col-2">
-	            <nav id="home-left-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
+			<div class="col-2 ps-0">
+	            <nav id="home-left-navbar " class="h-100 flex-column align-items-stretch pe-4 border-end bg-light">
 	                <nav class="nav nav-pills flex-column fw-lighter ps-3">
                         <sec:authorize access="isAuthenticated()">
 	                    	<sec:authorize access="hasRole('ROLE_OWNER')">
@@ -67,7 +66,7 @@
 
 			<script>new bootstrap.Popover(document.querySelector('#signupPopover-side'))</script>
 			
-			<div class="col-4 mb-3 me-3" id="home-content"></div>
+			<div class="col-4 mb-3 me-3 pt-4" id="home-content"></div>
 			<div class="col-3 pt-3 home-side-contents" >
 				<h5 class="mb-4" style="color:#ff792a;">인기 포스트</h5>
 				<c:forEach var="post" items="${postList}">
