@@ -91,6 +91,11 @@ public class UserController {
     public ResponseEntity followPost(@RequestParam("recipientId") int recipientId,
                                      @AuthenticationPrincipal SecurityUser securityUser) {
 
+        if (recipientId == securityUser.getUser().getId()) {
+            // do nothing
+            return ResponseEntity.ok().build();
+        }
+
         if (socialService.handleFollowRequest(securityUser.getUser().getId(), recipientId)) {
             return ResponseEntity.ok().build();
         } else {
