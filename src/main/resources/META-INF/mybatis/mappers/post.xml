@@ -111,19 +111,21 @@
 	
 	<select id="getPostById" parameterType="int" resultType="Post">
 		select 
-			id				as id,
-			title			as title,
-			sub_title		as subTitle,
-			create_date		as createDate,
-			update_date		as updateDate,
-			customer_id			as "customer.id",
-			report_count	as reportCount,
-			disabled		as disabled,
-			blocked			as blocked
+			p.id				as id,
+			p.title			as title,
+			p.sub_title		as subTitle,
+			p.create_date		as createDate,
+			p.update_date		as updateDate,
+			p.customer_id			as "customer.id",
+			p.report_count	as reportCount,
+			p.disabled		as disabled,
+			p.blocked			as blocked,
+			u.username	as "customer.username"
 		from
-			POSTS
+			POSTS p, USERS u
 		where	
-			id = #{id}
+			p.customer_id = u.id
+		and	p.id = #{id}
 	</select>
 	
 	<insert id="insertPost" parameterType="Post">
