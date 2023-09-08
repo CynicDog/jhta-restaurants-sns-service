@@ -14,7 +14,7 @@
     .wrap {
         position: relative;
         /*min-height: 100%;*/
-        padding-top: 70px;
+        padding-top: 47px;
         /*padding-bottom: 100px;*/
     }
     

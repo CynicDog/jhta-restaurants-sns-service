@@ -46,6 +46,7 @@
 						<a id="피자" class="category btn" role="button" >피자</a> 
 						<a id="버거" class="category btn" role="button" >버거</a>
 						<a id="돈까스" class="category btn" role="button" >돈까스</a>
+						<a id="구이" class="category btn" role="button" >구이</a>
 						<a id="양식" class="category btn" role="button" >양식</a> 
 						<a id="이탈리안" class="category btn" role="button" >이탈리안</a>
 						<a id="아시안" class="category btn" role="button" >아시안</a> 
