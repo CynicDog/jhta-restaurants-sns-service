@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -75,7 +76,7 @@ public class ReviewController {
 	            for(MultipartFile imageName : form.getChooseFile()) {
 	            	String objectName = "review/" + imageName.getOriginalFilename();
 	            	
-	            	BlobId blobId = BlobId.of(bucketName, objectName);
+	            	BlobId blobId = BlobId.of(bucketName, objectName + UUID.randomUUID().toString());
 	            	BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(imageName.getContentType()).build();
 	            	
 	            	Blob blob = storage.create(blobInfo, imageName.getBytes());
