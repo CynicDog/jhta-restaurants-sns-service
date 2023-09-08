@@ -233,6 +233,7 @@
             method: "POST"
         }).then(response => {
             if (response.ok) {
+                updateFollowersCount()
                 showMessagingToast("Successfully done!");
             } else {
                 showMessagingToast("Already requested.");
