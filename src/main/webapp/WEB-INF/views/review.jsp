@@ -32,7 +32,7 @@
 <body>
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
-	<div class="container">
+	<div class="container mt-5">
 	    <div class="restaurant-name">
 		   <div id="restaurant-name-placeholder"> <strong style="color: #ff792a;">${store.name}</strong>
 		   에 대한 솔직한 리뷰를 써주세요.</div>
