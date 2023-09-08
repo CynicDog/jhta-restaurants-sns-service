@@ -112,6 +112,10 @@
                             <i class="bi bi-star-fill" style="color: #C0C0C0;"></i> <span style=" display: inline-block; margin: -6px 10px 0 0; vertical-align: middle; color: #C0C0C0;">${bookmarkCount }</span>
                         </div>
                         <table class="table">
+                        	<tr>
+                                <th style="width: 120px;"><i class="bi bi-person"></i><span class="fw-lighter mx-2">사장님</span></th>
+                                <td><a class="badge bg-secondary-subtle border border-secondary-subtle text-secondary-emphasis rounded-pill link-offset-2 link-underline link-underline-opacity-0" href="/user/details?id=${store.owner.id} ">${store.owner.username }</a></td>
+                            </tr>
                             <tr>
                                 <th style="width: 120px;"><i class="bi bi-geo-alt"></i><span class="fw-lighter mx-2">주소</span></th>
                                 <td>${store.address}</td>
@@ -138,7 +142,7 @@
                                 <td>
                                     <c:forEach var="food" items="${foods}">
                                         <div class="col my-2">
-                                            <span class="food-name d-inline-block" style="width: 190px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+                                            <span class="food-name d-inline-block" style="width: 200px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
                                         </div>
                                     </c:forEach>
                                 </td>
@@ -199,15 +203,17 @@
 			                        </div>
 			                    </div>
 		                	</c:forEach>
-		                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
-		                	<c:forEach var="follow" items="${follows }">
-			                	<div>
-				                    <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
-			                	</div>
-			                	<div>
-				                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">${follow.username }</span> 
-			                	</div>    
-		                	</c:forEach>              
+		                	<sec:authorize access="isAuthenticated()">
+			                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
+			                	<c:forEach var="follow" items="${follows }">
+				                	<div>
+					                    <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
+				                	</div>
+				                	<div>
+					                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">${follow.username }</span> 
+				                	</div>    
+			                	</c:forEach>              
+		                	</sec:authorize>
 		                </div>
 		            </div>
 	            </div>
@@ -356,7 +362,7 @@
 					                    <div class="ratio ratio-1x1">
 					                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=\${datum.customerId}'" style="cursor: pointer;">
 					                    </div>
-					                    <span style="font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
+					                    <span style="white-space: nowrap; font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
 					                </div>
 					                <div class="text-center card-title my-1">
 					                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null ? '' : datum.reviewAvg.toFixed(1) }</span>

@@ -120,24 +120,26 @@
 
 	<select id="getStoreById" parameterType="int" resultType="Store">
 		select
-			id 					as id,
-			business_license	as businessLicense,
-			name				as name,
-			address				as address,
-			category			as category,
-			zipcode				as zipcode,
-			latitude			as latitude,
-			longitude			as longitude,
-			description			as description,
-			phone				as phone,
-			read_count			as readCount,
-			create_date			as createDate,
-			update_date			as updateDate,
-			owner_id			as "owner.id",
-			disabled			as disabled
+			s.id 					as id,
+			s.business_license		as businessLicense,
+			s.name					as name,
+			s.address				as address,
+			s.category				as category,
+			s.zipcode				as zipcode,
+			s.latitude				as latitude,
+			s.longitude				as longitude,
+			s.description			as description,
+			s.phone					as phone,
+			s.read_count			as readCount,
+			s.create_date			as createDate,
+			s.update_date			as updateDate,
+			s.owner_id				as "owner.id",
+			u.username 				as "owner.username",
+			s.disabled				as disabled
 		from
-			STORES
-		where id = #{value}
+			STORES as s
+		inner join USERS as u on s.owner_id = u.id 
+		where s.id = #{value}
 	</select>
 	
 	<select id="getStoreByName" parameterType="String" resultType="Store">
