@@ -285,7 +285,7 @@
 							<div class="row g-0">
 								<div class="col-md-4">
 									<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';"
-									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
+									 class="img-fluid rounded-start" alt="..." onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%; width: 90px;">
 								</div>
 							<div class="col-md-8">
 								<div class="card-body">
@@ -329,7 +329,7 @@
 						<div class="row g-0">
 							<div class="col-md-4">
 								<img src="/images/review/jpeg/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="img-fluid rounded-start" alt="..."
-								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%;">
+								 onclick="location.href='/store/detail?id=\${store.id}'" style="cursor:pointer; object-fit: cover; height: 100%; width: 90px;">
 							</div>
 						<div class="col-md-8">
 							<div class="card-body">
