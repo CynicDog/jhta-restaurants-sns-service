@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import kr.co.jhta.restaurants_service.vo.review.ReviewPicture;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -70,24 +71,27 @@ public class ReviewController {
 	// 리뷰 등록 요청 처리
 	@PostMapping
 	public String reviewRegister(ReviewCommand form, @AuthenticationPrincipal SecurityUser securityUser) throws IOException {
-	
-		 try {
-	            String bucketName = "jhta-restaurants-sns-service";
-	            for(MultipartFile imageName : form.getChooseFile()) {
-	            	String objectName = "review/" + imageName.getOriginalFilename();
-	            	
-	            	BlobId blobId = BlobId.of(bucketName, objectName + UUID.randomUUID().toString());
-	            	BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(imageName.getContentType()).build();
-	            	
-	            	Blob blob = storage.create(blobInfo, imageName.getBytes());
-	            }
 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+		int idx = 0;
+		List<String> uuidPrefixedFileNames = reviewService.createReview(form, securityUser);
 
-		reviewService.createReview(form, securityUser);
-		
+		try {
+			String bucketName = "jhta-restaurants-sns-service";
+			for(MultipartFile imageName : form.getChooseFile()) {
+				String objectName = "review/" + uuidPrefixedFileNames.get(idx);
+
+				BlobId blobId = BlobId.of(bucketName, objectName);
+				BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(imageName.getContentType()).build();
+
+				Blob blob = storage.create(blobInfo, imageName.getBytes());
+
+				idx += 1;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return "redirect:/store/detail?id=" + form.getStoreId();
 	}
 	// 리뷰 답글 등록 요청 처리

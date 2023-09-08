@@ -1,9 +1,6 @@
 package kr.co.jhta.restaurants_service.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // import java.util.stream.Collectors;
@@ -72,7 +69,7 @@ public class ReviewService {
 	private final Logger logger = Logger.getLogger(PostService.class);
 
 	// 새 리뷰 등록하기
-	public void createReview(ReviewCommand form, SecurityUser securityUser) {
+	public List<String> createReview(ReviewCommand form, SecurityUser securityUser) {
 
 		Review review = new Review();
 
@@ -93,16 +90,22 @@ public class ReviewService {
 			}
 		}
 
+		List<String> uuidPrefixedFileNames = new ArrayList<>();
 		if (form.getChooseFile() != null) {
 			for (MultipartFile fileName : form.getChooseFile()) {
 				ReviewPicture reviewPicture = new ReviewPicture();
-				reviewPicture.setPictureName(fileName.getOriginalFilename());
+				reviewPicture.setPictureName(UUID.randomUUID().toString() + "-" + fileName.getOriginalFilename());
 				reviewPicture.setReview(review);
 				reviewPicture.setUser(securityUser.getUser());
 				reviewPicture.setCreateDate(new Date());
+
+				uuidPrefixedFileNames.add(reviewPicture.getPictureName());
+
 				reviewPictureMapper.insertReveiwPicture(reviewPicture);
 			}
 		}
+
+		return uuidPrefixedFileNames;
 	}
 
 	// 새 리뷰 답글 등록하기
