@@ -35,7 +35,7 @@ html, body {
   			<div class="card-body">
 				<div class="row m-3">
 					<div class="col-2">
-						<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=${review.review.customer.id}'" style="cursor: pointer;">
+						<img src="/images/user/png/${review.review.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle shadow-sm object-fit-cover" onclick="location.href='/user/details?id=${review.review.customer.id}'" style="cursor: pointer; width: 180px; height: 180px;">
 					</div>
 					<div class="col-3">
 						<p class="mb-5 my-5" style="font-size:30px;"><strong>
@@ -64,7 +64,7 @@ html, body {
 					</div>
 				</div>
 				<div class="row col-3 m-3">
-					<a href="/store/detail?id=${review.review.store.id}"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
+					<a href="/store/detail?id=${review.review.store.id}"class="mx-3" style="white-space: nowrap">@${review.review.store.name}-${review.review.store.address}</a>
 				</div>	
 				<div class="row m-3">
 						<span style="font-size: 15px;">
@@ -72,45 +72,25 @@ html, body {
 							<a>${review.review.likedCount }</a>
 							<a class="float-end pt-1 mt-1 text-secondary"><fmt:formatDate value="${review.review.createDate }" pattern="yyyy-M-d" /></a>
 						</span>
-					<p class="border border-secondary border-opacity-50 rounded p-3" style="font-size:20px;">${review.review.content }</p>
+					<p style="font-size:20px;">${review.review.content }</p>
 				</div>
-				<div class="row" id="image-row">
+				<div class="row d-flex flex-nowrap overflow-auto" id="image-row">
 				<c:forEach var="picture" items="${review.reviewPicturesByReviewId }" varStatus="loop">
-					<c:choose>
-					<c:when test="${loop.index lt 2}">
 					<div class="col-4 " >
 						<img class="img-thumbnail object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..."  style="width: 100%; height: 450px; cursor: pointer;">
 					</div>
-					</c:when>
-					<c:when test="${loop.index eq 2}">
-					<div class="col-4">
-						<div class="card bg-dark text-center text-white fs-1">
-							<img class="img-thumbnail card-img opacity-50 object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px; cursor: pointer;">
-							<div class="col-1 card-img-overlay position-absolute top-50 start-50 translate-middle" >
-							<p id="review-count" class="position-absolute top-50 start-50 translate-middle">+</p>
-							</div>
-						</div>
-					</div>
-					</c:when>
-					<c:when test="${loop.index ge 3}">
-					<div class="col-4 visually-hidden" >
-						<img class="img-thumbnail card-img object-fit-cover" data-image-index="${loop.index}" src="/images/review/png/${picture.pictureName }" alt="..." style="width: 100%; height: 450px;">
-						<p id="hidden-review-count">+${loop.count - 2}</p>
-					</div>
-					</c:when>
-					</c:choose>
 				</c:forEach>
 					<!-- Modal -->
 					<div id="Modal" class="modal fade" aria-hidden="true" tabindex="-1">
 						<div class="modal-dialog modal-dialog-centered modal-xl">
-						 <div class="modal-content justify-content-center" style="background-color: black; display: flex;  height: 90vh;">;
+						 <div class="modal-content justify-content-center" style="background-color: black; display: flex;  width: 100%; height: 1000px;">;
 					    		<span id="span-close-modal" class="close position-absolute top-0 end-0 text-white-50" style="font-size:50px;" >&times;</span>
 							    <div class="row" >
 							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="prevButton" >&#10094;</button>
 							        </div>
 							        <div class="col-10 text-center">
-							            <img class="modal-content object-fit-cover" id="modalImg" style="width: 100%; height: 1000px;">
+							            <img class="modal-content object-fit-cover" id="modalImg" style="width: 100%; height: 900px;">
 							        </div>
 							        <div class="col-1 d-flex justify-content-center align-items-center">
 							            <button class="modal-nav-button" id="nextButton" >&#10095;</button>
@@ -134,26 +114,22 @@ html, body {
 					<div class="col-12  border-bottom my-3">
 						<input type="hidden" name="reviewId" value="${review.review.id}"/>
 						<input type="hidden" name="storeId" value="${review.review.store.id }"/>
-						<div class="form-floating text-start">
+						<div class="form-floating text-start border border-secondary border-opacity-50 rounded p-3">
 							<p>댓글을 작성하세요</p>
-			     			<textarea placeholder="댓글을 작성하세요" class="form-control-plaintext" id="comment-textarea" name="content" style="min-height:2rem"></textarea>
+			     			<textarea placeholder="댓글을 작성하세요" class="form-control-plaintext" id="comment-textarea" name="content" style="min-height:2rem;"></textarea>
+			     			<button id="button-add-comment" type="submit" class="btn btn-light float-end btn-lg mt-4" style="color: #838383">
+                       			<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
+                    		</button>
 		               	</div>
 					</div>
-					<div class="row m-3">
-					<div class="col-8"></div>
-					<div class="col-4">
-   						<button id="button-add-comment" type="submit" class="btn btn-light float-end btn-lg" style="color: #838383">
-                       		<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
-                    	</button>
-					</div>
-					</div>
 					</form>
+		<div class="row mb-1"></div>			
 		<c:forEach var="comment" items="${review.reviewCommentsByReviewId }" >
 			<div class="col-12 border-bottom my-3">
-			<div class="row my-3">
-				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #ff792a; font-size: 45px;"></i></div>
+			<div class="row my-3 mt-5">
+				<div class="col-1"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #b8b6b6; font-size: 45px;"></i></div>
 				<div class="col-1">
-					<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=${comment.userId}'" style="cursor: pointer;">
+					<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle shadow-sm object-fit-cover mx-2" onclick="location.href='/user/details?id=${comment.userId}'" style="cursor: pointer; width: 70px; height: 70px;">
 					<div class="text-center card-title my-1">
 						<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
 					</div>
@@ -168,10 +144,10 @@ html, body {
 						<span> 
 							<c:choose>
 								<c:when test="${not empty comment.nickname }">
-									<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.nickname }</strong></span>
+									<span class="btn badge rounded-pill text-dark rounded-pill" style="background-color: rgba(255, 131, 7, 0.3);" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.nickname }</strong></span>
 								</c:when>
 								<c:otherwise>
-									<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.username }</strong></span>
+									<span class="btn badge rounded-pill text-dark rounded-pill" style="background-color: rgba(255, 131, 7, 0.3);" onclick="location.href='/user/details?id=${comment.userId}'"><strong >${comment.username }</strong></span>
 								</c:otherwise>
 							</c:choose>
 						</span>
@@ -191,7 +167,7 @@ html, body {
 						<span class="text-end">
 							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light btn-sm" style="color: #838383">
 								<i class="bi bi-trash3"></i>
-											<span class="visually-hidden">삭제</span>
+								<span class="visually-hidden">삭제</span>
 							</a>
 						</span>
 					</div>

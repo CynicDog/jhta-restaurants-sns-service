@@ -28,7 +28,7 @@
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
     <div class="container">
-        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer; margin-top: 5px;" id="review-img-thumbnail">
+        <div class="row row-cols-5 object-fit-cover border rounded" style="cursor: pointer; margin-top: 15px;" id="review-img-thumbnail">
             <c:forEach var="recentReview" items="${recentReviews}">
                 <img class="img-thumbnail" src="/images/review/jpeg/${recentReview.reviewPictures[0].pictureName }" data-review-id="${recentReview.id }" id="review-img-${recentReview.id }" alt="Thumbnail 1" onclick="openModal(this)">
             </c:forEach>
@@ -191,7 +191,7 @@
 			                                <div class="ml-3">
 			                                    <h5 class="card-title mt-0" style="white-space: nowrap; margin-left: 5px; cursor: pointer; color: black; transition: color 0.3s; display: flex; align-items: center; "onclick="location.href='/store/detail?id=${closestStore.id }'"onmouseover="this.style.color='#ff792a';" onmouseout="this.style.color='black';"> 
 			                                    	${closestStore.name } 
-			                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill">${closestStore.averageRating }</span>
+			                                    	<span class="badge bg-dark-subtle border border-dark-subtle text-dark-emphasis rounded-pill"><fmt:formatNumber value="${closestStore.averageRating }" pattern="#.#" /></span>
 			                                    </h5>
 			                                    <p class="card-text text-sm ml-1" style="white-space: nowrap;">
 			                                        <span style="font-size: 12px; margin-left: 10px; display: block; height: 25px;"><strong>카테고리:</strong> ${closestStore.category }</span>
@@ -399,14 +399,20 @@
                                    	<input type="hidden" name="storeId" value="${param.id }"/>
                                     <div class="row">
                                         <div class="col" id="review-comment">
-                                            <span class="float-end">
-                                            	<button type="button" class="btn btn-light btn-sm text-danger">
+                                            <span class="float-end mt-1">
+                                            	<button type="button" class="btn btn-light btn-sm text-danger position-relative mx-1">
                                           			<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                            	 	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            	    \${datum.likedCount}
+                                            	    <span class="visually-hidden"> 좋아요 수</span>
                                            		</button>
-                                            	<button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light">
+                                            	<button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-sm btn-light position-relative mx-1">
                                             		<i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
+                                            		<span class="position-absolute top-0 start-100 translate-middle badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                                            	    \${datum.commentCount}
+                                            	    <span class="visually-hidden">댓글 수</span>
 	                                            </button>
-                                            	<button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm" style="color: #838383">
+                                            	<button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm mx-1" style="color: #838383">
                                                 	<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
                                             	</button>`;
                                    
@@ -486,7 +492,7 @@
                 	 if(datum.reviewKeywords) {
                 		 datum.reviewKeywords.forEach(keyword => { 
                 			 reviewKeywordsOutputArea.innerHTML += `
-                			 <span class="badge badge-sm bg-warning-subtle border border-warning-subtle text-warning-emphasis badge-rounded-pill fw-lighter m-2 p-1">\${keyword.keyword}</span>
+                			 <span class="badge badge-sm  bg-secondary-subtle text-secondary-emphasis badge-rounded-pill fw-lighter m-2 p-1">\${keyword.keyword}</span>
                 			 `
                 		 })
                 	 }
@@ -500,9 +506,7 @@
                      	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
  								<div class="row my-3">
  									<div class="col-2">
- 										<a id="Popover" tabindex="0" class="btn border-opacity-10 ratio ratio-1x1" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="정손님(회원등급) 평균별점" data-bs-content="Follow">
- 											<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image"  class="img-thumbnail rounded-circle" >
- 										</a>
+ 										<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" onclick="location.href='/user/details?id=\${Comment.userId}'" class="img-thumbnail rounded-circle shadow-sm object-fit-cover mx-2" style="cursor: pointer; width: 70px; height: 70px;">
  										<div class="text-center card-title my-1">
  											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
  										</div>
