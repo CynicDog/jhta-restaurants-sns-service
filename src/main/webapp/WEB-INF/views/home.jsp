@@ -29,22 +29,7 @@
 <%@ include file="common/navbar.jsp"%>
 <div class="wrap">
 	<div class="container-fluid">
-		<div class= "row ">
-			<div class= "col-12">
-				<div class="row border-bottom">
-					<div class="col-12">
-						<form action="/store/search" method="GET" id="form-search-keyword">
-							<div class="offset-3 my-5 search-bar input-group" style="width:45%;" >
-								<input name="keyword" type="text" id="field-keyword"
-									class="form-control rounded-pill" placeholder="지역 또는 가게명 입력"
-									aria-label="Recipient's username" aria-describedby="button-addon2">
-								<div class="input-group-append"></div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+
 		<div class= "row d-flex justify-content-between mt-3">
 			<div class="col-2">
 	            <nav id="home-left-navbar" class="h-100 flex-column align-items-stretch pe-4 border-end">
@@ -79,12 +64,12 @@
 	                </nav>
 	            </nav>
 			</div>
+
 			<script>new bootstrap.Popover(document.querySelector('#signupPopover-side'))</script>
 			
 			<div class="col-4 mb-3 me-3" id="home-content"></div>
-			
 			<div class="col-3 pt-3 home-side-contents" >
-				<h4 class="mb-4">인기 포스트</h4>
+				<h4 class="mb-4" style="color:#ff792a;">인기 포스트</h4>
 				<c:forEach var="post" items="${postList}">
 					<div class="card mb-3" style="border: none; cursor: pointer;" onclick="location.href='/post/detail?id=${post.id}'">
 						<div class="row d-flex justify-content-start">
@@ -105,7 +90,7 @@
 </div>
 
 <script type="text/javascript">
-	document.getElementById("form-navbar-search").style.display = "none";
+// 	document.getElementById("form-navbar-search").style.display = "none";
 	
 	let pageOnFeed = 1;
     let isFeedsFetching = false;
@@ -231,9 +216,8 @@
 				}).then(text => {//콜백 메서드 등록
 					if (text=== 'NO') {
 						followButton = `
-							<button id="button-follow-\${feed.id}" class="btn btn-primary" feed-id="\${feed.id}" data-writer-id="\${feed.userId}" >
-								팔로우
-							</button>
+							<button id="button-follow-\${feed.id}" class="btn btn-primary border-0 btn-sm" 
+							 feed-id="\${feed.id}" data-writer-id="\${feed.userId}">팔로우</button>
 						`
 					} else {
 						// do nothing 
@@ -253,7 +237,7 @@
 								\${generateRating(feed.rating)}
 								<span class="text-secondary ms-1" id="dateValue-\${feed.id }">\${timeForToday(feed.createDate)} </span]>
 							</div>
-							<div id="followButtonArea">
+							<div id="followButtonArea" class="d-flex align-items-center">
 								\${followButton}
 							</div>	
 						</div>
