@@ -62,43 +62,6 @@ html, body {
 
 						</div>
 					</div>
-					<sec:authorize access="hasRole('ROLE_CUSTOMER')">
-					<form action="reviewReport" method="post" id="reportForm">
-					<input type="hidden" name="reviewId" value="${review.review.id }"/>
-					<sec:authentication property="principal.user.id" var="userId" />
-					<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-       					<div class="modal-dialog">
-                    		<div class="modal-content">
-                            	<div class="modal-header">
-                            		<h1 class="modal-title fs-5" id="reportModalLabel">신고하기</h1>
-                              			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                       			</div>
-                          		<div class="modal-body">
-                             		<div class="col-md">
-                                   		<div class="form-floating">
-                                         	<select class="form-select" id="floatingSelectGrid" name="category">
-                                               	<option selected>신고사유를 선택해 주세요</option>
-                                                <option value="PROFANITY">욕설</option>
-                                                <option value="FALSEHOOD">비방</option>
-                                                <option value="PROMOTIONAL">허위</option>
-                                          	</select>
-                                          	<label for="floatingSelectGrid">신고사유</label>
-                                       	</div>
-                                 	</div>
-                                  	<div class="mb-3">
-                                      	<label for="message-text" class="col-form-label">Message:</label>
-                                    	<textarea class="form-control" id="message-text" name="content"></textarea>
-                                	</div>
-                         		</div>
-                          		<div class="modal-footer">
-                               		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                              		<button type="submit" class="btn btn-primary">Send message</button>
-                              	</div>
-               				</div>
-             			</div>
-              		</div>
-					</form>
-					</sec:authorize>
 				</div>
 				<div class="row col-3 m-3">
 					<a href="/store/detail?id=${review.review.store.id}"class="mx-3">@${review.review.store.name}-${review.review.store.address}</a>
@@ -162,12 +125,6 @@ html, body {
 			<c:forEach var="keyword" items="${review.reviewKeywords }">
 					<span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill fw-lighter fs-6 text-white m-2 p-1">${keyword.keyword }</span>
 			</c:forEach>
-				<span class="float-end">
-					<button type="button" class="btn btn-light btn-sm text-danger mb-4" data-bs-toggle="modal" data-bs-target="#reportModal" data-bs-whatever="@mdo">
-		          		<i class="bi bi-flag-fill" style="color:red; font-size:20px;"></i>
-		              	<span class="visually-hidden">신고</span>
-					</button>
-				</span>
 			</div>
 		</div>
 		<div class="h4 pb-2 mb-4 border-bottom border-secondary"></div>
@@ -226,16 +183,21 @@ html, body {
 					<div class="col-3 d-flex justify-content-end align-items-center">
 					</div>
 				</div>
+				<sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.user.id" var="userId"/>
+				<c:if test="${comment.userId eq userId }">
 				<div class="row position-absolute" style="bottom:0;right:20px;">
 					<div class="col">
 						<span class="text-end">
 							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light btn-sm" style="color: #838383">
 								<i class="bi bi-trash3"></i>
-								<span class="visually-hidden">삭제</span>
+											<span class="visually-hidden">삭제</span>
 							</a>
 						</span>
 					</div>
 				</div>
+				</c:if>
+				</sec:authorize>
 			</div>
 			</div>	
 			</div>

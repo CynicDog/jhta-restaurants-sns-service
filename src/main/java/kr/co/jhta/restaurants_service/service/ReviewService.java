@@ -257,9 +257,6 @@ public class ReviewService {
     
     public void deletedReview(int reviewId) {
 
-		reviewMapper.deleteReview(reviewId);
-
-   
     		reviewCommentMapper.deleteReviewCommentByReviewId(reviewId);
     		reviewKeywordMapper.deleteReviewKeywords(reviewId);
     		reviewPictureMapper.deleteReviewPictures(reviewId);
