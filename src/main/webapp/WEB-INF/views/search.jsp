@@ -81,11 +81,12 @@
 				</div>
 			</div>
 			<div class="col-3 right-sidebar bg-body-tertiary">
-				
 				<div class="my-3" style="position:sticky; top: 100px;">
 					<!-- 지도 -->
 					<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
-					<div id="postArea"></div>
+					<h4 class="mb-4 text-start" id="search-post-header" style="color:#ff792a;">관련 포스트</h4>
+					<div id="postArea">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -197,7 +198,7 @@
 								<div class="col text-start mt-1">							
 									<div class="d-flex justify-content-between">
 										<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
-										<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
+										<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #ff792a; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
 									</div>
 									<div class="d-flex justify-content-between">
 										<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
@@ -285,19 +286,24 @@
 		
 		function getPost(){
 			$('#postArea').empty();
-			$.getJSON('/store/posts',{category:categoryValue, keyword:keywordValue, xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result){
-				result.forEach(function(post){
-					let content = `
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
-							<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(60%);">
-							<div class="card-img-overlay d-flex justify-content-center align-items-center">
-								<p class="fs-5 my-0">\${post.title }</p>
+			$.getJSON('/store/posts',{category:categoryValue, keyword:keywordValue, xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result,status){
+				if(result.length===0){
+					$('#search-post-header').text("");
+				}else{
+					$('#search-post-header').text("관련 포스트");
+					result.forEach(function(post){
+						let content = `
+							<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
+								<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
+									 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(60%);">
+								<div class="card-img-overlay d-flex justify-content-center align-items-center">
+									<p class="fs-5 my-0">\${post.title }</p>
+								</div>
 							</div>
-						</div>
-					`
-					$("#postArea").append(content);
-				})
+						`
+						$("#postArea").append(content);
+					})
+				}
 			})
 		}
 			
