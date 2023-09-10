@@ -81,11 +81,12 @@
 				</div>
 			</div>
 			<div class="col-3 right-sidebar bg-body-tertiary">
-				
 				<div class="my-3" style="position:sticky; top: 100px;">
 					<!-- 지도 -->
 					<div id="map" class="mb-4" style="width: 100%; height: 350px; "></div>
-					<div id="postArea"></div>
+					<h4 class="mb-4 text-start" id="search-post-header" style="color:#ff792a;">관련 포스트</h4>
+					<div id="postArea">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -180,125 +181,132 @@
             $("#storeLoadingSpinner").css("display", "block");
             $("#div-pagination").css("display", "none");
             $("html, body").scrollTop(0);
-            
 			$.getJSON('stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
 										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
-				let points = [];
-				let storeNames = [];
-				let i = 0;
-				result.stores.forEach(function(store){ 
-					points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
-					let content = `
-						<div class="col-5 mb-3 me-3 store card-zoom">
-							<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
-								<img src="/images/review/png/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
-							</div>
-							<div class="row">
-								<div class="col text-start mt-1">							
-									<div class="d-flex justify-content-between">
-										<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
-										<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #FFC107; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
-									</div>
-									<div class="d-flex justify-content-between">
-										<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
-										<div>
-											<i id="store-reviewCnt-\${store.id}" class="bi bi-pencil-square text-secondary">\${store.reviewCnt}</i> 
-											<i id="store-bookmarkCnt-\${store.id}" class="bi bi-star text-secondary">\${store.bookmarkCnt}</i>
+				if(result.stores.length===0){
+					$("#div-stores").append( `<h4>'\${keywordValue}' 에 대한 검색 결과가 없습니다.</h4>
+					<br><br>
+					<h5>단어의 철자가 정확한지 확인해 보세요.<br>
+					또는 다른 검색어로 다시 검색해 보세요.</h5>
+					`)
+				}else{
+				    let points = [];
+					let storeNames = [];
+					let i = 0;
+					result.stores.forEach(function(store){ 
+						points.push(new kakao.maps.LatLng(store.latitude, store.longitude));
+						let content = `
+							<div class="col-5 mb-3 me-3 store card-zoom">
+								<div id="store-card-\${store.id}" index-id ="\${i}" class="card shadow" onclick="location.href='/store/detail?id=\${store.id}'" style="cursor: pointer;">
+									<img src="/images/review/png/\${store.pictureName}" onerror="this.onerror=null; this.src='/images/review/jpeg/store-default.jpeg';" class="card-img-top rounded " alt="..." style="object-fit: cover; height: 250px;">
+								</div>
+								<div class="row">
+									<div class="col text-start mt-1">							
+										<div class="d-flex justify-content-between">
+											<a id="store-name-\${store.id}" class="link-dark fs-4 " style="text-decoration: none;">\${store.name}</a>
+											<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #ff792a; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
+										</div>
+										<div class="d-flex justify-content-between">
+											<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
+											<div>
+												<i id="store-reviewCnt-\${store.id}" class="bi bi-pencil-square text-secondary">\${store.reviewCnt}</i> 
+												<i id="store-bookmarkCnt-\${store.id}" class="bi bi-star text-secondary">\${store.bookmarkCnt}</i>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					`;
-					// store 카드 추가 및 텍스트 내용 입력
-					$("#div-stores").append(content);
-					$("#store-name-store.id").text(store.name);
-					$("#store-reviewAvg-store.id").text(store.reviewAvg);
-					$("#store-category-store.id").text(store.category);
-					$("#store-reviewCnt-store.id").text(store.reviewCnt);
-					$("#store-bookmarkCnt-store.id").text(store.bookmarkCnt);
-					
-					storeNames.push(store.name);
-
-					i = i+1;
-				});
-				console.log("storeNames : ",storeNames);
-
-				//페이지네이션
-				
-				//페이지-이전/다음
-				if(result.pagination.first){
-					$("#prepage").addClass('disabled');
-				}
-				else{
-					$("#prepage").removeClass('disabled');
-				}
-				
-				if(result.pagination.last){
-					console.log("result.pagination.last : ", result.pagination.last);
-					$("#nextpage").addClass('disabled');
-				}
-				else{
-					$("#nextpage").removeClass('disabled');
-				}
+						`;
+						// store 카드 추가 및 텍스트 내용 입력
+						$("#div-stores").append(content);
+						$("#store-name-store.id").text(store.name);
+						$("#store-reviewAvg-store.id").text(store.reviewAvg);
+						$("#store-category-store.id").text(store.category);
+						$("#store-reviewCnt-store.id").text(store.reviewCnt);
+						$("#store-bookmarkCnt-store.id").text(store.bookmarkCnt);
+						
+						storeNames.push(store.name);
 	
-				//페이지-숫자
-				let beginPageNum = result.pagination.beginPage;
-				let endPageNum = result.pagination.endPage;
-			    let currentPage = result.pagination.page; 
-
-				console.log("beginPageNum : "+beginPageNum);
-				console.log("endPageNum : "+endPageNum);
-				console.log("currentPage : "+currentPage);
-			    
-				$(".page-num").remove();
-				for(let num = beginPageNum; num <= endPageNum; num++){
-					
-					let isActive;
-					if(num==currentPage){
-					
-						isActive = 'active';
-					}else{
-						isActive = '';
+						i = i+1;
+					});
+					//페이지네이션
+					//페이지-이전/다음
+					if(result.pagination.first){
+						$("#prepage").addClass('disabled');
+					}
+					else{
+						$("#prepage").removeClass('disabled');
 					}
 					
-				    let content = `
-				        <li class="page-item page-num ">
-				            <a href="search?page=\${num}" 
-				            		class="page-link num-link \${isActive}"
-				            		onclick="changePage(event, \${num})">\${num}
-				            </a>
-				        </li>
-				    `;
-
-				    $("#nextpage").before(content);
+					if(result.pagination.last){
+						console.log("result.pagination.last : ", result.pagination.last);
+						$("#nextpage").addClass('disabled');
+					}
+					else{
+						$("#nextpage").removeClass('disabled');
+					}
+		
+					//페이지-숫자
+					let beginPageNum = result.pagination.beginPage;
+					let endPageNum = result.pagination.endPage;
+				    let currentPage = result.pagination.page; 
+	
+					console.log("beginPageNum : "+beginPageNum);
+					console.log("endPageNum : "+endPageNum);
+					console.log("currentPage : "+currentPage);
+				    
+					$(".page-num").remove();
+					for(let num = beginPageNum; num <= endPageNum; num++){
 						
+						let isActive;
+						if(num==currentPage){
+						
+							isActive = 'active';
+						}else{
+							isActive = '';
+						}
+						
+					    let content = `
+					        <li class="page-item page-num ">
+					            <a href="search?page=\${num}" 
+					            		class="page-link num-link \${isActive}"
+					            		onclick="changePage(event, \${num})">\${num}
+					            </a>
+					        </li>
+					    `;
+	
+					    $("#nextpage").before(content);
+							
+					}
+		            $("#div-pagination").css("display", "block");
+	
+					drawMarker(points);
+					setInfoOverlay(storeNames,points);
 				}
 	            $("#storeLoadingSpinner").css("display", "none");
-	            $("#div-pagination").css("display", "block");
-
-				drawMarker(points);
-				setInfoOverlay(storeNames,points);
-
 			})
 		}
 		
 		function getPost(){
 			$('#postArea').empty();
-			$.getJSON('/store/posts',{category:categoryValue, keyword:keywordValue, xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result){
-				result.forEach(function(post){
-					let content = `
-						<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
-							<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
-								 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(70%);">
-							<div class="card-img-overlay d-flex flex-column align-items-center">
-								<p class="fs-5 my-0"><strong>\${post.title }</strong></p>
-								<p class="fs-5">\${post.subTitle }</p>
+			$.getJSON('/store/posts',{category:categoryValue, keyword:keywordValue, xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result,status){
+				if(result.length===0){
+					$('#search-post-header').text("");
+				}else{
+					$('#search-post-header').text("관련 포스트");
+					result.forEach(function(post){
+						let content = `
+							<div class="card text-center text-light font-weight-bold shadow mt-3" onclick="location.href='/post/detail?id=\${post.id}'" style="cursor: pointer;">
+								<img src="/images/post/jpeg/\${post.pictureFile }" class="card-img-top rounded" alt="..." 
+									 style="width: 100%; height: 100px; object-fit:cover; filter: brightness(60%);">
+								<div class="card-img-overlay d-flex justify-content-center align-items-center">
+									<p class="fs-5 my-0">\${post.title }</p>
+								</div>
 							</div>
-						</div>
-					`
-					$("#postArea").append(content);
-				})
+						`
+						$("#postArea").append(content);
+					})
+				}
 			})
 		}
 			

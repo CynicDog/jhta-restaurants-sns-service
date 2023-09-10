@@ -35,31 +35,31 @@
 	                <nav class="nav nav-pills flex-column fw-lighter ps-3 pt-4" style="position:sticky; top: 60px;">
                         <sec:authorize access="isAuthenticated()">
 	                    	<sec:authorize access="hasRole('ROLE_OWNER')">
-		                    	<a class="nav-link my-3 ms-2 text-secondary" href="/owner/my-page"><i class="bi bi-person-circle fs-5 me-3"></i>마이페이지</a>
+		                    	<a class="nav-link my-3 ms-2 link-dark" href="/owner/my-page"><i class="bi bi-person-circle fs-5 me-3"></i>마이페이지</a>
 		                	</sec:authorize>
 	                    	<sec:authorize access="hasRole('ROLE_CUSTOMER')">
-		                    	<a class="nav-link my-3 ms-2 text-secondary" href="/customer/my-page"><i class="bi bi-person-circle fs-5 me-3"></i>마이페이지</a>
+		                    	<a class="nav-link my-3 ms-2 link-dark" href="/customer/my-page"><i class="bi bi-person-circle fs-5 me-3"></i>마이페이지</a>
 		                    	
-		                    	<a class="nav-link my-3 ms-2 text-secondary" href="/post/register"><i class="bi bi-plus-square fs-5 me-3"></i>새 포스트</a>
+		                    	<a class="nav-link my-3 ms-2 link-dark" href="/post/register"><i class="bi bi-plus-square fs-5 me-3"></i>새 포스트</a>
 		                	</sec:authorize>
-	                        <a class="nav-link my-3 ms-2 text-secondary" href="/contents"><i class="bi bi-card-text fs-5 me-3"></i>컨텐츠</a>
-	                        <a class="nav-link my-3 ms-2 text-secondary" href="/user/logout"><i class="bi bi-box-arrow-right fs-5 me-3"></i>로그아웃</a>
+	                        <a class="nav-link my-3 ms-2 link-dark" href="/contents"><i class="bi bi-card-text fs-5 me-3"></i>컨텐츠</a>
+	                        <a class="nav-link my-3 ms-2 link-dark" href="/user/logout"><i class="bi bi-box-arrow-right fs-5 me-3"></i>로그아웃</a>
 	                    </sec:authorize>
 	                    <sec:authorize access="isAnonymous()">
-    			           	<a class="nav-link my-3 ms-2 text-secondary" href="/user/login"><i class="bi bi-power me-3 fs-5"></i>로그인</a>  
-    			           	<a class="nav-link my-3 ms-2 text-secondary" id="signupPopover-side" class="btn btn-secondary" 
+    			           	<a class="nav-link my-3 ms-2 link-dark" href="/user/login"><i class="bi bi-power me-3 fs-5"></i>로그인</a>  
+    			           	<a class="nav-link my-3 ms-2 link-dark" id="signupPopover-side" class="btn btn-secondary" 
     			           	   tabindex="0" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right"
     			           	   data-bs-html="true" data-bs-trigger="focus" data-bs-content="
 	                           <div class='fw-light'>
 	                               <div class='row text-center mx-1'>
-	                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/customer/signup'>손님 회원가입</a>
+	                                   <a class='link-dark text-center link-underline-opacity-0 py-2' href='/customer/signup'>손님 회원가입</a>
 	                               </div>
 	                               <div class='row text-center mx-1'>
-	                                   <a class='link-secondary text-center link-underline-opacity-0 py-2' href='/owner/signup'>사장님 회원가입</a>
+	                                   <a class='link-dark text-center link-underline-opacity-0 py-2' href='/owner/signup'>사장님 회원가입</a>
 	                               </div>
 	                           </div>
                            " style="cursor:pointer;"><i class="bi bi-person-plus me-3 fs-5"></i>회원가입</a>
-	                        <a class="nav-link my-3 ms-2 text-secondary" href="/contents"><i class="bi bi-card-text fs-5 me-3"></i>컨텐츠</a>
+	                        <a class="nav-link my-3 ms-2 link-dark" href="/contents"><i class="bi bi-card-text fs-5 me-3"></i>컨텐츠</a>
 	                    </sec:authorize>
 	                </nav>
 	            </nav>
