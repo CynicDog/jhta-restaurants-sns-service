@@ -125,7 +125,7 @@
         console.log(window.scrollY)
         console.log(document.body.offsetHeight)
 
-        if ((window.innerHeight + window.scrollY) + 3.2 >= document.body.offsetHeight) {
+        if ((window.innerHeight + window.scrollY) + 1.2 >= document.body.offsetHeight) {
 
             if (isPostFetching || isPostLast) {
                 // do nothing;
