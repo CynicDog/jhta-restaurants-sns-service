@@ -15,13 +15,14 @@
 				            name    			as name,
 				           	review_avg			as reviewAvg,
 				           	review_cnt			as reviewCnt,
+				           	((review_avg * review_cnt) / (review_cnt + 5)) as combinedScore,
 				           	bookmark_cnt		as bookmarkCnt,
 				           	category			as category,
 				           	latitude			as latitude,
 				           	longitude			as longitude,				           	
 							<choose>
 								<when test="sort == 'rating'">
-									row_number() over (order by review_avg desc) row_num
+									row_number() over (order by ((review_avg * review_cnt) / (review_cnt + 5)) desc) row_num
 								</when>
 								<when test="sort == 'bookmark'">
 									row_number() over (order by bookmark_cnt desc) row_num

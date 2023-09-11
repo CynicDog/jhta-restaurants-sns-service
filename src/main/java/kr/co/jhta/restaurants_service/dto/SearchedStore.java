@@ -19,6 +19,7 @@ public class SearchedStore {
 	private double reviewAvg;
 	private int reviewCnt;
 	private int bookmarkCnt;
+	private Double combinedScore;
 	private String category;
     private double latitude;
     private double longitude;

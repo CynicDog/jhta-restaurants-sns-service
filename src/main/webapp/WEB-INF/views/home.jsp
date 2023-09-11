@@ -230,7 +230,7 @@
 						<div id=home-content-header class="d-flex justify-content-between mb-2" >
 							<div id="home-feed-writer">
 								<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
-								 class="rounded-circle shadow-sm object-fit-cover userDetailEntry mx-1" data-user-id="\${feed.userId}" 
+								 class="rounded-circle shadow-sm object-fit-cover mx-1" data-user-id="\${feed.userId}" 
 								 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
 								
 								 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
