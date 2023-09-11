@@ -59,7 +59,7 @@
 	<div class="container border-top mt-3 bg-light" >
 		<div class="row text-center border-bottom">
 			<div class="col-12 my-5">
-				<h2>Follower Review</h2>
+				<h2>Following Review</h2>
 				<h4 class="text-secondary">( 내가 팔로우한 사람들의 리뷰를 확인해보세요! )</h4>
 			</div>
 		</div>
