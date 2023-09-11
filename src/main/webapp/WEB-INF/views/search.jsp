@@ -28,10 +28,10 @@
 	<div class="container-fluid text-center" style = "padding-left:100px; padding-right:100px;" >
 		<div class="row my-3 d-flex justify-content-between">
 			<div class="col-8 ">
-				<div class="d-flex justify-content-between mb-3">
+				<div class="d-flex justify-content-between my-3">
 					<a class="title btn fs-4" href="/store/search" style="color:#ff792a;">맛집 검색결과</a>
 					<select class="form-select me-3" style="width: 150px;" name="sort">
-						<option value="rating">평점 순</option>
+						<option value="rating">추천 순</option>
 						<option value="bookmark">즐겨찾기 순</option>
 						<option value="review">리뷰 많은 순</option>
 					</select>
