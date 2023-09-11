@@ -40,6 +40,14 @@ public class ReviewDto {
 	private List<ReviewKeyword> reviewKeywords;
 	private List<ReviewComment> reviewComments;
 	
+	public String getHtmlContent() {
+		if (content == null) {
+			return null;
+		}
+		return content.replace(System.lineSeparator(), "<br />");
+	}
+
+	
 //	public boolean isTaste() {
 //		return reviewKeywords
 //				.stream()

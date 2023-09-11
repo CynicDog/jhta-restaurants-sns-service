@@ -56,7 +56,25 @@
 	                                    <span style="font-size: medium; font-weight: bold;" id="modal-review-nickname">${recentReview.nickname }</span>
 	                                </div>
 	                                <div class="p-2 ml-auto">
-	                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill" id="modal-review-rating">${recentReview.rating }</span>
+	                                    <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill" id="modal-review-rating">
+	                                    <script>
+									        var rating = ${recentReview.rating};
+									        switch (rating) {
+									            case 5:
+									                document.write('맛있어요');
+									                break;
+									            case 3:
+									                document.write('괜찮아요');
+									                break;
+									            case 1:
+									                document.write('별로에요');
+									                break;
+									            default:
+									                document.write(rating);
+									                break;
+									        }
+									    </script>
+								    	</span>
 	                                </div>
 	                            </div>         
 								<div class="review" id="modal-review-content"> ${recentReview.content } </div>
@@ -126,7 +144,7 @@
                             </tr>
                             <tr>
                                 <th><i class="bi bi-shop"></i><span class="fw-lighter mx-2">가게 소개</span></th>
-                                <td>${store.description}</td>
+                                <td class="small" style="white-space: pre-line;">${store.description}</td>
                             </tr>
                             <tr>
                                 <th><i class="bi bi-tag"></i><span class="fw-lighter mx-2">음식 종류</span></th>
@@ -141,8 +159,9 @@
                                 <th><i class="bi bi-list"></i><span class="fw-lighter mx-2">메뉴</span></th>
                                 <td>
                                     <c:forEach var="food" items="${foods}">
-                                        <div class="col my-2">
-                                            <span class="food-name d-inline-block" style="width: 200px;"><c:out value="${food.name}"/></span> <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
+                                        <div class="col my-2 d-flex justify-content-between w-50" >
+                                            <span class="food-name d-inline-block" ><c:out value="${food.name}"/></span> 
+                                            <span class="food-price badge bg-secondary-subtle text-secondary-emphasis rounded-pill"><c:out value="${food.price}"/>원</span>
                                         </div>
                                     </c:forEach>
                                 </td>
@@ -205,14 +224,15 @@
 		                	</c:forEach>
 		                	<sec:authorize access="isAuthenticated()">
 			                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
-			                	<c:forEach var="follow" items="${follows }">
-				                	<div>
-					                    <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
-				                	</div>
-				                	<div>
-					                    <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">${follow.username }</span> 
-				                	</div>    
-			                	</c:forEach>              
+			                	<div>
+								    <c:forEach var="follow" items="${follows}">
+								        <div class="text-center" style="display: inline-block; margin-right: 10px;">
+								            <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px; cursor: pointer;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
+								            <br>
+								            <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">${follow.username }</span>
+								        </div>
+								    </c:forEach>
+								</div>              
 		                	</sec:authorize>
 		                </div>
 		            </div>
@@ -327,16 +347,18 @@
     
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
 
-    let pageOnReview = 1;
+    let pageOnReview = 0;
     let isReviewsFetching = false;
 	let isReviewsLast = false;
     let reviewFetchingOption = 'all';
-	
+	let fetchedReviews = [];
+    
 	const getReviews = (option, page) => {
 	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5&option=\${option}`).then(response => response.json());
 	}
 	
 	function fetchAndRenderReviews(reviewFetchingOption, pageOnReview) {
+		console.log("reviewFetchingOption:" + reviewFetchingOption)
 
 	    isReviewsFetching = true;
 	    getReviews(reviewFetchingOption, pageOnReview).then(data => {
@@ -344,216 +366,230 @@
 	        if (data.length < 5) {
 	            isReviewsLast = true;
 	        }
+	        
+	        var item = {
+	        	index: pageOnReview,
+	        	data: data
+	        }	 
+	        fetchedReviews.push(item);
+	        
+	        displayReviews();
 
-            data.forEach(datum => {
-            	
-            	/* let images = null; */
-				let like;
-				if(datum.isLiked==='y'){ like = 'bi-heart-fill';}
-				if(datum.isLiked==='n'){ like = 'bi-heart';}
-				console.info(like);
-				
-				let text = `
-					<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
-					    <div class="card-body">
-					        <div class="row">
-					            <div class="col-2">
-					                <div class="text-center card-title my-1">
-					                    <div class="ratio ratio-1x1">
-					                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=\${datum.customerId}'" style="cursor: pointer;">
-					                    </div>
-					                    <span style="white-space: nowrap; font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
-					                </div>
-					                <div class="text-center card-title my-1">
-					                    <span style="font-size: medium; font-weight: bold; color: #FFC107;">\${datum.reviewAvg === null ? '' : datum.reviewAvg.toFixed(1) }</span>
-					                </div>
-					            </div>
-					            <div class="col-10">
-					                <div class="row mb-2">
-					                    <div class="col-10" style="cursor: pointer;">
-					                        <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
-					                        <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
-					                    </div>
-					                    <div class="col-2 text-end" onclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
-					                        <span class="badge rounded-pill text-dark fw-light" style="background-color: rgba(255, 131, 7, 0.3);" id="review-rating-\${datum.id}">
-					                            \${(() => {
-					                                switch (datum.rating) {
-					                                case 5:
-					                                    return '맛있어요';
-					                                case 3:
-					                                    return '괜찮아요';
-					                                case 1:
-					                                    return '별로에요';
-					                                default:
-					                                    return datum.rating;
-					                                }
-					                            })()}
-					                        </span>
-					                    </div>
-					                </div>
-
-                                    <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
-                                    <div class="d-flex flex-nowrap " id="reviewKeywordsOutputArea-\${datum.id}"></div>
-                                    <form action="/review/store/register" method="post" id="reviewCommentForm">
-                                    <input type="hidden" name="reviewId" value="\${datum.id }"/>
-                                   	<input type="hidden" name="storeId" value="${param.id }"/>
-                                    <div class="row">
-                                        <div class="col" id="review-comment">
-                                            <span class="float-end mt-1">
-                                            	<button type="button" class="btn btn-light btn-sm text-danger position-relative mx-1">
-                                          			<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-                                            	 	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            	    \${datum.likedCount}
-                                            	    <span class="visually-hidden"> 좋아요 수</span>
-                                           		</button>
-                                            	<button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-sm btn-light position-relative mx-1">
-                                            		<i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
-                                            		<span class="position-absolute top-0 start-100 translate-middle badge bg-primary-subtle text-primary-emphasis rounded-pill">
-                                            	    \${datum.commentCount}
-                                            	    <span class="visually-hidden">댓글 수</span>
-	                                            </button>
-                                            	<button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm mx-1" style="color: #838383">
-                                                	<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
-                                            	</button>`;
-                                   
-                                            if (loginUserId && parseInt(loginUserId) == datum.customerId) {
-            									text += `
-            										<a href="/review/del?storeId=\${storeId}&reviewId=\${datum.id}" class="btn btn-light btn-sm" style="color: #838383">
-                                                		<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
-                                            		</a>`
-            								}
-            text += `
-                                            </span>
-                                        </div>
+        
+             isReviewsFetching = false;
+         })
+	}
+	
+	function  displayReviews() {
+		reviewOutputArea.innerHTML = "";
+		let sortedReviews = fetchedReviews.sort(function(item1, item2) {
+			return item1.index - item2.index;
+		});
+		
+		let reviews = [];
+		sortedReviews.forEach(function(item) {
+			reviews.push(...item.data)
+		})
+		
+	    reviews.forEach(datum => {
+        	/* let images = null; */
+			let like;
+			if(datum.isLiked==='y'){ like = 'bi-heart-fill';}
+			if(datum.isLiked==='n'){ like = 'bi-heart';}
+			console.info(like);
+			
+			let text = `
+				<div class="card mb-3" style="border-top: none; border-left: none; border-right: none; border-radius: 0; box-shadow: none;" data-review-rating=\${datum.rating}>
+				    <div class="card-body">
+				        <div class="row">
+				            <div class="col-2">
+				                <div class="text-center card-title my-1">
+				                    <div class="ratio ratio-1x1">
+				                        <img src="/images/user/png/\${datum.customerName}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle" onclick="location.href='/user/details?id=\${datum.customerId}'" style="cursor: pointer;">
+				                    </div>
+				                    <span style="white-space: nowrap; font-size: medium; font-weight: bold;" id="review-nickname-\${datum.id}">\${datum.nickname !== null ? datum.nickname : datum.customerName}</span>
+				                    <span style="font-size: small; font-weight: bold; color: #ff792a;">(\${datum.reviewAvg === null ? '' : datum.reviewAvg.toFixed(1) })</span>
+	                                    <span class="badge rounded-pill text-dark fw-light fs-6 my-2" style="background-color: rgba(255, 131, 7, 0.3);" id="review-rating-\${datum.id}" nclick="location.href='/review/detail?id=\${datum.id}'" style="cursor: pointer;">
+	                                        \${(() => {
+	                                            switch (datum.rating) {
+	                                            case 5:
+	                                                return '맛있어요';
+	                                            case 3:
+	                                                return '괜찮아요';
+	                                            case 1:
+	                                                return '별로에요';
+	                                            default:
+	                                                return datum.rating;
+	                                            }
+	                                        })()}
+	                                   </span>
+	                               </div>
+	                           </div>
+	                           <div class="col-10">
+	                               <div class="row mb-2">
+	                                   <div class="col-12" style="cursor: pointer;">
+	                                       <p class="col card-text" style="font-size: small; color: #adb5bd;">\${(new Date(datum.createDate)).toISOString().slice(0, 10)}</p>
+	                                       <p class="col card-text" onclick="location.href='/review/detail?id=\${datum.id}'" id="review-content-\${datum.id}">\${datum.content}</p>
+	                                   </div>
+	                               </div>
+	                               
+                                <div class="d-flex flex-nowrap overflow-auto" id="picturesOutputArea-\${datum.id}"></div>
+                                <div class="d-flex flex-nowrap " id="reviewKeywordsOutputArea-\${datum.id}"></div>
+                                <form action="/review/store/register" method="post" id="reviewCommentForm">
+                                <input type="hidden" name="reviewId" value="\${datum.id }"/>
+                               	<input type="hidden" name="storeId" value="${param.id }"/>
+                                <div class="row">
+                                    <div class="col" id="review-comment">
+                                        <span class="float-end mt-1">
+                                        	<button type="button" class="btn btn-light btn-sm text-danger position-relative mx-1">
+                                      			<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
+                                        	 	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        	    \${datum.likedCount}
+                                        	    <span class="visually-hidden"> 좋아요 수</span>
+                                       		</button>
+                                        	<button id="button-view-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-sm btn-light position-relative mx-1">
+                                        		<i class="bi bi-chat-text"></i><span class="visually-hidden">댓글</span>
+                                        		<span class="position-absolute top-0 start-100 translate-middle badge bg-primary-subtle text-primary-emphasis rounded-pill">
+                                        	    \${datum.commentCount}
+                                        	    <span class="visually-hidden">댓글 수</span>
+                                            </button>
+                                        	<button id="button-add-comment-\${datum.id}" id-index="\${datum.id}" type="button" class="btn btn-light btn-sm mx-1" style="color: #838383">
+                                            	<i class="bi bi-pencil-square"></i> <span class="visually-hidden">작성</span>
+                                        	</button>`;
+                               
+                                        if (loginUserId && parseInt(loginUserId) == datum.customerId) {
+        									text += `
+        										<a href="/review/del?storeId=\${storeId}&reviewId=\${datum.id}" class="btn btn-light btn-sm" style="color: #838383">
+                                            		<i class="bi bi-trash3"></i> <span class="visually-hidden">삭제</span>
+                                        		</a>`
+        								}
+        text += `
+                                        </span>
                                     </div>
-                                    <div class="row">
-								        <div class="col-12">
-								            <div class="card"id="cardAndTextarea-\${datum.id}" id-index="\${datum.id}" style="display: none;">
-								                <div class="card-body d-flex flex-row justify-content-between align-items-start">
-								                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea" name="content"></textarea>
-								                    <button class="btn btn-outline-secondary submit-reply-button " type="submit" id="button-addon2-\${datum.id}" ><i class="bi bi-pencil"></i></button>
-								                </div>
-								            </div>
-								            <div class="col-12" id="reviewCommentsOutputArea-\${datum.id}" style="display: none;"></div>
-								        </div>
-							    	</div>
-							    	</form>
                                 </div>
+                                <div class="row">
+							        <div class="col-12">
+							            <div class="card"id="cardAndTextarea-\${datum.id}" id-index="\${datum.id}" style="display: none;">
+							                <div class="card-body d-flex flex-row justify-content-between align-items-start">
+							                    <textarea class="form-control" placeholder="리뷰에 대한 답글을 작성해주세요" aria-label="답글 작성란" aria-describedby="button-addon2" id="replyTextarea" name="content"></textarea>
+							                    <button class="btn btn-outline-secondary submit-reply-button " type="submit" id="button-addon2-\${datum.id}" ><i class="bi bi-pencil"></i></button>
+							                </div>
+							            </div>
+							            <div class="col-12" id="reviewCommentsOutputArea-\${datum.id}" style="display: none;"></div>
+							        </div>
+						    	</div>
+						    	</form>
                             </div>
                         </div>
                     </div>
-                    <div>
-	                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	                        <div class="modal-dialog d-flex justify-content-center align-items-center cursor: pointer;" style="height: 100vh;">
-                                <img class="modalImg-\${datum.id}" style="max-width: 170%; max-height: 70vh;"></img>
-	                        </div>
-	                    </div>
-	                </div>
-                    `
-                    
-                    reviewOutputArea.innerHTML += text;
-                    
-                    const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
-                    if (datum.reviewPictures) {
-	                    datum.reviewPictures.forEach(picture => {
-	                        picturesOutputArea.innerHTML += `
-	                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail review-img-\${datum.id}" style="height: 120px; width: 120px" data-bs-toggle="modal" data-bs-target="#exampleModal-\${datum.id}">
-	                        `
-	                    })
-	                 }
-                    
-                     let modalImages = document.querySelectorAll(`.review-img-\${datum.id}`)
-                     document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[0].src;
+                </div>
+                <div>
+                    <div class="modal fade" id="exampleModal-\${datum.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog d-flex justify-content-center align-items-center cursor: pointer;" style="height: 100vh;">
+                            <img class="modalImg-\${datum.id}" style="max-width: 170%; max-height: 70vh;"></img>
+                        </div>
+                    </div>
+                </div>
+                `
+                
+                reviewOutputArea.innerHTML += text;
+                
+                const picturesOutputArea = document.getElementById('picturesOutputArea-' + datum.id)
+                if (datum.reviewPictures) {
+                    datum.reviewPictures.forEach(picture => {
+                        picturesOutputArea.innerHTML += `
+                            <img src="/images/review/jpeg/\${picture.pictureName}" alt="Image" class="object-fit-cover img-thumbnail review-img-\${datum.id}" style="height: 120px; width: 120px" data-bs-toggle="modal" data-bs-target="#exampleModal-\${datum.id}">
+                        `
+                    })
+                 }
+                
+                 let modalImages = document.querySelectorAll(`.review-img-\${datum.id}`)
+                 document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[0].src;
 
-                     let currentIndex = 0;
+                 let currentIndex = 0;
 
 
-                     function changeReviewImages(n) {
-                         currentIndex += n;
-                         if (currentIndex <0) {
-                             currentIndex = modalImages.length - 1;
-                         } else if (currentIndex >= modalImages.length) {
-                             currentIndex = 0; // 마지막 이미지로 돌아감
-                         }
-                         document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[currentIndex].src;
-                         console.log(currentIndex + ":" + modalImages[currentIndex].src);
+                 function changeReviewImages(n) {
+                     currentIndex += n;
+                     if (currentIndex <0) {
+                         currentIndex = modalImages.length - 1;
+                     } else if (currentIndex >= modalImages.length) {
+                         currentIndex = 0; // 마지막 이미지로 돌아감
                      }
-                     
-                	 document.addEventListener("keydown", function (event) {
-                         if (event.keyCode === 37) {
-                             changeReviewImages(-1);
-                         } else if (event.keyCode === 39) {
-                             changeReviewImages(1);
-                         }
-                     }); 
-
-                	 
-                	 const reviewKeywordsOutputArea = document.getElementById('reviewKeywordsOutputArea-' + datum.id)
-                	 if(datum.reviewKeywords) {
-                		 datum.reviewKeywords.forEach(keyword => { 
-                			 reviewKeywordsOutputArea.innerHTML += `
-                			 <span class="badge badge-sm  bg-secondary-subtle text-secondary-emphasis badge-rounded-pill fw-lighter m-2 p-1">\${keyword.keyword}</span>
-                			 `
-                		 })
-                	 }
-                    
-                    
-                     const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
-                     if (datum.reviewComments) {
-                     	datum.reviewComments.forEach(Comment => {
-                     		
-                     		let commenttext = `
-                     	        <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
- 								<div class="row my-3">
- 									<div class="col-2">
- 										<img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" onclick="location.href='/user/details?id=\${Comment.userId}'" class="img-thumbnail rounded-circle shadow-sm object-fit-cover mx-2" style="cursor: pointer; width: 70px; height: 70px;">
- 										<div class="text-center card-title my-1">
- 											<span style="font-size: medium; font-weight: bold; color: #FFC107;">\${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) }</span>
- 										</div>
- 									</div>
-									<div class="col-10 position-relative ">
-										<div class="row mb-2">
-											<div class="col-9 text-start">
-												<div class="card-text text-muted" style="font-size: small; ">  
-													<span>\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
-												</div>
-												<div class="card-text">
-													<span>\${Comment.nickname !== null ? Comment.nickname : Comment.username}</span>
-												</div>
-												<div class="card-text">
-													<span>\${Comment.content}</span>
-												</div>
-											</div>
-											<div class="col-3 d-flex justify-content-end align-items-center">
-										    </div>
-										</div>`;
-									if (loginUserId && parseInt(loginUserId) == Comment.userId) {
-										commenttext += `	
-											<div class="row position-absolute" style="bottom:0;right:20px;">
-												<div class="col">
-													<span class="text-end">
-														<a href="/review/store/comment/del?storeId=\${storeId}&reviewId=\${datum.id}&reviewCommentId=\${Comment.id}" class="btn btn-light btn-sm" style="color: #838383">
-															<i class="bi bi-trash3"></i>
-															<span class="visually-hidden">삭제</span>
-														</a>
-													</span>
-												</div>
-											</div>`
-									}
-			commenttext += `				
-									</div>
- 								</div>	`
-            
-                     		reviewCommentsOutputArea.innerHTML += commenttext;
-
-                     	})
+                     document.querySelector(`.modalImg-\${datum.id}`).src = modalImages[currentIndex].src;
+                     console.log(currentIndex + ":" + modalImages[currentIndex].src);
+                 }
+                 
+            	 document.addEventListener("keydown", function (event) {
+                     if (event.keyCode === 37) {
+                         changeReviewImages(-1);
+                     } else if (event.keyCode === 39) {
+                         changeReviewImages(1);
                      }
-                     
-             	})
-             })
-             isReviewsFetching = false;
-         }
- 	
+                 }); 
+
+            	 
+            	 const reviewKeywordsOutputArea = document.getElementById('reviewKeywordsOutputArea-' + datum.id)
+            	 if(datum.reviewKeywords) {
+            		 datum.reviewKeywords.forEach(keyword => { 
+            			 reviewKeywordsOutputArea.innerHTML += `
+            			 <span class="badge badge-sm  bg-secondary-subtle text-secondary-emphasis badge-rounded-pill fw-lighter m-2 p-1">\${keyword.keyword}</span>
+            			 `
+            		 })
+            	 }
+                
+                
+                 const reviewCommentsOutputArea = document.getElementById('reviewCommentsOutputArea-' + datum.id)
+                 if (datum.reviewComments) {
+                 	datum.reviewComments.forEach(Comment => {
+                 		
+                 		let commenttext = `
+                 		    <div class="col-12  border-bottom my-3" id="reviewCommentsOutputArea-\${datum.id}">
+                            <div class="row my-3">
+                                <div class="col-1 mt-3"><i class="bi bi-arrow-return-right d-flex justify-content-end align-items-center" style="color: #b8b6b6; font-size: 30px;"></i></div>
+                                <div class="col-2">
+                                    <img src="/images/user/png/\${Comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" onclick="location.href='/user/details?id=\${Comment.userId}'" class="img-thumbnail rounded-circle shadow-sm object-fit-cover mx-2" style="cursor: pointer; width: 70px; height: 70px;">
+                                    <div class="text-center card-title my-1">
+                                    	<span class="btn badge rounded-pill text-dark rounded-pill" style="background-color: rgba(255, 131, 7, 0.3);" onclick="location.href='/user/details?id=\${Comment.userId}'"><strong >\${Comment.nickname !== null ? Comment.nickname : Comment.username}</strong></span>
+                                    </div>
+                                </div>
+                                <div class="col-9 position-relative ">
+                                    <div class="row">
+                                    	<div class="col text-start">
+                                        	<div class="card-text text-muted" style="font-size: small; ">  
+                                            	<span>평균별점 \${Comment.reviewAvg === null? '' : Comment.reviewAvg.toFixed(1) } </span>
+                                          		<span class="float-end">\${(new Date(Comment.createDate)).toISOString().slice(0, 10)}</span>
+                                       	   	</div>
+                                        <div class="card-text">
+                                            <span>\${Comment.content}</span>
+                                        </div>
+                                    </div>
+                                </div>`;
+                              	if (loginUserId && parseInt(loginUserId) == Comment.userId) {
+                                    commenttext += `   
+                                    	<div class="row position-absolute" style="bottom:0;right:20px;">
+                                        	<div class="col">
+                                            	<span class="text-end">
+                                             		<a href="/review/store/comment/del?storeId=\${storeId}&reviewId=\${datum.id}&reviewCommentId=\${Comment.id}" class="btn btn-light btn-sm" style="color: #838383">
+                                                	<i class="bi bi-trash3" style="color:#EB0000"></i>
+                                                <span class="visually-hidden">삭제</span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>`
+								}
+		commenttext += `				
+								</div>
+								</div>	`
+        
+                 		reviewCommentsOutputArea.innerHTML += commenttext;
+
+                 	})
+                 }
+                 
+         	})
+        
+	} 	
 
 	let isCurrentReviewPicturesShowing = false;
 	
@@ -708,7 +744,7 @@
         .then(data => {
             data.map(datum => {
                 daysArea.innerHTML += `
-    	            <div>
+    	            <div class="w-50 d-flex justify-content-between">
     	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
     	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
     	            </div>
@@ -723,7 +759,7 @@
                 .forEach(daysOff => {
                     console.log(daysOff);
                     daysArea.innerHTML += `
-    	                <div>
+                    	<div class="w-50 d-flex justify-content-between">
     	                    <span class="d-inline-block" style="width: 50px;"> \${daysOff}</span>
     	                    <span class="badge bg-danger-subtle text-danger-emphasis rounded-pill"> 쉬는날</span>
     	                </div>
@@ -732,10 +768,10 @@
         });
 	
 	// initial fetching
-    fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
+    //fetchAndRenderReviews(reviewFetchingOption, pageOnReview);
 
     document.getElementById('btn-review-all').addEventListener('click', function() {
-
+    	fetchedReviews = [];
         reviewOutputArea.innerHTML = '';
 
         isReviewsLast = false;
@@ -746,7 +782,7 @@
     })
 
     document.getElementById('btn-review-good').addEventListener('click', function() {
-
+    	fetchedReviews = [];
         reviewOutputArea.innerHTML = '';
 
         isReviewsLast = false;
@@ -757,7 +793,7 @@
     })
 
     document.getElementById('btn-review-soso').addEventListener('click', function() {
-
+    	fetchedReviews = [];
         reviewOutputArea.innerHTML = '';
 
         isReviewsLast = false;
@@ -768,7 +804,7 @@
     })
 
     document.getElementById('btn-review-bad').addEventListener('click', function() {
-
+    	fetchedReviews = [];
         reviewOutputArea.innerHTML = '';
 
         isReviewsLast = false;
@@ -778,7 +814,12 @@
         fetchAndRenderReviews(reviewFetchingOption, pageOnReview)
     })
 
+	document.addEventListener("DOMContentLoaded", function() {
+	    window.scrollTo(0, 0); // 스크롤 위치를 0, 0으로 설정
+	});
+
     window.onscroll = function () {
+    	// console.log("window -> ", window.innerHeight, "scroll -> ", window.scrollY +.5, "documnet -> ", document.body.offsetHeight)
         if ((window.innerHeight + window.scrollY +.5) >= document.body.offsetHeight) {
 
             if (isReviewsFetching || isReviewsLast) {

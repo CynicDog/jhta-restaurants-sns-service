@@ -52,6 +52,13 @@ public class Review {
 		this.updateDate = new Date(); // default to current time
 		this.disabled = DISABLED.NO; // default to `NO`
 	}
+	
+	public String getHtmlContent() {
+		if (content == null) {
+			return null;
+		}
+		return content.replace(System.lineSeparator(), "<br />");
+	}
 
 	public enum DISABLED {
 		NO, YES
