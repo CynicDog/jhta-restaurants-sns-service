@@ -61,11 +61,6 @@
     <div class="container-fluid">
 
 		<a class="navbar-brand px-4" href="/"><img src="/images/logo/png/FOOD-STREET-navbar.png" style="width:120; height:50px;"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
         <form class="w-50 me-3" id="form-navbar-search" action="/store/search">
             <input id="field-navbar-search" class="form-control me-2" name="keyword" value="${keyword}" type="search" placeholder="지역, 식당 또는 음식" aria-label="Search" >
         </form>
