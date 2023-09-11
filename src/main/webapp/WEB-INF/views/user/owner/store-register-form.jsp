@@ -90,16 +90,16 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="form-floating my-3">
-                                            <input type="text" class="form-control-plaintext" name="description"
-                                                   id="description" placeholder=""/>
-                                            <label class="fw-lighter d-flex" for="description">Description
+                                        <div class="my-3 p-3">
+                                            <label class="fw-lighter d-flex" for="description"><span style="font-size: .9rem;">Description</span>
                                                 <div class="ms-auto">
                                                     <div class="validation description mx-3 text-danger"
                                                          style="display: none;">
                                                     </div>
                                                 </div>
                                             </label>
+                                            <textarea type="text" class="form-control-plaintext" name="description"
+                                                      id="description" placeholder="" style="height: 150px"></textarea>
                                         </div>
                                     </div>
                                     <div>
@@ -319,7 +319,7 @@
         const nameInput = document.querySelector('input[name="name"]')
         const phoneInput = document.querySelector('input[name="phone"]')
         const businessLicenseInput = document.querySelector('input[name="businessLicense"]')
-        const descriptionInput = document.querySelector('input[name="description"]')
+        const descriptionInput = document.querySelector('textarea[name="description"]')
         const addressInput = document.querySelector('input[name="address"]')
         const zipCodeInput = document.querySelector('input[name="zipCode"]')
         const addressDetailInput = document.querySelector('input[name="addressDetail"]')
