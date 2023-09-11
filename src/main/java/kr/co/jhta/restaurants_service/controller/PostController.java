@@ -170,7 +170,7 @@ public class PostController {
         return "post/posting";
     }
 
-    @GetMapping("/detail/delete")
+    @PostMapping("/detail/delete")
     @ResponseBody
     public void DeletePostDetail(@RequestParam("id") int id, RedirectAttributes redirectAttributes, @AuthenticationPrincipal SecurityUser securityUser) {
     	
