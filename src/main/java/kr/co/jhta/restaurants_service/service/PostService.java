@@ -89,7 +89,7 @@ public class PostService {
 				.map(postDataCommand -> {
 					Store store = storeMapper.getStoreById(postDataCommand.getStoreId());
           
-					return new PostData(post, store, postDataCommand.getContent(), postDataCommand.getChooseFile().getOriginalFilename());
+					return new PostData(post, store, postDataCommand.getContent(), postDataCommand.getUuidPrefixedFileName());
 				})
 				.forEach(postData -> {
 					postData.setUser(securityUser.getUser());
