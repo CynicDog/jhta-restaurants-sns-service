@@ -485,7 +485,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="fw-light shadow-sm rounded-2 bg-white my-3 p-4 overflow-auto">
+                            <div class="fw-light shadow-sm rounded-2 bg-white my-3 p-4 overflow-auto" style="white-space: pre-line;">
                                 \${datum.store.description}
                             </div>
                             <div class="my-4 px-4">
