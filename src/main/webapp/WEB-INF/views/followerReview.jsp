@@ -56,7 +56,7 @@
 <body>
 <%@ include file="common/navbar.jsp" %>
 <div class="wrap">
-	<div class="container border-top mt-3 bg-light" >
+	<div class="container border-top mt-5 bg-light" >
 		<div class="row text-center border-bottom">
 			<div class="col-12 my-5">
 				<h2>Following Review</h2>

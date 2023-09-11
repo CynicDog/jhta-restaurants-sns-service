@@ -28,7 +28,7 @@
 <body>
 <%@ include file="../common/navbar.jsp" %>
 <div class="wrap mt-2"> 
-	<div class="container mt-2" style="width:1320px;">
+	<div class="container mt-3" style="width:1320px;">
 		<div class="row text-center border-top mt-3 bg-light border-bottom" style="width:1320px;">
 			<div class="col-12 mt-5">
 				<h2><strong>${post.post.title}</strong></h2>
@@ -55,7 +55,8 @@
 				<div class="col-6 my-5 text-left">
 					<div class="d-flex">
 						<h3>${data.storeName }</h3>
-						<h3 class="text-warning ms-3"><strong><fmt:formatNumber value="${data.averageRating }" pattern="#.#" /></strong></h3>
+						<h3 class="ms-3" style="color:#FF8200;"><strong><fmt:formatNumber value="${data.averageRating }" pattern="#.#" /></strong></h3>
+						
 					</div>
 					<p class="text-secondary">${data.storeAddress }</p>
 					<p>${data.content }</p>
