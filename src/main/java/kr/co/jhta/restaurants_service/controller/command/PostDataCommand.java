@@ -12,12 +12,21 @@ public class PostDataCommand {
     MultipartFile chooseFile;
     int storeId;
     String content;
-    int dataId; 
+    int dataId;
+    String uuidPrefixedFileName;
 
     public PostDataCommand(MultipartFile chooseFile, int storeId, String content, int dataId) {
         this.chooseFile = chooseFile;
         this.storeId = storeId;
         this.content = content;
         this.dataId = dataId;
+    }
+
+    public PostDataCommand(MultipartFile chooseFile, int storeId, String content, int dataId, String uuidPrefixedFileName) {
+        this.chooseFile = chooseFile;
+        this.storeId = storeId;
+        this.content = content;
+        this.dataId = dataId;
+        this.uuidPrefixedFileName = uuidPrefixedFileName;
     }
 }

@@ -86,17 +86,12 @@
                         </div>
                         <div class="row mx-2">
                             <div class="col-sm-4 my-1 fw-lighter">
-                                <label for="preference" class="col-sm-2 col-form-label"><span
-                                        style="white-space: nowrap">Preference</span></label>
+                                <label for="preferenceOutputArea" class="col-sm-2 col-form-label">
+                                    <span style="white-space: nowrap">Preference</span>
+                                </label>
                             </div>
                             <div class="col-sm-8 my-1">
-                                <div class="form-control-plaintext" id="preference">
-                                <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
-                                    #청결해요
-                                </span>
-                                    <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
-                                    #주차가 편해요
-                                </span>
+                                <div id="preferenceOutputArea" class="form-control-plaintext">
                                 </div>
                             </div>
                         </div>
@@ -321,6 +316,25 @@
         let pageOnReview = 0
         let isReviewFetching = false;
         let isReviewLast = false;
+
+        const getReviewKeywords = fetch(`/review/keywords-by-user?id=\${userId}`).then(response => response.json())
+
+        function fetchAndRenderReviewKeywords() {
+
+            getReviewKeywords.then(data => {
+                if (data.length > 0) {
+                    data.forEach(datum => {
+                        document.getElementById('preferenceOutputArea').innerHTML += `
+                        <span class="badge bg-light-subtle border border-light-subtle text-light-emphasis rounded-pill">
+                            \${datum}
+                        </span>
+                    `
+                    })
+                }
+            })
+        }
+
+        fetchAndRenderReviewKeywords();
 
         const getFollowers = page => {
             return fetch(`/user/followers?id=\${userId}&page=\${page}&limit=7`).then(response => response.json());
@@ -808,7 +822,6 @@
 
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 96) {
 
-            console.log('hi')
             if (isPictureDataFetching || isPictureDataLast) {
                 // do nothing
             } else {
@@ -823,7 +836,15 @@
             method: "POST"
         }).then(response => {
             if (response.ok) {
-                updateFollowersCount()
+
+                visibility.then(public => {
+                    follow.then(follow => {
+
+                        if (public || follow) {
+                            updateFollowersCount()
+                        } // else: do nothing
+                    })
+                })
                 showMessagingToast("Successfully done!");
             } else {
                 showMessagingToast("Already requested.");
@@ -955,6 +976,7 @@
                 userImage.src = imageUrl;
             })
     }
+
     fetchUserImage();
 
 </script>

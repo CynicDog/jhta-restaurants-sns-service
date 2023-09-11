@@ -40,7 +40,7 @@
 		from
 			REVIEW_COMMENTS c
 		join USERS u ON c.owner_id = u.id
-		join (
+		left join (
 			select
 			customer_id,
 			AVG(rating) AS review_avg
