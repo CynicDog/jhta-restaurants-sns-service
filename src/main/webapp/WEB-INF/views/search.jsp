@@ -180,6 +180,7 @@
 			$("#div-stores").find(".store").remove();
             $("#storeLoadingSpinner").css("display", "block");
             $("#div-pagination").css("display", "none");
+            $("#div-stores").empty();
             $("html, body").scrollTop(0);
 			$.getJSON('stores', {sort:sortValue, page:pageValue, category:categoryValue, keyword:keywordValue,
 										 xStart:xStartValue, xEnd:xEndValue, yStart:yStartValue, yEnd:yEndValue }, function(result) {
