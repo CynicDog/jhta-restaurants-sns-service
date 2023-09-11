@@ -88,12 +88,12 @@
                         </div>
                         <div class="row mx-2">
                             <div class="col-sm-4 my-1 fw-lighter">
-                                <label for="preferenceOutputArea" class="col-sm-2 col-form-label"><span
-                                        style="white-space: nowrap">Preference</span></label>
+                                <label for="preferenceOutputArea" class="col-sm-2 col-form-label">
+                                    <span style="white-space: nowrap">Preference</span>
+                                </label>
                             </div>
                             <div class="col-sm-8 my-1">
                                 <div id="preferenceOutputArea" class="form-control-plaintext">
-
                                 </div>
                             </div>
                         </div>
