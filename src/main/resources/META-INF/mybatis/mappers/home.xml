@@ -24,8 +24,7 @@
 	<select id="getMyFeedsByFollowerId" resultMap="HomeResultByFollowMap">
 		select 
 			*,
-			ROW_NUMBER() OVER (ORDER BY priority asc, createDate DESC) as id
-			
+			ROW_NUMBER() OVER (ORDER BY priority asc, ((259200/TIME_TO_SEC(TIMEDIFF(NOW(),createDate)))+(likedCount+1)) DESC) as id
 		from
 			(select
 				R.id			as reviewId,
@@ -94,7 +93,7 @@
 	<select id="getAnonymousFeeds" resultMap="HomeAnonymousResultMap">
 		select 
 			*,
-			ROW_NUMBER() OVER (ORDER BY createDate desc) as id
+			ROW_NUMBER() OVER (ORDER BY ((259200/TIME_TO_SEC(TIMEDIFF(NOW(),createDate)))+(likedCount+1)) DESC) as id
 		from
 			(select
 				R.id			as reviewId,
