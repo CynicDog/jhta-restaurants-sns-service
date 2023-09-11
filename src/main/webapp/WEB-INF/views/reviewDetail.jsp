@@ -43,7 +43,7 @@ html, body {
 							<c:when test="${not empty review.review.customer.nickname }">${review.review.customer.nickname }</c:when>
 							<c:otherwise>${review.review.customer.username }</c:otherwise>
 						</c:choose>
-						</strong><span style="color: #ffc107;"><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="(#.#)" /></span></p>
+						</strong><span style="color: #ff792a;"><fmt:formatNumber value="${review.reviewRatingByCustomerId}" pattern="(#.#)" /></span></p>
 					</div>
 					<div class="col-7">
 						<div class="row float-end">
@@ -131,16 +131,6 @@ html, body {
 				<div class="col-1">
 					<img src="/images/user/png/${comment.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="img-thumbnail rounded-circle shadow-sm object-fit-cover mx-2" onclick="location.href='/user/details?id=${comment.userId}'" style="cursor: pointer; width: 70px; height: 70px;">
 					<div class="text-center card-title my-1">
-						<span style="font-size: medium; font-weight: bold; color: #FFC107;"><fmt:formatNumber value="${comment.reviewAvg}" pattern="#.#" /></span>
-					</div>
-				</div>
-				<div class="col-10 position-relative">
-				<div class="row mb-2">
-					<div class="col-9 text-start">
-					<div class="card-text text-muted" style="font-size: small; ">  
-						<span><fmt:formatDate value="${comment.createDate }" pattern="yyyy-M-d" /></span>
-					</div>
-					<div class="card-text">
 						<span> 
 							<c:choose>
 								<c:when test="${not empty comment.nickname }">
@@ -152,21 +142,34 @@ html, body {
 							</c:choose>
 						</span>
 					</div>
-					<div class="card-text">
-						<span>${comment.content}</span>
-					</div>
-					</div>
-					<div class="col-3 d-flex justify-content-end align-items-center">
+				</div>
+				<div class="col-10 position-relative">
+				<div class="row mb-2">
+					<div class="col-11 text-start">
+						<div class="card-text text-muted" style="font-size: small; "> 
+							<c:choose>
+								<c:when test="${comment.reviewAvg eq null}">
+									<span>평균별점</span>
+								</c:when>
+								<c:otherwise>
+										<span><fmt:formatNumber value="${comment.reviewAvg}" pattern="평균별점 #.#" /></span>
+								</c:otherwise>
+							</c:choose> 
+								<span class="float-end"><fmt:formatDate value="${comment.createDate }" pattern="yyyy-M-d" /></span>
+						</div>
+						<div class="card-text">
+							<span>${comment.content}</span>
+						</div>
 					</div>
 				</div>
 				<sec:authorize access="isAuthenticated()">
 				<sec:authentication property="principal.user.id" var="userId"/>
 				<c:if test="${comment.userId eq userId }">
-				<div class="row position-absolute" style="bottom:0;right:20px;">
-					<div class="col">
-						<span class="text-end">
-							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light btn-sm" style="color: #838383">
-								<i class="bi bi-trash3"></i>
+				<div class="row" style="bottom:0;right:20px;">
+					<div class="col-11">
+						<span class="float-end">
+							<a href="/review/comment/del?reviewId=${comment.reviewId}&reviewCommentId=${comment.id}" class="btn btn-light" style="color: #838383">
+								<i class="bi bi-trash3" style="color:#EB0000"></i>
 								<span class="visually-hidden">삭제</span>
 							</a>
 						</span>
