@@ -97,9 +97,10 @@ public class PostController {
     @PostMapping("/register-post-data")
     public ResponseEntity<String> insertPostData(MultipartFile chooseFile, int storeId, String content, @RequestParam(name = "data-id") int toBeDeleted, HttpSession httpSession) throws IOException {
 
+        String uuidPrefixedFileName = UUID.randomUUID().toString() + "-" + chooseFile.getOriginalFilename();
         try {
             String bucketName = "jhta-restaurants-sns-service";
-            String objectName = "post/" + chooseFile.getOriginalFilename();
+            String objectName = "post/" + uuidPrefixedFileName;
 
             BlobId blobId = BlobId.of(bucketName, objectName);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(chooseFile.getContentType()).build();
@@ -116,7 +117,7 @@ public class PostController {
             postDataCommands = new ArrayList<>();
         }
 
-        postDataCommands.add(new PostDataCommand(chooseFile, storeId, content, toBeDeleted));
+        postDataCommands.add(new PostDataCommand(chooseFile, storeId, content, toBeDeleted, uuidPrefixedFileName));
 
         httpSession.setAttribute("postData", postDataCommands);
 
