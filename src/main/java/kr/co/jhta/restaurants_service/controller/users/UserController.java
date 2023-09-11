@@ -130,7 +130,7 @@ public class UserController {
                         othersId.orElse(securityUser.getUser().getId()),
                         User.DISABLED.NO,
                         page.orElse(0),
-                        limit.orElse(10)
+                        limit.orElse(7)
                 );
 
         return ResponseEntity.of(Optional.ofNullable(followers));
@@ -148,7 +148,7 @@ public class UserController {
                         othersId.orElse(securityUser.getUser().getId()),
                         User.DISABLED.NO,
                         page.orElse(0),
-                        limit.orElse(10)
+                        limit.orElse(7)
                 );
 
         return ResponseEntity.of(Optional.ofNullable(followers));
