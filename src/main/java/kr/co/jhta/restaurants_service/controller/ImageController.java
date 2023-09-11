@@ -36,7 +36,8 @@ public class ImageController {
     public static String[] PUBLIC_URLS = {
             "/images/user/**",
             "/images/review/**",
-            "/images/post/**"
+            "/images/post/**",
+            "/images/logo/**"
     };
 
     @ResponseBody
@@ -58,6 +59,27 @@ public class ImageController {
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    
+    @ResponseBody
+    @GetMapping("/logo/png/{imageName}")
+    public ResponseEntity<byte[]> serveLogoPngImage(@PathVariable String imageName) throws IOException {
+    	
+    	BlobId blobId = BlobId.of(bucketName,"logo/" + imageName);
+    	
+    	Blob blob = storage.get(blobId);
+    	
+    	if (blob != null) {
+    		byte[] imageBytes = blob.getContent();
+    		
+    		HttpHeaders headers = new HttpHeaders();
+    		headers.setContentType(MediaType.IMAGE_PNG);
+    		
+    		return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    	}
+    	else {
+    		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    	}
     }
 
     @ResponseBody

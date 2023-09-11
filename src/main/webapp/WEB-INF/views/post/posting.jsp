@@ -30,15 +30,17 @@
 <div class="wrap mt-2"> 
 	<div class="container mt-2" style="width:1320px;">
 		<div class="row text-center border-top mt-3 bg-light border-bottom" style="width:1320px;">
-			<div class="col-12 my-5">
+			<div class="col-12 mt-5">
 				<h2><strong>${post.post.title}</strong></h2>
 				<h4 class="text-secondary">" ${post.post.subTitle} "</h4>
 			</div>
-			<div class="text-end">
-				<img type="button" id="userImage-nav" onclick="location.href='/user/details?id=${post.post.customer.id}'" src="/images/user/png/${post.post.customer.username }"
-									 class="rounded-circle shadow-sm object-fit-cover border mb-1 me-1" 
-									 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 50px; height: 50px;"/><br>
-				<p class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill" onclick="location.href='user/details?id=${post.post.customer.id}'"><strong >${post.post.customer.username }</strong></p>
+			<div class="d-flex justify-content-end">
+					<div class="text-center" style="width: 80px;">
+						<img id="userImage-nav" onclick="location.href='/user/details?id=${post.post.customer.id}'" src="/images/user/png/${post.post.customer.username }"
+											 class="rounded-circle shadow-sm object-fit-cover border mb-1 me-1" 
+											 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 50px; height: 50px;"/><br>
+						<div class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis fw-light rounded-pill mb-1" onclick="location.href='/user/details?id=${post.post.customer.id}'"><strong >${post.post.customer.username }</strong></div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -100,10 +102,13 @@
 								<div class="col-12  border-bottom my-3">
 									
 									<div class="row my-3">
-										<div class="col-2 ">
+										<div class="col-2 text-center">
 											<div class="d-flex justify-content-center align-items-center">
 										      <img id="userImage" src="/images/user/png/${comment.customer.username}" onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" class="rounded-circle shadow-sm object-fit-cover ms-2 mt-2" style="width: 60px; height: 60px;"/>
 										    </div>
+											<div class="card-text mt-1 ms-2">
+												<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.customer.id}'"><strong >${comment.customer.username }</strong></span>
+											</div>
 										</div>
 										
 										<div class="col-10">
@@ -111,9 +116,6 @@
 												<div class="col text-start">
 													<div class="card-text text-muted" style="font-size: small; ">  
 														<span><fmt:formatDate value="${comment.updateDate }" pattern="yyyy/MM/dd HH:mm"></fmt:formatDate></span>
-													</div>
-													<div class="card-text">
-														<span class="btn badge text-bg-success bg-opacity-50 text-secondary-emphasis rounded-pill" onclick="location.href='/user/details?id=${comment.customer.id}'"><strong >${comment.customer.username }</strong></span>
 													</div>
 													<div class="card-text" style="white-space: normal; word-wrap: break-word;">
 														<div>${comment.content }</div>

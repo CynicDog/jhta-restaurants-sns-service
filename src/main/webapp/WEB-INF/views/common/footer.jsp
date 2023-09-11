@@ -33,14 +33,14 @@
             </div>
         </div> -->
         
-        <div class="row mb-3">
+        <div class="row pt-4 mb-2">
        		<div class="col-2"></div>
         	<div class="col">
-				<img alt="" src="">  <!-- 홈 이미지 -->       		
+				<img src="/images/logo/png/FOOD-STREET-footer.png">  <!-- 홈 이미지 -->       		
         	</div>
         	<div class="col-2"></div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-2">
        		<div class="col-2"></div>
         	<div class="col-5"><hr></div>
         	<div class="col-3 "><hr></div>
