@@ -249,37 +249,33 @@
 	    }
 	});
 	
-	
- /*    $(".delete-button").click(function () {
-        let postId = $(this).data("post-id");
+	$(".delete-button").click(function () {
+	    let postId = $(this).data("post-id");
+	    // 모달 표시
+	    $('#confirmDeleteModal').modal('show');
 
-        if (confirm("게시물을 삭제하시겠습니까?")) {
-            $.getJSON('/post/detail/delete', {id : postId});
-	        window.history.back();
-        }
-        
-    });
-     */
-    $(".delete-button").click(function () {
-  		let postId = $(this).data("post-id");
-  		// 모달 표시
-  		$('#confirmDeleteModal').modal('show');
-  
-		// 확인 버튼 클릭 시
-		$('#confirmDelete').click(function() {
-	    	// 서버로 삭제 요청 보내기
-	   		$.getJSON('/post/detail/delete', {id : postId});
-	      
-	       	window.history.back();
-	      
-	   
-	    	// 모달 닫기
-	    	$('#confirmDeleteModal').modal('hide');
-	  	});
-  
-	  	$('#confirmCancel').click(function(){
-			$('#confirmDeleteModal').modal('hide');
-	  	})
+	    // 확인 버튼 클릭 시
+	    $('#confirmDelete').click(function() {
+	        $.ajax({
+	            url: '/post/detail/delete',
+	            type: 'POST',
+	            data: { id: postId },
+	            success: function () {
+	                // 서버 요청이 성공할 때 실행할 코드
+	                $('#confirmDeleteModal').modal('hide');
+	                window.history.back();
+	            },
+	            error: function () {
+	                // 서버 요청이 실패할 때 실행할 코드
+	                alert('게시물 삭제 중 오류가 발생했습니다.');
+	                $('#confirmDeleteModal').modal('hide');
+	            }
+	        });
+	    });
+
+	    $('#confirmCancel').click(function(){
+	        $('#confirmDeleteModal').modal('hide');
+	    });
 	});
      
      
