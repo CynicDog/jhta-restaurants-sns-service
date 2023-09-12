@@ -28,14 +28,21 @@ public class EmailSender {
         mailMessage.setTo(receivingEmailAddress);
         mailMessage.setSubject("[ OTP Code from Jhta restaurants service team ]");
 
-        String text =
+        String text = "환영합니다!\n\n" +
+                        "일회용 비밀번호(OTP) 코드는 다음과 같습니다: " + otpCode + "\n" +
+                        "\n" +
+                        "이 코드를 사용하여 등록 절차를 완료하세요.\n" +
+                        "질문이 있거나 추가 지원이 필요한 경우 언제든지 지원팀에 문의 부탁드립니다.\n" +
+                        "\n\n" +
+                        "Jhta Food Street 팀 ☺\uFE0F \n\n\n" +
+
                 "Welcome!\n\n" +
                 "We're excited to have you as a new member.\n" +
                 "Here is your One-Time Password (OTP) code: " + otpCode + "\n\n" +
                 "Please use this code to complete your registration process.\n" +
                 "If you have any questions or need further assistance, feel free to reach out to our support team.\n\n" +
                 "Best regards,\n\n" +
-                "Jhta restaurants service team ☺\uFE0F";
+                "Jhta Food Street service team ☺\uFE0F";
 
         mailMessage.setText(text);
 
