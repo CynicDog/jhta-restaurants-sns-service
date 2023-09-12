@@ -13,6 +13,7 @@
 						select
 				            id      			as id,
 				            name    			as name,
+				            address				as address,
 				           	review_avg			as reviewAvg,
 				           	review_cnt			as reviewCnt,
 				           	((review_avg * review_cnt) / (review_cnt + 5)) as combinedScore,
@@ -35,6 +36,7 @@
 				        	 (select distinct id,
 				        	 		S.name,
 				        	 		category,
+				        	 		address,
 				        	 		IFNULL(review_cnt,0) review_cnt,
 				        	 		IFNULL(review_avg,0) review_avg,
 				        	 		IFNULL(bookmark_cnt,0) bookmark_cnt,

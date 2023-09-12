@@ -208,7 +208,7 @@
 											<a id="store-reviewAvg-\${store.id}" class="fs-4" style="color: #ff792a; text-decoration: none;">\${store.reviewAvg.toFixed(1)}</a>
 										</div>
 										<div class="d-flex justify-content-between">
-											<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category}</p>
+											<p id="store-category-\${store.id}" class="fs-6 text-secondary">\${store.category} - \${store.address}</p>
 											<div>
 												<i id="store-reviewCnt-\${store.id}" class="bi bi-pencil-square text-secondary">\${store.reviewCnt}</i> 
 												<i id="store-bookmarkCnt-\${store.id}" class="bi bi-star text-secondary">\${store.bookmarkCnt}</i>
