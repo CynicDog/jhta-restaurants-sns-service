@@ -89,7 +89,7 @@
 	            </div>
 	        </div>
         </c:forEach>
-        <div class="row">
+        <div class="row m-5">
             <div class="col-md-8">
                 <div>
                     <header>
@@ -272,12 +272,15 @@
           //star- fill -> blank
           if ($(this).hasClass('bi-heart-fill')) {
                 $(this).removeClass('bi-heart-fill').addClass('bi-heart')
-                $.getJSON('/like/delete', {reviewId : reviewId});
+                $.getJSON('/like/delete', {reviewId : reviewId}, function(reviews){
+					$("span[review-id=" + reviewId + "]").text(reviews);
+				});
           //star- blank -> fill      
           } else {
              $(this).removeClass('bi-heart').addClass('bi-heart-fill')
-             $.getJSON('/like/insert', {reviewId : reviewId});
-
+             $.getJSON('/like/insert', {reviewId : reviewId}, function(reviews){
+					$("span[review-id=" + reviewId + "]").text(reviews);
+				});
           }
         } else {
             // 로그인되지 않은 경우, 로그인 페이지 열기
@@ -443,7 +446,7 @@
                                         <span class="float-end mt-1">
                                         	<button type="button" class="btn btn-light btn-sm text-danger position-relative mx-1">
                                       			<i id="recommend-\${datum.id}" review-id="\${datum.id}" class="bi \${like}" style="font-size: 15px;"></i> <span class="visually-hidden">추천</span>
-                                        	 	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        	 	<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" review-id="\${datum.id}" >
                                         	    \${datum.likedCount}
                                         	    <span class="visually-hidden"> 좋아요 수</span>
                                        		</button>
