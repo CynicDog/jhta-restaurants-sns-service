@@ -54,7 +54,7 @@
 				</div>
 				<div class="col-6 my-5 text-left">
 					<div class="d-flex">
-						<h3>${data.storeName }</h3>
+						<h3 onclick="location.href='/store/detail?id=${data.storeId}'" style=" cursor: pointer;">${data.storeName }</h3>
 						<h3 class="ms-3" style="color:#FF8200;"><strong><fmt:formatNumber value="${data.averageRating }" pattern="#.#" /></strong></h3>
 						
 					</div>
