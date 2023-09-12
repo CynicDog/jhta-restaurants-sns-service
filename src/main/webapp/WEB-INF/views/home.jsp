@@ -206,7 +206,7 @@
 	        }
 			result.forEach(function(feed){
 				let followButton = '';
-				if(feed.isFollowed==='y'){
+				if(feed.isFollowed ==='n'){
 					followButton = `
 						<button id="button-follow-\${feed.id}" class="btn btn-primary border-0 btn-sm" 
 						 feed-id="\${feed.id}" data-writer-id="\${feed.userId}">팔로우</button>
@@ -351,7 +351,7 @@
 	}
 	
     window.onscroll = function () {
-        if ((window.innerHeight + window.scrollY +1) >= document.body.offsetHeight) {
+        if ((window.innerHeight + window.scrollY +10) >= document.body.offsetHeight) {
 
             if (isFeedsFetching || isFeedsLast) {
                 // do nothing

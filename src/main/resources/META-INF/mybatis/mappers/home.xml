@@ -26,7 +26,7 @@
 		select 
 			*,
 			ROW_NUMBER() OVER (ORDER BY priority asc, ((259200/TIME_TO_SEC(TIMEDIFF(NOW(),createDate)))+(likedCount+1)) DESC) as id,
-			if((select X.followed_id from FOLLOWS X where X.follower_id = 130 and X.followed_id =  subquery.userId), 'y', 'n') as isFollowed
+			if((select X.followed_id from FOLLOWS X where X.follower_id = #{userId} and X.followed_id =  subquery.userId), 'y', 'n') as isFollowed
 		from
 			(select
 				R.id			as reviewId,
