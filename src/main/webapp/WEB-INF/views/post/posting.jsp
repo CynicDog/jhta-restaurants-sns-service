@@ -184,6 +184,22 @@
 					    </div>
 					  </div>
 					</div>
+			        <div class="modal fade" id="confirmDeleteModalComment" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="confirmDeleteModalLabel">댓글 삭제 확인</h5>
+					      </div>
+					      <div class="modal-body text-start">
+					        댓글을 삭제하시겠습니까?
+					      </div>
+					      <div class="mb-2 me-2">
+					        <button type="button" class="btn btn-secondary" id="confirmCancelComment">Cancel</button>
+					        <button type="button" class="btn btn-danger" id="confirmDeleteComment">Delete</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 				</div>
 			</div>
 			
@@ -286,19 +302,19 @@
     	    let commentId = $(this).data("comment-id");
     	  
     	    // 모달 표시
-    	    $('#confirmDeleteModal').modal('show');
+    	    $('#confirmDeleteModalComment').modal('show');
     	    
     	    // 확인 버튼 클릭 시
-    	    $('#confirmDelete').click(function() {
+    	    $('#confirmDeleteComment').click(function() {
     	        // 서버로 삭제 요청 보내기
     	        $.getJSON('/post/deleteComment', {commentId : commentId});
-	            $('#confirmDeleteModal').modal('hide');
+	            $('#confirmDeleteModalComment').modal('hide');
 	            window.location.reload();
     	    });
     	  
-    	    $('#confirmCancel').click(function(){
+    	    $('#confirmCancelComment').click(function(){
     	        // 취소 버튼 클릭 시, 모달 닫기
-    	        $('#confirmDeleteModal').modal('hide');
+    	        $('#confirmDeleteModalComment').modal('hide');
     	    })
     	});
 </script>
