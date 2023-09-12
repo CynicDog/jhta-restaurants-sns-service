@@ -189,10 +189,10 @@
 		            </div>    
 				</div>
             </div>
-            <div class="col-md-4" style="position: relative;">
+            <div class="col-md-4 ps-5" style="position: relative;">
             	<div style="position: sticky; top: 0;">
 	                <div id="map" style="width: 400px; height: 350px; cursor: pointer;"></div>
-		                <div class="p-4">
+		                <div class=" pt-4">
 		                <div class="row">
 		                	<c:forEach var="closestStore" items="${closestStores }">
 			                    <div class="mb-3">
@@ -224,7 +224,7 @@
 		                	</c:forEach>
 		                	<sec:authorize access="isAuthenticated()">
 			                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
-			                	<div>
+			                	<div style="width: 400px;">
 								    <c:forEach var="follow" items="${follows}">
 								        <div class="text-center" style="display: inline-block; margin-right: 10px;">
 								            <img src="/images/user/png/${follow.username}" class="img-thumbnail rounded-circle" style="width: 50px; height: 50px; cursor: pointer;" alt="..." onclick="location.href='/user/details?id=${follow.id}'">
@@ -348,9 +348,10 @@
     })
 
     
+    
 	const reviewOutputArea = document.getElementById('reviewOutputArea');
 
-    let pageOnReview = 0;
+    let pageOnReview = 1;
     let isReviewsFetching = false;
 	let isReviewsLast = false;
     let reviewFetchingOption = 'all';
@@ -360,7 +361,9 @@
 	    return fetch(`/store/detail/reviews?id=\${storeId}&page=\${page}&limit=5&option=\${option}`).then(response => response.json());
 	}
 	
-	function fetchAndRenderReviews(reviewFetchingOption, pageOnReview) {
+    fetchAndRenderReviews('all', 1);
+
+    function fetchAndRenderReviews(reviewFetchingOption, pageOnReview) {
 		console.log("reviewFetchingOption:" + reviewFetchingOption)
 
 	    isReviewsFetching = true;
