@@ -16,6 +16,7 @@
 	    <result column="isBookmarked" property="isBookmarked"/>
 	    <result column="isLiked" property="isLiked"/>
 	    <result column="likedCount" property="likedCount"/>
+	    <result column="isFollowed" property="isFollowed"/>
 	    
 	    <collection column="reviewId" property="reviewPictures" ofType="ReviewPicture" 
          			select="kr.co.jhta.restaurants_service.mapper.ReviewPictureMapper.getReviewPicturesByReviewId"/>
@@ -24,7 +25,8 @@
 	<select id="getMyFeedsByFollowerId" resultMap="HomeResultByFollowMap">
 		select 
 			*,
-			ROW_NUMBER() OVER (ORDER BY priority asc, ((259200/TIME_TO_SEC(TIMEDIFF(NOW(),createDate)))+(likedCount+1)) DESC) as id
+			ROW_NUMBER() OVER (ORDER BY priority asc, ((259200/TIME_TO_SEC(TIMEDIFF(NOW(),createDate)))+(likedCount+1)) DESC) as id,
+			if((select X.followed_id from FOLLOWS X where X.follower_id = 130 and X.followed_id =  subquery.userId), 'y', 'n') as isFollowed
 		from
 			(select
 				R.id			as reviewId,

@@ -32,5 +32,6 @@ public class HomeFeed {
 	private String isBookmarked;
 	private String isLiked;
 	private Integer likedCount;
+	private String isFollowed;
 	
 }

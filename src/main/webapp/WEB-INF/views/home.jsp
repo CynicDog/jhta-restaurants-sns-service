@@ -206,74 +206,64 @@
 	        }
 			result.forEach(function(feed){
 				let followButton = '';
+				if(feed.isFollowed==='y'){
+					followButton = `
+						<button id="button-follow-\${feed.id}" class="btn btn-primary border-0 btn-sm" 
+						 feed-id="\${feed.id}" data-writer-id="\${feed.userId}">팔로우</button>
+					`;
+				}
+				let star = feed.isBookmarked==='y' ? 'bi-star-fill' : 'bi-star';
+				let like = feed.isLiked==='y' ? 'bi-heart-fill' : 'bi-heart';
 				
-				//팔로우 여부에 따른 팔로우 버튼 표시
-				fetch(`/user/follow?id=\${feed.userId}`)
-				.then(response => { // 응답처리 콜백 메서드 등록
-					if (response.ok) {
-						return response.text();
-					}
-				}).then(text => {//콜백 메서드 등록
-					if (text=== 'NO') {
-						followButton = `
-							<button id="button-follow-\${feed.id}" class="btn btn-primary border-0 btn-sm" 
-							 feed-id="\${feed.id}" data-writer-id="\${feed.userId}">팔로우</button>
-						`
-					} else {
-						// do nothing 
-					}
-					
-					let star = feed.isBookmarked==='y' ? 'bi-star-fill' : 'bi-star';
-					let like = feed.isLiked==='y' ? 'bi-heart-fill' : 'bi-heart';
-					
-					let content = `
-						<div id=home-content-header class="d-flex justify-content-between mb-2" >
-							<div id="home-feed-writer">
-								<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
-								 class="rounded-circle shadow-sm object-fit-cover mx-1" data-user-id="\${feed.userId}" 
-								 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
-								
-								 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
-								\${generateRating(feed.rating)}
-								<span class="text-secondary ms-1" id="dateValue-\${feed.id }">\${timeForToday(feed.createDate)} </span]>
-							</div>
-							<div id="followButtonArea" class="d-flex align-items-center">
-								\${followButton}
-							</div>	
-						</div>
-						<div id="store-card" class="card mb-5" style="border: none;">
-							<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
-							  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
-							 	\${generateIndicator(feed.reviewPictures,feed)}
-							  </div>
-							  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
-								\${generatePicture(feed.reviewPictures,feed)}
-							  </div>
-							  \${generateControlButton(feed.reviewPictures,feed)}
-							</div>
+				let content = `
+					<div id=home-content-header class="d-flex justify-content-between mb-2" >
+						<div id="home-feed-writer">
+							<img type="button" id="userImage-\%{feed.id}" src="/images/user/png/\${feed.username}" onclick="location.href='/user/details?id=\${feed.userId}'"
+							 class="rounded-circle shadow-sm object-fit-cover mx-1" data-user-id="\${feed.userId}" 
+							 onerror="this.onerror=null; this.src='/images/user/png/user-default-image.png';" alt="User Image" style="width: 40px; height: 40px;"/>
 							
-							<div class="card-body pt-1 ps-1" >
-								<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
-								<i class="bi \${like} fs-4" id="like-\${feed.id}" data-reviewId="\${feed.reviewId}" style="cursor: pointer; color: red;"></i> 
-								<span class="text fs-6 fw-lighter" data-reviewId="\${feed.reviewId}">\${feed.likedCount}</span>
-								<div class="border d-flex justify-content-between mt-2" >
-									<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
-										<div class="col ms-1">
-								           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
-								           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
-										</div>
-									</div>
-									<div class="d-flex align-items-center px-2">
-										<i class="bi \${star} fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
-									</div>
-								</div>		
-							</div>
+							 <span class="me-2 fw-bold" onclick="location.href='/user/details?id=\${feed.userId}'" style="cursor: pointer;">\${feed.username} </span>
+							\${generateRating(feed.rating)}
+							<span class="text-secondary ms-1" id="dateValue-\${feed.id }">\${timeForToday(feed.createDate)} </span]>
 						</div>
+						<div id="followButtonArea" class="d-flex align-items-center">
+							\${followButton}
+						</div>	
+					</div>
+					<div id="store-card" class="card mb-5" style="border: none;">
+						<div id="carouselHomeFeedIndicators-\${feed.id}" class="carousel slide">
+						  <div class="carousel-indicators" id="carousel-indicators-\${feed.id}">
+						 	\${generateIndicator(feed.reviewPictures,feed)}
+						  </div>
+						  <div class="carousel-inner" id ="carousel-inner-\${feed.id}">
+							\${generatePicture(feed.reviewPictures,feed)}
+						  </div>
+						  \${generateControlButton(feed.reviewPictures,feed)}
+						</div>
+						
+						<div class="card-body pt-1 ps-1" >
+							<p class="card-text mb-1" onclick="location.href='/review/detail?id=\${feed.reviewId}'" style="cursor: pointer;">\${feed.content}</p>
+							<i class="bi \${like} fs-4" id="like-\${feed.id}" data-reviewId="\${feed.reviewId}" style="cursor: pointer; color: red;"></i> 
+							<span class="text fs-6 fw-lighter" data-reviewId="\${feed.reviewId}">\${feed.likedCount}</span>
+							<div class="border d-flex justify-content-between mt-2" >
+								<div class="row" onclick="location.href='/store/detail?id=\${feed.storeId}'" style="cursor: pointer;">
+									<div class="col ms-1">
+							           <p class="mb-0"><strong>\${feed.storeName}</strong></p>	
+							           <p class="text-secondary mb-0"><small>\${feed.address}</small></p>	
+									</div>
+								</div>
+								<div class="d-flex align-items-center px-2">
+									<i class="bi \${star} fs-4" id="star-\${feed.id}" store-id="\${feed.storeId}" style="cursor: pointer; color: gold;"></i>
+								</div>
+							</div>		
+						</div>
+					</div>
 				`;
-					$("#home-content").append(content);
+				$("#home-content").append(content);
+				
 				});
 			});
-		});
+
 		isFeedsFetching = false;
 	}
 	
