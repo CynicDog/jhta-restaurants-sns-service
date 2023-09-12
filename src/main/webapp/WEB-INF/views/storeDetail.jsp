@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>애플리케이션</title>
+<title>Food Street</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -89,7 +89,7 @@
 	            </div>
 	        </div>
         </c:forEach>
-        <div class="row m-5">
+        <div class="row m-4">
             <div class="col-md-8">
                 <div>
                     <header>
@@ -223,6 +223,7 @@
 			                    </div>
 		                	</c:forEach>
 		                	<sec:authorize access="isAuthenticated()">
+		                	<c:if test="${not empty follows}">
 			                	<h5 style="color: #ff792a;"><strong>리뷰 작성한 친구</strong></h5>
 			                	<div style="width: 400px;">
 								    <c:forEach var="follow" items="${follows}">
@@ -233,6 +234,7 @@
 								        </div>
 								    </c:forEach>
 								</div>              
+							</c:if>
 		                	</sec:authorize>
 		                </div>
 		            </div>

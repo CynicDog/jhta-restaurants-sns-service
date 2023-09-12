@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Food Street</title>
 <%@ include file="common/navbar.jsp" %>
 <style type="text/css">
 	.cards {

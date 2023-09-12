@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문의 사항</title>
+<title>Food Street</title>
 </head>
 <body>
 
