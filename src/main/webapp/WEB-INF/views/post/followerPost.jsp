@@ -42,7 +42,7 @@
 		    font-size:18px;
 		}
     </style>
-    <title>Insert title here</title>
+    <title>Food Street</title>
 </head>
 <body>
 <div class="wrap">
