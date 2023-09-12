@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/images/logo/png/favicon.ico"image/x-icon">
+<link rel="icon" href="/images/logo/png/favicon.ico" type="image/x-icon">
 <title>Food Street</title>
 <%@ include file="common/navbar.jsp" %>
 <style type="text/css">

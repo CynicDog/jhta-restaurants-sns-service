@@ -51,6 +51,8 @@
 		    font-size:18px;
 		}
     </style>
+<link rel="shortcut icon" href="/images/logo/png/favicon.ico"image/x-icon">
+<link rel="icon" href="/images/logo/png/favicon.ico" type="image/x-icon">    
 <title>Food Street</title>
 </head>
 <body>

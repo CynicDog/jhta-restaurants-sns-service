@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<link rel="shortcut icon" href="/images/logo/png/favicon.ico"image/x-icon">
+	<link rel="icon" href="/images/logo/png/favicon.ico" type="image/x-icon">
     <title>Food Street</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
