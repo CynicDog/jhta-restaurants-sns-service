@@ -754,7 +754,7 @@
         .then(data => {
             data.map(datum => {
                 daysArea.innerHTML += `
-    	            <div class="w-50 d-flex justify-content-between">
+    	            <div class="w-50 d-flex justify-content-between my-1">
     	                <span class="d-inline-block" style="width: 50px;">\${datum.day}</span>
     	                <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">\${datum.openTime} ~ \${datum.closeTime}</span>
     	            </div>
