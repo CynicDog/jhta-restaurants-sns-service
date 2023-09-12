@@ -38,11 +38,11 @@
 	            <span class="close" onclick="closeModal(${recentReview.id })" style="position: absolute; top: 10px; right: 10px; font-size: 32px; color: white; cursor: pointer;">&times;</span>
 	            <div class=" d-flex justify-content-center align-items-center" style="height: 100%;">
 	                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-	                    <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+	                    <!-- <button class="modal-nav-button" id="prevButton" onclick="changeImage(-1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
 	                        &#10094;
-	                    </button>
+	                    </button> -->
 	                </div>
-	                <div class="text-center" style="background-color: black; width: 80%;">
+	                <div class="text-center" style="background-color: black; width: 60%;">
 					    <div class="fotorama" data-nav="thumbs">
 					        <img class="modal-content" id="modalImg-${recentReview.id }" style="width: auto; height: auto; max-width: 100%; max-height: 80vh; margin: auto; display: block;">
 					    </div>
@@ -82,9 +82,9 @@
 	                    </div>
 	                </div>
 	                <div style="width: 100px;" class=" d-flex justify-content-center align-items-center">
-	                    <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
+	                    <!-- <button class="modal-nav-button" id="nextButton" onclick="changeImage(1)" style="font-size: 2em; background: none; border: none; cursor: pointer; color: white;">
 	                        &#10095;
-	                    </button>
+	                    </button> -->
 	                </div>
 	            </div>
 	        </div>
